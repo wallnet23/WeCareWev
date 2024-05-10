@@ -1,0 +1,79 @@
+<div class="container">
+    <form [formGroup]="installationSiteForm">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-12 col-lg-6 mb-3">
+                    <label for="country" style="font-weight: bold;">*Client Country</label>
+                    <select class="form-select" aria-label="select example" formControlName="country">
+                        <option [ngValue]="null" disabled selected>Select a Country</option>
+                        <option *ngFor="let country of countriesData">
+                            <img src="{{country.flags.png}}" width="20px" height="15px"> {{ country.name.common }}
+                        </option>
+                    </select>
+                </div>
+                <div class="col-12 col-lg-6 mb-3">
+                    <label for="address" style="font-weight: bold;">*Address</label>
+                    <input type="text" name="address" id="address" formControlName="address" class="form-control"
+                        placeholder="Address" required>
+                </div>
+                <div class="col-12 col-lg-6 mb-3">
+                    <label for="city" style="font-weight: bold;">*City</label>
+                    <input type="text" name="city" id="city" formControlName="city" class="form-control"
+                        placeholder="City" required>
+                </div>
+                <div class="col-12 col-lg-6 mb-3">
+                    <label for="postalCode" style="font-weight: bold;">Postal Code</label>
+                    <input type="text" name="postalCode" id="postalCode" formControlName="postalCode"
+                        class="form-control" placeholder="" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-12 text-center" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <img src="assets/img/pictures.png" style="width: 90%; height: auto;">
+            </div>
+        </div>
+
+        <div class="row justify-content-center mt-2">
+            <ng-container *ngFor="let imageUrl of images; let i = index">
+                <div class="col-xs-12 col-sm-6 col-md-2 mb-4 text-center" style="width: 100px; height: 100px;">
+                    <img [src]="imageUrl" class="img-fluid thumbnailImg">
+                    <i class="bi bi-trash hoverPointer" (click)="deleteImg(i)"></i>
+                </div>
+            </ng-container>
+        </div>
+        <div class="row justify-content-center mt-3 mb-3">
+            <div class="col-md-4 text-center">
+                <label for="fileUpload" class="btn btn-outline-dark">
+                    <i class="bi bi-upload" style="margin-right: 4px;"></i>
+                    Importa
+                    <input type="file" id="fileUpload" style="display: none;" (change)="onFileSelected($event)"
+                        accept="image/*">
+                </label>
+            </div>
+        </div>
+
+        <!-- <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
+        </mat-form-field> -->
+        <div class="text-center">
+            <button class="mr-2" mat-raised-button matStepperPrevious style="width: 80px;" (click)="sendData()">
+                Previous
+            </button>
+            <button class="ml-2" mat-raised-button matStepperNext [disabled]="(!installationSiteForm.valid || !isImages)"
+                (click)="sendData()" style="width: 80px;">
+                Next
+            </button>
+        </div>
+    </form>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <img src="assets/img/pictures.png" style="width: 150%; height: auto;">
+        </div>
+    </div>
+</div>

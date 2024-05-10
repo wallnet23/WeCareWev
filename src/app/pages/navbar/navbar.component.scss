@@ -1,0 +1,29 @@
+.navbarLogo {
+    margin-left: 20px;
+    max-width: 90px;
+    height: auto;
+    object-fit: contain;
+}
+
+.navbar {
+    background-color: white;
+    border-bottom: 1px solid lightgrey;
+}
+
+.navItem:hover {
+    cursor: pointer;
+}
+
+.custom-toggler.navbar-toggler {
+    border-color: lightgray;
+}
+
+.custom-toggler .navbar-toggler-icon {
+    border-color: lightgray;
+}
+
+.barra-attiva {
+    display: inline;
+    margin-top: 3px solid white;
+    content: '';
+}

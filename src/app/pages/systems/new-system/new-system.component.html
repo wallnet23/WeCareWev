@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 p-2 text-center">
+      <h2 style="font-weight: bold;">
+        {{systemName}}
+      </h2>
+    </div>
+
+    <div class="col-12 p-0">
+      <mat-stepper orientation="vertical" [linear]="false" #stepper>
+
+        <mat-step [stepControl]="clientFormGroup" errorMessage="Name is required.">
+          <ng-template matStepLabel>CLIENT INFO</ng-template>
+          <app-client-info></app-client-info>
+        </mat-step>
+
+        <mat-step [stepControl]="installationSiteFormGroup" errorMessage="Address is required.">
+          <ng-template matStepLabel>INSTALLATION SITE</ng-template>
+          <app-installation-site></app-installation-site>
+        </mat-step>
+
+        <mat-step [stepControl]="installationSiteFormGroup" errorMessage="Address is required.">
+          <ng-template matStepLabel>SUPPLIER INFO</ng-template>
+          <app-supplier-info></app-supplier-info>
+        </mat-step>
+
+        <mat-step [stepControl]="installationSiteFormGroup" errorMessage="Address is required.">
+          <ng-template matStepLabel>PRODUCT INFO</ng-template>
+          <app-product-info></app-product-info>
+        </mat-step>
+
+        <mat-step [stepControl]="installationSiteFormGroup" errorMessage="Address is required.">
+          <ng-template matStepLabel>ADDITIONAL INFO</ng-template>
+          <app-additional-info></app-additional-info>
+        </mat-step>
+
+        <mat-step>
+          <ng-template matStepLabel>Done</ng-template>
+          <p>You are now done.</p>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button (click)="stepper.reset()">Reset</button>
+          </div>
+        </mat-step>
+
+      </mat-stepper>
+    </div>
+  </div>
+</div>
