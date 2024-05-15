@@ -17,6 +17,7 @@ import { Router, RouterModule } from '@angular/router';
 })
 export class ModifyPasswordComponent {
 
+  isSent: boolean = false;
   validEmail: boolean = true;
 
   recoverPswForm = new FormGroup({
@@ -28,9 +29,10 @@ export class ModifyPasswordComponent {
   send() {
     //Send the request to the server
     const email = this.recoverPswForm.get('email')?.value;
-    console.log("email: ", email);
-    if(email === 'paolo@gmail.com') {
-      this.router.navigate(['']);
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if(emailRegex.test(email!)) {
+      this.validEmail = true;
+      this.isSent = true;
     }
     else {
       this.validEmail = false;

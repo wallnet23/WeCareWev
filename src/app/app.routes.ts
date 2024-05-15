@@ -7,6 +7,7 @@ import { ModifySystemComponent } from './pages/systems/modify-system/modify-syst
 import { SettingsComponent } from './pages/profile/settings/settings.component';
 import { SystemNameComponent } from './pages/systems/system-name/system-name.component';
 import { SystemOverviewComponent } from './pages/systems/system-overview/system-overview.component';
+import { NewPasswordComponent } from './pages/profile/new-password/new-password.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -19,4 +20,5 @@ export const routes: Routes = [
     { path: 'profile/settings', component: SettingsComponent },
     { path: 'systemName', component: SystemNameComponent },
     { path: 'systemOverview/:name', component: SystemOverviewComponent },
+    { path: 'newPassword', component: NewPasswordComponent },
 ];

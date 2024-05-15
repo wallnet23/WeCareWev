@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LoadSystemsService } from '../../../services/load-systems.service';
 import { SystemInfo } from '../interfaces/system-info';
 import { MatTooltip } from '@angular/material/tooltip';
@@ -31,7 +31,7 @@ export class SystemOverviewComponent {
   system: SystemInfo;
 
   constructor(private loadSystemService: LoadSystemsService, private route: ActivatedRoute,
-    public dialog: MatDialog) {
+    public dialog: MatDialog, private router: Router) {
     this.route.params.subscribe(params => {
       this.systemName = params['name'];
     });
@@ -44,6 +44,10 @@ export class SystemOverviewComponent {
         width: '250px'
       });
     }
+  }
+
+  modifySystem(name: string) {
+    this.router.navigate(['/sy'])
   }
 
 

@@ -1,11 +1,11 @@
-<div class="container">
+<div class="container fullPage">
     <div class="row justify-content-center align-items-center mt-2 p-2">
         <div class="col-6 text-center">
             <h2 class="systemName">{{systemName}}</h2>
         </div>
     </div>
     <div class="row justify-content-center p-1 p-lg-4">
-        <div class="col-12 col-md-6 mt-2">
+        <!-- <div class="col-12 col-md-6 mt-2">
             <mat-card class="card">
                 <mat-card-header class="titleBorder header">
                     <mat-card-title class="cardTitle">SYSTEM DATA</mat-card-title>
@@ -43,9 +43,47 @@
                     </ul>
                 </mat-card-content>
             </mat-card>
-        </div>
+        </div> -->
 
         <div class="col-12 col-md-6 mt-2">
+            <div class="card">
+                <h5 class="card-header">SYSTEM DATA</h5>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li class="listElement">
+                            <i class="bi bi-circle-fill" style="font-size: large;" [ngClass]="{
+                                'text-success': system.status === 'Approved',
+                                'text-danger': system.status === 'Incomplete',
+                                'text-warning': system.status === 'Waiting for approval'}">
+                            </i>
+                            <span style="margin-left: 1rem;">{{system.status}}</span>
+                        </li>
+                        <li class="listElement">
+                            <span class="listTitle">Description:</span><br>
+                            <span class="listDescription">{{system.description}}</span>
+                        </li>
+                        <li class="listElement">
+                            <span class="listTitle">Supplier Name:</span><br>
+                            <span class="listDescription">{{system.supplierInfo.name}}</span>
+                        </li>
+                        <li class="listElement">
+                            <span class="listTitle">Installation Site:</span><br>
+                            <span class="listDescription">{{system.installationSite.city}}</span>
+                        </li>
+                        <li class="listElement">
+                            <span class="listTitle">Installation Date:</span><br>
+                            <span class="listDescription">{{system.productGeneralInfo.installationDate}}</span>
+                        </li>
+                        <li class="listElement">
+                            <span class="listTitle">Problem Occurred:</span><br>
+                            <span class="listDescription">{{system.additionalInfo.problemOccurred}}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="col-12 col-md-6 mt-2">
             <mat-card (click)="openDialog()" class="card">
                 <mat-card-header class="titleBorder header">
                     <mat-card-title class="cardTitle">WARRANTY EXTENSION</mat-card-title>
@@ -64,10 +102,33 @@
                     </p>
                 </mat-card-content>
             </mat-card>
+        </div> -->
+
+
+        <div class="col-12 col-md-6 mt-2">
+            <div class="card" (click)="openDialog()">
+                <h5 class="card-header">WARRANTY EXTENSION</h5>
+                <div class="card-body">
+                    <p style="margin-top: 1rem;">
+                        <span class="listTitle">Warranty Extension Status: </span><br>
+                        <span class="listDescription">{{warrantyExtensionStatus}}</span>
+                    </p><br>
+                    <p class="paragraph" *ngIf="!isWarrantyRequest">
+                        Request a warranty extension, our technician will review your system and check
+                        if there's a possibility for a warrant extension.
+                    </p>
+                    <p class="paragraph" *ngIf="isWarrantyRequest">
+                        Click on this card to see the details of your warranty request status
+                    </p>
+                </div>
+                <div class="card-footer text-center">
+                    <div href="#" class="btn btn-outline-dark" (click)="openDialog()">New Warranty Extension</div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="row justify-content-center align-items-center mt-2 p-1 p-lg-4">
+    <!-- <div class="row justify-content-center align-items-center mt-2 p-1 p-lg-4">
         <div class="col-12">
             <mat-card (click)="openDialog()" class="card">
                 <mat-card-header class="titleBorder header">
@@ -83,9 +144,32 @@
                 </mat-card-content>
             </mat-card>
         </div>
-    </div>
+    </div> -->
 
     <div class="row justify-content-center align-items-center mt-2 p-1 p-lg-4">
+        <div class="col-12">
+            <div class="card" (click)="openDialog()">
+                <h5 class="card-header">CHAT</h5>
+                <div class="card-body">
+                    <div *ngIf="!isChat">
+                        <h5 class="card-title">No chats available</h5>
+                        <p class="card-text">Press on the button below to start a chat with Weco technicians to solve
+                            your problems.</p>
+                    </div>
+                    <div *ngIf="isChat">
+                        <h5 class="card-title">Number of chats available</h5>
+                        <p class="card-text">Click on this card to visualize old chats or press on the button below to start a chat with Weco
+                            technicians to solve your problems.</p>
+                    </div>
+                </div>
+                <div class="card-footer text-center">
+                    <div class="btn btn-outline-dark" (click)="openDialog()">Start a new chat</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="row justify-content-center align-items-center mt-2 p-1 p-lg-4">
         <div class="col-12">
             <mat-card (click)="openDialog()" class="card">
                 <mat-card-header class="titleBorder header">
@@ -100,6 +184,28 @@
                     </p>
                 </mat-card-content>
             </mat-card>
+        </div>
+    </div> -->
+
+    <div class="row justify-content-center align-items-center mt-2 p-1 p-lg-4">
+        <div class="col-12">
+            <div class="card" (click)="openDialog()">
+                <h5 class="card-header">RMA</h5>
+                <div class="card-body">
+                    <div *ngIf="!isRma">
+                        <h5 class="card-title">No RMA available</h5>
+                        <p class="card-text">Press on the button below to start a new process for RMA.</p>
+                    </div>
+                    <div *ngIf="isRma">
+                        <h5 class="card-title">Number of RMA available</h5>
+                        <p class="card-text">Click on the card to visualize old RMA or press on the button below to start a new process for
+                            RMA.</p>
+                    </div>
+                </div>
+                <div class="card-footer text-center">
+                    <div href="#" class="btn btn-outline-dark">New RMA</div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
