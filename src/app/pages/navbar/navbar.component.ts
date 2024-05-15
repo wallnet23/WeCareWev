@@ -29,7 +29,7 @@ export class NavbarComponent {
   }
 
   isCurrentPage(src: string): boolean {
-    return (this.currentPage == src);
+    return (this.currentPage.toLowerCase().includes(src.toLowerCase()));
   }
 
   logout() {

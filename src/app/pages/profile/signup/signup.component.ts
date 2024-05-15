@@ -5,6 +5,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { RouterModule } from '@angular/router';
 import { map, Observable } from 'rxjs';
 import { MatSelectModule } from '@angular/material/select';
+import { RecaptchaFormsModule, RecaptchaModule, RecaptchaV3Module, ReCaptchaV3Service } from 'ng-recaptcha';
 
 
 interface Country {
@@ -29,6 +30,9 @@ interface Country {
     RouterModule,
     HttpClientModule,
     MatSelectModule,
+    RecaptchaModule,
+    RecaptchaFormsModule,
+    RecaptchaV3Module,
   ],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss'
@@ -49,9 +53,10 @@ export class SignupComponent implements OnInit {
     email: new FormControl<string |null>(null, Validators.email),
     phoneNumber: new FormControl<string |null>(null, Validators.minLength(8)),
     description: new FormControl<string | null>(null, Validators.required),
+    recaptcha: new FormControl(null, Validators.required),
   })
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private recaptcha: ReCaptchaV3Service,) { }
 
   ngOnInit() {
     this.fetchCountryData().subscribe((obj) => {
@@ -61,6 +66,7 @@ export class SignupComponent implements OnInit {
 
   subscribe() {
     console.log(this.signupForm.value);
+    console.log(this.signupForm.getRawValue());
   }
 
   fetchCountryData(): Observable<Country[]> {

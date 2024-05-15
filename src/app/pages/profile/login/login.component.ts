@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { IpInfoConnectService } from '../../../services/ip-info-connect.service';
 
 @Component({
   selector: 'app-login',
@@ -24,11 +25,12 @@ export class LoginComponent {
     password: new FormControl('', Validators.required),
   })
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private ipInfoConnectService: IpInfoConnectService) {}
 
   login() {
     //console.log("email: ", this.loginForm.get('email')?.value);
     //console.log("password: ", this.loginForm.get('password')?.value);
+    this.ipInfoConnectService.getLanguage().subscribe((val) => {console.log(val)});
     const email = this.loginForm.get('email')?.value;
     const password = this.loginForm.get('password')?.value;
     if(email === 'paolo@gmail.com' && password === "123") {
