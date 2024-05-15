@@ -56,7 +56,7 @@ export class SignupComponent implements OnInit {
     recaptcha: new FormControl(null, Validators.required),
   })
 
-  constructor(private http: HttpClient, private recaptcha: ReCaptchaV3Service,) { }
+  constructor(private http: HttpClient, private recaptcha: ReCaptchaV3Service) { }
 
   ngOnInit() {
     this.fetchCountryData().subscribe((obj) => {
