@@ -15,23 +15,25 @@
                     <div class="row">
                         <div class="col-12 col-md-6 mt-2">
                             <span style="font-weight: bold;">Supplier Name:</span><br>
-                            <span class="content">{{system.supplierInfo.name}}</span>
+                            <div class="content">{{system.supplierInfo.name}}</div>
                         </div>
                         <div class="col-12 col-md-6 mt-2">
                             <span style="font-weight: bold;">System Description:</span><br>
-                            <span class="content">{{system.description}}</span>
+                            <div class="content">{{system.description}}</div>
                         </div>
                         <div class="col-12 col-md-6 mt-2">
                             <span style="font-weight: bold;">installation Site:</span><br>
-                            <span class="content">{{system.installationSite.city}}</span>
+                            <div class="content">{{system.installationSite.city}}</div>
                         </div>
                         <div class="col-12 col-md-6 mt-2">
                             <span style="font-weight: bold;">Warranty Status:</span><br>
-                            <span class="content">TODO: ADD THIS FIELD TO THE SYSTEM INTERFACE</span>
-                            <i class="bi bi-circle-fill status" [ngClass]="{
+                            <div class="content">TODO: ADD THIS FIELD TO THE SYSTEM INTERFACE
+                                <i class="bi bi-circle-fill status" [ngClass]="{
                                 'text-success': system.status === 'Approved',
                                 'text-danger': system.status === 'Incomplete',
-                                'text-warning': system.status === 'Waiting for approval'}"></i>
+                                'text-warning': system.status === 'Waiting for approval'}">
+                                </i>
+                            </div>
                         </div>
                     </div>
                 </div>

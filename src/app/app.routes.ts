@@ -8,6 +8,8 @@ import { SettingsComponent } from './pages/profile/settings/settings.component';
 import { SystemNameComponent } from './pages/systems/system-name/system-name.component';
 import { SystemOverviewComponent } from './pages/systems/system-overview/system-overview.component';
 import { NewPasswordComponent } from './pages/profile/new-password/new-password.component';
+import { AssistanceRequestListComponent } from './pages/systems/assistance-request-list/assistance-request-list.component';
+import { AssistanceRequestComponent } from './pages/systems/assistance-request/assistance-request.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -21,4 +23,6 @@ export const routes: Routes = [
     { path: 'systemName', component: SystemNameComponent },
     { path: 'systemOverview/:name', component: SystemOverviewComponent },
     { path: 'newPassword', component: NewPasswordComponent },
+    { path: 'assistanceRequestList', component: AssistanceRequestListComponent },
+    { path: 'assistanceRequest/:id', component: AssistanceRequestComponent },
 ];

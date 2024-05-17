@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SystemInfo } from '../pages/systems/interfaces/system-info';
+import { SystemInfo } from '../pages/systems/interfaces/full-system-interface';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 
 

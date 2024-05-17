@@ -4,7 +4,7 @@
             <div class="input p-2">
                 <label class="searchLabel">SEARCH SYSTEM</label>
                 <input [(ngModel)]="searchText" (input)="loadSystemService.filterSystems(searchText)" type="text" class="form-control searchBar mt-2" placeholder="Name of the system">
-              </div>
+            </div>
         </div>
         <div class="col-12">
             <app-system-card></app-system-card>

@@ -3,10 +3,12 @@ import { Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadSystemsService } from '../../../services/load-systems.service';
-import { SystemInfo } from '../interfaces/system-info';
+import { SystemInfo } from '../interfaces/full-system-interface';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { IncompleteDialogComponent } from '../components/incomplete-dialog/incomplete-dialog.component';
+import { AssistanceRequestsService } from '../../../services/assistance-requests.service';
+import { AssistanceRequest } from '../interfaces/assistance-request';
 
 @Component({
   selector: 'app-system-overview',
@@ -22,6 +24,8 @@ import { IncompleteDialogComponent } from '../components/incomplete-dialog/incom
 })
 export class SystemOverviewComponent {
 
+  requests: AssistanceRequest[] = [];
+  latestRequests: AssistanceRequest[] = [];
   warrantyExtensionStatus: string = 'Not Requested';
   isWarrantyRequest: boolean = false;
   isChat: boolean = false;
@@ -31,11 +35,16 @@ export class SystemOverviewComponent {
   system: SystemInfo;
 
   constructor(private loadSystemService: LoadSystemsService, private route: ActivatedRoute,
-    public dialog: MatDialog, private router: Router) {
+    public dialog: MatDialog, private router: Router, private assistanceRequestsService: AssistanceRequestsService) {
     this.route.params.subscribe(params => {
       this.systemName = params['name'];
     });
     this.system = loadSystemService.getSystem(this.systemName);
+    this.latestRequests = assistanceRequestsService.latestRequests;
+    this.requests = assistanceRequestsService.requests;
+    if(this.latestRequests.length > 0) {
+      this.isChat = true;
+    }
   }
 
   openDialog(): void {
@@ -46,8 +55,23 @@ export class SystemOverviewComponent {
     }
   }
 
+  openDialogOrGoTo(src: string): void {
+    if(this.system.status === 'Incomplete') {
+      this.dialog.open(IncompleteDialogComponent, {
+        width: '250px'
+      });
+    }
+    else {
+      this.router.navigate([src])
+    }
+  }  
+
   modifySystem(name: string) {
-    this.router.navigate(['/sy'])
+    this.router.navigate(['/newSystem'])
+  }
+
+  goTo(request: AssistanceRequest) {
+    this.router.navigate(['/assistanceRequest', request])
   }
 
 

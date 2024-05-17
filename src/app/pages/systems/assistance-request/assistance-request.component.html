@@ -1,0 +1,37 @@
+<div class="container">
+    <div class="row justify-content-center p-2">
+        <div class="col-8">
+            <div class="card">
+                <div class="card-header orangeBg" style="font-weight: bold;">
+                    {{request?.title}}
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 mt-1">
+                            <span style="font-weight: bold;">Description of the problem: </span><br>
+                            <div class="p-1">
+                                {{request?.problemDescription}}
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-lg-4 mt-1">
+                            <span style="font-weight: bold;">Date of submission: </span><br>
+                            <div class="p-1">
+                                {{request?.date?.getDate()}}-{{request?.date?.getMonth()}}-{{request?.date?.getFullYear()}}
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-lg-4 mt-1">
+                            <span style="font-weight: bold;">Status: </span><br>
+                            <div class="p-1">
+                                {{request?.status}}
+                            </div>
+                        </div>
+                        <div class="col-12 mt-1">
+                            <span style="font-weight: bold;">System Info: </span><br>
+                            PUT SYSTEM INFO HERE
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

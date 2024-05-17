@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { LoadSystemsService } from '../../../../services/load-systems.service';
-import { SystemInfo } from '../../interfaces/system-info';
+import { SystemInfo } from '../../interfaces/full-system-interface';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
