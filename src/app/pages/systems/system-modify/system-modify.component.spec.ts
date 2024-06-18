@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BatterySystemComponent } from './battery-system.component';
+import { SystemModifyComponent } from './system-modify.component';
 
-describe('BatterySystemComponent', () => {
-  let component: BatterySystemComponent;
-  let fixture: ComponentFixture<BatterySystemComponent>;
+describe('SystemModifyComponent', () => {
+  let component: SystemModifyComponent;
+  let fixture: ComponentFixture<SystemModifyComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BatterySystemComponent]
+      imports: [SystemModifyComponent]
     })
     .compileComponents();
-    
-    fixture = TestBed.createComponent(BatterySystemComponent);
+
+    fixture = TestBed.createComponent(SystemModifyComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

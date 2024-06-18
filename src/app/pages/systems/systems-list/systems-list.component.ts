@@ -7,7 +7,7 @@ import { LoadSystemsService } from '../../../services/load-systems.service';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-battery-system',
+  selector: 'app-systems-list',
   standalone: true,
   imports: [
     CommonModule,
@@ -15,10 +15,10 @@ import { FormsModule } from '@angular/forms';
     SystemCardComponent,
     FormsModule
   ],
-  templateUrl: './battery-system.component.html',
-  styleUrl: './battery-system.component.scss'
+  templateUrl: './systems-list.component.html',
+  styleUrl: './systems-list.component.scss'
 })
-export class BatterySystemComponent {
+export class SystemsListComponent {
 searchText: any;
 
   constructor(private router: Router, public loadSystemService: LoadSystemsService) {}

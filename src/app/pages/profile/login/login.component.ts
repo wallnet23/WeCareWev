@@ -4,7 +4,6 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { Router, RouterModule } from '@angular/router';
 import { IpInfoConnectService } from '../../../services/ip-info-connect.service';
 import { ConnectServerService } from '../../../services/connect-server.service';
-import { Connect } from '../../../classes/connect';
 import { AuthService } from '../../../services/auth.service';
 
 @Component({
@@ -31,7 +30,7 @@ export class LoginComponent {
   })
 
   constructor(private router: Router, private ipInfoConnectService: IpInfoConnectService,
-    private connectServerService: ConnectServerService, private authService: AuthService) { }
+     private authService: AuthService) { }
 
   async login() {
 

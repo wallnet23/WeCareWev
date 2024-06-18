@@ -7,7 +7,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-system-name',
+  selector: 'app-system-new',
   standalone: true,
   imports: [
     CommonModule,
@@ -16,10 +16,10 @@ import { Router } from '@angular/router';
     ReactiveFormsModule,
     FormsModule,
   ],
-  templateUrl: './system-name.component.html',
-  styleUrl: './system-name.component.scss'
+  templateUrl: './system-new.component.html',
+  styleUrl: './system-new.component.scss'
 })
-export class SystemNameComponent {
+export class SystemNewComponent {
 
   isValid: boolean = true;
 
@@ -31,7 +31,7 @@ export class SystemNameComponent {
   constructor(private formBuilder: FormBuilder, private router: Router) {}
 
   send() {
-    //SAVE THE FORM 
+    //SAVE THE FORM
     this.router.navigate(['/systemOverview', this.systemInfoFormGroup.get('name')?.value]);
   }
 }

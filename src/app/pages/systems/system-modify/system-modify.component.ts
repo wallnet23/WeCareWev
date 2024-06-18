@@ -14,9 +14,9 @@ import { ActivatedRoute } from '@angular/router';
 import { AdditionalInfoComponent } from '../components/additional-info/additional-info.component';
 
 @Component({
-  selector: 'app-modify-system',
-  templateUrl: './modify-system.component.html',
-  styleUrl: './modify-system.component.scss',
+  selector: 'app-system-modify',
+  templateUrl: './system-modify.component.html',
+  styleUrl: './system-modify.component.scss',
   standalone: true,
   providers: [
     {
@@ -39,7 +39,7 @@ import { AdditionalInfoComponent } from '../components/additional-info/additiona
     AdditionalInfoComponent,
   ],
 })
-export class ModifySystemComponent {
+export class SystemModifyComponent {
 
   isValid: boolean = true;
   incomplete: boolean = true;

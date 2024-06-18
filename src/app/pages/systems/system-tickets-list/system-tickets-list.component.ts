@@ -6,15 +6,15 @@ import { Inverter } from '../interfaces/inverter';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-assistance-request-list',
+  selector: 'app-system-tickets-list',
   standalone: true,
   imports: [
     CommonModule
   ],
-  templateUrl: './assistance-request-list.component.html',
-  styleUrl: './assistance-request-list.component.scss'
+  templateUrl: './system-tickets-list.component.html',
+  styleUrl: './system-tickets-list.component.scss'
 })
-export class AssistanceRequestListComponent {
+export class SystemTicketsListComponent {
 
   requests: AssistanceRequest[] = [];
   hasInverterProblem: boolean[] = [];

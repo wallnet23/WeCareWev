@@ -4,7 +4,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { Router, RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-modify-password',
+  selector: 'app-sendemail-modify-password',
   standalone: true,
   imports: [
     FormsModule,
@@ -12,10 +12,10 @@ import { Router, RouterModule } from '@angular/router';
     ReactiveFormsModule,
     RouterModule,
   ],
-  templateUrl: './modify-password.component.html',
-  styleUrl: './modify-password.component.scss'
+  templateUrl: './sendemail-modify-password.component.html',
+  styleUrl: './sendemail-modify-password.component.scss'
 })
-export class ModifyPasswordComponent {
+export class SendemailModifyPasswordComponent{
 
   isSent: boolean = false;
   validEmail: boolean = true;

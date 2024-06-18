@@ -4,13 +4,13 @@ import { ActivatedRoute } from '@angular/router';
 import { AssistanceRequest } from '../interfaces/assistance-request';
 
 @Component({
-  selector: 'app-assistance-request',
+  selector: 'app-ticket',
   standalone: true,
   imports: [],
-  templateUrl: './assistance-request.component.html',
-  styleUrl: './assistance-request.component.scss'
+  templateUrl: './ticket.component.html',
+  styleUrl: './ticket.component.scss'
 })
-export class AssistanceRequestComponent {
+export class TicketComponent {
 
   id: string | null = null;
   request!: AssistanceRequest | undefined;

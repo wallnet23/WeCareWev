@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Connect } from '../classes/constants';
+import { Connect } from '../classes/connect';
 import { catchError, map, Observable, of } from 'rxjs';
 
 @Injectable({

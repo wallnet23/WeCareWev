@@ -1,32 +1,32 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './pages/profile/login/login.component';
-import { ModifyPasswordComponent } from './pages/profile/modify-password/modify-password.component';
 import { SignupComponent } from './pages/profile/signup/signup.component';
-import { BatterySystemComponent } from './pages/systems/battery-system/battery-system.component';
-import { ModifySystemComponent } from './pages/systems/modify-system/modify-system.component';
 import { SettingsComponent } from './pages/profile/settings/settings.component';
-import { SystemNameComponent } from './pages/systems/system-name/system-name.component';
 import { SystemOverviewComponent } from './pages/systems/system-overview/system-overview.component';
 import { NewPasswordComponent } from './pages/profile/new-password/new-password.component';
-import { AssistanceRequestListComponent } from './pages/systems/assistance-request-list/assistance-request-list.component';
-import { AssistanceRequestComponent } from './pages/systems/assistance-request/assistance-request.component';
-import { TicketsComponent } from './pages/systems/tickets/tickets.component';
 import { authGuard } from './guards/auth.guard';
 import { DeniedAccessComponent } from './pages/denied-access/denied-access.component';
+import { SendemailModifyPasswordComponent } from './pages/profile/sendemail-modify-password/sendemail-modify-password.component';
+import { TicketsListComponent } from './pages/systems/tickets-list/tickets-list.component';
+import { SystemNewComponent } from './pages/systems/system-new/system-new.component';
+import { TicketComponent } from './pages/systems/ticket/ticket.component';
+import { SystemTicketsListComponent } from './pages/systems/system-tickets-list/system-tickets-list.component';
+import { SystemModifyComponent } from './pages/systems/system-modify/system-modify.component';
+import { SystemsListComponent } from './pages/systems/systems-list/systems-list.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full'},
     { path: 'login', component: LoginComponent },
-    { path: 'modifyPassword', component: ModifyPasswordComponent, canActivate: [authGuard]},
+    { path: 'sendemailModifyPassword', component: SendemailModifyPasswordComponent, canActivate: [authGuard]},
     { path: 'signup', component: SignupComponent },
-    { path: 'batterySystem', component: BatterySystemComponent },
-    { path: 'modifySystem/:name', component: ModifySystemComponent },
+    { path: 'systemsList', component: SystemsListComponent },
+    { path: 'systemModify/:id', component: SystemModifyComponent },
     { path: 'profile/settings', component: SettingsComponent },
-    { path: 'newSystem', component: SystemNameComponent },
-    { path: 'systemOverview/:name', component: SystemOverviewComponent },
+    { path: 'newSystem', component: SystemNewComponent },
+    { path: 'systemOverview/:id', component: SystemOverviewComponent },
     { path: 'newPassword', component: NewPasswordComponent },
-    { path: 'assistanceRequestList', component: AssistanceRequestListComponent },
-    { path: 'assistanceRequest/:id', component: AssistanceRequestComponent },
-    { path: 'ticketsList', component: TicketsComponent },
+    { path: 'systemTicketsList/:id', component: SystemTicketsListComponent },
+    { path: 'ticket/:id', component: TicketComponent },
+    { path: 'ticketsList', component: TicketsListComponent },
     { path: 'deniedAccess', component:  DeniedAccessComponent},
 ];

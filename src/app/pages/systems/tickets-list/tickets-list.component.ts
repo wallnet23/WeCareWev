@@ -4,15 +4,15 @@ import { TicketService } from '../../../services/ticket.service';
 import { Ticket } from '../interfaces/ticket';
 
 @Component({
-  selector: 'app-tickets',
+  selector: 'app-tickets-list',
   standalone: true,
   imports: [
     CommonModule,
   ],
-  templateUrl: './tickets.component.html',
-  styleUrl: './tickets.component.scss'
+  templateUrl: './tickets-list.component.html',
+  styleUrl: './tickets-list.component.scss'
 })
-export class TicketsComponent {
+export class TicketsListComponent {
 
   tickets: Ticket[] = []
 
