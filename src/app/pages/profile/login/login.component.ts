@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { IpInfoConnectService } from '../../../services/ip-info-connect.service';
+import { ConnectServerService } from '../../../services/connect-server.service';
+import { Connect } from '../../../classes/connect';
 
 @Component({
   selector: 'app-login',
@@ -27,7 +29,8 @@ export class LoginComponent {
     password: new FormControl('', Validators.required),
   })
 
-  constructor(private router: Router, private ipInfoConnectService: IpInfoConnectService) { }
+  constructor(private router: Router, private ipInfoConnectService: IpInfoConnectService, 
+    private connectServerService: ConnectServerService) { }
 
   login() {
     //console.log("email: ", this.loginForm.get('email')?.value);
@@ -35,12 +38,10 @@ export class LoginComponent {
     this.ipInfoConnectService.getLanguage().subscribe((val) => { console.log(val) });
     const email = this.loginForm.get('email')?.value;
     const password = this.loginForm.get('password')?.value;
-    if (email === 'paolo@gmail.com' && password === "123") {
-      this.router.navigate(['/batterySystem']);
-    }
-    else {
-      this.valid = false;
-    }
+    this.connectServerService.postRequest(Connect.urlServerLaraApi, 'login', {}).
+    subscribe((val: any) => {
+      console.log(val);
+    })
   }
 
   seePassword() {

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Constants } from '../classes/constants';
+import { Connect } from '../classes/connect';
 import { catchError, map, Observable, of } from 'rxjs';
 
 @Injectable({
@@ -8,7 +8,7 @@ import { catchError, map, Observable, of } from 'rxjs';
 })
 export class IpInfoConnectService {
 
-  apiUrl = `${Constants.IPINFO_URL}?token=${Constants.IPINFO_API_TOKEN}`;
+  apiUrl = `${Connect.IPINFO_URL}?token=${Connect.IPINFO_API_TOKEN}`;
   constructor(private http: HttpClient) { }
 
   getLanguage(): Observable<string> {

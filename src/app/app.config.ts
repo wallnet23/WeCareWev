@@ -8,7 +8,7 @@ import { environment } from '../environments/environment';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes), provideAnimations(), provideHttpClient(),
-    { provide: RECAPTCHA_V3_SITE_KEY, useValue: environment.apiUrl },
+    { provide: RECAPTCHA_V3_SITE_KEY, useValue: environment.recaptcha.apiUrl },
     {
       provide: RECAPTCHA_SETTINGS,
       useValue: {
