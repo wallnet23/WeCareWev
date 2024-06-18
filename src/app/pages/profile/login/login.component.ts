@@ -5,6 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 import { IpInfoConnectService } from '../../../services/ip-info-connect.service';
 import { ConnectServerService } from '../../../services/connect-server.service';
 import { Connect } from '../../../classes/connect';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -30,20 +31,23 @@ export class LoginComponent {
   })
 
   constructor(private router: Router, private ipInfoConnectService: IpInfoConnectService,
-    private connectServerService: ConnectServerService) { }
+    private connectServerService: ConnectServerService, private authService: AuthService) { }
 
-  login() {
-    //console.log("email: ", this.loginForm.get('email')?.value);
-    //console.log("password: ", this.loginForm.get('password')?.value);
-    this.ipInfoConnectService.getLanguage().subscribe((val) => { 
-      //console.log(val) 
+  async login() {
+
+    this.ipInfoConnectService.getLanguage().subscribe((val) => {
+      //console.log(val)
     });
-    const email = this.loginForm.get('email')?.value;
-    const password = this.loginForm.get('password')?.value;
-    this.connectServerService.postRequest(Connect.urlServerLaraApi, 'login', {email: email, password: password}).
-    subscribe((val: any) => {
-      console.log(val);
-    })
+    // try {
+    await this.authService.loginUser(
+      this.loginForm.get('email')?.value!,
+      this.loginForm.get('password')?.value!);
+    if (this.authService.getToken() != null) {
+      this.router.navigate(['/batterySystem']);
+    }
+    // } catch (error) {
+    //   console.error('Login failed', error);
+    // }
   }
 
   seePassword() {

@@ -4,6 +4,7 @@ import { ConnectServerService } from './connect-server.service';
 import { Connect } from '../classes/connect'
 import { Router } from '@angular/router';
 import { User } from '../pages/profile/interfaces/user';
+import { ApiResponse } from '../interfaces/api-response';
 
 @Injectable({
   providedIn: 'root'
@@ -15,15 +16,6 @@ export class AuthService {
     return this.userSubject.asObservable();
   }
 
-  private menuSubject = new Subject<string>();
-  getInfoMenu(): Observable<string> {
-    // console.log('ricevi menu');
-    return this.menuSubject.asObservable();
-  }
-  setInfoMenu() {
-    // console.log('invia menu');
-    this.menuSubject.next('load');
-  }
   authorization: string = 'none';
 
   constructor(private connectServerService: ConnectServerService, private router: Router) {
@@ -45,20 +37,17 @@ export class AuthService {
   }
 
   async loginUser(email_value: string, password_value: string) {
-    const esito = await lastValueFrom(
-      this.connectServerService.postRequest(Connect.urlServerLaraApi, 'login', {
+    const esito: ApiResponse<{authorization: {token: string; type: string;}}> = await lastValueFrom(
+      this.connectServerService.postRequest<ApiResponse<{authorization: {token: string; type: string;}}>>(Connect.urlServerLaraApi, 'login', {
         email: email_value,
         password: password_value,
       })
     );
-    // console.log('esito', esito);
-    if (esito && esito.access_token) {
-      this.setToken(esito.access_token);
+
+    //console.log('esito', esito);
+    if (esito && esito.data && esito.data.authorization) {
+      this.setToken(esito.data.authorization.token);
       this.setLoginIn('ok');
-      this.getUser();
-      this.setInfoMenu();
-      //this.urlService.setInfoCurrenPage('home');
-      // console.log('Token:', this.getToken());
     }
   }
 
@@ -68,9 +57,8 @@ export class AuthService {
         // console.log('logout', esito);
         this.removeLocalAuth();
         this.userSubject.next(null);
-        this.setInfoMenu();
         //this.urlService.setInfoCurrenPage('home');
-        this.router.navigate(['home']);
+        this.router.navigate(['login']);
       }
     );
   }
@@ -102,11 +90,11 @@ export class AuthService {
   }
 
   private setLoginIn(val: string) {
-    localStorage.setItem('logAuthW', val);
+    localStorage.setItem('loggedW', val);
   }
 
   private removeLoginIn() {
-    localStorage.removeItem('logAuthW');
+    localStorage.removeItem('loggedW');
   }
 
   private removeToken() {

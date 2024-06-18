@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ViewportRuler } from '@angular/cdk/scrolling';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -21,8 +22,10 @@ export class NavbarComponent {
   isToggle: boolean = false;
   currentPage: string = '';
 
-  constructor(private currentPageService: CurrentPageService, private router: Router, private viewportRuler: ViewportRuler) {
-    this.currentPageService.currentUrl$.subscribe(url => {
+  constructor(private currentPageService: CurrentPageService,
+    private viewportRuler: ViewportRuler, private authService: AuthService) {
+
+      this.currentPageService.currentUrl$.subscribe(url => {
       this.currentPage = "/" + url.split('/')[1];
     });
     this.checkWindowSize();
@@ -34,7 +37,7 @@ export class NavbarComponent {
 
   logout() {
     //Esegui il logout
-    this.router.navigate(['/login']);
+    this.authService.logoutUser();
   }
 
   @HostListener('window:resize', ['$event'])

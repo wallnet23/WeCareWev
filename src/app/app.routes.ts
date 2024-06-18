@@ -10,19 +10,22 @@ import { SystemOverviewComponent } from './pages/systems/system-overview/system-
 import { NewPasswordComponent } from './pages/profile/new-password/new-password.component';
 import { AssistanceRequestListComponent } from './pages/systems/assistance-request-list/assistance-request-list.component';
 import { AssistanceRequestComponent } from './pages/systems/assistance-request/assistance-request.component';
+import { DeniedAccessComponent } from './pages/denied-access/denied-access.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full'},
     { path: 'login', component: LoginComponent },
-    { path: 'modifyPassword', component: ModifyPasswordComponent },
+    { path: 'modifyPassword', component: ModifyPasswordComponent, canActivate: [authGuard]},
     { path: 'signup', component: SignupComponent },
-    { path: 'batterySystem', component: BatterySystemComponent },
-    { path: 'newSystem', component: ModifySystemComponent },
-    { path: 'newSystem/:name', component: ModifySystemComponent },
-    { path: 'profile/settings', component: SettingsComponent },
-    { path: 'systemName', component: SystemNameComponent },
-    { path: 'systemOverview/:name', component: SystemOverviewComponent },
-    { path: 'newPassword', component: NewPasswordComponent },
-    { path: 'assistanceRequestList', component: AssistanceRequestListComponent },
-    { path: 'assistanceRequest/:id', component: AssistanceRequestComponent },
+    { path: 'batterySystem', component: BatterySystemComponent , canActivate: [authGuard]},
+    { path: 'newSystem', component: ModifySystemComponent , canActivate: [authGuard]},
+    { path: 'newSystem/:name', component: ModifySystemComponent, canActivate: [authGuard] },
+    { path: 'profile/settings', component: SettingsComponent, canActivate: [authGuard] },
+    { path: 'systemName', component: SystemNameComponent, canActivate: [authGuard] },
+    { path: 'systemOverview/:name', component: SystemOverviewComponent , canActivate: [authGuard]},
+    { path: 'newPassword', component: NewPasswordComponent , canActivate: [authGuard]},
+    { path: 'assistanceRequestList', component: AssistanceRequestListComponent , canActivate: [authGuard]},
+    { path: 'assistanceRequest/:id', component: AssistanceRequestComponent , canActivate: [authGuard]},
+    { path: 'deniedAccess', component:  DeniedAccessComponent},
 ];
