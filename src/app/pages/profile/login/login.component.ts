@@ -35,10 +35,12 @@ export class LoginComponent {
   login() {
     //console.log("email: ", this.loginForm.get('email')?.value);
     //console.log("password: ", this.loginForm.get('password')?.value);
-    this.ipInfoConnectService.getLanguage().subscribe((val) => { console.log(val) });
+    this.ipInfoConnectService.getLanguage().subscribe((val) => { 
+      //console.log(val) 
+    });
     const email = this.loginForm.get('email')?.value;
     const password = this.loginForm.get('password')?.value;
-    this.connectServerService.postRequest(Connect.urlServerLaraApi, 'login', {}).
+    this.connectServerService.postRequest(Connect.urlServerLaraApi, 'login', {email: email, password: password}).
     subscribe((val: any) => {
       console.log(val);
     })
