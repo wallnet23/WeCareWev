@@ -42,7 +42,7 @@ export class LoginComponent {
       this.loginForm.get('email')?.value!,
       this.loginForm.get('password')?.value!);
     if (this.authService.getToken() != null) {
-      this.router.navigate(['/batterySystem']);
+      this.router.navigate(['/systemsList']);
     }
     // } catch (error) {
     //   console.error('Login failed', error);

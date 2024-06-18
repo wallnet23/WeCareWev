@@ -29,4 +29,5 @@ export const routes: Routes = [
     { path: 'ticket/:id', component: TicketComponent, canActivate: [authGuard] },
     { path: 'ticketsList', component: TicketsListComponent, canActivate: [authGuard] },
     { path: 'deniedAccess', component:  DeniedAccessComponent},
+    { path: '**', redirectTo: 'systemsList'}
 ];

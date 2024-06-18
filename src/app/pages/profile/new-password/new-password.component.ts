@@ -40,7 +40,7 @@ export class NewPasswordComponent {
         this.equalPassword = true;
         this.validPassword = true;
         this.errorMessage = false;
-        this.router.navigate(['batterySystem'])
+        this.router.navigate(['systemsList'])
       }
       else {
         this.equalPassword = false;
