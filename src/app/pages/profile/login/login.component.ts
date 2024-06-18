@@ -4,7 +4,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { Router, RouterModule } from '@angular/router';
 import { IpInfoConnectService } from '../../../services/ip-info-connect.service';
 import { ConnectServerService } from '../../../services/connect-server.service';
-import { Connect } from '../../../classes/connect';
+import { Connect } from '../../../classes/constants';
 
 @Component({
   selector: 'app-login',

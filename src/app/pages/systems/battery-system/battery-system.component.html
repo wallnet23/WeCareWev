@@ -1,9 +1,10 @@
 <div class="container p-2">
     <div class="row justify-content-center align-items-center">
         <div class="col-12 col-md-8 col-lg-6 text-center">
-            <div class="input p-2">
-                <label class="searchLabel">SEARCH SYSTEM</label>
-                <input [(ngModel)]="searchText" (input)="loadSystemService.filterSystems(searchText)" type="text" class="form-control searchBar mt-2" placeholder="Name of the system">
+            <label class="searchLabel">SEARCH SYSTEM</label>
+            <div class="input p-2 input-group">
+                <input [(ngModel)]="searchText" (input)="loadSystemService.filterSystems(searchText)" type="text" class="form-control searchBar" placeholder="Name of the system">
+                <button class="btn btn-dark">Cerca</button>
             </div>
         </div>
         <div class="col-12">

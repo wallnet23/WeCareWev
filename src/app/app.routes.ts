@@ -10,6 +10,7 @@ import { SystemOverviewComponent } from './pages/systems/system-overview/system-
 import { NewPasswordComponent } from './pages/profile/new-password/new-password.component';
 import { AssistanceRequestListComponent } from './pages/systems/assistance-request-list/assistance-request-list.component';
 import { AssistanceRequestComponent } from './pages/systems/assistance-request/assistance-request.component';
+import { TicketsComponent } from './pages/systems/tickets/tickets.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -17,12 +18,12 @@ export const routes: Routes = [
     { path: 'modifyPassword', component: ModifyPasswordComponent },
     { path: 'signup', component: SignupComponent },
     { path: 'batterySystem', component: BatterySystemComponent },
-    { path: 'newSystem', component: ModifySystemComponent },
-    { path: 'newSystem/:name', component: ModifySystemComponent },
+    { path: 'modifySystem/:name', component: ModifySystemComponent },
     { path: 'profile/settings', component: SettingsComponent },
-    { path: 'systemName', component: SystemNameComponent },
+    { path: 'newSystem', component: SystemNameComponent },
     { path: 'systemOverview/:name', component: SystemOverviewComponent },
     { path: 'newPassword', component: NewPasswordComponent },
     { path: 'assistanceRequestList', component: AssistanceRequestListComponent },
     { path: 'assistanceRequest/:id', component: AssistanceRequestComponent },
+    { path: 'ticketsList', component: TicketsComponent }
 ];
