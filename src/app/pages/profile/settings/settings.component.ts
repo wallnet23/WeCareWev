@@ -27,6 +27,13 @@ interface Country {
 })
 export class SettingsComponent {
 
+  type1: string = 'password'
+  type2: string = 'password'
+  type3: string = 'password'
+  toggled1: boolean = true;
+  toggled2: boolean = true;
+  toggled3: boolean = true;
+  
   isItalian: boolean = false;
   countriesData: Country[] = [];
   
@@ -73,6 +80,39 @@ export class SettingsComponent {
     } else {
       this.isItalian = false;
       this.signupForm.patchValue({partitaIva: 'none', licenseNumber: ''});
+    }
+  }
+
+  seePassword(id: string) {
+    if(id === 'password1') {
+      if(this.type1 === 'password') {
+        this.type1 = 'text';
+        this.toggled1 = false;
+      }
+      else {
+        this.type1 = 'password';
+        this.toggled1 = true;
+      }
+    }
+    else if (id === 'password2') {
+      if(this.type2 === 'password') {
+        this.type2 = 'text';
+        this.toggled2 = false;
+      }
+      else {
+        this.type2 = 'password';
+        this.toggled2 = true;
+      }
+    }
+    else {
+      if(this.type3 === 'password') {
+        this.type3 = 'text';
+        this.toggled3 = false;
+      }
+      else {
+        this.type3 = 'password';
+        this.toggled3 = true;
+      }
     }
   }
 }

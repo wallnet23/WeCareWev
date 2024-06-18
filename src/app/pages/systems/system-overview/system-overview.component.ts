@@ -66,13 +66,12 @@ export class SystemOverviewComponent {
     }
   }  
 
-  modifySystem(name: string) {
-    this.router.navigate(['/newSystem'])
+  modifySystem() {
+    this.router.navigate(['/newSystem', this.systemName])
   }
 
   goTo(request: AssistanceRequest) {
     this.router.navigate(['/assistanceRequest', request])
   }
-
 
 }

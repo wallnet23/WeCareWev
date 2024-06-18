@@ -31,4 +31,30 @@
 .switcher-label {
     margin-left: 10px;
 }
-  
+
+.input-container {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.input-container .form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.input-container .form-control {
+    padding-right: 2.5rem;
+    width: 100%; 
+}
+
+.input-container .icon {
+    position: absolute;
+    right: 10px;
+    top: 74%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    z-index: 2; /* Assicura che l'icona sia sopra l'input */
+}
+
+
+

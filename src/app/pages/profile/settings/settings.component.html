@@ -48,17 +48,23 @@
                         aria-labelledby="changePasswordList">
                         <div class="card-body pb-2">
                             <form [formGroup]="modifyPasswordForm" style="margin: 0 auto">
-                                <div class="form-group">
+                                <div class="form-group input-container">
                                     <label for="password" class="form-label section">Current password</label>
-                                    <input type="password" name="password" formControlName="password" class="form-control">
+                                    <input [type]="type1" id="password1" name="password" formControlName="password" class="form-control">
+                                    <i class="bi bi-eye icon" [ngClass]="{'bi-eye': !toggled1, 'bi-eye-slash': toggled1}"
+                                            id="togglePassword" (click)="seePassword('password1')"></i>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group input-container">
                                     <label for="newPassword" class="form-label section">New password</label>
-                                    <input type="password" name="newPassword" formControlName="newPassword" class="form-control">
+                                    <input [type]="type2" id="password2" name="newPassword" formControlName="newPassword" class="form-control">
+                                    <i class="bi bi-eye icon" [ngClass]="{'bi-eye': !toggled2, 'bi-eye-slash': toggled2}"
+                                            id="togglePassword" (click)="seePassword('password2')"></i>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group input-container">
                                     <label for="repeatNewPassword" class="form-label section">Repeat new password</label>
-                                    <input type="password" name="repeatNewPassword" formControlName="repeatNewPassword" class="form-control">
+                                    <input [type]="type3" id="password3" name="repeatNewPassword" formControlName="repeatNewPassword" class="form-control">
+                                    <i class="bi bi-eye icon" [ngClass]="{'bi-eye': !toggled3, 'bi-eye-slash': toggled3}"
+                                            id="togglePassword" (click)="seePassword('password3')"></i>
                                 </div>
                             </form>
                         </div>
