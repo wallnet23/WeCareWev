@@ -4,25 +4,6 @@
     display: inline-block;
 }
 
-.fixed-button {
-    position: fixed;
-    top: 80px;
-    right: 50px;
-    z-index: 1000;
-    background-color: #000000;
-    border: none;
-    border-radius: 50%;
-    width: 53px;
-    height: 53px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    font-size: 24px;
-    cursor: pointer;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
-
 .fixed-button:hover {
     background-color: #4d4949;
     /* Colore di sfondo del pulsante al passaggio del mouse */
@@ -40,4 +21,15 @@
 .btn:focus {
     box-shadow: none;
     border-color: #000000;
+}
+
+.description {
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tickets:hover {
+    cursor: pointer;
 }

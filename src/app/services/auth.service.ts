@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { lastValueFrom, Observable, Subject, tap } from 'rxjs';
 import { ConnectServerService } from './connect-server.service';
-import { Connect } from '../classes/connect'
+import { Connect } from '../classes/constants'
 import { Router } from '@angular/router';
 import { User } from '../pages/profile/interfaces/user';
 import { ApiResponse } from '../interfaces/api-response';
