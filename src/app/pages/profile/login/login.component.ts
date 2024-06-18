@@ -29,7 +29,7 @@ export class LoginComponent {
     password: new FormControl('', Validators.required),
   })
 
-  constructor(private router: Router, private ipInfoConnectService: IpInfoConnectService, 
+  constructor(private router: Router, private ipInfoConnectService: IpInfoConnectService,
     private connectServerService: ConnectServerService) { }
 
   login() {
