@@ -1,10 +1,10 @@
 import { CanActivateFn, Router } from '@angular/router';
-import { Connect } from '../classes/connect';
 import { ApiResponse } from '../interfaces/api-response';
 import { ConnectServerService } from '../services/connect-server.service';
 import { inject } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { UrlService } from '../services/url.service';
+import { Connect } from '../classes/connect';
 
 export const authGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
@@ -17,19 +17,20 @@ export const authGuard: CanActivateFn = (route, state) => {
   // console.log('url_withparams:', url_withparams);
 
   if (authService.isLoggedIn()) {
-    
+
   return connectServerService.getRequestAsync(Connect.urlServerLaraApi, 'checkPageAccess',
     {
       path: url,
       path_composer: url_withparams
     }).then(
       (esito: ApiResponse<{ accesso_pagina: number }>) => {
-        console.log(esito);
+        // console.log('esito',esito);
         if (esito.data && esito.data.accesso_pagina) {
-          if ((url == '/login' || url == 'signup') && authService.isLoggedIn()) {
-            router.navigate(['systemsList']);
-            return false;
-          }
+          // console.log('url', url);
+          // if ((url == '/login' || url == 'signup') && authService.isLoggedIn()) {
+          //   router.navigate(['systemsList']);
+          //   return false;
+          // }
           //console.log("qui", esito.data.accesso_pagina);
           if (esito.data.accesso_pagina == 1) {
             return true;

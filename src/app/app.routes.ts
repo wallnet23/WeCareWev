@@ -13,12 +13,13 @@ import { TicketComponent } from './pages/systems/ticket/ticket.component';
 import { SystemTicketsListComponent } from './pages/systems/system-tickets-list/system-tickets-list.component';
 import { SystemModifyComponent } from './pages/systems/system-modify/system-modify.component';
 import { SystemsListComponent } from './pages/systems/systems-list/systems-list.component';
+import { loginSignupGuard } from './guards/login-signup.guard';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full'},
-    { path: 'login', component: LoginComponent },
+    { path: 'login', component: LoginComponent , canActivate: [loginSignupGuard]},
     { path: 'sendemailModifyPassword', component: SendemailModifyPasswordComponent, canActivate: [authGuard]},
-    { path: 'signup', component: SignupComponent },
+    { path: 'signup', component: SignupComponent, canActivate: [loginSignupGuard]},
     { path: 'systemsList', component: SystemsListComponent, canActivate: [authGuard]},
     { path: 'systemModify/:id', component: SystemModifyComponent, canActivate: [authGuard] },
     { path: 'profile/settings', component: SettingsComponent, canActivate: [authGuard] },

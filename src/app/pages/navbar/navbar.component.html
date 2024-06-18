@@ -9,13 +9,13 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item d-flex align-items-center mb-1 mr-5" [ngClass]="{'ml-3': isToggle}">
                     <a class="nav-link" href="/systemsList"
-                        [ngStyle]="{'border-bottom': isCurrentPage('/system') ? '2px solid #FF0000' : 'none'}">
+                        [ngStyle]="{'border-bottom': isCurrentPage('/systemsList') ? '2px solid #FF0000' : 'none'}">
                         Systems
                     </a>
                 </li>
                 <li class="nav-item d-flex align-items-center mb-1 mr-5" [ngClass]="{'ml-3': isToggle}">
-                    <a class="nav-link" href="/ticketList"
-                        [ngStyle]="{'border-bottom': isCurrentPage('/system') ? '2px solid #FF0000' : 'none'}">
+                    <a class="nav-link" href="/ticketsList"
+                        [ngStyle]="{'border-bottom': isCurrentPage('/ticketsList') ? '2px solid #FF0000' : 'none'}">
                         Tickets
                     </a>
                 </li>
@@ -36,7 +36,7 @@
                             </li>
                         </ul>
                     </div>
-                </li> 
+                </li>
                 <li *ngIf="isToggle" class="nav-item d-flex align-items-center mb-1 ml-3">
                     <a class="nav-link" href="/profile/settings"
                         [ngStyle]="{'border-bottom': isCurrentPage('/profile') ? '2px solid #FF0000' : 'none'}">
