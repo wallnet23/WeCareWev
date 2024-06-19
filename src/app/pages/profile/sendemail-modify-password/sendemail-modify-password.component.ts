@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-sendemail-modify-password',
@@ -11,6 +12,7 @@ import { Router, RouterModule } from '@angular/router';
     CommonModule,
     ReactiveFormsModule,
     RouterModule,
+    TranslateModule,
   ],
   templateUrl: './sendemail-modify-password.component.html',
   styleUrl: './sendemail-modify-password.component.scss'

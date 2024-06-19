@@ -1,0 +1,57 @@
+<div class="container-fluid p-1 p-sm-2 p-lg-3 p-xxl-4 mt-4">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-12 text-center">
+            <span class="title">{{"NEWTICKET.NEWTICKET" | translate}}</span>
+        </div>
+    </div>
+    <form [formGroup]="ticketForm">
+        <div class="form-group row justify-content-center align-items-center p-1 p-sm-2 p-lg-4">
+            <div class="col-12 col-lg-10 mb-4">
+                <label class="formLabel" for="title">{{"NEWTICKET.TITLE" | translate}}</label>
+                <input class="form-control" type="text" id="title" formControlName="title" required>
+            </div>
+            <div class="col-12 col-md-6 col-lg-5 mb-4">
+                <label class="formLabel" for="date_ticket">{{"NEWTICKET.DATE" | translate}}</label>
+                <input type="date" id="date_ticket" formControlName="date_ticket" class="form-control" required>
+            </div>
+            <div class="col-12 col-md-6 col-lg-5 mb-4">
+                <label class="formLabel" for="idsystem">{{"NEWTICKET.RELATEDSYS" | translate}}</label>
+                <select type="select" id="idsystem" formControlName="idsystem" class="form-select">
+                    <option selected>{{"NEWTICKET.NONE" | translate}}</option>
+                    <option *ngFor="let system of systems">{{system.systemName}}</option>
+                </select>
+            </div>
+            <div class="col-12 col-lg-10 mb-4">
+                <label class="formLabel" for="description">{{"NEWTICKET.DESCRIPTION" | translate}}</label>
+                <textarea class="form-control" type="text" id="description" formControlName="description" rows="3"
+                    placeholder="Detailed info about the ticket"></textarea>
+            </div>
+            <div class="col-12 p-2 text-center" style="border-bottom: 1px solid lightgray; max-width: 900px;">
+                <div class="row justify-content-center mt-2">
+                    <div *ngFor="let image of images; let i = index"
+                        class="col-xs-12 col-sm-6 col-md-2 mb-4 text-center" style="width: 100px; height: 100px;">
+                        <img [src]="image" class="img-fluid thumbnailImg">
+                        <i class="bi bi-trash trash" (click)="deleteImg(i)"></i>
+                    </div>
+                </div>
+                <div class="row justify-content-center mb-3">
+                    <div class="col-12 col-sm-6 col-md-4 text-center">
+                        <label *ngIf="!imageSpaceLeft" class="text-danger">{{"NEWTICKET.IMPORTIMG" | translate}}</label>
+                        <label style="font-size: small;">{{"NEWTICKET.ATTACHMENT" | translate}}</label><br>
+                        <label *ngIf="images.length < maxImages" class="btn btn-outline-dark" for="fileUpload">
+                            <i class="bi bi-upload" style="margin-right: 4px;"></i>
+                            {{"NEWTICKET.IMPORT" | translate}}
+                            <input type="file" id="fileUpload" style="display: none;" (change)="onFileSelected($event)"
+                                accept="image/*" multiple>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 text-center mt-3">
+                <button class="btn btn-dark" (click)="submitTicket()" [disabled]="ticketForm.invalid">
+                    {{"NEWTICKET.SUBMIT" | translate}}
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

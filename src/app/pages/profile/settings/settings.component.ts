@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { map, Observable } from 'rxjs';
 
 interface Country {
@@ -21,6 +22,7 @@ interface Country {
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    TranslateModule
   ],
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.scss'

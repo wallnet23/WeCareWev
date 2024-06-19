@@ -6,9 +6,9 @@ import { LoadSystemsService } from '../../../services/load-systems.service';
 import { SystemInfo } from '../interfaces/full-system-interface';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { IncompleteDialogComponent } from '../components/incomplete-dialog/incomplete-dialog.component';
 import { AssistanceRequestsService } from '../../../services/assistance-requests.service';
 import { AssistanceRequest } from '../interfaces/assistance-request';
+import { ConnectServerService } from '../../../services/connect-server.service';
 
 @Component({
   selector: 'app-system-overview',
@@ -24,7 +24,7 @@ import { AssistanceRequest } from '../interfaces/assistance-request';
 })
 export class SystemOverviewComponent {
 
-  requests: AssistanceRequest[] = [];
+  ticketsList: AssistanceRequest[] = [];
   latestRequests: AssistanceRequest[] = [];
   warrantyExtensionStatus: string = 'Not Requested';
   isWarrantyRequest: boolean = false;
@@ -35,43 +35,40 @@ export class SystemOverviewComponent {
   system: SystemInfo;
 
   constructor(private loadSystemService: LoadSystemsService, private route: ActivatedRoute,
-    public dialog: MatDialog, private router: Router, private assistanceRequestsService: AssistanceRequestsService) {
+    public dialog: MatDialog, private router: Router, private assistanceRequestsService: AssistanceRequestsService,
+    private connectServerService: ConnectServerService) {
     this.route.params.subscribe(params => {
-      this.systemName = params['name'];
+      this.systemName = params['id'];
     });
     this.system = loadSystemService.getSystem(this.systemName);
     this.latestRequests = assistanceRequestsService.latestRequests;
-    this.requests = assistanceRequestsService.requests;
-    if(this.latestRequests.length > 0) {
+    this.ticketsList = assistanceRequestsService.requests;
+    if (this.latestRequests.length > 0) {
       this.isChat = true;
     }
   }
 
-  openDialog(): void {
-    if (this.system.status === 'Incomplete') {
-      this.dialog.open(IncompleteDialogComponent, {
-        width: '250px'
-      });
-    }
+  ticketsListSystem() {
+    this.router.navigate(['/systemTicketsList', 1]);
+  }
+  newTicket() {
+    this.router.navigate(['/newTicket']);
   }
 
-  openDialogOrGoTo(src: string): void {
-    if(this.system.status === 'Incomplete') {
-      this.dialog.open(IncompleteDialogComponent, {
-        width: '250px'
-      });
-    }
-    else {
-      this.router.navigate([src])
-    }
-  }  
+  goToTicket(id: number) {
+    this.router.navigate(['/modifyTicket', id])
+  }
 
   modifySystem() {
-    this.router.navigate(['/newSystem', this.systemName])
+    this.router.navigate(['/systemModify', this.systemName])
   }
 
-  goTo(request: AssistanceRequest) {
-    this.router.navigate(['/assistanceRequest', request])
+  warrantyExtension() {
+    this.router.navigate(['/warrantyExtension'])
   }
+
+  // goTo(request: AssistanceRequest) {
+  //   this.router.navigate(['/assistanceRequest', request])
+  // }
 
 }

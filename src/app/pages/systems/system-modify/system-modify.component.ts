@@ -57,7 +57,7 @@ export class SystemModifyComponent {
 
   constructor(private formBuilder: FormBuilder, private route: ActivatedRoute) {
     this.route.params.subscribe(params => {
-      this.systemName = params['name'];
+      this.systemName = params['id'];
     });
   }
 

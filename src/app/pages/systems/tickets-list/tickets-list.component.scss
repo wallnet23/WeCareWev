@@ -33,3 +33,48 @@
 .tickets:hover {
     cursor: pointer;
 }
+
+.fixed-button {
+    position: fixed;
+    top: 155px;
+    right: 150px;
+    z-index: 1000;
+    background-color: #000000;
+    border: none;
+    border-radius: 50%;
+    width: 53px;
+    height: 53px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+
+    @media(max-width: 1500px) {
+        top: 155px;
+        right: 100px;
+    }
+
+    @media(max-width: 1200px) {
+        top: 155px;
+        right: 50px;
+    }
+
+    @media(max-width: 992px) {
+        top: 125px;
+        right: 50px;
+    }
+
+    @media (max-width: 800px) {
+        left: 20px;
+        top: 60px;
+    }
+    
+}
+
+.fixed-button:hover {
+    background-color: #4d4949;
+    /* Colore di sfondo del pulsante al passaggio del mouse */
+}

@@ -1,4 +1,4 @@
-<nav class="navbar sticky-top navbar-expand-lg">
+<nav class="navbar sticky-top navbar-expand-lg" style="min-width: 350px;">
     <div class="container-fluid">
         <img src="assets/img/logo.png" class="navbarLogo">
         <button class="navbar-toggler custom-toggler mr-2" type="button" data-bs-toggle="collapse"
@@ -10,13 +10,13 @@
                 <li class="nav-item d-flex align-items-center mb-1 mr-5" [ngClass]="{'ml-3': isToggle}">
                     <a class="nav-link" href="/systemsList"
                         [ngStyle]="{'border-bottom': isCurrentPage('/systemsList') ? '2px solid #FF0000' : 'none'}">
-                        Systems {{ 'HELLO' | translate }}
+                        {{'NAVBAR.SYSTEMS' | translate}}
                     </a>
                 </li>
                 <li class="nav-item d-flex align-items-center mb-1 mr-5" [ngClass]="{'ml-3': isToggle}">
                     <a class="nav-link" href="/ticketsList"
                         [ngStyle]="{'border-bottom': isCurrentPage('/ticketsList') ? '2px solid #FF0000' : 'none'}">
-                        Tickets
+                        {{'NAVBAR.TICKETS' | translate}}
                     </a>
                 </li>
                 <li *ngIf="!isToggle" class="nav-item d-flex align-items-center mb-1 mr-5">
@@ -25,14 +25,14 @@
                             [ngStyle]="{'border-bottom': isCurrentPage('/profile') ? '2px solid #FF0000' : 'none'}"
                             id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-person mr-2"></i>
-                            Profile
+                            {{'NAVBAR.PROFILE' | translate}}
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a class="dropdown-item" href="/profile/settings">Settings</a>
+                                <a class="dropdown-item" href="/profile/settings">{{'NAVBAR.SETTINGS' | translate}}</a>
                             </li>
                             <li>
-                                <a class="dropdown-item" (click)="logout()">Logout</a>
+                                <a class="dropdown-item" (click)="logout()">{{'NAVBAR.LOGOUT' | translate}}</a>
                             </li>
                         </ul>
                     </div>
@@ -40,12 +40,12 @@
                 <li *ngIf="isToggle" class="nav-item d-flex align-items-center mb-1 ml-3">
                     <a class="nav-link" href="/profile/settings"
                         [ngStyle]="{'border-bottom': isCurrentPage('/profile') ? '2px solid #FF0000' : 'none'}">
-                        Profile Settings
+                        {{'NAVBAR.PROFILESETTINGS' | translate}}
                     </a>
                 </li>
                 <li *ngIf="isToggle" class="nav-item d-flex align-items-center mb-1 ml-3">
                     <a class="nav-link" (click)="logout()">
-                        Logout
+                        {{'NAVBAR.LOGOUT' | translate}}
                     </a>
                 </li>
             </ul>

@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-new-password',
@@ -9,6 +10,7 @@ import { Router } from '@angular/router';
   imports: [
     ReactiveFormsModule,
     CommonModule,
+    TranslateModule
   ],
   templateUrl: './new-password.component.html',
   styleUrl: './new-password.component.scss'

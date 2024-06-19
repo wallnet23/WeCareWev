@@ -5,7 +5,7 @@
         </div>
     </div>
     <div class="row justify-content-center p-1 p-lg-4">
-        
+
         <div class="col-12 col-md-6 mt-2">
             <div class="card">
                 <h5 class="card-header blueBg">SYSTEM DATA</h5>
@@ -38,13 +38,13 @@
                     </ul>
                 </div>
                 <div class="card-footer blueBg text-center">
-                    <div href="#" class="btn btn-outline-dark btn-light" (click)="modifySystem()">Modify system data</div>
+                    <button class="btn btn-outline-dark btn-light" (click)="modifySystem()">Modify system data</button>
                 </div>
             </div>
         </div>
 
         <div class="col-12 col-md-6 mt-2">
-            <div class="card" (click)="openDialog()">
+            <div class="card">
                 <h5 class="card-header greenBg">WARRANTY EXTENSION</h5>
                 <div class="card-body">
                     <p style="margin-top: 1rem;">
@@ -60,7 +60,8 @@
                     </p>
                 </div>
                 <div class="card-footer greenBg text-center">
-                    <div href="#" class="btn btn-outline-dark btn-light" (click)="openDialog()">New warranty extension</div>
+                    <div href="#" class="btn btn-outline-dark btn-light" (click)="warrantyExtension()">New warranty extension
+                    </div>
                 </div>
             </div>
         </div>
@@ -68,10 +69,10 @@
 
     <div class="row justify-content-center align-items-center mt-2 p-1 p-lg-4">
         <div class="col-12">
-            <div class="card" (click)="openDialog()">
-                <h5 class="card-header orangeBg">ASSISTANCE REQUEST</h5>
+            <div class="card" >
+                <h5 class="card-header orangeBg">TICKETS</h5>
                 <div class="card-body">
-                    <div *ngIf="!isChat">
+                    <!-- <div *ngIf="!isChat">
                         <h5 class="card-title">No requests available</h5>
                         <p class="card-text">Click here to add a new assistance request for one of your systems and chat
                             with Weco technicians to solve
@@ -81,50 +82,51 @@
                         <h5 class="card-title">Number of chats available</h5>
                         <p class="card-text">Click on this card to visualize all of the assistance requests and chats
                             for this system.</p>
-                        <p>
-                        
-                            <span style="font-weight: bold;">Latest Requests:</span>
-                        <ul *ngFor="let request of latestRequests" class="list-unstyled">
-                            <li>
-                                <div class="card" (click)="goTo(request)">
-                                    <div class="card-body">
-                                        <div class="card-text">
-                                            <div class="row justify-content-center">
-                                                <div class="col-12 col-lg-4 text-start">
-                                                    <span style="font-weight: bold;">Title: </span>
-                                                    <span>{{request.title}}</span>
-                                                </div>
-                                                <div class="col-12 col-md-6 col-lg-4 mt-md-4 mt-lg-0 text-center">
-                                                    <span style="font-weight: bold;">Date: </span>
-                                                    <span>{{request.date.getDate()}}-{{request.date.getMonth()}}-{{request.date.getFullYear()}}</span>
-                                                </div>
-                                                <div class="col-12 col-md-6 col-lg-4 mt-md-4 mt-lg-0 text-end">
-                                                    <span style="font-weight: bold;">Status: </span>
-                                                    <span>
-                                                        {{request.status}}
-                                                        <i class="bi bi-circle-fill"
-                                                            [ngClass]="{
-                                                            'text-success': request.status === 'Solved',
-                                                            'text-danger': request.status === 'Not Solved',
-                                                            'text-warning': request.status === 'Waiting for approval'}">
-                                                        </i>
-                                                    </span>
-                                                </div>
+                        <p> 
+                            </div>-->
+
+                    <span style="font-weight: bold;">Latest Requests:</span>
+                    <ul *ngFor="let ticket of ticketsList" class="list-unstyled">
+                        <li>
+                            <div class="card" (click)="goToTicket(ticket.id)">
+                                <div class="card-body">
+                                    <div class="card-text">
+                                        <div class="row justify-content-center">
+                                            <div class="col-12 col-lg-4 text-start">
+                                                <span style="font-weight: bold;">Title: </span>
+                                                <span>{{ticket.title}}</span>
+                                            </div>
+                                            <div class="col-12 col-md-6 col-lg-4 mt-md-4 mt-lg-0 text-center">
+                                                <span style="font-weight: bold;">Date: </span>
+                                                <span>{{ticket.date.getDate()}}-{{ticket.date.getMonth()}}-{{ticket.date.getFullYear()}}</span>
+                                            </div>
+                                            <div class="col-12 col-md-6 col-lg-4 mt-md-4 mt-lg-0 text-end">
+                                                <span style="font-weight: bold;">Status: </span>
+                                                <span>
+                                                    {{ticket.status}}
+                                                    <i class="bi bi-circle-fill"
+                                                        [ngClass]="{
+                                                            'text-success': ticket.status === 'Solved',
+                                                            'text-danger': ticket.status === 'Not Solved',
+                                                            'text-warning': ticket.status === 'Waiting for approval'}">
+                                                    </i>
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </li>
-                        </ul>
-                    </div>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
                 <div class="card-footer orangeBg text-center">
                     <div class="row justify-content-center">
                         <div class="col-12 mt-1" [ngClass]="{'col-sm-6': isChat}">
-                            <div class="btn btn-outline-dark btn-light" (click)="openDialog()">Add a new request</div>
+                            <div class="btn btn-outline-dark btn-light" (click)="newTicket()">Add a new ticket</div>
                         </div>
                         <div class="col-12 col-sm-6 mt-1">
-                            <div *ngIf="isChat" class="btn btn-outline-dark btn-light" (click)="openDialogOrGoTo('/assistanceRequestList')">Requests overview</div>
+                            <div *ngIf="isChat" class="btn btn-outline-dark btn-light"
+                                (click)="ticketsListSystem()">Ticket list system</div>
                         </div>
                     </div>
                 </div>
@@ -134,7 +136,7 @@
 
     <div class="row justify-content-center align-items-center mt-2 p-1 p-lg-4">
         <div class="col-12">
-            <div class="card" (click)="openDialog()">
+            <div class="card">
                 <h5 class="card-header yellowBg">RMA</h5>
                 <div class="card-body">
                     <div *ngIf="!isRma">

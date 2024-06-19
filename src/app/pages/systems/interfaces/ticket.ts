@@ -1,8 +1,8 @@
 export interface Ticket {
     id: number;
-    name: string;
-    date: string;
+    title: string;
+    date_ticket: string;
     description: string;
-    system: string | null;
-    status: string;
+    idsystem: number | null;
+    status?: string;
 }

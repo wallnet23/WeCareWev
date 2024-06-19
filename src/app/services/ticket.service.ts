@@ -11,10 +11,10 @@ export class TicketService {
   constructor() { 
 
     this.tickets = [
-      {id: 0, name: "Ticket 1", date: "20/11/23", description: "Breve descrizione sistema con eventuale ellispsis se troppo lunga per la colonna", system: null, status: "Waiting"},
-      {id: 1, name: "Ticket 2", date: "10/05/23", description: "Breve descrizione sistema con eventuale ellispsis se troppo lunga per la colonna", system: "MySystem", status: "Completed"},
-      {id: 2, name: "Ticket 3", date: "20/11/23", description: "Breve descrizione sistema con eventuale ellispsis se troppo lunga per la colonna", system: null, status: "Waiting"},
-      {id: 3, name: "Ticket 4", date: "10/05/23", description: "Breve descrizione sistema con eventuale ellispsis se troppo lunga per la colonna", system: "MySystem", status: "Working"},
+      {id: 0, title: "Ticket 1", date_ticket: "20/11/23", description: "Breve descrizione sistema con eventuale ellispsis se troppo lunga per la colonna", idsystem: null, status: "Waiting"},
+      {id: 1, title: "Ticket 2", date_ticket: "10/05/23", description: "Breve descrizione sistema con eventuale ellispsis se troppo lunga per la colonna", idsystem: 1, status: "Completed"},
+      {id: 2, title: "Ticket 3", date_ticket: "20/11/23", description: "Breve descrizione sistema con eventuale ellispsis se troppo lunga per la colonna", idsystem: null, status: "Waiting"},
+      {id: 3, title: "Ticket 4", date_ticket: "10/05/23", description: "Breve descrizione sistema con eventuale ellispsis se troppo lunga per la colonna", idsystem: 2, status: "Working"},
     ]
   }
 }

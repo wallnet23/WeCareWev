@@ -39,7 +39,7 @@
             <ng-container *ngFor="let imageUrl of images; let i = index">
                 <div class="col-xs-12 col-sm-6 col-md-2 mb-4 text-center" style="width: 100px; height: 100px;">
                     <img [src]="imageUrl" class="img-fluid thumbnailImg">
-                    <i class="bi bi-trash hoverPointer" (click)="deleteImg(i)"></i>
+                    <i class="bi bi-trash trash" (click)="deleteImg(i)"></i>
                 </div>
             </ng-container>
         </div>

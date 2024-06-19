@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { map, Observable } from 'rxjs';
 import { MatSelectModule } from '@angular/material/select';
 import { RecaptchaFormsModule, RecaptchaModule, RecaptchaV3Module, ReCaptchaV3Service } from 'ng-recaptcha';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 interface Country {
@@ -33,6 +34,7 @@ interface Country {
     RecaptchaModule,
     RecaptchaFormsModule,
     RecaptchaV3Module,
+    TranslateModule
   ],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss'

@@ -47,8 +47,9 @@ interface Country {
 })
 export class SupplierInfoComponent implements OnInit {
 
+  maxImages: number = 15;
   isImages: boolean = false;
-  errorMessage: string = '';
+  imageSpaceLeft: boolean = true;
   images: string[] = [];
   countriesData: Country[] = [];
 
@@ -83,7 +84,7 @@ export class SupplierInfoComponent implements OnInit {
       this.images = this.uploadImage.getImages();
       this.isImages = true;
     }
-    this.errorMessage = this.uploadImage.upload(event, uploadCallback);
+    this.imageSpaceLeft = this.uploadImage.upload(event, uploadCallback, this.maxImages);
     console.log(this.uploadImage.getImages());
   }
 

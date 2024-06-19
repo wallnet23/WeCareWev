@@ -7,8 +7,8 @@
                         <div class="brand-wrapper">
                             <img src="assets/img/logo.png" alt="logo" class="logo">
                         </div>
-                        <p class="login-card-description">Subscribe</p>
-                        <p style="font-size: x-small; margin-bottom: 23px;">All fields are mandatory</p>
+                        <p class="login-card-description">{{"SIGNUP.SUBSCRIBE" | translate}}</p>
+                        <p style="font-size: x-small; margin-bottom: 23px;">{{"SIGNUP.MANDATORY" | translate}}</p>
                     </div>
                 </div>
                 <div class="container">
@@ -16,25 +16,25 @@
                         <div class="form-group">
                             <div class="row p-3">
                                 <div class="col-12 col-lg-6 mb-3">
-                                    <label for="name" style="font-weight: bold;">Name</label>
+                                    <label for="name" style="font-weight: bold;">{{"SIGNUP.NAME" | translate}}</label>
                                     <input type="text" name="name" id="name" formControlName="name" class="form-control form_control"
                                         placeholder="">
                                 </div>
                                 <div class="col-12 col-lg-6 mb-3">
-                                    <label for="surname" style="font-weight: bold;">Surname</label>
+                                    <label for="surname" style="font-weight: bold;">{{"SIGNUP.SURNAME" | translate}}</label>
                                     <input type="text" name="surname" id="surname" formControlName="surname"
                                         class="form-control form_control" placeholder="">
                                 </div>
                                 <div class="col-12 col-lg-6 mb-3">
-                                    <label for="companyName" style="font-weight: bold;">Company Name</label>
+                                    <label for="companyName" style="font-weight: bold;">{{"SIGNUP.COMPANY" | translate}}</label>
                                     <input type="companyName" name="companyName" id="companyName"
                                         formControlName="companyName" class="form-control form_control" placeholder=""
                                         [ngClass]="{'error': !validEmail}">
                                 </div>
                                 <div class="col-12 col-lg-6 mb-3">
-                                    <label for="country" style="font-weight: bold;">Country</label>
+                                    <label for="country" style="font-weight: bold;">{{"SIGNUP.COUNTRY" | translate}}</label>
                                     <select class="form-select" id="country" aria-label="select example" formControlName="country" required (change)="setLicence()">
-                                        <option [ngValue]="null" disabled selected>Select a Country</option>
+                                        <option [ngValue]="null" disabled selected>{{"SIGNUP.SELECTCOUNTRY" | translate}}</option>
                                         <option *ngFor="let country of countriesData">
                                             <img src="{{country.flags.png}}"
                                                 width="20px" height="15px"> {{ country.name.common }}
@@ -50,27 +50,27 @@
                                     </mat-select> -->
                                 </div>
                                 <div *ngIf="!isItalian" class="col-12 col-lg-6 mb-3">
-                                    <label for="licenseNumber" style="font-weight: bold;">License Number</label>
+                                    <label for="licenseNumber" style="font-weight: bold;">{{"SIGNUP.LICENSENUMBER" | translate}}</label>
                                     <input type="licenseNumber" name="licenseNumber" id="licenseNumber"
                                         formControlName="licenseNumber" class="form-control form_control" placeholder="">
                                 </div>
                                 <div *ngIf="isItalian" class="col-12 col-lg-6 mb-3">
-                                    <label for="partitaIva" style="font-weight: bold;">Partita Iva</label>
+                                    <label for="partitaIva" style="font-weight: bold;">{{"SIGNUP.IVA" | translate}}</label>
                                     <input type="partitaIva" name="partitaIva" id="partitaIva"
                                         formControlName="partitaIva" class="form-control form_control" placeholder="">
                                 </div>
                                 <div class="col-12 col-lg-6 mb-3">
-                                    <label for="email" style="font-weight: bold;">Email</label>
+                                    <label for="email" style="font-weight: bold;">{{"SIGNUP.EMAIL" | translate}}</label>
                                     <input type="email" name="email" id="email" formControlName="email"
                                         class="form-control form_control" placeholder="" [ngClass]="{'error': !validEmail}">
                                 </div>
                                 <div class="col-12 col-lg-6 mb-3">
-                                    <label for="phoneNumber" style="font-weight: bold;">Phone Number</label>
+                                    <label for="phoneNumber" style="font-weight: bold;">{{"SIGNUP.PHONE" | translate}}</label>
                                     <input type="text" name="phoneNumber" id="phoneNumber"
                                         formControlName="phoneNumber" class="form-control form_control" placeholder="(+999) 9999999">
                                 </div>
                                 <div class="col-12 mb-3">
-                                    <label for="description" style="font-weight: bold;">Request Info</label>
+                                    <label for="description" style="font-weight: bold;">{{"SIGNUP.INFO" | translate}}</label>
                                     <textarea name="description" id="description" rows="3"
                                         formControlName="description" class="form-control" placeholder="Write some short infos about your request">
                                     </textarea>
@@ -87,8 +87,8 @@
                     </form>
                 </div>
                 <nav class="login-card-footer-nav text-center mb-2">
-                    <a href="#!">Terms of use.</a>
-                    <a href="#!"> Privacy policy</a>
+                    <a href="#!" class="me-4">{{"SIGNUP.USERTERMS" | translate}}</a>
+                    <a href="#!">{{"SIGNUP.PRIVACY" | translate}}</a>
                 </nav>
             </div>
         </div>

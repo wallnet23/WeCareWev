@@ -13,27 +13,38 @@ export class UploadImageService {
 
   constructor() { }
 
-  upload(event: any, uploadCallback: () => void) {
-    const files: FileList = event.target.files;
-    if (this.images.length < 20) {
-      if (files.length > 0) {
-        const file: File = files[0];
+  upload(files: FileList, uploadCallback: () => void, maxImages: number) {
+    const newImages: any = [];
+    let imagesAdded = 0;
+  
+    if (this.images.length + files.length <= maxImages) {
+      for (let i = 0; i < files.length; i++) {
+        if (this.images.length + newImages.length >= maxImages) {
+          break; // Se il limite di immagini viene raggiunto blocca il caricamento di quelle in più
+        }
+        const file = files[i];
         const reader = new FileReader();
         reader.onload = () => {
           const imageUrl: string = reader.result as string;
-          this.images.push(imageUrl);
+          newImages.push(imageUrl);
+          imagesAdded++;
           if (this.cover == '') {
             this.cover = imageUrl;
           }
-          uploadCallback();
+          
+          if (imagesAdded === files.length || this.images.length + newImages.length === maxImages) {
+            this.images = [...this.images, ...newImages];
+            uploadCallback();
+          }
         };
         reader.readAsDataURL(file);
-        return this.success;
       }
-      return this.unacceptableFile;
+      return true;
+    } else {
+      return false;
     }
-    else return this.limitReached;
   }
+  
 
   getCover() {
     return this.cover;

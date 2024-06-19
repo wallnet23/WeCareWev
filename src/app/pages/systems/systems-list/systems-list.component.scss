@@ -6,7 +6,7 @@
 
 .fixed-button {
     position: fixed;
-    top: 80px;
+    top: 125px;
     right: 50px;
     z-index: 1000;
     background-color: #000000;
@@ -21,6 +21,12 @@
     font-size: 24px;
     cursor: pointer;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+
+
+    @media (max-width: 800px) {
+        left: 20px;
+        top: 60px;
+    }
 }
 
 .fixed-button:hover {

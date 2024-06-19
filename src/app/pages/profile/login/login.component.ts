@@ -5,6 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 import { IpInfoConnectService } from '../../../services/ip-info-connect.service';
 import { ConnectServerService } from '../../../services/connect-server.service';
 import { AuthService } from '../../../services/auth.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,8 @@ import { AuthService } from '../../../services/auth.service';
     FormsModule,
     CommonModule,
     RouterModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslateModule,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'

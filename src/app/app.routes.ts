@@ -14,11 +14,13 @@ import { SystemTicketsListComponent } from './pages/systems/system-tickets-list/
 import { SystemModifyComponent } from './pages/systems/system-modify/system-modify.component';
 import { SystemsListComponent } from './pages/systems/systems-list/systems-list.component';
 import { loginSignupGuard } from './guards/login-signup.guard';
+import { TicketNewComponent } from './pages/systems/ticket-new/ticket-new.component';
+import { WarrantyExtensionComponent } from './pages/warranty/warranty-extension/warranty-extension.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full'},
     { path: 'login', component: LoginComponent , canActivate: [loginSignupGuard]},
-    { path: 'sendemailModifyPassword', component: SendemailModifyPasswordComponent, canActivate: [authGuard]},
+    { path: 'sendemailModifyPassword', component: SendemailModifyPasswordComponent, canActivate: [loginSignupGuard]},
     { path: 'signup', component: SignupComponent, canActivate: [loginSignupGuard]},
     { path: 'systemsList', component: SystemsListComponent, canActivate: [authGuard]},
     { path: 'systemModify/:id', component: SystemModifyComponent, canActivate: [authGuard] },
@@ -29,6 +31,8 @@ export const routes: Routes = [
     { path: 'systemTicketsList/:id', component: SystemTicketsListComponent, canActivate: [authGuard] },
     { path: 'ticket/:id', component: TicketComponent, canActivate: [authGuard] },
     { path: 'ticketsList', component: TicketsListComponent, canActivate: [authGuard] },
+    { path: 'newTicket', component: TicketNewComponent, canActivate: [authGuard] },
+    { path: 'warrantyExtension', component:  WarrantyExtensionComponent, canActivate: [authGuard]},
     { path: 'deniedAccess', component:  DeniedAccessComponent},
     { path: '**', redirectTo: 'systemsList'}
 ];
