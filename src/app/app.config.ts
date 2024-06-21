@@ -10,6 +10,7 @@ import { requestErrorInterceptor } from './interceptors/request-error.intercepto
 import { spinnerInterceptor } from './interceptors/spinner.interceptor';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { provideToastr } from 'ngx-toastr';
 
 // required for AoT
 export function HttpLoaderFactory(http: HttpClient) {
@@ -20,6 +21,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideAnimations(),
+    provideToastr(),
     provideHttpClient(withFetch(), withInterceptors([authInterceptor, requestErrorInterceptor, spinnerInterceptor])),
     { provide: RECAPTCHA_V3_SITE_KEY, useValue: environment.recaptcha.apiUrl },
     {

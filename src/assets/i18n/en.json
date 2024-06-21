@@ -68,7 +68,7 @@
     "PRIVACY": "Privacy policy"
   },
   "SIGNUP": {
-    "SUBSCRIBE": "Subscribe",
+    "SUBSCRIBE": "Informazioni del tecnico che richiede assistenza per conto del cliente finale",
     "MANDATORY": "All fields are mandatory",
     "NAME": "Name",
     "SURNAME": "Surname",
@@ -79,6 +79,7 @@
     "IVA": "VAT",
     "EMAIL": "Email",
     "PHONE": "Phone Number",
+    "WHATSAPP": "WhatsApp Number",
     "INFO": "Request Info",
     "USERTERMS": "Terms of use",
     "PRIVACY": "Privacy policy"

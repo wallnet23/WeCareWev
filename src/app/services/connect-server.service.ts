@@ -1,6 +1,7 @@
 import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, lastValueFrom } from 'rxjs';
+import { Observable, lastValueFrom, map } from 'rxjs';
+import { Country } from '../interfaces/country';
 
 @Injectable({
   providedIn: 'root'
@@ -46,5 +47,10 @@ export class ConnectServerService {
     } else {
       return 30000; // Timeout di 30 secondi per gli altri tipi di richieste (PUT, DELETE, ecc.)
     }
+  }
+
+  getRequestCountryData(): Observable<Country[]> {
+    return this.getRequest<Country[]>('https://restcountries.com/v3.1/','all?fields=name,flags,cca2,ccn3',{})
+      .pipe(map((val: Country[]) => val.sort((a,b) => a.name.common.localeCompare(b.name.common))));
   }
 }

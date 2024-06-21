@@ -38,7 +38,7 @@ export class AuthService {
 
   async loginUser(email_value: string, password_value: string) {
     const esito: ApiResponse<{authorization: {token: string; type: string;}}> = await lastValueFrom(
-      this.connectServerService.postRequest<ApiResponse<{authorization: {token: string; type: string;}}>>(Connect.urlServerLaraApi, 'login', {
+      this.connectServerService.postRequest<ApiResponse<{authorization: {token: string; type: string;}}>>(Connect.urlServerLaraApi, 'user/login', {
         email: email_value,
         password: password_value,
       })
@@ -52,7 +52,7 @@ export class AuthService {
   }
 
   logoutUser() {
-    return this.connectServerService.postRequest(Connect.urlServerLaraApi, `logout`, {}).subscribe(
+    return this.connectServerService.postRequest(Connect.urlServerLaraApi, `user/logout`, {}).subscribe(
       (esito: any) => {
         // console.log('logout', esito);
         this.removeLocalAuth();
@@ -64,7 +64,7 @@ export class AuthService {
   }
 
   getUser() {
-    return this.connectServerService.getRequest<User>(Connect.urlServerLaraApi, 'user', {}).subscribe(
+    return this.connectServerService.getRequest<User>(Connect.urlServerLaraApi, 'user/user', {}).subscribe(
       (val: User) => {
         console.log('Response: ', val);
         if (this.isLoggedIn()) {

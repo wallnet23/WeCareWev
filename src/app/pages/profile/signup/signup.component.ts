@@ -2,24 +2,17 @@ import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { map, Observable } from 'rxjs';
 import { MatSelectModule } from '@angular/material/select';
 import { RecaptchaFormsModule, RecaptchaModule, RecaptchaV3Module, ReCaptchaV3Service } from 'ng-recaptcha';
 import { TranslateModule } from '@ngx-translate/core';
-
-
-interface Country {
-  name: {
-    common: string;
-  },
-  cca2: string;
-  ccn3: string;
-  flags: {
-    png: string;
-  }
-}
-
+import { Country } from '../../../interfaces/country';
+import { ConnectServerService } from '../../../services/connect-server.service';
+import { Connect } from '../../../classes/connect';
+import { ApiResponse } from '../../../interfaces/api-response';
+import { ToastrService } from 'ngx-toastr';
+import { PopupDialogService } from '../../../services/popup-dialog.service';
 
 @Component({
   selector: 'app-signup',
@@ -48,32 +41,40 @@ export class SignupComponent implements OnInit {
   signupForm = new FormGroup({
     name: new FormControl<string | null>(null, Validators.required),
     surname: new FormControl<string | null>(null, Validators.required),
-    companyName: new FormControl<string | null>(null, Validators.required),
-    country: new FormControl<Country | null>(null, Validators.required),
-    licenseNumber: new FormControl<string |null>(null, Validators.required),
-    partitaIva: new FormControl<string |null>(null, Validators.required),
-    email: new FormControl<string |null>(null, Validators.email),
-    phoneNumber: new FormControl<string |null>(null, Validators.minLength(8)),
-    description: new FormControl<string | null>(null, Validators.required),
+    company_name: new FormControl<string | null>(null, Validators.required),
+    obj_country: new FormControl<Country | null>(null, Validators.required),
+    license_number: new FormControl<string | null>(null, Validators.required),
+    vat: new FormControl<string | null>(null, Validators.required),
+    email: new FormControl<string | null>(null, Validators.email),
+    phone: new FormControl<string | null>(null, Validators.minLength(6)),
+    phone_whatsapp: new FormControl<string | null>(null, Validators.minLength(6)),
+    request_description: new FormControl<string | null>(null, Validators.required),
     recaptcha: new FormControl(null, Validators.required),
   })
 
-  constructor(private http: HttpClient, private recaptcha: ReCaptchaV3Service) { }
+  constructor(private connectServerService: ConnectServerService,
+    private recaptcha: ReCaptchaV3Service, private popupDialogService: PopupDialogService,
+    private router: Router) { }
 
   ngOnInit() {
-    this.fetchCountryData().subscribe((obj) => {
+    this.connectServerService.getRequestCountryData().subscribe((obj) => {
       this.countriesData = obj;
     });
-  }  
-
-  subscribe() {
-    console.log(this.signupForm.value);
-    console.log(this.signupForm.getRawValue());
+    this.formLogic();
   }
 
-  fetchCountryData(): Observable<Country[]> {
-    return this.http.get<Country[]>('https://restcountries.com/v3.1/all?fields=name,flags,cca2,cca3')
-      .pipe(map((val: Country[]) => val.sort((a,b) => a.name.common.localeCompare(b.name.common))));
+  subscribe() {
+    // console.log(this.signupForm.value);
+    console.log(this.signupForm.getRawValue());
+
+    this.connectServerService.postRequest<ApiResponse<{}>>(Connect.urlServerLaraApi, 'user/signup', {
+      obj_val: this.signupForm.getRawValue()
+    }).subscribe(
+      (esito: ApiResponse<{}>) => {
+        this.popupDialogService.alertElement(esito);
+        this.router.navigate(['/login']);
+      }
+    )
   }
 
   onCountrySelect(selectedCountry: any) {
@@ -81,15 +82,18 @@ export class SignupComponent implements OnInit {
     // You can update a form control value here if needed
   }
 
-  setLicence() {
-    const selectedCountry = this.signupForm.get('country')?.value!;
-    if (selectedCountry.toString() === 'Italy') {
-      this.isItalian = true;
-      this.signupForm.patchValue({licenseNumber: 'none', partitaIva: ''});
-    } else {
-      this.isItalian = false;
-      this.signupForm.patchValue({partitaIva: 'none', licenseNumber: ''});
-    }
+  private formLogic() {
+    this.signupForm.get('obj_country')?.valueChanges.subscribe(
+      (country: Country | null) => {
+        if (country && country.name.common.toString() === 'Italy') {
+          this.isItalian = true;
+          this.signupForm.patchValue({ license_number: 'none', vat: '' });
+        } else {
+          this.isItalian = false;
+          this.signupForm.patchValue({ vat: 'none', license_number: '' });
+        }
+      }
+    );
   }
 
 }

@@ -92,7 +92,7 @@ export class TicketNewComponent {
       });
     }
 
-    this.connectServerService.postRequest<ApiResponse<Ticket>>(Connect.urlServerLaraApi, 'insertTicket', formData).
+    this.connectServerService.postRequest<ApiResponse<Ticket>>(Connect.urlServerLaraApi, 'ticket/insertTicket', formData).
       subscribe((val: ApiResponse<Ticket>) => {
         if(val.data) {
           this.router.navigate(['/ticket', val.data.id]);

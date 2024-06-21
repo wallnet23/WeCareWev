@@ -18,34 +18,34 @@ export const authGuard: CanActivateFn = (route, state) => {
 
   if (authService.isLoggedIn()) {
 
-  return connectServerService.getRequestAsync(Connect.urlServerLaraApi, 'checkPageAccess',
-    {
-      path: url,
-      path_composer: url_withparams
-    }).then(
-      (esito: ApiResponse<{ accesso_pagina: number }>) => {
-        // console.log('esito',esito);
-        if (esito.data && esito.data.accesso_pagina) {
-          // console.log('url', url);
-          // if ((url == '/login' || url == 'signup') && authService.isLoggedIn()) {
-          //   router.navigate(['systemsList']);
-          //   return false;
-          // }
-          //console.log("qui", esito.data.accesso_pagina);
-          if (esito.data.accesso_pagina == 1) {
-            return true;
+    return connectServerService.getRequestAsync(Connect.urlServerLaraApi, 'user/checkPageAccess',
+      {
+        path: url,
+        path_composer: url_withparams
+      }).then(
+        (esito: ApiResponse<{ accesso_pagina: number }>) => {
+          // console.log('esito',esito);
+          if (esito.data && esito.data.accesso_pagina) {
+            // console.log('url', url);
+            // if ((url == '/login' || url == 'signup') && authService.isLoggedIn()) {
+            //   router.navigate(['systemsList']);
+            //   return false;
+            // }
+            //console.log("qui", esito.data.accesso_pagina);
+            if (esito.data.accesso_pagina == 1) {
+              return true;
+            } else {
+              router.navigate(['deniedAccess']);
+              return false;
+            }
           } else {
             router.navigate(['deniedAccess']);
             return false;
           }
-        } else {
-          router.navigate(['deniedAccess']);
-          return false;
-        }
-      });
-    }
-    else {
-      router.navigate(['login']);
-      return false;
-    }
+        });
+  }
+  else {
+    router.navigate(['login']);
+    return false;
+  }
 };

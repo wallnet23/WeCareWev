@@ -4,6 +4,7 @@ import { NavbarComponent } from './pages/navbar/navbar.component';
 import { CurrentPageService } from './services/current-page.service';
 import { AuthService } from './services/auth.service';
 import { CommonModule } from '@angular/common';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,8 @@ import { CommonModule } from '@angular/common';
   imports: [
     RouterOutlet,
     NavbarComponent,
-    CommonModule
+    CommonModule,
+    NgxSpinnerModule
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

@@ -35,7 +35,6 @@ export class LoginComponent {
      private authService: AuthService) { }
 
   async login() {
-
     this.ipInfoConnectService.getLanguage().subscribe((val) => {
       //console.log(val)
     });

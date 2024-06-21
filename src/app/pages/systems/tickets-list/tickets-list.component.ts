@@ -26,7 +26,7 @@ export class TicketsListComponent {
   }
 
   getTicketListFromServer() {
-    this.connectServerService.getRequest<ApiResponse<Ticket[]>>(Connect.urlServerLaraApi, 'listTicket', {}).
+    this.connectServerService.getRequest<ApiResponse<Ticket[]>>(Connect.urlServerLaraApi, 'ticket/listTicket', {}).
     subscribe((val: ApiResponse<{listTickets: Ticket[]}>) => {
       if(val.data) {
         this.tickets = val.data.listTickets;

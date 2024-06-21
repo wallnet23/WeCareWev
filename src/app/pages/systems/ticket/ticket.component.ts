@@ -38,7 +38,7 @@ export class TicketComponent {
   }
 
   private getTicketAndSystemFromServer() {
-    this.connectServerService.getRequest<ApiResponse<{ticket: Ticket, system: SystemInfo}>>(Connect.urlServerLaraApi, 'infoTicket', {id: this.id}).
+    this.connectServerService.getRequest<ApiResponse<{ticket: Ticket, system: SystemInfo}>>(Connect.urlServerLaraApi, 'ticket/infoTicket', {id: this.id}).
     subscribe((val: ApiResponse<{ticket: Ticket, system: SystemInfo}>) => {
       if(val.data && val.data.ticket) {
         this.ticket = val.data.ticket;
