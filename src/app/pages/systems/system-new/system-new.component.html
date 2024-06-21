@@ -1,15 +1,15 @@
 <div class="container p-2">
     <div class="row justify-content-center align-items-center">
         <div class="col-12 text-center mt-4 form-group">
-            <form [formGroup]="systemInfoFormGroup">
+            <form [formGroup]="newSystemForm">
                 <div class="p-2 form-group">
-                    <label for="name" style="font-weight: bold;">
+                    <label for="title" style="font-weight: bold;">
                         SYSTEM NAME
                         <mat-icon
                             matTooltip="Choose a general name for your system. You'll see it as a reference to your system"
                             style="font-size: medium;">info</mat-icon>
                     </label>
-                    <input type="text" name="name" id="name" class="form-control mt-1" formControlName="name" placeholder="Type the name here">
+                    <input type="text" name="title" id="title" class="form-control mt-1" formControlName="title" placeholder="System name">
                 </div>
 
                 <div class="p-2">
@@ -25,8 +25,8 @@
         </div>
 
         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 text-center mt-3">
-            <label *ngIf="!systemInfoFormGroup.valid" for="save" style="font-size: x-small;">Name is mandatory</label><br>
-            <button class="btn btn-outline-dark" id="save" [disabled]="!systemInfoFormGroup.valid" (click)="send()">
+            <label *ngIf="newSystemForm.invalid" for="save" style="font-size: x-small;">Name is mandatory</label><br>
+            <button class="btn btn-outline-dark" id="save" [disabled]="newSystemForm.invalid" (click)="sendNewSystem()">
                 Salva
             </button>
         </div>

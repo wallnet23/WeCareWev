@@ -30,6 +30,7 @@ export class TicketsListComponent {
     subscribe((val: ApiResponse<{listTickets: Ticket[]}>) => {
       if(val.data) {
         this.tickets = val.data.listTickets;
+        //console.log("Tickets", val.data.listTickets)
       }
     })
   }

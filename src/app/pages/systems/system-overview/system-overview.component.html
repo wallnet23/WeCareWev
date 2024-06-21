@@ -1,11 +1,43 @@
-<div class="container fullPage">
+<div *ngIf="idsystem > 0; else blockError;" class="container fullPage">
     <div class="row justify-content-center align-items-center mt-2 p-2">
         <div class="col-6 text-center">
-            <h2 class="systemName">{{systemName}}</h2>
+            <h2 class="systemName">{{systemInfo?.title}}</h2>
         </div>
     </div>
-    <div class="row justify-content-center p-1 p-lg-4">
 
+    <div class="row justify-content-center align-items-center p-2">
+        <div class="col-12 text-center">
+            <span style="font-size: medium; font-style: italic;">{{systemInfo?.description}}</span>
+            <button type="button" class="btn btn-sm btn-outline-dark ms-2" data-bs-toggle="modal"
+                data-bs-target="#descriptionModal">
+                <i class="bi bi-pencil"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="modal fade" id="descriptionModal" tabindex="0" aria-labelledby="descriptionModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="descriptionModalLabel">Change system description</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <textarea type="text" [value]="systemInfo?.description" style="width: 100%;"
+                        #newDescription></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Dismiss</button>
+                    <button type="button" class="btn btn-primary" (click)="modifyDescription(newDescription.value)"
+                        data-bs-dismiss="modal">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row justify-content-center p-1 p-lg-4">
         <div class="col-12 col-md-6 mt-2">
             <div class="card">
                 <h5 class="card-header blueBg">SYSTEM DATA</h5>
@@ -13,27 +45,24 @@
                     <ul class="list-unstyled">
                         <li class="listElement">
                             <i class="bi bi-circle-fill" style="font-size: large;" [ngClass]="{
-                                'text-success': system.status === 'Approved',
-                                'text-danger': system.status === 'Incomplete',
-                                'text-warning': system.status === 'Waiting for approval'}">
+                                'text-success': systemInfo?.status === 'Approved',
+                                'text-danger': systemInfo?.status === 'Incomplete',
+                                'text-warning': systemInfo?.status === 'Waiting for approval'}">
                             </i>
-                            <span style="margin-left: 1rem;">{{system.status}}</span>
-                        </li>
-                        <li class="listElement">
-                            <span class="listTitle">Description:</span><br>
-                            <span class="listDescription">{{system.description}}</span>
+                            <span *ngIf="systemInfo?.status" style="margin-left: 1rem;">{{systemInfo?.status}}</span>
+                            <span *ngIf="!systemInfo?.status" style="margin-left: 1rem;">Status not available</span>
                         </li>
                         <li class="listElement">
                             <span class="listTitle">Supplier Name:</span><br>
-                            <span class="listDescription">{{system.supplierInfo.name}}</span>
+                            <span class="listDescription">{{systemInfo?.customerName}}</span>
                         </li>
                         <li class="listElement">
                             <span class="listTitle">Installation Site:</span><br>
-                            <span class="listDescription">{{system.installationSite.city}}</span>
+                            <span class="listDescription">{{systemInfo?.installationSite}}</span>
                         </li>
                         <li class="listElement">
                             <span class="listTitle">Installation Date:</span><br>
-                            <span class="listDescription">{{system.productGeneralInfo.installationDate}}</span>
+                            <span class="listDescription">{{systemInfo?.installationDate}}</span>
                         </li>
                     </ul>
                 </div>
@@ -51,16 +80,19 @@
                         <span class="listTitle">Warranty Extension Status: </span><br>
                         <span class="listDescription">{{warrantyExtensionStatus}}</span>
                     </p><br>
-                    <p class="paragraph" *ngIf="!isWarrantyRequest">
+                    <p class="paragraph" *ngIf="!isWarrantyRequest; else warrantyBlock">
                         Request a warranty extension, our technician will review your system and check
                         if there's a possibility for a warrant extension.
                     </p>
-                    <p class="paragraph" *ngIf="isWarrantyRequest">
-                        Click on this card to see the details of your warranty request status
-                    </p>
+                    <ng-template #warrantyBlock>
+                        <p class="paragraph">
+                            Click on this card to see the details of your warranty request status
+                        </p>
+                    </ng-template>
                 </div>
                 <div class="card-footer greenBg text-center">
-                    <div href="#" class="btn btn-outline-dark btn-light" (click)="warrantyExtension()">New warranty extension
+                    <div href="#" class="btn btn-outline-dark btn-light" (click)="warrantyExtension()">New warranty
+                        extension
                     </div>
                 </div>
             </div>
@@ -69,7 +101,7 @@
 
     <div class="row justify-content-center align-items-center mt-2 p-1 p-lg-4">
         <div class="col-12">
-            <div class="card" >
+            <div class="card">
                 <h5 class="card-header orangeBg">TICKETS</h5>
                 <div class="card-body">
                     <!-- <div *ngIf="!isChat">
@@ -86,32 +118,36 @@
                             </div>-->
 
                     <span style="font-weight: bold;">Latest Requests:</span>
-                    <ul *ngFor="let ticket of ticketsList" class="list-unstyled">
+                    <ul *ngFor="let ticket of systemTickets" class="list-unstyled">
                         <li>
                             <div class="card" (click)="goToTicket(ticket.id)">
                                 <div class="card-body">
                                     <div class="card-text">
-                                        <div class="row justify-content-center">
+                                        <div *ngIf="isTicket; else ticketBlock" class="row justify-content-center">
                                             <div class="col-12 col-lg-4 text-start">
                                                 <span style="font-weight: bold;">Title: </span>
                                                 <span>{{ticket.title}}</span>
                                             </div>
                                             <div class="col-12 col-md-6 col-lg-4 mt-md-4 mt-lg-0 text-center">
                                                 <span style="font-weight: bold;">Date: </span>
-                                                <span>{{ticket.date.getDate()}}-{{ticket.date.getMonth()}}-{{ticket.date.getFullYear()}}</span>
+                                                <span>{{ticket.date_ticket}}</span>
                                             </div>
                                             <div class="col-12 col-md-6 col-lg-4 mt-md-4 mt-lg-0 text-end">
                                                 <span style="font-weight: bold;">Status: </span>
                                                 <span>
                                                     {{ticket.status}}
-                                                    <i class="bi bi-circle-fill"
-                                                        [ngClass]="{
+                                                    <i class="bi bi-circle-fill" [ngClass]="{
                                                             'text-success': ticket.status === 'Solved',
                                                             'text-danger': ticket.status === 'Not Solved',
                                                             'text-warning': ticket.status === 'Waiting for approval'}">
                                                     </i>
                                                 </span>
                                             </div>
+                                        </div>
+                                        <div class="row justify-content-center">
+                                            <ng-template #ticketBlock>
+                                                No tickets available for this system
+                                            </ng-template>
                                         </div>
                                     </div>
                                 </div>
@@ -121,12 +157,14 @@
                 </div>
                 <div class="card-footer orangeBg text-center">
                     <div class="row justify-content-center">
-                        <div class="col-12 mt-1" [ngClass]="{'col-sm-6': isChat}">
+                        <div class="col-12 mt-1" [ngClass]="{'col-sm-6': isTicket}">
                             <div class="btn btn-outline-dark btn-light" (click)="newTicket()">Add a new ticket</div>
                         </div>
                         <div class="col-12 col-sm-6 mt-1">
-                            <div *ngIf="isChat" class="btn btn-outline-dark btn-light"
-                                (click)="ticketsListSystem()">Ticket list system</div>
+                            <div *ngIf="isTicket" class="btn btn-outline-dark btn-light"
+                                (click)="ticketsListSystem()">
+                                Ticket list system
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -157,3 +195,8 @@
         </div>
     </div>
 </div>
+
+<ng-template #blockError class="mt-4 p-2 text-center">
+    <h1>LOADING ERROR</h1><br>
+    <h3 class="mt-4">Refresh the page to try again</h3>
+</ng-template>

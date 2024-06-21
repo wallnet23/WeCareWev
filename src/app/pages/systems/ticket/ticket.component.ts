@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { AssistanceRequestsService } from '../../../services/assistance-requests.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AssistanceRequest } from '../interfaces/assistance-request';
 import { Ticket } from '../interfaces/ticket';
 import { ConnectServerService } from '../../../services/connect-server.service';
 import { ApiResponse } from '../../../interfaces/api-response';
 import { Connect } from '../../../classes/connect';
 import { CommonModule } from '@angular/common';
-import { SystemInfo } from '../interfaces/full-system-interface';
+import { SystemInfo } from '../interfaces/system-info';
+
 
 @Component({
   selector: 'app-ticket',

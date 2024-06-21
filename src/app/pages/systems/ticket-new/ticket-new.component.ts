@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoadSystemsService } from '../../../services/load-systems.service';
-import { SystemInfo } from '../interfaces/full-system-interface';
+//import { SystemInfo } from '../interfaces/full-system-interface';
 import { UploadImageService } from '../../../services/upload-images.service';
 import { CommonModule } from '@angular/common';
 import { Ticket } from '../interfaces/ticket';
@@ -10,6 +10,7 @@ import { Connect } from '../../../classes/connect';
 import { ConnectServerService } from '../../../services/connect-server.service';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { SystemInfo } from '../interfaces/system-info';
 
 @Component({
   selector: 'app-ticket-new',
@@ -28,7 +29,7 @@ export class TicketNewComponent {
   selectedFiles: File[] = [];
   maxImages: number = 6;
   imageSpaceLeft: boolean = true;
-  systems!: SystemInfo[];
+  systems: SystemInfo[] = [];
   images: string[] = [];
 
   ticketForm = new FormGroup({
@@ -42,7 +43,7 @@ export class TicketNewComponent {
 
   constructor(private loadSystemService: LoadSystemsService, public uploadImageService: UploadImageService,
     private connectServerService: ConnectServerService, private router: Router) {
-    this.systems = loadSystemService.getAllSystems();
+    //this.systems = loadSystemService.getAllSystems();
   }
 
   formatDate(date: Date): string {

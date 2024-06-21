@@ -53,4 +53,10 @@ export class ConnectServerService {
     return this.getRequest<Country[]>('https://restcountries.com/v3.1/','all?fields=name,flags,cca2,ccn3',{})
       .pipe(map((val: Country[]) => val.sort((a,b) => a.name.common.localeCompare(b.name.common))));
   }
+
+  getSpecificCountryData(ccn3: string): Observable<Country> {
+    return this.getRequest<Country>('https://restcountries.com/v3.1/alpha/', ccn3, {})
+    .pipe(map((val: Country) => val));
+  }
+
 }

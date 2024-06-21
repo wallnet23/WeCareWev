@@ -18,7 +18,7 @@
                 <label class="formLabel" for="idsystem">{{"NEWTICKET.RELATEDSYS" | translate}}</label>
                 <select type="select" id="idsystem" formControlName="idsystem" class="form-select">
                     <option selected>{{"NEWTICKET.NONE" | translate}}</option>
-                    <option *ngFor="let system of systems">{{system.systemName}}</option>
+                    <option *ngFor="let system of systems">{{system.title}}</option>
                 </select>
             </div>
             <div class="col-12 col-lg-10 mb-4">

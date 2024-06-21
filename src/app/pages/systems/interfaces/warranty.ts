@@ -1,7 +1,7 @@
 import { Cluster } from "./cluster";
 import { Inverter } from "./inverter";
 
-export interface AssistanceRequest {
+export interface Warranty {
     id: number;
     title: string;
     date: Date;

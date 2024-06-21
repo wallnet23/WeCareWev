@@ -68,7 +68,7 @@
     "PRIVACY": "Privacy policy"
   },
   "SIGNUP": {
-    "SUBSCRIBE": "Informazioni del tecnico che richiede assistenza per conto del cliente finale",
+    "SUBSCRIBE": "Technician that is in charge of the customer's system",
     "MANDATORY": "All fields are mandatory",
     "NAME": "Name",
     "SURNAME": "Surname",
@@ -79,8 +79,10 @@
     "IVA": "VAT",
     "EMAIL": "Email",
     "PHONE": "Phone Number",
+    "PHONEPLACEHOLDER": "(+999) 9999999",
     "WHATSAPP": "WhatsApp Number",
     "INFO": "Request Info",
+    "INFOPLACEHOLDER": "Write some short infos about your request",
     "USERTERMS": "Terms of use",
     "PRIVACY": "Privacy policy"
   },
@@ -95,5 +97,18 @@
     "ATTACHMENT": "Import attachments (max 6)",
     "IMPORT": "Import",
     "SUBMIT": "Submit"
+  },
+  "STEPONE": {
+    "NAME": "*Customer Name",
+    "NAMEPLACEHOLDER": "Name",
+    "SURNAME": "*Customer Surname",
+    "SURNAMEPLACEHOLDER": "Surname",
+    "COUNTRY": "*Customer Country",
+    "SELECTCOUNTRY": "Select a Country",
+    "PHONE": "Phone Number",
+    "PHONEPLACEHOLDER": "(+999) 9999999",
+    "VAT": "VAT",
+    "LICENSENUMBER": "License Number",
+    "NEXT": "Next"
   }
 }

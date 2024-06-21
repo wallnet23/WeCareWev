@@ -1,31 +1,40 @@
 <div class="container">
-    <form [formGroup]="clientFormGroup">
+    <form [formGroup]="stepOneForm">
         <div class="form-group">
             <div class="row">
                 <div class="col-12 col-lg-6 mb-3">
-                    <label for="name" style="font-weight: bold;">*Client Name</label>
-                    <input type="text" name="name" id="name" formControlName="name" class="form-control"
-                        placeholder="Client name" required>
+                    <label for="customer_name" style="font-weight: bold;">{{"STEPONE.NAME" | translate}}</label>
+                    <input type="text" name="customer_name" id="customer_name" formControlName="customer_name" class="form-control"
+                        placeholder='{{"STEPONE.NAMEPLACEHOLDER" | translate}}' required>
                 </div>
                 <div class="col-12 col-lg-6 mb-3">
-                    <label for="surname" style="font-weight: bold;">*Client Surname</label>
-                    <input type="text" name="surname" id="surname" formControlName="surname" class="form-control"
-                        placeholder="Client surname" required>
+                    <label for="customer_surname" style="font-weight: bold;">{{"STEPONE.SURNAME" | translate}}</label>
+                    <input type="text" name="customer_surname" id="customer_surname" formControlName="customer_surname" class="form-control"
+                        placeholder='{{"STEPONE.SURNAMEPLACEHOLDER" | translate}}' required>
                 </div>
-
                 <div class="col-12 col-lg-6 mb-3">
-                    <label for="country" style="font-weight: bold;">*Client Country</label>
-                    <select class="form-select" aria-label="select example" formControlName="country">
-                        <option [ngValue]="null" disabled selected>Select a Country</option>
-                        <option *ngFor="let country of countriesData">
-                            <img src="{{country.flags.png}}" width="20px" height="15px"> {{ country.name.common }}
+                    <label for="ccn3" style="font-weight: bold;">{{"STEPONE.COUNTRY" | translate}}</label>
+                    <select class="form-select" aria-label="select example" formControlName="ccn3">
+                        <option [ngValue]="null" disabled selected>{{"STEPONE.SELECTCOUNTRY" | translate}}</option>
+                        <option *ngFor="let country of countriesData" [ngValue]="country.ccn3">
+                            <img src="{{country.flags?.png}}" width="20px" height="15px"> {{ country.name.common }}
                         </option>
                     </select>
                 </div>
                 <div class="col-12 col-lg-6 mb-3">
-                    <label for="phoneNumber" style="font-weight: bold;">Phone Number</label>
-                    <input type="phoneNumber" name="phoneNumber" id="phoneNumber" formControlName="phoneNumber"
-                        class="form-control" placeholder="(+999) 9999999">
+                    <label for="customer_phone" style="font-weight: bold;">{{"STEPONE.PHONE" | translate}}</label>
+                    <input type="customer_phone" name="customer_phone" id="customer_phone" formControlName="customer_phone"
+                        class="form-control" placeholder='{{"STEPONE.PHONEPLACEHOLDER" | translate}}'>
+                </div>
+                <div class="col-12 col-lg-6 mb-3">
+                    <label for="customer_vat" style="font-weight: bold;">{{"STEPONE.VAT" | translate}}</label>
+                    <input type="text" name="customer_vat" id="customer_vat" formControlName="customer_vat" class="form-control"
+                        placeholder="">
+                </div>
+                <div class="col-12 col-lg-6 mb-3">
+                    <label for="customer_licensenumber" style="font-weight: bold;">{{"STEPONE.LICENSENUMBER" | translate}}</label>
+                    <input type="text" name="customer_licensenumber" id="customer_licensenumber" formControlName="customer_licensenumber" class="form-control"
+                        placeholder="">
                 </div>
             </div>
         </div>
@@ -35,9 +44,9 @@
             <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
         </mat-form-field> -->
         <div class="text-center">
-            <button mat-raised-button matStepperNext [disabled]="!clientFormGroup.valid"
-            (click)="sendData()">
-                Next
+            <button mat-raised-button matStepperNext [disabled]="stepOneForm.invalid"
+            (click)="saveStep()">
+            {{"STEPONE.NEXT" | translate}}
             </button>
         </div>
     </form>
