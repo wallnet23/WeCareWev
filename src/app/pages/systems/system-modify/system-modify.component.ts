@@ -59,6 +59,7 @@ export class SystemModifyComponent {
     this.route.params.subscribe(params => {
       this.systemId = params['id'];
     });
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
