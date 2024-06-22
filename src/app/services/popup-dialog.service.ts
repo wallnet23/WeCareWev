@@ -1,20 +1,22 @@
-import { Injectable } from '@angular/core';
-import { ApiResponse } from '../interfaces/api-response';
+import { Injectable, inject } from '@angular/core';
+import { ApiResponse, ObjButtonClose } from '../interfaces/api-response';
 import { ActiveToast, ToastrService } from 'ngx-toastr';
 import { MatDialog } from '@angular/material/dialog';
 import { PopupDialogComponent } from '../components/popup-dialog/popup-dialog.component';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PopupDialogService {
 
+  readonly router = inject(Router);
   constructor(private toastr: ToastrService, public dialog: MatDialog) { }
 
   alertElement(obj_val: ApiResponse<any>) {
     if (obj_val.type_alert && obj_val.type_alert === 1) {
       this.toastDialog(obj_val);
-    }else{
+    } else {
       this.popupDialog(obj_val);
     }
   }
@@ -27,9 +29,15 @@ export class PopupDialogService {
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      // console.log(`Dialog result: ${result}`);
-    });
+    dialogRef.afterClosed().subscribe(
+      (result: ObjButtonClose) => {
+        if (result && result.action === 1) {
+          if (result.action_type === 1) {
+            this.router.navigate([result.urlfront, result.urlparam])
+          }
+        }
+        console.log(`Dialog result: ${result}`);
+      });
   }
 
   private toastDialog(obj_val: ApiResponse<any>) {
@@ -52,7 +60,7 @@ export class PopupDialogService {
     }
     if (obj_val.code == 200) {
       obj_toast = this.toastr.success(obj_val.message, obj_val.title, config);
-    } else if (obj_val.code == 511) {
+    } else if (obj_val.code == 513 || obj_val.code == 511) {
       obj_toast = this.toastr.warning(obj_val.message, obj_val.title, config);
     } else {
       obj_toast = this.toastr.error(obj_val.message, obj_val.title, config);

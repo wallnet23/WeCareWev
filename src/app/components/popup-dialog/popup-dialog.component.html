@@ -1,1 +1,8 @@
-<p>popup-dialog works!</p>
+<h2 mat-dialog-title>{{title}}</h2>
+<mat-dialog-content>
+  {{descrizione}}
+</mat-dialog-content>
+<mat-dialog-actions class="justify-content-end">
+  <button mat-button (click)="closeButtonDialog()"
+  [class]="buttonStylePopup">{{label_buttonClose}}</button>
+</mat-dialog-actions>
