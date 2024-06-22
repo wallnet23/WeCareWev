@@ -50,7 +50,6 @@ export class PopupDialogComponent {
 
 
   closeButtonDialog() {
-    console.log('pippo');
     this.dialogRef.close(this.obj_buttonClose);
   }
 }

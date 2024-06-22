@@ -14,12 +14,14 @@ export const requestErrorInterceptor: HttpInterceptorFn = (req, next) => {
   const popupDialogService = inject(PopupDialogService);
   return next(req).pipe(
     timeout({ each: connectServerService.getTimeoutForRequest(req), with: () => throwError(() => new Error('Timeout della richiesta')) }),
-    catchError((error: HttpErrorResponse) => {
+    catchError((error: HttpErrorResponse | any) => {
       // Default error message
       let errorMessage = 'An unknown error occurred';
       let code = 544;
       let not_popup = 0; // se 1 non voglio il popup
       let alert_type = null;
+      let obj_dialog = null;
+      let obj_toast = null;
       // Handle client-side errors
       if (error.error instanceof ErrorEvent) {
         errorMessage = `Client-side error: ${error.error.message}`;
@@ -65,7 +67,15 @@ export const requestErrorInterceptor: HttpInterceptorFn = (req, next) => {
         }
         if((error.error && error.error.message) || error.message){
           errorMessage = `${error.error.message || error.message}`;
+          console.log('error info: ',error)
         }
+        if((error.error && error.error.obj_dialog) || error.obj_dialog){
+          obj_dialog = error.error.obj_dialog || error.obj_dialog;
+        }
+        if((error.error && error.error.obj_toast) || error.obj_toast){
+          obj_toast = error.error.obj_toast || error.obj_toast;
+        }
+        console.log('error.obj_dialog', error.error);
       }
 
       // Log the error to the console
@@ -75,7 +85,9 @@ export const requestErrorInterceptor: HttpInterceptorFn = (req, next) => {
         data: {},
         title: 'Error',
         message: errorMessage,
-        type_alert: alert_type
+        type_alert: alert_type,
+        obj_dialog: obj_dialog,
+        obj_toast: obj_toast
       }
       if (not_popup == 0) {
         popupDialogService.alertElement(obj_request);

@@ -31,12 +31,17 @@ export class PopupDialogService {
 
     dialogRef.afterClosed().subscribe(
       (result: ObjButtonClose) => {
+        console.log('Dialog result:', result);
         if (result && result.action === 1) {
           if (result.action_type === 1) {
-            this.router.navigate([result.urlfront, result.urlparam])
+            const array_router = [result.urlfront];
+            if(result.urlparam && result.urlparam != null){
+              array_router.push(result.urlparam);
+            }
+            this.router.navigate(array_router);
           }
         }
-        console.log(`Dialog result: ${result}`);
+        // console.log(`Dialog result: ${result}`);
       });
   }
 

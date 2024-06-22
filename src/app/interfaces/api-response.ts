@@ -6,11 +6,11 @@ export interface ApiResponse<T> {
   message: string;
   // 1: toast se null o altro apre il dialog
   type_alert?: number | null;
-  obj_toast?: {
+  obj_toast?: null | {
     closeButton?: number;
     disableTimeOut?: number;
   };
-  obj_dialog?: {
+  obj_dialog?: null | {
     disableClose: number;
     obj_buttonClose?: ObjButtonClose;
   }
