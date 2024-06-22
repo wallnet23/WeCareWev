@@ -42,8 +42,8 @@ export class SignupComponent implements OnInit {
     name: new FormControl<string | null>(null, Validators.required),
     surname: new FormControl<string | null>(null, Validators.required),
     company_name: new FormControl<string | null>(null, Validators.required),
-    obj_country: new FormControl<Country | null>(null, Validators.required),
-    license_number: new FormControl<string | null>(null, Validators.required),
+    country: new FormControl<Country | null>(null, Validators.required),
+    licensenumber: new FormControl<string | null>(null, Validators.required),
     vat: new FormControl<string | null>(null, Validators.required),
     email: new FormControl<string | null>(null, Validators.email),
     phone: new FormControl<string | null>(null, Validators.minLength(6)),
@@ -63,7 +63,7 @@ export class SignupComponent implements OnInit {
     this.formLogic();
   }
 
-  subscribe() {
+  sendSignupData() {
     // console.log(this.signupForm.value);
     console.log(this.signupForm.getRawValue());
 
@@ -87,10 +87,10 @@ export class SignupComponent implements OnInit {
       (country: Country | null) => {
         if (country && country.name.common.toString() === 'Italy') {
           this.isItalian = true;
-          this.signupForm.patchValue({ license_number: 'none', vat: '' });
+          this.signupForm.patchValue({ licensenumber: 'none', vat: '' });
         } else {
           this.isItalian = false;
-          this.signupForm.patchValue({ vat: 'none', license_number: '' });
+          this.signupForm.patchValue({ vat: 'none', licensenumber: '' });
         }
       }
     );

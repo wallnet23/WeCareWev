@@ -4,7 +4,7 @@ export interface Country {
   },
   cca2: string;
   ccn3: string;
-  flags: {
+  flags?: {
     png: string;
   }
 }

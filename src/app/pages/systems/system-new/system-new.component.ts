@@ -5,6 +5,10 @@ import { FormBuilder, Validators, FormsModule, ReactiveFormsModule, FormControl 
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
+import { ConnectServerService } from '../../../services/connect-server.service';
+import { ApiResponse } from '../../../interfaces/api-response';
+import { Connect } from '../../../classes/connect';
+import { PopupDialogService } from '../../../services/popup-dialog.service';
 
 @Component({
   selector: 'app-system-new',
@@ -23,15 +27,28 @@ export class SystemNewComponent {
 
   isValid: boolean = true;
 
-  systemInfoFormGroup = this.formBuilder.group({
-    name: new FormControl<string | null>(null, Validators.required),
+  newSystemForm = this.formBuilder.group({
+    title: new FormControl<string>('', Validators.required),
     description: new FormControl<string>('')
   })
 
-  constructor(private formBuilder: FormBuilder, private router: Router) {}
+  constructor(private formBuilder: FormBuilder, private router: Router, 
+    private connectServerService: ConnectServerService, private popupDialogService: PopupDialogService) {}
 
-  send() {
+  sendNewSystem() {
+    const title  = this.newSystemForm.get('title')?.value;
+    const description = this.newSystemForm.get('description')?.value;
+    this.connectServerService.postRequest<ApiResponse<{id: number}>>(Connect.urlServerLaraApi, 'system/newSystem',
+       {
+        title: title,
+        description: description
+      })
+    .subscribe((val: ApiResponse<{id: number}>) => {
+      if(val.data) {
+        this.popupDialogService.alertElement(val);
+        this.router.navigate(['/systemOverview', val.data.id]);
+      }
+    })
     //SAVE THE FORM
-    this.router.navigate(['/systemOverview', this.systemInfoFormGroup.get('name')?.value]);
   }
 }

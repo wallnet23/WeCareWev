@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { LoadSystemsService } from '../../../../services/load-systems.service';
-import { SystemInfo } from '../../interfaces/full-system-interface';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { SystemInfo } from '../../interfaces/system-info';
+import { ConnectServerService } from '../../../../services/connect-server.service';
+import { ApiResponse } from '../../../../interfaces/api-response';
+import { Connect } from '../../../../classes/connect';
 
 @Component({
   selector: 'app-system-card',
@@ -18,20 +21,27 @@ import { CommonModule } from '@angular/common';
 export class SystemCardComponent {
 
   isSystem: boolean = false;
-  systems: SystemInfo[] = [];
+  systemsList: SystemInfo[] = [];
 
-  constructor(private loadSystemsService: LoadSystemsService, private router: Router) {
-    this.loadSystemsService.getFilteredSystems().subscribe((result) => {
-      this.systems = result;
-    });
-
-    if(this.systems.length > 0) {
-      this.isSystem = true;
-    }
+  constructor(private loadSystemsService: LoadSystemsService, private router: Router,
+    private connectServerService: ConnectServerService) {
+    this.getSystemList()
   }
 
-  goTo(name: string) {
-    this.router.navigate(['/systemOverview', name]);
+  getSystemList() {
+    this.connectServerService.getRequest<ApiResponse<{systemsInfo: SystemInfo[]}>>(Connect.urlServerLaraApi, 'system/systemsList', {})
+    .subscribe((val: ApiResponse<{systemsInfo: SystemInfo[]}>) => {
+        if(val.data) {
+          this.systemsList = val.data.systemsInfo;
+          if(this.systemsList.length > 0) {
+            this.isSystem = true;
+          }
+        }
+      })
+  } 
+
+  systemOverview(id: number) {
+    this.router.navigate(['/systemOverview', id]);
   }
 
 }

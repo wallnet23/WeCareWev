@@ -43,7 +43,7 @@ export class SystemModifyComponent {
 
   isValid: boolean = true;
   incomplete: boolean = true;
-  systemName: string = '';
+  systemId: number = 0;
 
   @ViewChild('client') obj_client!: ClientInfoComponent;
   @ViewChild('installationSite') obj_installationSite!: InstallationSiteComponent;
@@ -57,12 +57,13 @@ export class SystemModifyComponent {
 
   constructor(private formBuilder: FormBuilder, private route: ActivatedRoute) {
     this.route.params.subscribe(params => {
-      this.systemName = params['id'];
+      this.systemId = params['id'];
     });
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.clientFormGroup = this.obj_client.clientFormGroup;
+    this.clientFormGroup = this.obj_client.stepOneForm;
     this.installationSiteFormGroup = this.obj_installationSite.installationSiteForm;
     this.supplierInfoFormGroup = this.obj_supplier.supplierFormGroup;
     this.productInfoFormGroup = this.obj_product.productFormGroup;

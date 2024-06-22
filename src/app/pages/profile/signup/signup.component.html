@@ -7,7 +7,7 @@
                         <div class="brand-wrapper">
                             <img src="assets/img/logo.png" alt="logo" class="logo">
                         </div>
-                        <p class="login-card-description">{{"SIGNUP.SUBSCRIBE" | translate}}</p>
+                        <p class="login-card-description" style="font-size: medium;">{{"SIGNUP.SUBSCRIBE" | translate}}</p>
                         <p style="font-size: x-small; margin-bottom: 23px;">{{"SIGNUP.MANDATORY" | translate}}</p>
                     </div>
                 </div>
@@ -32,11 +32,11 @@
                                         [ngClass]="{'error': !validEmail}">
                                 </div>
                                 <div class="col-12 col-lg-6 mb-3">
-                                    <label for="obj_country" style="font-weight: bold;">{{"SIGNUP.COUNTRY" | translate}}</label>
-                                    <select class="form-select" id="obj_country" aria-label="select example" formControlName="obj_country">
+                                    <label for="country" style="font-weight: bold;">{{"SIGNUP.COUNTRY" | translate}}</label>
+                                    <select class="form-select" id="country" aria-label="select example" formControlName="country">
                                         <option [ngValue]="null" disabled selected>{{"SIGNUP.SELECTCOUNTRY" | translate}}</option>
                                         <option *ngFor="let country of countriesData" [ngValue]="country">
-                                            <img src="{{country.flags.png}}"
+                                            <img src="{{country.flags?.png}}"
                                                 width="20px" height="15px"> {{ country.name.common }}
                                         </option>
                                     </select>
@@ -50,9 +50,9 @@
                                     </mat-select> -->
                                 </div>
                                 <div *ngIf="!isItalian" class="col-12 col-lg-6 mb-3">
-                                    <label for="license_number" style="font-weight: bold;">{{"SIGNUP.LICENSENUMBER" | translate}}</label>
-                                    <input  id="license_number"
-                                        formControlName="license_number" class="form-control form_control" placeholder="">
+                                    <label for="licensenumber" style="font-weight: bold;">{{"SIGNUP.LICENSENUMBER" | translate}}</label>
+                                    <input  id="licensenumber"
+                                        formControlName="licensenumber" class="form-control form_control" placeholder="">
                                 </div>
                                 <div *ngIf="isItalian" class="col-12 col-lg-6 mb-3">
                                     <label for="vat" style="font-weight: bold;">{{"SIGNUP.IVA" | translate}}</label>
@@ -67,17 +67,17 @@
                                 <div class="col-12 col-lg-6 mb-3">
                                     <label for="phone" style="font-weight: bold;">{{"SIGNUP.PHONE" | translate}}</label>
                                     <input type="text"  id="phone"
-                                        formControlName="phone" class="form-control form_control" placeholder="(+999) 9999999">
+                                        formControlName="phone" class="form-control form_control" placeholder='{{"SIGNUP.PHONEPLACEHOLDER" | translate}}'>
                                 </div>
                                 <div class="col-12 col-lg-6 mb-3">
                                   <label for="phone_whatsapp" style="font-weight: bold;">{{"SIGNUP.WHATSAPP" | translate}}</label>
                                   <input type="text"  id="phone_whatsapp"
-                                      formControlName="phone_whatsapp" class="form-control form_control" placeholder="(+999) 9999999">
+                                      formControlName="phone_whatsapp" class="form-control form_control" placeholder='{{"SIGNUP.PHONEPLACEHOLDER" | translate}}'>
                               </div>
                                 <div class="col-12 mb-3">
                                     <label for="request_description" style="font-weight: bold;">{{"SIGNUP.INFO" | translate}}</label>
                                     <textarea  id="request_description" rows="3"
-                                        formControlName="request_description" class="form-control" placeholder="Write some short infos about your request">
+                                        formControlName="request_description" class="form-control" placeholder='{{"SIGNUP.INFOPLACEHOLDER" | translate}}'>
                                     </textarea>
                                 </div>
                                 <div class="col-12 mb-3">
@@ -87,7 +87,7 @@
                         </div>
                         <div class="col-12">
                             <button  class="btn btn-block send-btn mb-4" type="button"
-                            (click)="subscribe()">Send Request</button>
+                            (click)="sendSignupData()">Send Request</button>
                         </div>
                     </form>
                 </div>
