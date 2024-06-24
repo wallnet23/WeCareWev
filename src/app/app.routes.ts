@@ -32,6 +32,7 @@ export const routes: Routes = [
     { path: 'ticket/:id', component: TicketComponent, canActivate: [authGuard] },
     { path: 'ticketsList', component: TicketsListComponent, canActivate: [authGuard] },
     { path: 'newTicket', component: TicketNewComponent, canActivate: [authGuard] },
+    { path: 'newTicket/:id', component: TicketNewComponent, canActivate: [authGuard] },
     { path: 'warrantyExtension', component:  WarrantyExtensionComponent, canActivate: [authGuard]},
     { path: 'deniedAccess', component:  DeniedAccessComponent},
     { path: '**', redirectTo: 'systemsList'}

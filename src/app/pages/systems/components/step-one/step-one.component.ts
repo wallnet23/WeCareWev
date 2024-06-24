@@ -5,8 +5,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatStepperModule } from '@angular/material/stepper';
-import { map, Observable } from 'rxjs';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { ConnectServerService } from '../../../../services/connect-server.service';
@@ -18,7 +18,7 @@ import { Country } from '../../../../interfaces/country';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-client-info',
+  selector: 'app-step-one',
   standalone: true,
   providers: [
     {
@@ -38,10 +38,10 @@ import { TranslateModule } from '@ngx-translate/core';
     MatIconModule,
     TranslateModule,
   ],
-  templateUrl: './client-info.component.html',
-  styleUrl: './client-info.component.scss'
+  templateUrl: './step-one.component.html',
+  styleUrl: './step-one.component.scss'
 })
-export class ClientInfoComponent implements OnInit {
+export class StepOneComponent implements OnInit {
 
   @Input() idsystem = 0;
   countriesData: Country[] = [];
@@ -59,19 +59,18 @@ export class ClientInfoComponent implements OnInit {
     this.connectServerService.getRequestCountryData().subscribe((obj) => {
       this.countriesData = obj;
     });
+    this.infoStep();
   }
 
   constructor(private formBuilder: FormBuilder, private connectServerService: ConnectServerService,
     private popupDialogService: PopupDialogService) { }
 
-  //saveStep --> invio i dati al server per ogni step, chiamo l'api con il ccn3 per recuperare l'oggetto country. url: system/saveStepOne
-  //infoStep --> prendo i dati. url: system/infoStepOne
-
   infoStep() {
-    this.connectServerService.getRequest<ApiResponse<StepOne>>(Connect.urlServerLaraApi, 'system/infoStepOne', {id: this.idsystem}).
-      subscribe((val: ApiResponse<StepOne>) => {
-        if (val.data) {
-          this.stepOneForm.patchValue(val.data);
+    this.connectServerService.getRequest<ApiResponse<{ stepOne: StepOne }>>(Connect.urlServerLaraApi, 'system/infoStepOne', { id: this.idsystem }).
+      subscribe((val: ApiResponse<{ stepOne: StepOne }>) => {
+        if (val.data && val.data.stepOne) {
+          this.stepOneForm.patchValue(val.data.stepOne);
+          //console.log(val.data.stepOne.ccn3);
         }
       })
   }
@@ -80,25 +79,42 @@ export class ClientInfoComponent implements OnInit {
     let stepOne = JSON.parse(JSON.stringify(this.stepOneForm.getRawValue()));
     let country$: Observable<Country>;
     let country: Country;
-    console.log("CCN3: ", this.stepOneForm.get('ccn3')?.value!)
-    country$ = this.connectServerService.getSpecificCountryData(this.stepOneForm.get('ccn3')?.value!);
-    country$.subscribe((val: any) => {
-      if (val && val.length > 0) {
-        country = {name: {common: val[0].name.common}, cca2: val[0].cca2, ccn3: val[0].ccn3};
-        console.log(country);
-        delete stepOne.ccn3;
-        stepOne.customer_country = country;
-        this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepOne',
-          {
-            idsystem: this.idsystem,
-            obj_step: stepOne
-          })
-          .subscribe((val: ApiResponse<null>) => {
-            this.popupDialogService.alertElement(val);
-          })
-      }
-    })
 
+    if (stepOne.ccn3) {
+      country$ = this.connectServerService.getSpecificCountryData(this.stepOneForm.get('ccn3')?.value!);
+      country$.subscribe((val: any) => {
+        if (val && val.length > 0) {
+          country = { name: { common: val[0].name.common }, cca2: val[0].cca2, ccn3: val[0].ccn3 };
+          console.log(country);
+          delete stepOne.ccn3;
+          stepOne.customer_country = country;
+          this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepOne',
+            {
+              idsystem: this.idsystem,
+              obj_step: stepOne
+            })
+            .subscribe((val: ApiResponse<null>) => {
+              this.popupDialogService.alertElement(val);
+              this.infoStep();
+            })
+        }
+      })
+    }
+    else {
+      country = { name: { common: '' }, cca2: '', ccn3: '' };
+      delete stepOne.ccn3;
+      stepOne.location_country = country;
+
+      this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepTwo',
+        {
+          idsystem: this.idsystem,
+          obj_step: stepOne,
+        })
+        .subscribe((val: ApiResponse<null>) => {
+          this.popupDialogService.alertElement(val);
+          this.infoStep();
+        })
+    }
   }
 
 }

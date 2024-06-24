@@ -5,67 +5,89 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatStepperModule } from '@angular/material/stepper';
-import { ClientInfoComponent } from '../components/client-info/client-info.component';
-import { InstallationSiteComponent } from '../components/installation-site/installation-site.component';
+import { StepOneComponent } from '../components/step-one/step-one.component';
+import { StepTwoComponent } from '../components/step-two/step-two.component';
 import { MatIconModule } from '@angular/material/icon';
-import { SupplierInfoComponent } from '../components/supplier-info/supplier-info.component';
-import { ProductInfoComponent } from '../components/product-info/product-info.component';
+import { StepThreeComponent } from '../components/step-three/step-three.component';
+import { StepFourComponent } from '../components/step-four/step-four.component';
 import { ActivatedRoute } from '@angular/router';
-import { AdditionalInfoComponent } from '../components/additional-info/additional-info.component';
+import { StepFiveComponent } from '../components/step-five/step-five.component';
+import { ConnectServerService } from '../../../services/connect-server.service';
+import { ApiResponse } from '../../../interfaces/api-response';
+import { SystemInfo } from '../interfaces/system-info';
+import { Ticket } from '../interfaces/ticket';
+import { Warranty } from '../interfaces/warranty';
+import { RMA } from '../interfaces/rma';
+import { Connect } from '../../../classes/connect';
 
 @Component({
-  selector: 'app-system-modify',
-  templateUrl: './system-modify.component.html',
-  styleUrl: './system-modify.component.scss',
-  standalone: true,
-  providers: [
-    {
-      provide: STEPPER_GLOBAL_OPTIONS,
-      useValue: {showError: true},
-    },
-  ],
-  imports: [
-    MatStepperModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    ClientInfoComponent,
-    InstallationSiteComponent,
-    MatIconModule,
-    SupplierInfoComponent,
-    ProductInfoComponent,
-    AdditionalInfoComponent,
-  ],
+    selector: 'app-system-modify',
+    templateUrl: './system-modify.component.html',
+    styleUrl: './system-modify.component.scss',
+    standalone: true,
+    providers: [
+        {
+            provide: STEPPER_GLOBAL_OPTIONS,
+            useValue: { showError: true },
+        },
+    ],
+    imports: [
+        MatStepperModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        StepOneComponent,
+        StepTwoComponent,
+        StepThreeComponent,
+        StepFourComponent,
+        StepFiveComponent,
+        MatIconModule,
+    ]
 })
 export class SystemModifyComponent {
 
   isValid: boolean = true;
   incomplete: boolean = true;
-  systemId: number = 0;
+  idsystem: number = 0;
+  systemName: string = '';
 
-  @ViewChild('client') obj_client!: ClientInfoComponent;
-  @ViewChild('installationSite') obj_installationSite!: InstallationSiteComponent;
-  @ViewChild('supplier') obj_supplier!: SupplierInfoComponent;
-  @ViewChild('product') obj_product!: ProductInfoComponent;
+  @ViewChild('stepOne') obj_stepOne!: StepOneComponent;
+  @ViewChild('stepTwo') obj_stepTwo!: StepTwoComponent;
+  @ViewChild('stepThree') obj_stepThree!: StepThreeComponent;
+  @ViewChild('stepFour') obj_stepFour!: StepFourComponent;
+  @ViewChild('stepFive') obj_stepFive!: StepFiveComponent;
 
-  clientFormGroup!: FormGroup;
-  installationSiteFormGroup!: FormGroup;
-  supplierInfoFormGroup!: FormGroup;
-  productInfoFormGroup!: FormGroup;
+  stepOneForm!: FormGroup;
+  stepTwoForm!: FormGroup;
+  stepThreeForm!: FormGroup;
+  stepFourForm!: FormGroup;
+  stepFiveForm!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute) {
+  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private connectServerService: ConnectServerService) {
     this.route.params.subscribe(params => {
-      this.systemId = params['id'];
+      this.idsystem = params['id'];
+      this.getSystemOverview()
     });
 
   }
 
+  getSystemOverview() {
+    this.connectServerService.getRequest<ApiResponse<{systemInfo: SystemInfo, systemTickets: Ticket[], systemWarranty: Warranty, systemRMA: RMA}>>
+    (Connect.urlServerLaraApi, 'system/systemOverview', {id: this.idsystem})
+    .subscribe((val: ApiResponse<{systemInfo: SystemInfo, systemTickets: Ticket[], systemWarranty: Warranty, systemRMA: RMA}>) => {
+      if(val.data) {
+        this.systemName = val.data.systemInfo.title
+      }
+    })
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
-    this.clientFormGroup = this.obj_client.stepOneForm;
-    this.installationSiteFormGroup = this.obj_installationSite.installationSiteForm;
-    this.supplierInfoFormGroup = this.obj_supplier.supplierFormGroup;
-    this.productInfoFormGroup = this.obj_product.productFormGroup;
+    this.stepOneForm = this.obj_stepOne.stepOneForm;
+    this.stepTwoForm = this.obj_stepTwo.stepTwoForm;
+    this.stepThreeForm = this.obj_stepThree.stepThreeForm;
+    this.stepFourForm = this.obj_stepFour.stepFourForm;
+    this.stepFiveForm = this.obj_stepFive.stepFiveForm;
   }
 }

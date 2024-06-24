@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormsModule, ReactiveFormsModule, FormControl, FormArray } from '@angular/forms';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { MatButtonModule } from '@angular/material/button';
@@ -28,7 +28,7 @@ interface ClusterInfo {
 }
 
 @Component({
-  selector: 'app-product-info',
+  selector: 'app-step-four',
   standalone: true,
   providers: [
     {
@@ -48,16 +48,16 @@ interface ClusterInfo {
     MatIconModule,
     MatCardModule,
   ],
-  templateUrl: './product-info.component.html',
-  styleUrl: './product-info.component.scss'
+  templateUrl: './step-four.component.html',
+  styleUrl: './step-four.component.scss'
 })
-export class ProductInfoComponent {
+export class StepFourComponent {
 
-
+  @Input() idsystem = 0;
   inverterNum: any[] = [];
   numbers: number[] = Array.from({ length: 10 }, (_, i) => i + 1);
 
-  productFormGroup = this.formBuilder.group({
+  stepFourForm = this.formBuilder.group({
     installationDate: new FormControl<Date | null>(null, Validators.required),
     sysComposition: new FormControl<string | null>(null, Validators.required),
     wecoProducts: new FormControl<string | null>(null, Validators.required),
@@ -80,11 +80,11 @@ export class ProductInfoComponent {
   constructor(private formBuilder: FormBuilder, private http: HttpClient, private uploadImage: UploadImageService) { }
 
   sendData() {
-    console.log(this.productFormGroup.value);
+    console.log(this.stepFourForm.value);
   }
 
   generateInverterArray() {
-    const i = this.productFormGroup.get('inverterNumber')?.value;
+    const i = this.stepFourForm.get('inverterNumber')?.value;
     this.inverterFieldsAsFormArray.clear();
     for (let j = 0; j < i!; j++) {
       this.inverterFieldsAsFormArray.push(this.inverter(
@@ -129,7 +129,7 @@ export class ProductInfoComponent {
   */
 
   get clusterFieldsAsFormArray() {
-    return this.productFormGroup.get('clusters') as FormArray;
+    return this.stepFourForm.get('clusters') as FormArray;
   }
 
   get batteryFieldsAsFormArray() {
@@ -137,7 +137,7 @@ export class ProductInfoComponent {
   }
 
   get inverterFieldsAsFormArray() {
-    return this.productFormGroup.get('inverters') as FormArray;
+    return this.stepFourForm.get('inverters') as FormArray;
   }
 
   inverter(obj: InverterInfo) {
@@ -169,6 +169,6 @@ export class ProductInfoComponent {
   }
 
   print() {
-    console.log(this.productFormGroup);
+    console.log(this.stepFourForm);
   }
 }

@@ -17,8 +17,8 @@
             <div class="col-12 col-md-6 col-lg-5 mb-4">
                 <label class="formLabel" for="idsystem">{{"NEWTICKET.RELATEDSYS" | translate}}</label>
                 <select type="select" id="idsystem" formControlName="idsystem" class="form-select">
-                    <option selected>{{"NEWTICKET.NONE" | translate}}</option>
-                    <option *ngFor="let system of systems">{{system.title}}</option>
+                    <option [ngValue]="null" selected>{{"NEWTICKET.NONE" | translate}}</option>
+                    <option [ngValue]="system.id" *ngFor="let system of systems">{{system.title}}</option>
                 </select>
             </div>
             <div class="col-12 col-lg-10 mb-4">
@@ -30,7 +30,7 @@
                 <div class="row justify-content-center mt-2">
                     <div *ngFor="let image of images; let i = index"
                         class="col-xs-12 col-sm-6 col-md-2 mb-4 text-center" style="width: 100px; height: 100px;">
-                        <img [src]="image" class="img-fluid thumbnailImg">
+                        <img [src]="image.src" [alt]="image.title" class="img-fluid thumbnailImg">
                         <i class="bi bi-trash trash" (click)="deleteImg(i)"></i>
                     </div>
                 </div>

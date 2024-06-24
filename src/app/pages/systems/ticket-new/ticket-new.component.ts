@@ -8,9 +8,10 @@ import { Ticket } from '../interfaces/ticket';
 import { ApiResponse } from '../../../interfaces/api-response';
 import { Connect } from '../../../classes/connect';
 import { ConnectServerService } from '../../../services/connect-server.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { SystemInfo } from '../interfaces/system-info';
+import { Image } from '../components/interfaces/image';
 
 @Component({
   selector: 'app-ticket-new',
@@ -29,8 +30,8 @@ export class TicketNewComponent {
   selectedFiles: File[] = [];
   maxImages: number = 6;
   imageSpaceLeft: boolean = true;
-  systems: SystemInfo[] = [];
-  images: string[] = [];
+  images: Image[] = [];
+  systems: {id: number, title: string}[] = [];
 
   ticketForm = new FormGroup({
     id: new FormControl<number>(0, Validators.required),
@@ -42,8 +43,23 @@ export class TicketNewComponent {
   })
 
   constructor(private loadSystemService: LoadSystemsService, public uploadImageService: UploadImageService,
-    private connectServerService: ConnectServerService, private router: Router) {
-    //this.systems = loadSystemService.getAllSystems();
+    private connectServerService: ConnectServerService, private router: Router, private activatedRoute: ActivatedRoute) {
+      this.activatedRoute.paramMap.subscribe((paramMap) => {
+        this.setSystem(parseInt(paramMap.get('id')!));
+      });
+  }
+
+  private setSystem(idsystem: number) {
+    this.connectServerService.getRequest<ApiResponse<{systemInfo: {id: number, title: string}}>>(Connect.urlServerLaraApi, 'system/systemInfo', 
+      {id: idsystem})
+      .subscribe((val: ApiResponse<{systemInfo: {id: number, title: string}}>) => {
+        if(val.data) {
+          this.systems.push(val.data.systemInfo);
+          this.ticketForm.get('idsystem')?.setValue(val.data.systemInfo.id);
+          console.log("id", val.data.systemInfo.id)
+          console.log("system", this.systems)
+        }
+      })
   }
 
   formatDate(date: Date): string {
@@ -93,7 +109,7 @@ export class TicketNewComponent {
       });
     }
 
-    this.connectServerService.postRequest<ApiResponse<Ticket>>(Connect.urlServerLaraApi, 'ticket/insertTicket', formData).
+    this.connectServerService.postRequest<ApiResponse<Ticket>>(Connect.urlServerLaraApi, 'ticket/insertTicket', {formData: formData}).
       subscribe((val: ApiResponse<Ticket>) => {
         if(val.data) {
           this.router.navigate(['/ticket', val.data.id]);

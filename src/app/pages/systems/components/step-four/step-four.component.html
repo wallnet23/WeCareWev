@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <form [formGroup]="productFormGroup">
+    <form [formGroup]="stepFourForm">
         <div class="form-group">
             <div class="row">
                 <div class="col-12 col-md-6 mb-3">
@@ -21,24 +21,24 @@
                     <label for="wecoProducts" style="font-weight: bold;">Weco Products in the System</label>
                     <select class="form-select" aria-label="select example" formControlName="wecoProducts">
                         <option [ngValue]="null" disabled selected>Select an Option</option>
-                        <option *ngIf="productFormGroup.get('sysComposition')?.value === null" disabled>No options
+                        <option *ngIf="stepFourForm.get('sysComposition')?.value === null" disabled>No options
                         </option>
-                        <option *ngIf="productFormGroup.get('sysComposition')?.value === 'inverter'
-                        || productFormGroup.get('sysComposition')?.value === 'batteryInverter'" value="inverter">
+                        <option *ngIf="stepFourForm.get('sysComposition')?.value === 'inverter'
+                        || stepFourForm.get('sysComposition')?.value === 'batteryInverter'" value="inverter">
                             Inverter </option>
-                        <option *ngIf="productFormGroup.get('sysComposition')?.value == 'batteryInverter'"
+                        <option *ngIf="stepFourForm.get('sysComposition')?.value == 'batteryInverter'"
                             value="battery"> Battery </option>
-                        <option *ngIf="productFormGroup.get('sysComposition')?.value == 'batteryInverter'"
+                        <option *ngIf="stepFourForm.get('sysComposition')?.value == 'batteryInverter'"
                             value="batteryInverter"> Battery and Inverter </option>
                     </select>
                 </div>
 
                 <div class="col-12 mb-3"
-                    *ngIf="productFormGroup.get('sysComposition')?.value === 'batteryInverter'
-                    && (productFormGroup.get('wecoProducts')?.value === 'inverter' || productFormGroup.get('wecoProducts')?.value === 'battery')">
-                    <label *ngIf="productFormGroup.get('wecoProducts')?.value === 'inverter'" for="brand"
+                    *ngIf="stepFourForm.get('sysComposition')?.value === 'batteryInverter'
+                    && (stepFourForm.get('wecoProducts')?.value === 'inverter' || stepFourForm.get('wecoProducts')?.value === 'battery')">
+                    <label *ngIf="stepFourForm.get('wecoProducts')?.value === 'inverter'" for="brand"
                         style="font-weight: bold;">Battery Brand</label>
-                    <label *ngIf="productFormGroup.get('wecoProducts')?.value === 'battery'" for="inverterBrand"
+                    <label *ngIf="stepFourForm.get('wecoProducts')?.value === 'battery'" for="inverterBrand"
                         style="font-weight: bold;">Inverter Brand</label>
                     <input type="text" name="brand" id="brand" formControlName="brand" class="form-control"
                         placeholder="Write something" required>
@@ -46,8 +46,8 @@
             </div>
 
             <div class="row">
-                <mat-card *ngIf="productFormGroup.get('sysComposition')?.value === 'inverter'
-                        || productFormGroup.get('sysComposition')?.value === 'batteryInverter'">
+                <mat-card *ngIf="stepFourForm.get('sysComposition')?.value === 'inverter'
+                        || stepFourForm.get('sysComposition')?.value === 'batteryInverter'">
                     <mat-card-header class="titleBorder">
                         <mat-card-title style="font-weight: bold;">Inverter Info</mat-card-title>
                     </mat-card-header>
@@ -71,7 +71,7 @@
                         </div>
 
                         <div class="col-12 mt-3 form-check form-switch"
-                            *ngIf="productFormGroup.get('inverterNumber')?.value != null">
+                            *ngIf="stepFourForm.get('inverterNumber')?.value != null">
                             <input class="form-check-input" type="checkbox" role="switch" id="parallelInverter"
                                 formControlName="parallelInverter">
                             <label class="form-check-label" for="parallelInverter">The inverter are in
@@ -79,14 +79,14 @@
                         </div>
 
                         <div class="col-12 mt-3 form-check form-switch"
-                            *ngIf="productFormGroup.get('parallelInverter')?.value == true">
+                            *ngIf="stepFourForm.get('parallelInverter')?.value == true">
                             <input class="form-check-input" type="checkbox" role="switch" id="powerInverter"
                                 formControlName="powerInverter">
                             <label class="form-check-label" for="powerInverter">The inverter are in
                                 parallel on power side</label>
                         </div>
 
-                        <div class="col-12 p-0 mt-3" *ngIf="productFormGroup.get('inverterNumber')?.value != null">
+                        <div class="col-12 p-0 mt-3" *ngIf="stepFourForm.get('inverterNumber')?.value != null">
                             <div class="container">
                                 <div class="row mt-1">
                                     <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xxl-2 p-2"
@@ -125,7 +125,7 @@
             </div>
 
             <div class="row mt-3">
-                <mat-card *ngIf="productFormGroup.get('sysComposition')?.value === 'batteryInverter'"
+                <mat-card *ngIf="stepFourForm.get('sysComposition')?.value === 'batteryInverter'"
                     style="border-bottom: 2px solid lightgray;">
                     <mat-card-header class="titleBorder">
                         <mat-card-title style="font-weight: bold;">Battery Info</mat-card-title>
@@ -143,22 +143,22 @@
                         </div>
 
 
-                        <div class="col-12 p-0" *ngIf="productFormGroup.get('batteryVoltage')?.value != null">
+                        <div class="col-12 p-0" *ngIf="stepFourForm.get('batteryVoltage')?.value != null">
                             <label class="mt-3" for="batteryModel"
                                 style="font-weight: bold; font-size: medium;">Battery
                                 Model</label>
                             <select class="form-select" formControlName="batteryModel">
                                 <option [ngValue]="null" disabled selected>Select a model</option>
-                                <option *ngIf="productFormGroup.get('batteryVoltage')?.value === 'LV'" value="4K4"> 4K4
+                                <option *ngIf="stepFourForm.get('batteryVoltage')?.value === 'LV'" value="4K4"> 4K4
                                 </option>
                                 <option value="5K3"> 5K3 </option>
                                 <option value="5K3"> 4K5 </option>
-                                <option *ngIf="productFormGroup.get('batteryVoltage')?.value === 'HV'" value="14K3">
+                                <option *ngIf="stepFourForm.get('batteryVoltage')?.value === 'HV'" value="14K3">
                                     14K3 </option>
                             </select>
                         </div>
 
-                        <div class="col-12 p-0" *ngIf="productFormGroup.get('batteryModel')?.value != null">
+                        <div class="col-12 p-0" *ngIf="stepFourForm.get('batteryModel')?.value != null">
                             <label class="mt-3" for="batteryType" style="font-weight: bold; font-size: medium;">Battery
                                 Type</label>
                             <select class="form-select" formControlName="batteryType">
@@ -170,7 +170,7 @@
                         </div>
 
 
-                        <div *ngIf="productFormGroup.get('batteryType')?.value != null" class="col-12 p-0">
+                        <div *ngIf="stepFourForm.get('batteryType')?.value != null" class="col-12 p-0">
                             <label class="form-check-label mt-3 mr-2" for="singleBattery">
                                 Single Battery</label>
                             <div class="form-check form-check-inline">
@@ -185,7 +185,7 @@
                             </div>
                         </div>
 
-                        <div *ngIf="productFormGroup.get('singleBattery')?.value == true" class="col-12 p-0">
+                        <div *ngIf="stepFourForm.get('singleBattery')?.value == true" class="col-12 p-0">
                             <div class="container">
                                 <div class="row mt-1">
                                     <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xxl-2 p-1">
@@ -235,7 +235,7 @@
                             </div>
                         </div>
 
-                        <div *ngIf="productFormGroup.get('singleBattery')?.value == false" class="col-12 p-0">
+                        <div *ngIf="stepFourForm.get('singleBattery')?.value == false" class="col-12 p-0">
 
                             <div class="col-12 p-0">
                                 <label class="form-check-label mt-3 mr-2" for="parallelCluster">
@@ -303,13 +303,10 @@
             <button class="mr-2" mat-raised-button matStepperPrevious style="width: 80px;" (click)="sendData()">
                 Previous
             </button>
-            <button class="ml-2" mat-raised-button matStepperNext [disabled]="!productFormGroup.valid"
+            <button class="ml-2" mat-raised-button matStepperNext
                 (click)="sendData()">
                 Next
             </button>
         </div>
     </form>
-    <div class="btn btn-outline-dark" (click)="print()">
-        view
-    </div>
 </div>

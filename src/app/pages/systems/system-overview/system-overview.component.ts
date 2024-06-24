@@ -81,7 +81,7 @@ export class SystemOverviewComponent {
     this.router.navigate(['/systemTicketsList', 1]);
   }
   newTicket() {
-    this.router.navigate(['/newTicket']);
+    this.router.navigate(['/newTicket', this.idsystem]);
   }
 
   goToTicket(id: number) {

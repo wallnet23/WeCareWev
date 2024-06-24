@@ -2,36 +2,39 @@
   <div class="row">
     <div class="col-12 p-2 text-center">
       <h2 style="font-weight: bold;">
-        {{systemId}}
+        {{systemName}}
       </h2>
+    </div>
+    <div class="col-12 text-center">
+      <small>* Mandatory fields</small>
     </div>
 
     <div class="col-12 p-0">
       <mat-stepper orientation="vertical" [linear]="false" #stepper>
 
-        <mat-step [stepControl]="clientFormGroup" errorMessage="Name is required.">
+        <mat-step [stepControl]="stepOneForm" errorMessage="Name is required.">
           <ng-template matStepLabel>CLIENT INFO</ng-template>
-          <app-client-info></app-client-info>
+          <app-step-one #stepOne [idsystem]="idsystem"></app-step-one>
         </mat-step>
 
-        <mat-step [stepControl]="installationSiteFormGroup" errorMessage="Address is required.">
+        <mat-step [stepControl]="stepTwoForm" errorMessage="Address is required.">
           <ng-template matStepLabel>INSTALLATION SITE</ng-template>
-          <app-installation-site></app-installation-site>
+          <app-step-two #stepTwo [idsystem]="idsystem"></app-step-two>
         </mat-step>
 
-        <mat-step [stepControl]="installationSiteFormGroup" errorMessage="Address is required.">
+        <mat-step [stepControl]="stepThreeForm" errorMessage="Address is required.">
           <ng-template matStepLabel>SUPPLIER INFO</ng-template>
-          <app-supplier-info></app-supplier-info>
+          <app-step-three #stepThree [idsystem]="idsystem"></app-step-three>
         </mat-step>
 
-        <mat-step [stepControl]="installationSiteFormGroup" errorMessage="Address is required.">
+        <mat-step [stepControl]="stepFourForm" errorMessage="Address is required.">
           <ng-template matStepLabel>PRODUCT INFO</ng-template>
-          <app-product-info></app-product-info>
+          <app-step-four #stepFour [idsystem]="idsystem"></app-step-four>
         </mat-step>
 
-        <mat-step [stepControl]="installationSiteFormGroup" errorMessage="Address is required.">
+        <mat-step [stepControl]="stepFiveForm" errorMessage="Address is required.">
           <ng-template matStepLabel>ADDITIONAL INFO</ng-template>
-          <app-additional-info></app-additional-info>
+          <app-step-five #stepFive [idsystem]="idsystem"></app-step-five>
         </mat-step>
 
         <mat-step>
