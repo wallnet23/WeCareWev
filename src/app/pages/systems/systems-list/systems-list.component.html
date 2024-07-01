@@ -1,10 +1,11 @@
 <div class="container mt-4 p-1 p-lg-3 p-xxl-4" style="min-width: 350px;">
     <div class="row justify-content-center align-items-center">
         <div class="col-12 col-md-8 col-lg-6 text-center">
-            <label class="searchLabel">SEARCH SYSTEM</label>
+            <label class="searchLabel">{{"SYSTEM.SYSTEMLIST.TITLE" | translate}}</label>
             <div class="input p-2 input-group">
-                <input [(ngModel)]="searchText" type="text" class="form-control searchBar" placeholder="Name of the system">
-                <button class="btn btn-dark">Cerca</button>
+                <input [(ngModel)]="searchText" type="text" class="form-control searchBar"
+                placeholder='{{"SYSTEM.SYSTEMLIST.SEARCHPLACEHOLDER" | translate}}'>
+                <button class="btn btn-dark">{{"SYSTEM.SYSTEMLIST.BUTTONSEARCH" | translate}}</button>
             </div>
         </div>
         <div class="col-12">

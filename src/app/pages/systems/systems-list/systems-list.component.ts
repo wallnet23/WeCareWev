@@ -3,12 +3,9 @@ import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { SystemCardComponent } from '../components/system-card/system-card.component';
-import { LoadSystemsService } from '../../../services/load-systems.service';
 import { FormsModule } from '@angular/forms';
 import { SystemInfo } from '../interfaces/system-info';
-import { ConnectServerService } from '../../../services/connect-server.service';
-import { ApiResponse } from '../../../interfaces/api-response';
-import { Connect } from '../../../classes/connect';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-systems-list',
@@ -17,7 +14,8 @@ import { Connect } from '../../../classes/connect';
     CommonModule,
     MatIconModule,
     SystemCardComponent,
-    FormsModule
+    FormsModule,
+    TranslateModule
   ],
   templateUrl: './systems-list.component.html',
   styleUrl: './systems-list.component.scss'
@@ -25,10 +23,9 @@ import { Connect } from '../../../classes/connect';
 export class SystemsListComponent {
 searchText: any;
 
-  systemsList: SystemInfo[] = [] 
+  systemsList: SystemInfo[] = []
 
-  constructor(private router: Router, public loadSystemService: LoadSystemsService,
-    private connectServerService: ConnectServerService) {
+  constructor(private router: Router) {
 
     }
 

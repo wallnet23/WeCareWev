@@ -45,16 +45,16 @@
                     <ul class="list-unstyled">
                         <li class="listElement">
                             <i class="bi bi-circle-fill" style="font-size: large;" [ngClass]="{
-                                'text-success': systemInfo?.status === 'Approved',
-                                'text-danger': systemInfo?.status === 'Incomplete',
-                                'text-warning': systemInfo?.status === 'Waiting for approval'}">
+                                'text-success': systemInfo?.status?.title === 'Approved',
+                                'text-danger': systemInfo?.status?.title === 'Incomplete',
+                                'text-warning': systemInfo?.status?.title === 'Waiting for approval'}">
                             </i>
                             <span *ngIf="systemInfo?.status" style="margin-left: 1rem;">{{systemInfo?.status}}</span>
                             <span *ngIf="!systemInfo?.status" style="margin-left: 1rem;">Status not available</span>
                         </li>
                         <li class="listElement">
                             <span class="listTitle">Supplier Name:</span><br>
-                            <span class="listDescription">{{systemInfo?.customerName}}</span>
+                            <span class="listDescription">{{systemInfo?.customerInfo}}</span>
                         </li>
                         <li class="listElement">
                             <span class="listTitle">Installation Site:</span><br>
@@ -74,13 +74,22 @@
 
         <div class="col-12 col-md-6 mt-2">
             <div class="card">
-                <h5 class="card-header greenBg">WARRANTY EXTENSION</h5>
+                <h5 class="card-header greenBg">WARRANTY</h5>
                 <div class="card-body">
                     <p style="margin-top: 1rem;">
-                        <span class="listTitle">Warranty Extension Status: </span><br>
-                        <span class="listDescription">{{warrantyExtensionStatus}}</span>
-                    </p><br>
-                    <p class="paragraph" *ngIf="!isWarrantyRequest; else warrantyBlock">
+                        <span class="listTitle">Warranty Status: </span><br>
+                        <!-- <span class="listDescription">{{warrantyExtensionStatus}}</span> -->
+                    </p>
+                    <p class="paragraph" *ngIf="systemInfo?.status?.id == 4; else warrantyBlock" >
+
+                    </p>
+                    <ng-template #warrantyBlock>
+                      <p class="paragraph">
+                          Per visualizzare la garanzia è necessario che l'impianto sia stato approvato.
+                          Stato impianto:
+                      </p>
+                  </ng-template>
+                    <!-- <p class="paragraph" *ngIf="!isWarrantyRequest; else warrantyBlock">
                         Request a warranty extension, our technician will review your system and check
                         if there's a possibility for a warrant extension.
                     </p>
@@ -88,11 +97,11 @@
                         <p class="paragraph">
                             Click on this card to see the details of your warranty request status
                         </p>
-                    </ng-template>
+                    </ng-template> -->
                 </div>
                 <div class="card-footer greenBg text-center">
-                    <div href="#" class="btn btn-outline-dark btn-light" (click)="warrantyExtension()">New warranty
-                        extension
+                    <div href="#" class="btn btn-outline-dark btn-light" (click)="warrantyInfo()">Warranty
+                        info
                     </div>
                 </div>
             </div>
@@ -114,7 +123,7 @@
                         <h5 class="card-title">Number of chats available</h5>
                         <p class="card-text">Click on this card to visualize all of the assistance requests and chats
                             for this system.</p>
-                        <p> 
+                        <p>
                             </div>-->
 
                     <span style="font-weight: bold;">Latest Requests:</span>
@@ -143,6 +152,13 @@
                                                     </i>
                                                 </span>
                                             </div>
+                                            <div class="col-12">
+                                              <span style="font-weight: bold;">Description: </span>
+                                              <span>
+                                                  {{ticket.description}}
+
+                                              </span>
+                                          </div>
                                         </div>
                                         <div class="row justify-content-center">
                                             <ng-template #ticketBlock>
@@ -172,7 +188,7 @@
         </div>
     </div>
 
-    <div class="row justify-content-center align-items-center mt-2 p-1 p-lg-4">
+    <div class="row justify-content-center align-items-center mt-2 p-1 p-lg-4" *ngIf="false">
         <div class="col-12">
             <div class="card">
                 <h5 class="card-header yellowBg">RMA</h5>

@@ -92,8 +92,8 @@ export class SystemOverviewComponent {
     this.router.navigate(['/systemModify', this.idsystem])
   }
 
-  warrantyExtension() {
-    this.router.navigate(['/warrantyExtension'])
+  warrantyInfo() {
+    this.router.navigate(['/warrantyInfo'])
   }
 
   // goTo(request: AssistanceRequest) {

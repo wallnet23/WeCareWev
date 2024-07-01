@@ -1,312 +1,61 @@
 <div class="container-fluid">
-    <form [formGroup]="stepFourForm">
-        <div class="form-group">
-            <div class="row">
-                <div class="col-12 col-md-6 mb-3">
-                    <label for="installationDate" style="font-weight: bold;">Installation Date</label>
-                    <input type="date" name="installationDate" id="installationDate" formControlName="installationDate"
-                        class="form-control" placeholder="gg/mm/aaaa">
-                </div>
-
-                <div class="col-12 col-md-6 mb-3">
-                    <label for="sysComposition" style="font-weight: bold;">System Composition</label>
-                    <select class="form-select" aria-label="select example" formControlName="sysComposition">
-                        <option [ngValue]="null" disabled selected>Select an Option</option>
-                        <option value="inverter"> Inverter </option>
-                        <option value="batteryInverter"> Battery and Inverter </option>
-                    </select>
-                </div>
-
-                <div class="col-12 col-md-6 mb-3">
-                    <label for="wecoProducts" style="font-weight: bold;">Weco Products in the System</label>
-                    <select class="form-select" aria-label="select example" formControlName="wecoProducts">
-                        <option [ngValue]="null" disabled selected>Select an Option</option>
-                        <option *ngIf="stepFourForm.get('sysComposition')?.value === null" disabled>No options
-                        </option>
-                        <option *ngIf="stepFourForm.get('sysComposition')?.value === 'inverter'
-                        || stepFourForm.get('sysComposition')?.value === 'batteryInverter'" value="inverter">
-                            Inverter </option>
-                        <option *ngIf="stepFourForm.get('sysComposition')?.value == 'batteryInverter'"
-                            value="battery"> Battery </option>
-                        <option *ngIf="stepFourForm.get('sysComposition')?.value == 'batteryInverter'"
-                            value="batteryInverter"> Battery and Inverter </option>
-                    </select>
-                </div>
-
-                <div class="col-12 mb-3"
-                    *ngIf="stepFourForm.get('sysComposition')?.value === 'batteryInverter'
-                    && (stepFourForm.get('wecoProducts')?.value === 'inverter' || stepFourForm.get('wecoProducts')?.value === 'battery')">
-                    <label *ngIf="stepFourForm.get('wecoProducts')?.value === 'inverter'" for="brand"
-                        style="font-weight: bold;">Battery Brand</label>
-                    <label *ngIf="stepFourForm.get('wecoProducts')?.value === 'battery'" for="inverterBrand"
-                        style="font-weight: bold;">Inverter Brand</label>
-                    <input type="text" name="brand" id="brand" formControlName="brand" class="form-control"
-                        placeholder="Write something" required>
-                </div>
-            </div>
-
-            <div class="row">
-                <mat-card *ngIf="stepFourForm.get('sysComposition')?.value === 'inverter'
-                        || stepFourForm.get('sysComposition')?.value === 'batteryInverter'">
-                    <mat-card-header class="titleBorder">
-                        <mat-card-title style="font-weight: bold;">Inverter Info</mat-card-title>
-                    </mat-card-header>
-                    <mat-card-content>
-
-                        <div class="col-12 form-check form-switch mt-4">
-                            <input class="form-check-input" type="checkbox" role="switch" id="hybridInverter"
-                                formControlName="hybridInverter">
-                            <label class="form-check-label" for="hybridInverter">Hybrid Inverter</label>
-                        </div>
-
-                        <div class="col-12 mt-3 p-0">
-                            <label for="inverterNumber" style="font-weight: bold; font-size: medium;">Inverter
-                                Number</label>
-                            <select class="form-select" formControlName="inverterNumber"
-                                (change)="generateInverterArray()">
-                                <option [ngValue]="null" disabled selected>Select a value</option>
-                                <option *ngFor="let number of numbers" [value]="number"> {{number}}
-                                </option>
-                            </select>
-                        </div>
-
-                        <div class="col-12 mt-3 form-check form-switch"
-                            *ngIf="stepFourForm.get('inverterNumber')?.value != null">
-                            <input class="form-check-input" type="checkbox" role="switch" id="parallelInverter"
-                                formControlName="parallelInverter">
-                            <label class="form-check-label" for="parallelInverter">The inverter are in
-                                parallel communication</label>
-                        </div>
-
-                        <div class="col-12 mt-3 form-check form-switch"
-                            *ngIf="stepFourForm.get('parallelInverter')?.value == true">
-                            <input class="form-check-input" type="checkbox" role="switch" id="powerInverter"
-                                formControlName="powerInverter">
-                            <label class="form-check-label" for="powerInverter">The inverter are in
-                                parallel on power side</label>
-                        </div>
-
-                        <div class="col-12 p-0 mt-3" *ngIf="stepFourForm.get('inverterNumber')?.value != null">
-                            <div class="container">
-                                <div class="row mt-1">
-                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xxl-2 p-2"
-                                        *ngFor="let formGroup of inverterFieldsAsFormArray.controls; let i = index"
-                                        formArrayName="inverters">
-                                        <mat-card>
-                                            <div [formGroupName]="i">
-                                                <mat-card-header style="border-bottom: 2px solid lightgray;">
-                                                    <mat-card-title style="font-weight: bold; font-size: medium;">
-                                                        Inverter {{i+1}}</mat-card-title>
-                                                </mat-card-header>
-                                                <mat-card-content>
-                                                    <label class="mt-2"
-                                                        style="font-weight: bold; font-size: medium;">Serial
-                                                        Number</label>
-                                                    <input class="form-control" type="text"
-                                                        formControlName="serialNumber">
-                                                    <label class="mt-2"
-                                                        style="font-weight: bold; font-size: medium;">Model</label>
-                                                    <input class="form-control" type="text" formControlName="model">
-                                                    <div class="col-12 mt-3 form-check form-switch">
-                                                        <input class="form-check-input" type="checkbox" role="switch"
-                                                            id="askSupport" formControlName="askSupport">
-                                                        <label class="form-check-label" for="askSupport">Ask Support for
-                                                            this inverter</label>
-                                                    </div>
-                                                </mat-card-content>
-                                            </div>
-                                        </mat-card>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </mat-card-content>
-                </mat-card>
-            </div>
-
-            <div class="row mt-3">
-                <mat-card *ngIf="stepFourForm.get('sysComposition')?.value === 'batteryInverter'"
-                    style="border-bottom: 2px solid lightgray;">
-                    <mat-card-header class="titleBorder">
-                        <mat-card-title style="font-weight: bold;">Battery Info</mat-card-title>
-                    </mat-card-header>
-                    <mat-card-content>
-
-                        <div class="col-12 p-0">
-                            <label class="mt-3" for="batteryVoltage" style="font-weight: bold; font-size: medium;">
-                                High or low voltage</label>
-                            <select class="form-select" formControlName="batteryVoltage">
-                                <option [ngValue]="null" disabled selected>Select a value</option>
-                                <option value="HV"> HV </option>
-                                <option value="LV"> LV </option>
-                            </select>
-                        </div>
-
-
-                        <div class="col-12 p-0" *ngIf="stepFourForm.get('batteryVoltage')?.value != null">
-                            <label class="mt-3" for="batteryModel"
-                                style="font-weight: bold; font-size: medium;">Battery
-                                Model</label>
-                            <select class="form-select" formControlName="batteryModel">
-                                <option [ngValue]="null" disabled selected>Select a model</option>
-                                <option *ngIf="stepFourForm.get('batteryVoltage')?.value === 'LV'" value="4K4"> 4K4
-                                </option>
-                                <option value="5K3"> 5K3 </option>
-                                <option value="5K3"> 4K5 </option>
-                                <option *ngIf="stepFourForm.get('batteryVoltage')?.value === 'HV'" value="14K3">
-                                    14K3 </option>
-                            </select>
-                        </div>
-
-                        <div class="col-12 p-0" *ngIf="stepFourForm.get('batteryModel')?.value != null">
-                            <label class="mt-3" for="batteryType" style="font-weight: bold; font-size: medium;">Battery
-                                Type</label>
-                            <select class="form-select" formControlName="batteryType">
-                                <option [ngValue]="null" disabled selected>Select a model</option>
-                                <!-- PRENDERE IN INGRESSO I VARI MODELLI A SECONDA DELLA TIPOLOGIA -->
-                                <option value="5K3"> 5K3 </option>
-                                <option value="5K3"> 4K5 </option>
-                            </select>
-                        </div>
-
-
-                        <div *ngIf="stepFourForm.get('batteryType')?.value != null" class="col-12 p-0">
-                            <label class="form-check-label mt-3 mr-2" for="singleBattery">
-                                Single Battery</label>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input mt-1" type="radio" id="yes" [value]="true"
-                                    formControlName="singleBattery">
-                                <label class="form-check-label" for="yes">Yes</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input mt-1" type="radio" id="no" [value]="false"
-                                    formControlName="singleBattery">
-                                <label class="form-check-label" for="no">No</label>
-                            </div>
-                        </div>
-
-                        <div *ngIf="stepFourForm.get('singleBattery')?.value == true" class="col-12 p-0">
-                            <div class="container">
-                                <div class="row mt-1">
-                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xxl-2 p-1">
-                                        <mat-card>
-                                            <mat-card-header style="border-bottom: 2px solid lightgray;">
-                                                <mat-card-title style="font-weight: bold; font-size: medium;">
-                                                    Cluster 1</mat-card-title>
-                                            </mat-card-header>
-                                            <mat-card-content class="p-1">
-
-                                                <div formGroupName="battery">
-                                                    <div class="cluster">
-                                                        <div class="p-1">
-                                                            <label style="font-weight: bold; font-size: small;">
-                                                                Serial Number</label>
-                                                            <input class="form-control" type="text"
-                                                                formControlName="serialNumber">
-
-                                                            <div class="form-check form-switch mt-2">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    role="switch" id="askSupport"
-                                                                    formControlName="askSupport">
-                                                                <label class="form-check-label" for="askSupport"
-                                                                    style="font-size: small;">
-                                                                    Ask Support for this cluster</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="mt-2">
-                                                        <label for="relatedInverter" style="font-weight: bold;">Related
-                                                            Inverter</label>
-                                                        <select class="form-select" aria-label="select example"
-                                                            formControlName="relatedInverter">
-                                                            <option [ngValue]="null" disabled selected>Select an Option
-                                                            </option>
-                                                            <!--PRENDERE IN INGRESSO GLI INVERTER INSERITI IN PRECEDENZA-->
-                                                            <option value="inverter"> Inverter 1 </option>
-                                                            <option value="batteryInverter"> Inverter 2 </option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </mat-card-content>
-                                        </mat-card>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div *ngIf="stepFourForm.get('singleBattery')?.value == false" class="col-12 p-0">
-
-                            <div class="col-12 p-0">
-                                <label class="form-check-label mt-3 mr-2" for="parallelCluster">
-                                    Parallel Cluster</label>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input mt-1" type="radio" id="yes2" [value]="true"
-                                        formControlName="parallelCluster">
-                                    <label class="form-check-label" for="yes2">Yes</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input mt-1" type="radio" id="no2" [value]="false"
-                                        formControlName="parallelCluster">
-                                    <label class="form-check-label" for="no2">No</label>
-                                </div>
-                            </div>
-
-                            <div class="col-12 mt-3 p-0">
-                                <label for="itemsForCluster" style="font-weight: bold; font-size: medium;">Batteries for
-                                    Cluster</label>
-                                <select class="form-select" formControlName="itemsForCluster">
-                                    <option [ngValue]="null" disabled selected>Select a value</option>
-                                    <option *ngFor="let number of numbers" [value]="number"> {{number}}
-                                    </option>
-                                </select>
-                            </div>
-
-                            <mat-card class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <mat-card-header style="border-bottom: 2px solid lightgray;">
-                                    <mat-card-title style="font-weight: bold; font-size: medium;">
-                                        Cluster 1</mat-card-title>
-                                </mat-card-header>
-                                <mat-card-content>
-                                    <div class="row justify-content-center" formGroupName="battery">
-                                        <div class="col-12 mt-2 p-0">
-                                            <label style="font-weight: bold; font-size: medium;">Serial Number</label>
-                                            <input class="form-control" type="text" formControlName="serialNumber">
-                                        </div>
-                                        <div class="col-12 mt-2 p-0 form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" role="switch"
-                                                id="askSupport" formControlName="askSupport">
-                                            <label class="form-check-label" for="askSupport">Ask Support for
-                                                this cluster</label>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 col-md-6 mb-3">
-                                        <label for="relatedInverter" style="font-weight: bold;">Related Inverter</label>
-                                        <select class="form-select" aria-label="select example"
-                                            formControlName="relatedInverter">
-                                            <option [ngValue]="null" disabled selected>Select an Option</option>
-                                            <!--PRENDERE IN INGRESSO GLI INVERTER INSERITI IN PRECEDENZA-->
-                                            <option value="inverter"> Inverter 1 </option>
-                                            <option value="batteryInverter"> Inverter 2 </option>
-                                        </select>
-                                    </div>
-                                </mat-card-content>
-                            </mat-card>
-                        </div>
-                    </mat-card-content>
-                </mat-card>
-            </div>
+  <form [formGroup]="stepFourForm">
+    <div class="form-group">
+      <div class="row">
+        <div class="col-12 col-md-6 mb-3">
+          <label for="product_installdate" style="font-weight: bold;">*Installation Date</label>
+          <input type="date" name="product_installdate" id="product_installdate" formControlName="product_installdate"
+            class="form-control" placeholder="gg/mm/aaaa">
+        </div>
+        <div class="col-12 col-md-6 mb-3">
+          <label for="product_systemcomposition" style="font-weight: bold;">*System Composition</label>
+          <select class="form-select" aria-label="select example" id="product_systemcomposition"
+           formControlName="product_systemcomposition">
+            <option *ngFor="let comp of systemComposition" [ngValue]="comp.id">{{comp.name}}</option>
+          </select>
         </div>
 
-        <div class="text-center">
-            <button class="mr-2" mat-raised-button matStepperPrevious style="width: 80px;" (click)="sendData()">
-                Previous
-            </button>
-            <button class="ml-2" mat-raised-button matStepperNext
-                (click)="sendData()">
-                Next
-            </button>
+        <div class="col-12 col-md-6 mb-3">
+          <label for="product_systemweco" style="font-weight: bold;">*Weco Products in the System</label>
+          <select class="form-select" aria-label="select example" id="product_systemweco"
+           formControlName="product_systemweco">
+            <option *ngFor="let weco of wecoComposition" [ngValue]="weco.id">{{weco.name}}</option>
+          </select>
         </div>
-    </form>
+
+        <div class="col-12 col-md-6 mb-3" *ngIf="stepFourForm.get('product_systemcomposition')?.value == 2 &&
+          stepFourForm.get('product_systemweco')?.value != null && stepFourForm.get('product_systemweco')?.value != 3">
+          <label *ngIf="stepFourForm.get('product_systemweco')?.value == 1" for="brand" style="font-weight: bold;">What brand
+            of batteries are you working with?</label>
+          <label *ngIf="stepFourForm.get('product_systemweco')?.value == 2" for="product_brand"
+            style="font-weight: bold;">*What brand of inverter are you working with?</label>
+          <input type="text" name="product_brand" id="product_brand" formControlName="product_brand"
+          class="form-control" placeholder="...">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <app-inverters #invertersComponent [idsystem]="idsystem" *ngIf="stepFourForm.get('product_systemweco')?.value != null"></app-inverters>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12" *ngIf="stepFourForm.get('product_systemcomposition')?.value == 2 && (obj_invert ? obj_invert.getValidFormInvert() : false)">
+          <app-clusters #clustersComponent [idsystem]="idsystem"></app-clusters>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center">
+      <button class="mr-2" mat-raised-button matStepperPrevious style="width: 80px;" (click)="sendData()">
+        Previous
+      </button>
+      <button class="ml-2" mat-raised-button (click)="saveData()">
+        Save
+      </button>
+      <button class="ml-2" mat-raised-button matStepperNext [disabled]="!formValid" (click)="sendData()">
+        Next
+      </button>
+    </div>
+  </form>
 </div>

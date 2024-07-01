@@ -19,6 +19,7 @@ import { Ticket } from '../interfaces/ticket';
 import { Warranty } from '../interfaces/warranty';
 import { RMA } from '../interfaces/rma';
 import { Connect } from '../../../classes/connect';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-system-modify',
@@ -44,12 +45,12 @@ import { Connect } from '../../../classes/connect';
         StepFourComponent,
         StepFiveComponent,
         MatIconModule,
+        CommonModule
     ]
 })
-export class SystemModifyComponent {
+export class SystemModifyComponent implements OnInit{
 
-  isValid: boolean = true;
-  incomplete: boolean = true;
+  allFormValid: boolean = true;
   idsystem: number = 0;
   systemName: string = '';
 
@@ -65,12 +66,16 @@ export class SystemModifyComponent {
   stepFourForm!: FormGroup;
   stepFiveForm!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private connectServerService: ConnectServerService) {
+  constructor(private route: ActivatedRoute, private connectServerService: ConnectServerService) {
     this.route.params.subscribe(params => {
       this.idsystem = params['id'];
       this.getSystemOverview()
     });
 
+  }
+
+  ngOnInit(): void {
+    this.getAllFormValid();
   }
 
   getSystemOverview() {
@@ -83,11 +88,24 @@ export class SystemModifyComponent {
     })
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.stepOneForm = this.obj_stepOne.stepOneForm;
-    this.stepTwoForm = this.obj_stepTwo.stepTwoForm;
-    this.stepThreeForm = this.obj_stepThree.stepThreeForm;
-    this.stepFourForm = this.obj_stepFour.stepFourForm;
-    this.stepFiveForm = this.obj_stepFive.stepFiveForm;
+  // ngOnChanges(changes: SimpleChanges): void {
+  //   this.stepOneForm = this.obj_stepOne.stepOneForm;
+  //   this.stepTwoForm = this.obj_stepTwo.stepTwoForm;
+  //   this.stepThreeForm = this.obj_stepThree.stepThreeForm;
+  //   this.stepFourForm = this.obj_stepFour.stepFourForm;
+  //   this.stepFiveForm = this.obj_stepFive.stepFiveForm;
+  // }
+
+  approvalRequested(){
+
   }
+
+  private getAllFormValid() {
+    const valid = this.obj_stepOne?.stepOneForm?.valid &&
+    this.obj_stepTwo?.stepTwoForm?.valid &&
+    this.obj_stepThree?.stepThreeForm?.valid &&
+    this.obj_stepFour?.stepFourForm?.valid;
+    this.allFormValid =  valid == null ? false : true;
+  }
+
 }

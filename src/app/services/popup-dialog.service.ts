@@ -65,7 +65,7 @@ export class PopupDialogService {
     }
     if (obj_val.code == 200) {
       obj_toast = this.toastr.success(obj_val.message, obj_val.title, config);
-    } else if (obj_val.code == 513 || obj_val.code == 511) {
+    } else if (obj_val.code == 513 || obj_val.code == 511 || obj_val.code == 240) {
       obj_toast = this.toastr.warning(obj_val.message, obj_val.title, config);
     } else {
       obj_toast = this.toastr.error(obj_val.message, obj_val.title, config);

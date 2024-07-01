@@ -50,7 +50,7 @@ export class TicketNewComponent {
   }
 
   private setSystem(idsystem: number) {
-    this.connectServerService.getRequest<ApiResponse<{systemInfo: {id: number, title: string}}>>(Connect.urlServerLaraApi, 'system/systemInfo', 
+    this.connectServerService.getRequest<ApiResponse<{systemInfo: {id: number, title: string}}>>(Connect.urlServerLaraApi, 'system/systemInfo',
       {id: idsystem})
       .subscribe((val: ApiResponse<{systemInfo: {id: number, title: string}}>) => {
         if(val.data) {
@@ -109,7 +109,8 @@ export class TicketNewComponent {
       });
     }
 
-    this.connectServerService.postRequest<ApiResponse<Ticket>>(Connect.urlServerLaraApi, 'ticket/insertTicket', {formData: formData}).
+    this.connectServerService.postRequest<ApiResponse<Ticket>>(Connect.urlServerLaraApi, 'ticket/insertTicket',
+      formData).
       subscribe((val: ApiResponse<Ticket>) => {
         if(val.data) {
           this.router.navigate(['/ticket', val.data.id]);

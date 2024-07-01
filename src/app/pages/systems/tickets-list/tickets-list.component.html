@@ -1,10 +1,11 @@
 <div class="container mt-4 p-1 p-lg-3 p-xxl-4" style="min-width: 350px;">
     <div class="row justify-content-center align-items-center">
         <div class="col-12 col-md-8 col-lg-6 text-center">
-            <label class="searchLabel">SEARCH TICKET</label>
+            <label class="searchLabel">{{'TICKET.TICKETLIST.TITLE' | translate}}</label>
             <div class="input p-2 input-group">
-                <input type="text" class="form-control searchBar" placeholder="Name of the ticket">
-                <button class="btn btn-dark">Cerca</button>
+                <input type="text" class="form-control searchBar"
+                placeholder="{{'TICKET.TICKETLIST.SEARCHPLACEHOLDER' | translate}}">
+                <button class="btn btn-dark">{{'TICKET.TICKETLIST.BUTTONSEARCH' | translate}}</button>
             </div>
         </div>
         <div *ngIf="tickets.length > 0" class="col-12 mt-4 text-center">
@@ -37,10 +38,10 @@
             </table>
         </div>
         <div *ngIf="tickets.length <= 0" class="col-12 text-center mt-4">
-            NO TICKETS AVAILABLE
+            {{'TICKET.TICKETLIST.EMPTY' | translate}}
         </div>
-        <div class="btn button fixed-button" (click)="goTo('/newTicket', null)">
+        <!-- <div class="btn button fixed-button" (click)="goTo('/newTicket', null)">
             <span class="mb-1" style="font-weight: bold; font-size: x-large; color: white;">+</span>
-        </div>
+        </div> -->
     </div>
 </div>

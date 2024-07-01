@@ -15,7 +15,6 @@ import { SystemModifyComponent } from './pages/systems/system-modify/system-modi
 import { SystemsListComponent } from './pages/systems/systems-list/systems-list.component';
 import { loginSignupGuard } from './guards/login-signup.guard';
 import { TicketNewComponent } from './pages/systems/ticket-new/ticket-new.component';
-import { WarrantyExtensionComponent } from './pages/warranty/warranty-extension/warranty-extension.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -33,7 +32,7 @@ export const routes: Routes = [
     { path: 'ticketsList', component: TicketsListComponent, canActivate: [authGuard] },
     { path: 'newTicket', component: TicketNewComponent, canActivate: [authGuard] },
     { path: 'newTicket/:id', component: TicketNewComponent, canActivate: [authGuard] },
-    { path: 'warrantyExtension', component:  WarrantyExtensionComponent, canActivate: [authGuard]},
+    // { path: 'warrantyInfo', component:  , canActivate: [authGuard]},
     { path: 'deniedAccess', component:  DeniedAccessComponent},
     { path: '**', redirectTo: 'systemsList'}
 ];

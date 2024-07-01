@@ -6,12 +6,14 @@ import { Router } from '@angular/router';
 import { ConnectServerService } from '../../../services/connect-server.service';
 import { ApiResponse } from '../../../interfaces/api-response';
 import { Connect } from '../../../classes/connect';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-tickets-list',
   standalone: true,
   imports: [
     CommonModule,
+    TranslateModule
   ],
   templateUrl: './tickets-list.component.html',
   styleUrl: './tickets-list.component.scss'

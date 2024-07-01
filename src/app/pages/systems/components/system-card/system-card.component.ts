@@ -7,6 +7,7 @@ import { SystemInfo } from '../../interfaces/system-info';
 import { ConnectServerService } from '../../../../services/connect-server.service';
 import { ApiResponse } from '../../../../interfaces/api-response';
 import { Connect } from '../../../../classes/connect';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-system-card',
@@ -14,6 +15,7 @@ import { Connect } from '../../../../classes/connect';
   imports: [
     MatCardModule,
     CommonModule,
+    TranslateModule
   ],
   templateUrl: './system-card.component.html',
   styleUrl: './system-card.component.scss'
@@ -23,13 +25,14 @@ export class SystemCardComponent {
   isSystem: boolean = false;
   systemsList: SystemInfo[] = [];
 
-  constructor(private loadSystemsService: LoadSystemsService, private router: Router,
+  constructor(private router: Router,
     private connectServerService: ConnectServerService) {
     this.getSystemList()
   }
 
   getSystemList() {
-    this.connectServerService.getRequest<ApiResponse<{systemsInfo: SystemInfo[]}>>(Connect.urlServerLaraApi, 'system/systemsList', {})
+    this.connectServerService.getRequest<ApiResponse<{systemsInfo: SystemInfo[]}>>
+    (Connect.urlServerLaraApi, 'system/systemsList', {})
     .subscribe((val: ApiResponse<{systemsInfo: SystemInfo[]}>) => {
         if(val.data) {
           this.systemsList = val.data.systemsInfo;
@@ -38,7 +41,7 @@ export class SystemCardComponent {
           }
         }
       })
-  } 
+  }
 
   systemOverview(id: number) {
     this.router.navigate(['/systemOverview', id]);

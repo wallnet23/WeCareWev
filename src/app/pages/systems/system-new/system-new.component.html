@@ -1,6 +1,6 @@
 <div class="container p-2">
     <div class="row justify-content-center align-items-center">
-        <div class="col-12 text-center mt-4 form-group">
+        <div class="col-12 col-lg-8 text-center mt-4 form-group">
             <form [formGroup]="newSystemForm">
                 <div class="p-2 form-group">
                     <label for="title" style="font-weight: bold;">
@@ -24,10 +24,10 @@
             </form>
         </div>
 
-        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 text-center mt-3">
+        <div class="col-12 text-center mt-3">
             <label *ngIf="newSystemForm.invalid" for="save" style="font-size: x-small;">Name is mandatory</label><br>
             <button class="btn btn-outline-dark" id="save" [disabled]="newSystemForm.invalid" (click)="sendNewSystem()">
-                Salva
+                Add system
             </button>
         </div>
     </div>

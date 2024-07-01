@@ -1,10 +1,12 @@
 export interface Inverter {
-    hybridInverter: boolean,
-    parallelInverter: boolean,
-    powerInverter: string,
-    inverterInfo: [{
-        serialNumber: string,
-        model: string,
-        askSupport: boolean,
-    }],
+    // hybridInverter: boolean,
+    // parallelInverter: boolean,
+    // powerInverter: string,
+    // inverterInfo: [{
+    //     serialNumber: string,
+    //     model: string,
+    //     askSupport: boolean,
+    // }],
+    serialnumber: string;
+    model: string;
 }

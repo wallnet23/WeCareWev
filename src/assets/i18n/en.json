@@ -86,29 +86,52 @@
     "USERTERMS": "Terms of use",
     "PRIVACY": "Privacy policy"
   },
-  "NEWTICKET": {
-    "NEWTICKET": "NEW TICKET",
-    "TITLE": "Title",
-    "DATE": "Date",
-    "RELATEDSYS": "Related system",
-    "NONE": "None",
-    "DESCRIPTION": "Description",
-    "IMPORTIMG": "You're trying to import too many images",
-    "ATTACHMENT": "Import attachments (max 6)",
-    "IMPORT": "Import",
-    "SUBMIT": "Submit"
-  },
   "STEPONE": {
-    "NAME": "*Customer Name",
+    "NAME": "Customer Name",
     "NAMEPLACEHOLDER": "Name",
-    "SURNAME": "*Customer Surname",
+    "SURNAME": "Customer Surname",
     "SURNAMEPLACEHOLDER": "Surname",
-    "COUNTRY": "*Customer Country",
+    "COUNTRY": "Customer Country",
     "SELECTCOUNTRY": "Select a Country",
     "PHONE": "Phone Number",
     "PHONEPLACEHOLDER": "(+999) 9999999",
     "VAT": "VAT",
     "LICENSENUMBER": "License Number",
+    "FISCALCODE": "Fiscal Code",
     "NEXT": "Next"
+  },
+  "SYSTEM": {
+    "SYSTEMLIST": {
+      "TITLE": "SYSTEMS LIST",
+      "BUTTONSEARCH": "Search",
+      "SEARCHPLACEHOLDER": "Name of the system",
+      "EMPTY": "No system available, add a system to view the warranty, request an RMA or open a support ticket."
+    },
+    "SYSTEMTICKETLIST": {
+      "TITLE": "LIST OF SYSTEM TICKETS",
+      "BUTTONSEARCH": "Search",
+      "SEARCHPLACEHOLDER": "Name of the system",
+      "EMPTY": ""
+    }
+  },
+  "TICKET": {
+    "TICKETLIST": {
+      "TITLE": "TICKETS LIST",
+      "BUTTONSEARCH": "Search",
+      "SEARCHPLACEHOLDER": "Name of the ticket",
+      "EMPTY": "No tickets available. To add a ticket create or enter a system."
+    },
+    "NEWTICKET": {
+      "NEWTICKET": "NEW TICKET",
+      "TITLE": "Title",
+      "DATE": "Date",
+      "RELATEDSYS": "Related system",
+      "NONE": "None",
+      "DESCRIPTION": "Description",
+      "IMPORTIMG": "You're trying to import too many images",
+      "ATTACHMENT": "Import attachments (max 6)",
+      "IMPORT": "Import",
+      "SUBMIT": "Submit"
+    }
   }
 }

@@ -4,12 +4,14 @@ import { CommonModule } from '@angular/common';
 import { Inverter } from '../interfaces/inverter';
 import { Router } from '@angular/router';
 import { Ticket } from '../interfaces/ticket';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-system-tickets-list',
   standalone: true,
   imports: [
-    CommonModule
+    CommonModule,
+    TranslateModule
   ],
   templateUrl: './system-tickets-list.component.html',
   styleUrl: './system-tickets-list.component.scss'
@@ -23,7 +25,7 @@ export class SystemTicketsListComponent {
   // batteryProblem: { serialNumber: string, relatedInverter: string }[] = [];
 
   constructor(private assistanceRequestsService: AssistanceRequestsService, private router: Router) {
-    
+
   }
 
   setInverterProblem(ticket: Ticket) {

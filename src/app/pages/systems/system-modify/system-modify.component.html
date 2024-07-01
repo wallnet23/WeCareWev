@@ -6,43 +6,51 @@
       </h2>
     </div>
     <div class="col-12 text-center">
-      <small>* Mandatory fields</small>
+      <small class="fw-bold">* Mandatory fields</small>
     </div>
 
     <div class="col-12 p-0">
       <mat-stepper orientation="vertical" [linear]="false" #stepper>
 
-        <mat-step [stepControl]="stepOneForm" errorMessage="Name is required.">
-          <ng-template matStepLabel>CLIENT INFO</ng-template>
+        <mat-step [stepControl]="stepOneForm" errorMessage="All fields with * required.">
+          <ng-template matStepLabel>CUSTOMER INFO</ng-template>
           <app-step-one #stepOne [idsystem]="idsystem"></app-step-one>
         </mat-step>
 
-        <mat-step [stepControl]="stepTwoForm" errorMessage="Address is required.">
+        <mat-step *ngIf="obj_stepOne ? obj_stepOne.stepOneForm?.valid : false" [stepControl]="stepTwoForm"
+          errorMessage="Address is required.">
           <ng-template matStepLabel>INSTALLATION SITE</ng-template>
           <app-step-two #stepTwo [idsystem]="idsystem"></app-step-two>
         </mat-step>
 
-        <mat-step [stepControl]="stepThreeForm" errorMessage="Address is required.">
+        <mat-step *ngIf="obj_stepTwo ? obj_stepTwo.stepTwoForm?.valid : false" [stepControl]="stepThreeForm"
+          errorMessage="Address is required.">
           <ng-template matStepLabel>SUPPLIER INFO</ng-template>
           <app-step-three #stepThree [idsystem]="idsystem"></app-step-three>
         </mat-step>
 
-        <mat-step [stepControl]="stepFourForm" errorMessage="Address is required.">
+        <mat-step *ngIf="obj_stepThree ? obj_stepThree.stepThreeForm?.valid : false" [stepControl]="stepFourForm"
+          errorMessage="Address is required.">
           <ng-template matStepLabel>PRODUCT INFO</ng-template>
           <app-step-four #stepFour [idsystem]="idsystem"></app-step-four>
         </mat-step>
 
-        <mat-step [stepControl]="stepFiveForm" errorMessage="Address is required.">
+        <!-- <mat-step [stepControl]="stepFiveForm" errorMessage="Address is required.">
           <ng-template matStepLabel>ADDITIONAL INFO</ng-template>
           <app-step-five #stepFive [idsystem]="idsystem"></app-step-five>
-        </mat-step>
+        </mat-step> -->
 
         <mat-step>
           <ng-template matStepLabel>Done</ng-template>
           <p>You are now done.</p>
           <div>
             <button mat-button matStepperPrevious>Back</button>
-            <button mat-button (click)="stepper.reset()">Reset</button>
+            <!-- <button mat-button (click)="stepper.reset()">Reset</button> -->
+            <button mat-button (click)="approvalRequested()"
+            *ngIf="allFormValid">Richiesta approvazione</button>
+            <div class="fw-bold" *ngIf="!allFormValid">
+              Concludi ogni step per richiedere l'approvazione dell'impianto al tecnico Weco.
+            </div>
           </div>
         </mat-step>
 

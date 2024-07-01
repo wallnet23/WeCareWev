@@ -1,30 +1,29 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators, FormsModule, ReactiveFormsModule, FormControl, FormArray } from '@angular/forms';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatStepperModule } from '@angular/material/stepper';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { UploadImageService } from '../../../../services/upload-images.service';
 import { MatCardModule } from '@angular/material/card';
-
-interface InverterInfo {
-  serialNumber: string;
-  model: string;
-  askSupport: boolean;
-}
+import { InvertersComponent } from './inverters/inverters.component';
+import { ClustersComponent } from './clusters/clusters.component';
 
 interface BatteryInfo {
-    serialNumber: string;
-    askSupport: boolean;
+  serialNumber: string;
+  askSupport: boolean;
 }
 
 interface ClusterInfo {
   batteries: BatteryInfo,
   relatedInverter: string;
+}
+interface SystemComposition {
+  id: number | null;
+  name: string;
 }
 
 @Component({
@@ -37,6 +36,7 @@ interface ClusterInfo {
     },
   ],
   imports: [
+    CommonModule,
     MatStepperModule,
     FormsModule,
     ReactiveFormsModule,
@@ -44,131 +44,143 @@ interface ClusterInfo {
     MatInputModule,
     MatButtonModule,
     HttpClientModule,
-    CommonModule,
     MatIconModule,
     MatCardModule,
+    InvertersComponent,
+    ClustersComponent
   ],
   templateUrl: './step-four.component.html',
   styleUrl: './step-four.component.scss'
 })
-export class StepFourComponent {
-
+export class StepFourComponent implements OnInit {
+  @ViewChild('invertersComponent') obj_invert!: InvertersComponent;
+  @ViewChild('clustersComponent') obj_cluster!: ClustersComponent;
   @Input() idsystem = 0;
-  inverterNum: any[] = [];
-  numbers: number[] = Array.from({ length: 10 }, (_, i) => i + 1);
-
+  systemComposition: SystemComposition[] = [
+    {
+      id: null,
+      name: '---'
+    },
+    {
+      id: 1,
+      name: 'Inverter'
+    },
+    {
+      id: 2,
+      name: 'Battery and Inverter'
+    }];
+  wecoComposition: SystemComposition[] = [];
+  formValid: boolean = false;
   stepFourForm = this.formBuilder.group({
-    installationDate: new FormControl<Date | null>(null, Validators.required),
-    sysComposition: new FormControl<string | null>(null, Validators.required),
-    wecoProducts: new FormControl<string | null>(null, Validators.required),
-    brand: new FormControl('', Validators.required),
-    hybridInverter: new FormControl<boolean>(false, Validators.required),
-    inverterNumber: new FormControl<number | null>(null, Validators.required),
-    parallelInverter: new FormControl<boolean>(false, Validators.required),
-    powerInverter: new FormControl<boolean>(false, Validators.required),
-    inverters: this.formBuilder.array([]),
-    batteryVoltage: new FormControl<string | null>(null, Validators.required),
-    batteryType: new FormControl<string | null>(null, Validators.required),
-    batteryModel: new FormControl<string | null>(null, Validators.required),
-    singleBattery: new FormControl<boolean | null>(null, Validators.required),
-    clusterNumber: new FormControl<number | null>(null, Validators.required),
-    parallelCluster: new FormControl<boolean | null>(null, Validators.required),
-    itemsForCluster: new FormControl<number | null>(null, Validators.required),
-    clusters: this.formBuilder.array([])
+    product_installdate: new FormControl<Date | null>(null, Validators.required),
+    product_systemcomposition: new FormControl<number | null>(null, Validators.required),
+    product_systemweco: new FormControl<number | null>(null, Validators.required),
+    product_brand: new FormControl('', Validators.required),
+
+    // batteryVoltage: new FormControl<string | null>(null, Validators.required),
+    // batteryType: new FormControl<string | null>(null, Validators.required),
+    // batteryModel: new FormControl<string | null>(null, Validators.required),
+    // singleBattery: new FormControl<boolean | null>(null, Validators.required),
+    // clusterNumber: new FormControl<number | null>(null, Validators.required),
+    // parallelCluster: new FormControl<boolean | null>(null, Validators.required),
+    // itemsForCluster: new FormControl<number | null>(null, Validators.required),
+    // clusters: this.formBuilder.array([])
   });
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient, private uploadImage: UploadImageService) { }
+  constructor(private formBuilder: FormBuilder) { }
+
+  ngOnInit(): void {
+    this.logicStep();
+    this.getStepValid();
+  }
 
   sendData() {
-    console.log(this.stepFourForm.value);
+    console.log('data 1', this.stepFourForm.value);
+    console.log('inverter', this.obj_invert.getDataFormInverter());
   }
 
-  generateInverterArray() {
-    const i = this.stepFourForm.get('inverterNumber')?.value;
-    this.inverterFieldsAsFormArray.clear();
-    for (let j = 0; j < i!; j++) {
-      this.inverterFieldsAsFormArray.push(this.inverter(
-        {
-          serialNumber: '',
-          model: '',
-          askSupport: false,
-        }
-      ))
-    }
-    console.log(this.inverterFieldsAsFormArray);
+  saveData(){
+    console.log('data 1', this.stepFourForm.value);
+    console.log('inverter', this.obj_invert.getDataFormInverter());
   }
 
-  /*
-  generateBatteryArray() {
-    if (this.productFormGroup.get('singleBattery')?.value == true) {
-      this.batteryFieldsAsFormArray.clear();
-      this.clusterFieldsAsFormArray.clear()
-      this.clusterFieldsAsFormArray.push(this.cluster(
-        {
-          batteries: new FormArray([]),
-          relatedInverter: ''
-        }
-      ))
+  private getStepValid(){
+    if(this.stepFourForm && this.obj_invert){
+      this.formValid = this.stepFourForm.valid && this.obj_invert.getValidFormInvert();
+    }else{
+      this.formValid = false;
     }
-    else {
-      const i = this.productFormGroup.get('clusterNumber')?.value;
-      const j = this.productFormGroup.get('itemsForCluster')?.value;
-      this.inverterFieldsAsFormArray.clear();
-      for (let j = 0; j < i!; j++) {
-        this.inverterFieldsAsFormArray.push(this.inverter(
-          {
-            serialNumber: '',
-            model: '',
-            askSupport: false,
-          }
-        ))
+  }
+
+
+
+  // cluster(obj: ClusterInfo) {
+  //   return this.formBuilder.group({
+  //     batteries: this.formBuilder.array([]),
+  //     relatedInverter: new FormControl(obj.relatedInverter, Validators.required)
+  //   })
+  // }
+
+  // battery(obj: BatteryInfo) {
+  //   return this.formBuilder.group({
+  //     serialNumber: new FormControl(obj.serialNumber, Validators.required),
+  //     askSupport: new FormControl(obj.askSupport, Validators.required)
+  //   })
+  // }
+
+
+  private logicStep() {
+    this.stepFourForm.get('product_systemcomposition')?.valueChanges.subscribe(
+      (val) => {
+        console.log();
+        if (val == null) {
+          this.wecoComposition = [
+            {
+              id: null,
+              name: '---'
+            }];
+          this.stepFourForm.patchValue({
+            product_systemweco: null
+          });
+          this.stepFourForm.get('product_systemweco')?.disable();
+          // inverter
+        } else if (val == 1) {
+          this.wecoComposition = [
+            {
+              id: 1,
+              name: 'Inverter'
+            }
+          ];
+          this.stepFourForm.patchValue({
+            product_systemweco: 1
+          });
+          this.stepFourForm.get('product_systemweco')?.enable();
+          // Batterie e inverter
+        } else if (val && val == 2) {
+          this.wecoComposition = [
+            {
+              id: null,
+              name: '---'
+            },
+            {
+              id: 1,
+              name: 'Inverter'
+            },
+            {
+              id: 2,
+              name: 'Battery'
+            },
+            {
+              id: 3,
+              name: 'Battery and Inverter'
+            }
+          ];
+          this.stepFourForm.patchValue({
+            product_systemweco: null
+          });
+          this.stepFourForm.get('product_systemweco')?.enable();
+        }
       }
-    }
-    console.log(this.clusterFieldsAsFormArray);
-  }
-  */
-
-  get clusterFieldsAsFormArray() {
-    return this.stepFourForm.get('clusters') as FormArray;
-  }
-
-  get batteryFieldsAsFormArray() {
-    return this.clusterFieldsAsFormArray.get('batteries') as FormArray;
-  }
-
-  get inverterFieldsAsFormArray() {
-    return this.stepFourForm.get('inverters') as FormArray;
-  }
-
-  inverter(obj: InverterInfo) {
-    return this.formBuilder.group({
-      serialNumber: new FormControl(obj.serialNumber, Validators.required),
-      model: new FormControl(obj.model, Validators.required),
-      askSupport: new FormControl<boolean>(obj.askSupport, Validators.required),
-    })
-  }
-
-  cluster(obj: ClusterInfo) {
-    return this.formBuilder.group({
-      batteries: this.formBuilder.array([]),
-      relatedInverter: new FormControl(obj.relatedInverter, Validators.required)
-    })
-  }
-
-  battery(obj: BatteryInfo) {
-    return this.formBuilder.group({
-      serialNumber: new FormControl(obj.serialNumber, Validators.required),
-      askSupport: new FormControl(obj.askSupport, Validators.required)
-    })
-  }
-
-  support(i: number) {
-    const askSupport = !this.inverterFieldsAsFormArray.at(i).get('askSupport');
-    this.inverterFieldsAsFormArray.at(i).setValue('askSupport', askSupport);
-    console.log(this.inverterFieldsAsFormArray.at(i).get('askSupport'))
-  }
-
-  print() {
-    console.log(this.stepFourForm);
+    )
   }
 }
