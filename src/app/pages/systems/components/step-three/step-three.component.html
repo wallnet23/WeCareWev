@@ -71,7 +71,7 @@
             <button class="mr-2" mat-raised-button matStepperPrevious style="width: 80px;">
                 Previous
             </button>
-            <button class="ml-2" mat-raised-button matStepperNext
+            <button class="ml-2" mat-raised-button matStepperNext [disabled]="stepThreeForm.invalid"
                 (click)="saveStep()">
                 Next
             </button>

@@ -11,6 +11,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { InvertersComponent } from './inverters/inverters.component';
 import { ClustersComponent } from './clusters/clusters.component';
+import { ConnectServerService } from '../../../../services/connect-server.service';
+import { ApiResponse } from '../../../../interfaces/api-response';
+import { Connect } from '../../../../classes/connect';
+import { PopupDialogService } from '../../../../services/popup-dialog.service';
 
 interface BatteryInfo {
   serialNumber: string;
@@ -75,19 +79,12 @@ export class StepFourComponent implements OnInit {
     product_installdate: new FormControl<Date | null>(null, Validators.required),
     product_systemcomposition: new FormControl<number | null>(null, Validators.required),
     product_systemweco: new FormControl<number | null>(null, Validators.required),
-    product_brand: new FormControl('', Validators.required),
-
-    // batteryVoltage: new FormControl<string | null>(null, Validators.required),
-    // batteryType: new FormControl<string | null>(null, Validators.required),
-    // batteryModel: new FormControl<string | null>(null, Validators.required),
-    // singleBattery: new FormControl<boolean | null>(null, Validators.required),
-    // clusterNumber: new FormControl<number | null>(null, Validators.required),
-    // parallelCluster: new FormControl<boolean | null>(null, Validators.required),
-    // itemsForCluster: new FormControl<number | null>(null, Validators.required),
-    // clusters: this.formBuilder.array([])
+    product_brand: new FormControl(''),
   });
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private connectServerService: ConnectServerService,
+    private popupDialogService: PopupDialogService
+  ) { }
 
   ngOnInit(): void {
     this.logicStep();
@@ -99,34 +96,37 @@ export class StepFourComponent implements OnInit {
     console.log('inverter', this.obj_invert.getDataFormInverter());
   }
 
-  saveData(){
+  saveData() {
+    const stepFour = this.stepFourForm.value;
     console.log('data 1', this.stepFourForm.value);
-    console.log('inverter', this.obj_invert.getDataFormInverter());
+    let stepInverter = null;
+    let stepCluster = null;
+    if(this.obj_invert && this.obj_invert.getDataFormInverter()){
+      console.log('inverter', this.obj_invert.getDataFormInverter());
+      console.log('inverter valid', this.obj_invert.getValidFormInvert());
+    }
+
+    console.log('data valid', this.stepFourForm.valid);
+    // this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepFour',
+    //   {
+    //     idsystem: this.idsystem,
+    //     obj_step: stepFour,
+    //     obj_inverter: stepInverter,
+    //     obj_cluster: stepCluster,
+    //   })
+    //   .subscribe((val: ApiResponse<null>) => {
+    //     this.popupDialogService.alertElement(val);
+
+    //   })
   }
 
-  private getStepValid(){
-    if(this.stepFourForm && this.obj_invert){
+  private getStepValid() {
+    if (this.stepFourForm && this.obj_invert) {
       this.formValid = this.stepFourForm.valid && this.obj_invert.getValidFormInvert();
-    }else{
+    } else {
       this.formValid = false;
     }
   }
-
-
-
-  // cluster(obj: ClusterInfo) {
-  //   return this.formBuilder.group({
-  //     batteries: this.formBuilder.array([]),
-  //     relatedInverter: new FormControl(obj.relatedInverter, Validators.required)
-  //   })
-  // }
-
-  // battery(obj: BatteryInfo) {
-  //   return this.formBuilder.group({
-  //     serialNumber: new FormControl(obj.serialNumber, Validators.required),
-  //     askSupport: new FormControl(obj.askSupport, Validators.required)
-  //   })
-  // }
 
 
   private logicStep() {

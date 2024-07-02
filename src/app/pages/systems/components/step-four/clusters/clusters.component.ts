@@ -88,24 +88,24 @@ export class ClustersComponent implements OnInit {
         }
       })
     this.connectServerService.getRequest<ApiResponse<{ systemModel: SystemModel[] }>>(Connect.urlServerLaraApi, 'system/listSystemModel',
-        {}
-      ).subscribe(
-        (val: ApiResponse<{ systemModel: SystemModel[] }>) => {
-          if (val.data && val.data.systemModel) {
-            this.systemModel = val.data.systemModel;
-          }
-        })
-      this.connectServerService.getRequest<ApiResponse<{ systemType: SystemType[] }>>(Connect.urlServerLaraApi, 'system/listSystemType',
-          {}
-        ).subscribe(
-          (val: ApiResponse<{ systemType: SystemType[] }>) => {
-            if (val.data && val.data.systemType) {
-              this.systemType = val.data.systemType;
-            }
-          })
+      {}
+    ).subscribe(
+      (val: ApiResponse<{ systemModel: SystemModel[] }>) => {
+        if (val.data && val.data.systemModel) {
+          this.systemModel = val.data.systemModel;
+        }
+      })
+    this.connectServerService.getRequest<ApiResponse<{ systemType: SystemType[] }>>(Connect.urlServerLaraApi, 'system/listSystemType',
+      {}
+    ).subscribe(
+      (val: ApiResponse<{ systemType: SystemType[] }>) => {
+        if (val.data && val.data.systemType) {
+          this.systemType = val.data.systemType;
+        }
+      })
   }
 
-  private logicCluster(){
+  private logicCluster() {
     this.stepClusterForm.get('cluster_singlebattery')?.valueChanges.subscribe(
       (val) => {
         if (val == 0) {
@@ -128,8 +128,14 @@ export class ClustersComponent implements OnInit {
       });
     this.stepClusterForm.get('cluster_numberdevices')?.valueChanges.subscribe(
       (val) => {
-        if (val && val > 0) {
-          this.generateClusters();
+        const obj_clusternumber = this.stepClusterForm.get('cluster_number');
+        if (obj_clusternumber && obj_clusternumber.value) {
+          if (val && val > 0 && obj_clusternumber.value > 0) {
+            this.generateClusters();
+          }
+        } else {
+          // svuota
+          this.clusterFieldAsFormArray.clear();
         }
       });
     this.stepClusterForm.get('refidwecaresystemvolt')?.valueChanges.subscribe(
@@ -155,7 +161,7 @@ export class ClustersComponent implements OnInit {
                 }
               }
             )
-          // HV
+            // HV
           } else if (val == 2) {
             this.systemModel_view = [];
             this.systemType.forEach(
@@ -186,10 +192,10 @@ export class ClustersComponent implements OnInit {
             (type: SystemType) => {
               if (type.refidwecaresystemmodel == val) {
                 // LV
-                if(voltage == 1 && type.lv == 1){
+                if (voltage == 1 && type.lv == 1) {
                   this.systemType_view.push(type);
                   // HV
-                }else if(voltage == 2 && type.hv == 1){
+                } else if (voltage == 2 && type.hv == 1) {
                   this.systemType_view.push(type);
                 }
               }
@@ -228,15 +234,15 @@ export class ClustersComponent implements OnInit {
 
   private populateClusters(num_cluster: number | null | undefined, num_battery: number | null | undefined) {
     this.clusterFieldAsFormArray.clear();
-    if(num_cluster){
+    if (num_cluster) {
       for (let i = 0; i < num_cluster; i++) {
         this.addCluster();
-        if(num_battery){
+        if (num_battery) {
           for (let j = 0; j < num_battery; j++) {
             let tipo = 'Slave';
             if (j == 0) {
               tipo = 'Master';
-              if(this.stepClusterForm.get('refidwecaresystemvolt')?.value == 2){
+              if (this.stepClusterForm.get('refidwecaresystemvolt')?.value == 2) {
                 tipo = 'HVBOX';
               }
 

@@ -48,7 +48,7 @@ export class StepOneComponent implements OnInit {
   countriesData: Country[] = [];
 
   stepOneForm = this.formBuilder.group({
-    customer_techniciandata: new FormControl(0),
+    customer_techniciandata: new FormControl<boolean | number>(0),
     customer_name: new FormControl('', Validators.required),
     customer_surname: new FormControl('', Validators.required),
     ccn3: new FormControl<string | null>(null, Validators.required),
@@ -65,6 +65,7 @@ export class StepOneComponent implements OnInit {
       this.countriesData = obj;
     });
     this.infoStep();
+    this.logicStep();
   }
 
   infoStep() {
@@ -137,9 +138,9 @@ export class StepOneComponent implements OnInit {
   private logicStep() {
     this.stepOneForm.get('customer_techniciandata')?.valueChanges.subscribe(
       (val) => {
-        if (val == 0) {
+        if (val == (0 || false)) {
           this.stepOneForm.reset();
-        } else if (val == 1) {
+        } else if (val == (1 || true)) {
           this.connectServerService.getRequest<ApiResponse<{ infoTechnician: Technician }>>(Connect.urlServerLaraApi, 'user/infoTechnician',
             {}).subscribe(
               (val: ApiResponse<{ infoTechnician: Technician }>) => {

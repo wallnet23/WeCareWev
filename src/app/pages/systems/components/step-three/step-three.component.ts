@@ -69,7 +69,7 @@ export class StepThreeComponent implements OnInit {
     this.getImages();
   }
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient, private uploadImageService: UploadImageService,
+  constructor(private formBuilder: FormBuilder, private uploadImageService: UploadImageService,
     private connectServerService: ConnectServerService, private popupDialogService: PopupDialogService) { }
 
   infoStep() {
