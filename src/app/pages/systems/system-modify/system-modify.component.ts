@@ -10,7 +10,7 @@ import { StepTwoComponent } from '../components/step-two/step-two.component';
 import { MatIconModule } from '@angular/material/icon';
 import { StepThreeComponent } from '../components/step-three/step-three.component';
 import { StepFourComponent } from '../components/step-four/step-four.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { StepFiveComponent } from '../components/step-five/step-five.component';
 import { ConnectServerService } from '../../../services/connect-server.service';
 import { ApiResponse } from '../../../interfaces/api-response';
@@ -19,7 +19,7 @@ import { Ticket } from '../interfaces/ticket';
 import { Warranty } from '../interfaces/warranty';
 import { RMA } from '../interfaces/rma';
 import { Connect } from '../../../classes/connect';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 
 @Component({
     selector: 'app-system-modify',
@@ -66,7 +66,9 @@ export class SystemModifyComponent implements OnInit{
   stepFourForm!: FormGroup;
   stepFiveForm!: FormGroup;
 
-  constructor(private route: ActivatedRoute, private connectServerService: ConnectServerService) {
+  constructor(private route: ActivatedRoute, private connectServerService: ConnectServerService,
+    private location: Location
+  ) {
     this.route.params.subscribe(params => {
       this.idsystem = params['id'];
       this.getSystemOverview()
@@ -108,4 +110,7 @@ export class SystemModifyComponent implements OnInit{
     this.allFormValid =  valid == null ? false : true;
   }
 
+  goBack(){
+    this.location.back();
+  }
 }
