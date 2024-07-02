@@ -55,3 +55,15 @@
 .blueBg {
     background-color: #CFE2FF;
 }
+
+.arrowBtn {
+    position: absolute !important;
+    top: 20;
+    left: 0;
+    margin: 16px;
+}
+
+.arrowBtn:hover {
+    color: white;
+}
+

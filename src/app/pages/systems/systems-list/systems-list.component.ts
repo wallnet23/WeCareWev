@@ -27,7 +27,7 @@ searchText: any;
 
   constructor(private router: Router) {
 
-    }
+  }
 
   navigate(src: string) {
     this.router.navigate([src]);
