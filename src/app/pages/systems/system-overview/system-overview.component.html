@@ -1,4 +1,11 @@
 <div *ngIf="idsystem > 0; else blockError;" class="container fullPage">
+
+    <div class="arrowBtn m-2">
+        <a (click)="goBack()" class="btn btn-outline-dark">
+            <i class="bi bi-arrow-left arrowIcon"></i>
+        </a>
+    </div>
+
     <div class="row justify-content-center align-items-center mt-2 p-2">
         <div class="col-6 text-center">
             <h2 class="systemName">{{systemInfo?.title}}</h2>
@@ -42,29 +49,39 @@
             <div class="card">
                 <h5 class="card-header blueBg">SYSTEM DATA</h5>
                 <div class="card-body">
-                    <ul class="list-unstyled">
-                        <li class="listElement">
-                            <i class="bi bi-circle-fill" style="font-size: large;" [ngClass]="{
+                    <div *ngIf="systemInfo && systemInfo?.customerInfo?.length! > 1; else systemBlock">
+                        <ul class="list-unstyled">
+                            <li class="listElement">
+                                <i class="bi bi-circle-fill" style="font-size: large;" [ngClass]="{
                                 'text-success': systemInfo?.status?.title === 'Approved',
                                 'text-danger': systemInfo?.status?.title === 'Incomplete',
                                 'text-warning': systemInfo?.status?.title === 'Waiting for approval'}">
-                            </i>
-                            <span *ngIf="systemInfo?.status" style="margin-left: 1rem;">{{systemInfo?.status}}</span>
-                            <span *ngIf="!systemInfo?.status" style="margin-left: 1rem;">Status not available</span>
-                        </li>
-                        <li class="listElement">
-                            <span class="listTitle">Supplier Name:</span><br>
-                            <span class="listDescription">{{systemInfo?.customerInfo}}</span>
-                        </li>
-                        <li class="listElement">
-                            <span class="listTitle">Installation Site:</span><br>
-                            <span class="listDescription">{{systemInfo?.installationSite}}</span>
-                        </li>
-                        <li class="listElement">
-                            <span class="listTitle">Installation Date:</span><br>
-                            <span class="listDescription">{{systemInfo?.installationDate}}</span>
-                        </li>
-                    </ul>
+                                </i>
+                                <span *ngIf="systemInfo?.status"
+                                    style="margin-left: 1rem;">{{systemInfo?.status}}</span>
+                                <span *ngIf="!systemInfo?.status" style="margin-left: 1rem;">Status not available</span>
+                            </li>
+                            <li class="listElement">
+                                <span class="listTitle">Customer Name:</span><br>
+                                <span class="listDescription">{{systemInfo?.customerInfo}}</span>
+                            </li>
+                            <li class="listElement">
+                                <span class="listTitle">Installation Site:</span><br>
+                                <span class="listDescription">{{systemInfo?.installationSite}}</span>
+                            </li>
+                            <li class="listElement">
+                                <span class="listTitle">Device Info:</span><br>
+                                <ul>
+                                    <li *ngFor="let device of systemInfo?.devicesInfo">
+                                        <span class="listDescription">{{device}}</span>
+                                    </li>
+                                </ul>                    
+                            </li>
+                        </ul>
+                    </div>
+                    <ng-template #systemBlock class="mt-4 p-2 text-center">
+                        <span class="mt-2">Insert the system's datas to enable the others functionalities</span>
+                    </ng-template>
                 </div>
                 <div class="card-footer blueBg text-center">
                     <button class="btn btn-outline-dark btn-light" (click)="modifySystem()">Modify system data</button>
@@ -80,15 +97,16 @@
                         <span class="listTitle">Warranty Status: </span><br>
                         <!-- <span class="listDescription">{{warrantyExtensionStatus}}</span> -->
                     </p>
-                    <p class="paragraph" *ngIf="systemInfo?.status?.id == 4; else warrantyBlock" >
+                    <p class="paragraph" *ngIf="systemInfo?.status?.id == 4; else warrantyBlock">
 
                     </p>
                     <ng-template #warrantyBlock>
-                      <p class="paragraph">
-                          Per visualizzare la garanzia è necessario che l'impianto sia stato approvato.
-                          Stato impianto:
-                      </p>
-                  </ng-template>
+                        <p class="paragraph">
+                            Per visualizzare la garanzia di ogni dispositivo è necessario che l'impianto sia stato
+                            approvato.<br>
+                            Stato impianto:
+                        </p>
+                    </ng-template>
                     <!-- <p class="paragraph" *ngIf="!isWarrantyRequest; else warrantyBlock">
                         Request a warranty extension, our technician will review your system and check
                         if there's a possibility for a warrant extension.
@@ -153,12 +171,12 @@
                                                 </span>
                                             </div>
                                             <div class="col-12">
-                                              <span style="font-weight: bold;">Description: </span>
-                                              <span>
-                                                  {{ticket.description}}
+                                                <span style="font-weight: bold;">Description: </span>
+                                                <span>
+                                                    {{ticket.description}}
 
-                                              </span>
-                                          </div>
+                                                </span>
+                                            </div>
                                         </div>
                                         <div class="row justify-content-center">
                                             <ng-template #ticketBlock>
@@ -177,8 +195,7 @@
                             <div class="btn btn-outline-dark btn-light" (click)="newTicket()">Add a new ticket</div>
                         </div>
                         <div class="col-12 col-sm-6 mt-1">
-                            <div *ngIf="isTicket" class="btn btn-outline-dark btn-light"
-                                (click)="ticketsListSystem()">
+                            <div *ngIf="isTicket" class="btn btn-outline-dark btn-light" (click)="ticketsListSystem()">
                                 Ticket list system
                             </div>
                         </div>

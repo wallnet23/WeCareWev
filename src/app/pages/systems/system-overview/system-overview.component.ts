@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -41,7 +41,7 @@ export class SystemOverviewComponent {
 
   constructor(private loadSystemService: LoadSystemsService, private route: ActivatedRoute,
     public dialog: MatDialog, private router: Router, private assistanceRequestsService: AssistanceRequestsService,
-    private connectServerService: ConnectServerService) {
+    private connectServerService: ConnectServerService, private location: Location) {
 
     this.route.params.subscribe(params => {
       this.idsystem = params['id'];
@@ -62,6 +62,7 @@ export class SystemOverviewComponent {
         if(this.systemTickets.length > 0) {
           this.isTicket = true;
         }
+        console.log("System info:", this.systemInfo)
       }
     })
   }
@@ -93,7 +94,11 @@ export class SystemOverviewComponent {
   }
 
   warrantyInfo() {
-    this.router.navigate(['/warrantyInfo'])
+    this.router.navigate(['/warrantyInfo', this.idsystem])
+  }
+
+  goBack() {
+    this.location.back();
   }
 
   // goTo(request: AssistanceRequest) {

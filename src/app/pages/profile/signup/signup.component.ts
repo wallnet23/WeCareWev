@@ -1,8 +1,8 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { map, Observable } from 'rxjs';
 import { MatSelectModule } from '@angular/material/select';
 import { RecaptchaFormsModule, RecaptchaModule, RecaptchaV3Module, ReCaptchaV3Service } from 'ng-recaptcha';
@@ -54,7 +54,12 @@ export class SignupComponent implements OnInit {
 
   constructor(private connectServerService: ConnectServerService,
     private recaptcha: ReCaptchaV3Service, private popupDialogService: PopupDialogService,
-    private router: Router) { }
+    private router: Router, private route: ActivatedRoute, private location: Location) { 
+      this.route.queryParamMap.subscribe(params => {
+        console.log(params.get('text'));
+        this.signupForm.get('request_description')?.setValue(params.get('text'));
+      });
+    }
 
   ngOnInit() {
     this.connectServerService.getRequestCountryData().subscribe((obj) => {
@@ -94,6 +99,10 @@ export class SignupComponent implements OnInit {
         }
       }
     );
+  }
+
+  goBack() {
+    this.location.back();
   }
 
 }
