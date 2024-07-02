@@ -59,7 +59,7 @@ export class ClustersComponent implements OnInit {
     num: i + 1,
     // Proprietà aggiuntive...
   }));
-  numDispCluster = Array(16).fill(0).map((_, i) => ({
+  numDevicesCluster = Array(16).fill(0).map((_, i) => ({
     num: i + 1,
     // Proprietà aggiuntive...
   }));
