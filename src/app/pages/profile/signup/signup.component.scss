@@ -18,7 +18,7 @@
     min-height: 140vh;
     font-family: "Karla", sans-serif;
     background-color: #9b9b9b;
-    min-width: 300px;
+    min-width: 370px;
 }
 
 .login-card {
@@ -78,6 +78,18 @@ form {
     }
 }
 
+.form_select {
+    border: 1px solid #d5dae2;
+    //padding: 15px 25px;
+    //margin-bottom: 20px;
+    height: 45px;
+    font-weight: normal;
+
+    &::placeholder {
+        color: #919aa3;
+    }
+}
+
 .send-btn {
     padding: 13px 20px 12px;
     background-color: #000;
@@ -98,8 +110,16 @@ form {
 #fullPage {
     max-width: 500px;
 
+    @media (min-width: 768px) {
+        max-width: 650px;
+    }
+
     @media (min-width: 992px) {
         max-width: 800px;
+    }
+
+    @media (min-width: 1200px) {
+        max-width: 1000px;
     }
 }
 
@@ -109,4 +129,8 @@ form {
 
 .arrowBtn:hover {
     color: white;
+}
+
+.small-asterisk {
+    font-size: smaller; /* Makes the asterisk smaller */
 }

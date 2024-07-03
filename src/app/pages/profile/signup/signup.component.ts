@@ -3,7 +3,6 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { map, Observable } from 'rxjs';
 import { MatSelectModule } from '@angular/material/select';
 import { RecaptchaFormsModule, RecaptchaModule, RecaptchaV3Module, ReCaptchaV3Service } from 'ng-recaptcha';
 import { TranslateModule } from '@ngx-translate/core';
@@ -41,14 +40,15 @@ export class SignupComponent implements OnInit {
   signupForm = new FormGroup({
     name: new FormControl<string | null>(null, Validators.required),
     surname: new FormControl<string | null>(null, Validators.required),
-    company_name: new FormControl<string | null>(null, Validators.required),
+    company_name: new FormControl<string | null>(null),
     country: new FormControl<Country | null>(null, Validators.required),
     licensenumber: new FormControl<string | null>(null, Validators.required),
-    vat: new FormControl<string | null>(null, Validators.required),
+    vat: new FormControl<string | null>(null),
     email: new FormControl<string | null>(null, Validators.email),
-    phone: new FormControl<string | null>(null, Validators.minLength(6)),
-    phone_whatsapp: new FormControl<string | null>(null, Validators.minLength(6)),
-    request_description: new FormControl<string | null>(null, Validators.required),
+    phone: new FormControl<string | null>(null, Validators.required),
+    phone_whatsapp: new FormControl<string | null>(null),
+    fiscalcode: new FormControl<string | null>(null, Validators.required),
+    request_description: new FormControl<string | null>(null),
     recaptcha: new FormControl(null, Validators.required),
   })
 
@@ -88,14 +88,19 @@ export class SignupComponent implements OnInit {
   }
 
   private formLogic() {
-    this.signupForm.get('obj_country')?.valueChanges.subscribe(
+    this.signupForm.get('country')?.valueChanges.subscribe(
       (country: Country | null) => {
+        console.log("COUNTRY SELECTED", country?.name.common.toString())
         if (country && country.name.common.toString() === 'Italy') {
           this.isItalian = true;
-          this.signupForm.patchValue({ licensenumber: 'none', vat: '' });
+          this.signupForm.patchValue({ licensenumber: 'none', vat: '', fiscalcode: '' });
+          this.signupForm.get('licensenumber')?.disable();
+          this.signupForm.get('fiscalcode')?.enable();
         } else {
           this.isItalian = false;
-          this.signupForm.patchValue({ vat: 'none', licensenumber: '' });
+          this.signupForm.patchValue({ vat: 'none', licensenumber: '', fiscalcode: 'null' });
+          this.signupForm.get('licensenumber')?.enable();
+          this.signupForm.get('fiscalcode')?.disable();
         }
       }
     );

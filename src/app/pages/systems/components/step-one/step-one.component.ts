@@ -16,7 +16,7 @@ import { Connect } from '../../../../classes/connect';
 import { PopupDialogService } from '../../../../services/popup-dialog.service';
 import { Country } from '../../../../interfaces/country';
 import { TranslateModule } from '@ngx-translate/core';
-import { Technician } from '../../../profile/interfaces/technician';
+import { UserData } from '../../../profile/interfaces/user-data';
 
 @Component({
   selector: 'app-step-one',
@@ -48,7 +48,7 @@ export class StepOneComponent implements OnInit {
   countriesData: Country[] = [];
 
   stepOneForm = this.formBuilder.group({
-    customer_techniciandata: new FormControl<boolean | number>(0),
+    customer_userdata: new FormControl<boolean | number>(0),
     customer_name: new FormControl('', Validators.required),
     customer_surname: new FormControl('', Validators.required),
     ccn3: new FormControl<string | null>(null, Validators.required),
@@ -136,24 +136,24 @@ export class StepOneComponent implements OnInit {
   }
 
   private logicStep() {
-    this.stepOneForm.get('customer_techniciandata')?.valueChanges.subscribe(
+    this.stepOneForm.get('customer_userdata')?.valueChanges.subscribe(
       (val) => {
         if (val == (0 || false)) {
           this.stepOneForm.reset();
         } else if (val == (1 || true)) {
-          this.connectServerService.getRequest<ApiResponse<{ infoTechnician: Technician }>>(Connect.urlServerLaraApi, 'user/infoTechnician',
+          this.connectServerService.getRequest<ApiResponse<{ userData: UserData }>>(Connect.urlServerLaraApi, 'user/infoTechnician',
             {}).subscribe(
-              (val: ApiResponse<{ infoTechnician: Technician }>) => {
-                if (val && val.data && val.data.infoTechnician) {
-                  const obj_technician: Technician = val.data.infoTechnician;
+              (val: ApiResponse<{ userData: UserData }>) => {
+                if (val && val.data && val.data.userData) {
+                  const obj_userData: UserData = val.data.userData;
                   this.stepOneForm.patchValue({
-                    customer_name: obj_technician.name,
-                    customer_surname: obj_technician.surname,
-                    ccn3: obj_technician.ccn3,
-                    customer_phone: obj_technician.phone,
-                    customer_vat: obj_technician.vat,
-                    customer_licensenumber: obj_technician.licensenumber,
-                    customer_fiscalcode: obj_technician.fiscalcode
+                    customer_name: val.data.userData.name,
+                    customer_surname: val.data.userData.surname,
+                    ccn3: val.data.userData.ccn3,
+                    customer_phone: val.data.userData.phone,
+                    customer_vat: val.data.userData.vat,
+                    customer_licensenumber: val.data.userData.licensenumber,
+                    customer_fiscalcode: val.data.userData.fiscalcode
                   })
                 }
               }

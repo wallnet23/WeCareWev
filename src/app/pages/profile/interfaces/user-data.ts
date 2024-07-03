@@ -1,4 +1,4 @@
-export interface Technician {
+export interface UserData {
   name: string;
   surname: string;
   ccn3: string;
