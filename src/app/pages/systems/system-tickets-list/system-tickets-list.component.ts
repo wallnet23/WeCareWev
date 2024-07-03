@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AssistanceRequestsService } from '../../../services/assistance-requests.service';
 import { CommonModule } from '@angular/common';
-import { Inverter } from '../interfaces/inverter';
+import { Inverter } from '../interfaces/inverterData';
 import { Router } from '@angular/router';
 import { Ticket } from '../interfaces/ticket';
 import { TranslateModule } from '@ngx-translate/core';

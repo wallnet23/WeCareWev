@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators, FormsModule, ReactiveFormsModule, FormControl, FormArray } from '@angular/forms';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { MatButtonModule } from '@angular/material/button';
@@ -15,16 +15,15 @@ import { ConnectServerService } from '../../../../services/connect-server.servic
 import { ApiResponse } from '../../../../interfaces/api-response';
 import { Connect } from '../../../../classes/connect';
 import { PopupDialogService } from '../../../../services/popup-dialog.service';
+import { StepFour } from '../interfaces/step-four';
+import { InverterData } from '../../interfaces/inverterData';
+import { ClusterData } from '../../interfaces/clusterData';
 
 interface BatteryInfo {
   serialNumber: string;
   askSupport: boolean;
 }
 
-interface ClusterInfo {
-  batteries: BatteryInfo,
-  relatedInverter: string;
-}
 interface SystemComposition {
   id: number | null;
   name: string;
@@ -75,8 +74,10 @@ export class StepFourComponent implements OnInit {
     }];
   wecoComposition: SystemComposition[] = [];
   formValid: boolean = false;
+  stepInverter!: InverterData;
+  view_stepinverter = false;
   stepFourForm = this.formBuilder.group({
-    product_installdate: new FormControl<Date | null>(null, Validators.required),
+    product_installdate: new FormControl<Date | null | string>(null, Validators.required),
     product_systemcomposition: new FormControl<number | null>(null, Validators.required),
     product_systemweco: new FormControl<number | null>(null, Validators.required),
     product_brand: new FormControl(''),
@@ -89,7 +90,10 @@ export class StepFourComponent implements OnInit {
   ngOnInit(): void {
     this.logicStep();
     this.getStepValid();
+    this.infoStep();
+    this.getViewStepInverterValid();
   }
+
 
   sendData() {
     console.log('data 1', this.stepFourForm.value);
@@ -98,26 +102,51 @@ export class StepFourComponent implements OnInit {
 
   saveData() {
     const stepFour = this.stepFourForm.value;
-    console.log('data 1', this.stepFourForm.value);
+    // console.log('data 1', this.stepFourForm.value);
     let stepInverter = null;
     let stepCluster = null;
-    if(this.obj_invert && this.obj_invert.getDataFormInverter()){
-      console.log('inverter', this.obj_invert.getDataFormInverter());
-      console.log('inverter valid', this.obj_invert.getValidFormInvert());
+    if (this.obj_invert && this.obj_invert.getDataFormInverter()) {
+      stepInverter = this.obj_invert.getDataFormInverter();
+      // console.log('inverter valid', this.obj_invert.getValidFormInvert());
     }
+    // console.log('data valid', this.stepFourForm.valid);
+    this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepFour',
+      {
+        idsystem: this.idsystem,
+        obj_step: stepFour,
+        obj_inverter: stepInverter,
+        obj_cluster: stepCluster,
+      })
+      .subscribe((val: ApiResponse<null>) => {
+        this.popupDialogService.alertElement(val);
+        this.infoStep();
+      })
+  }
 
-    console.log('data valid', this.stepFourForm.valid);
-    // this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepFour',
-    //   {
-    //     idsystem: this.idsystem,
-    //     obj_step: stepFour,
-    //     obj_inverter: stepInverter,
-    //     obj_cluster: stepCluster,
-    //   })
-    //   .subscribe((val: ApiResponse<null>) => {
-    //     this.popupDialogService.alertElement(val);
+  private infoStep() {
+    this.connectServerService.getRequest<ApiResponse<{
+      stepFour: StepFour,
+      stepInverter: InverterData,
+      stepCluster: ClusterData
+    }>>(Connect.urlServerLaraApi, 'system/infoStepFour',
+      {
+        id: this.idsystem
+      })
+      .subscribe((val: ApiResponse<{
+        stepFour: StepFour,
+        stepInverter: InverterData,
+        stepCluster: ClusterData
+      }>) => {
+        if (val.data && val.data.stepFour) {
+          const data_step = val.data.stepFour;
+          this.stepFourForm.patchValue(data_step);
+        }
+        if (val.data && val.data.stepInverter) {
+          this.stepInverter = val.data.stepInverter;
+        }
+        console.log(val.data);
 
-    //   })
+      })
   }
 
   private getStepValid() {
@@ -128,6 +157,16 @@ export class StepFourComponent implements OnInit {
     }
   }
 
+  private getViewStepInverterValid() {
+    let result = false;
+    if (this.obj_invert) {
+      if (this.stepFourForm.get('product_systemcomposition')?.value == 2 &&
+        this.obj_invert.getValidFormInvert()) {
+        result = true;
+      }
+    }
+    this.view_stepinverter = result;
+  }
 
   private logicStep() {
     this.stepFourForm.get('product_systemcomposition')?.valueChanges.subscribe(

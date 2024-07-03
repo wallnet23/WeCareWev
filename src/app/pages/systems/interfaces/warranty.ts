@@ -1,5 +1,5 @@
-import { Cluster } from "./cluster";
-import { Inverter } from "./inverter";
+import { Cluster } from "./clusterData";
+import { Inverter } from "./inverterData";
 
 export interface Warranty {
     id: number;

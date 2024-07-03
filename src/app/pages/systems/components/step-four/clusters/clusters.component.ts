@@ -10,7 +10,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ConnectServerService } from '../../../../../services/connect-server.service';
 import { ApiResponse } from '../../../../../interfaces/api-response';
 import { Connect } from '../../../../../classes/connect';
-import { Inverter } from '../../../interfaces/inverter';
+import { Inverter } from '../../../interfaces/inverterData';
 
 interface SystemVolt {
   id: number;

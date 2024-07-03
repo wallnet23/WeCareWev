@@ -36,11 +36,11 @@
 
       <div class="row">
         <div class="col-12">
-          <app-inverters #invertersComponent [idsystem]="idsystem" *ngIf="stepFourForm.get('product_systemweco')?.value != null"></app-inverters>
+          <app-inverters #invertersComponent [idsystem]="idsystem" [stepInverter]="stepInverter" *ngIf="stepFourForm.get('product_systemweco')?.value != null"></app-inverters>
         </div>
       </div>
       <div class="row">
-        <div class="col-12" *ngIf="stepFourForm.get('product_systemcomposition')?.value == 2 && (obj_invert ? obj_invert.getValidFormInvert() : false)">
+        <div class="col-12" *ngIf="view_stepinverter">
           <app-clusters #clustersComponent [idsystem]="idsystem"></app-clusters>
         </div>
       </div>

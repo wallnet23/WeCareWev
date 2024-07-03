@@ -11,7 +11,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { StepThreeComponent } from '../components/step-three/step-three.component';
 import { StepFourComponent } from '../components/step-four/step-four.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { StepFiveComponent } from '../components/step-five/step-five.component';
 import { ConnectServerService } from '../../../services/connect-server.service';
 import { ApiResponse } from '../../../interfaces/api-response';
 import { SystemInfo } from '../interfaces/system-info';
@@ -43,7 +42,6 @@ import { CommonModule, Location } from '@angular/common';
         StepTwoComponent,
         StepThreeComponent,
         StepFourComponent,
-        StepFiveComponent,
         MatIconModule,
         CommonModule
     ]
@@ -58,7 +56,6 @@ export class SystemModifyComponent implements OnInit{
   @ViewChild('stepTwo') obj_stepTwo!: StepTwoComponent;
   @ViewChild('stepThree') obj_stepThree!: StepThreeComponent;
   @ViewChild('stepFour') obj_stepFour!: StepFourComponent;
-  @ViewChild('stepFive') obj_stepFive!: StepFiveComponent;
 
   stepOneForm!: FormGroup;
   stepTwoForm!: FormGroup;
