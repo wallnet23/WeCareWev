@@ -14,6 +14,7 @@ export class PopupDialogService {
   constructor(private toastr: ToastrService, public dialog: MatDialog) { }
 
   alertElement(obj_val: ApiResponse<any>) {
+    console.log('dentro: ', obj_val);
     if (obj_val.type_alert && obj_val.type_alert === 1) {
       this.toastDialog(obj_val);
     } else {

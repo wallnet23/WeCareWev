@@ -80,6 +80,8 @@
       "LICENSENUMBER": "License Number",
       "VAT": "VAT",
       "EMAIL": "Email",
+      "PWD": "Password",
+      "PWD_CONFIRM": "Password Confirmed",
       "PHONE": "Phone Number",
       "PHONEPLACEHOLDER": "(+999) 9999999",
       "OPTIONALPLACEHOLDER": "Optional",
