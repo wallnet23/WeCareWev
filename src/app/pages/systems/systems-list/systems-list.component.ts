@@ -30,6 +30,6 @@ searchText: any;
   }
 
   navigate(src: string) {
-    this.router.navigate([src]);
+    this.router.navigate([src, 0]);
   }
 }

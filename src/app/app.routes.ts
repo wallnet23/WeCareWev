@@ -17,6 +17,7 @@ import { loginSignupGuard } from './guards/login-signup.guard';
 import { TicketNewComponent } from './pages/systems/ticket-new/ticket-new.component';
 import { WarrantyTrialComponent } from './warranty-trial/warranty-trial.component';
 import { WarrantyInfoComponent } from './pages/warranty/warranty-info/warranty-info.component';
+import { SystemManagementComponent } from './pages/systems/system-management/system-management.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -24,9 +25,10 @@ export const routes: Routes = [
     { path: 'sendemailModifyPassword', component: SendemailModifyPasswordComponent, canActivate: [loginSignupGuard]},
     { path: 'signup', component: SignupComponent, canActivate: [loginSignupGuard]},
     { path: 'systemsList', component: SystemsListComponent, canActivate: [authGuard]},
-    { path: 'systemModify/:id', component: SystemModifyComponent, canActivate: [authGuard] },
+    //{ path: 'systemModify/:id', component: SystemModifyComponent, canActivate: [authGuard] },
+    { path: 'systemManagement/:id', component: SystemManagementComponent },
     { path: 'profile/settings', component: SettingsComponent, canActivate: [authGuard] },
-    { path: 'newSystem', component: SystemNewComponent, canActivate: [authGuard] },
+    //{ path: 'newSystem', component: SystemNewComponent, canActivate: [authGuard] },
     { path: 'systemOverview/:id', component: SystemOverviewComponent, canActivate: [authGuard] },
     { path: 'newPassword', component: NewPasswordComponent, canActivate: [authGuard] },
     { path: 'systemTicketsList/:id', component: SystemTicketsListComponent, canActivate: [authGuard] },

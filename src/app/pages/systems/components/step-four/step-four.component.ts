@@ -88,10 +88,12 @@ export class StepFourComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.logicStep();
-    this.getStepValid();
-    this.infoStep();
-    this.getViewStepInverterValid();
+    if (this.idsystem > 0) {
+      this.logicStep();
+      this.getStepValid();
+      this.infoStep();
+      this.getViewStepInverterValid();
+    }
   }
 
 

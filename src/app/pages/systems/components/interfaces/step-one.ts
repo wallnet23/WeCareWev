@@ -1,4 +1,7 @@
 export interface StepOne {
+    title: string;
+    description: string;
+    system_owner: number;
     customer_name: string;
     customer_surname: string;
     ccn3: string;

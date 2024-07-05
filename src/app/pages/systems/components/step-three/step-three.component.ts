@@ -65,8 +65,10 @@ export class StepThreeComponent implements OnInit {
     this.connectServerService.getRequestCountryData().subscribe((obj) => {
       this.countriesData = obj;
     })
-    this.infoStep();
-    this.getImages();
+    if (this.idsystem > 0) {
+      this.infoStep();
+      this.getImages();
+    }
   }
 
   constructor(private formBuilder: FormBuilder, private uploadImageService: UploadImageService,

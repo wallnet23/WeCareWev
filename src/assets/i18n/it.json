@@ -1,4 +1,149 @@
 {
-  "HELLO": "Ciao",
-  "WELCOME": "Benvenuto"
+  "NAVBAR": {
+    "SYSTEMS": "Impianti",
+    "TICKETS": "Tickets",
+    "PROFILE": "Profilo",
+    "SETTINGS": "Impostazioni",
+    "LOGOUT": "Logout",
+    "PROFILESETTINGS": "Impostazioni Profilo"
+  },
+
+  "PROFILE": {
+    "SETTINGS": {
+      "SETTINGS": "IMPOSTAZIONI",
+      "GENERAL": "Generali",
+      "COMPANY": "Info Azienda",
+      "NOTIFICATIONS": "Notifiche",
+      "PASSWORD": "Cambia password",
+      "NAME": "Nome",
+      "SURNAME": "Cognome",
+      "EMAIL": "Email",
+      "PHONENUMBER": "Numero di telefono",
+      "CURRENTPSW": "Password corrente",
+      "NEWPSW": "Nuova password",
+      "REPEATPSW": "Ripeti nuova password",
+      "COMPANYNAME": "Nome azienda",
+      "LICENSENUMBER": "Numero di licenza",
+      "COMPANYCOUNTRY": "Nazione azienda",
+      "SELECTCOUNTRY": "Seleziona una nazione",
+      "PHONE": "Telefono",
+      "WEBSITE": "Sito web",
+      "ACTIVITY": "Attività",
+      "NOTIFICATIONS1": "Email me when someone comments on my article",
+      "NOTIFICATIONS2": "Email me when someone answers on my forum thread",
+      "NOTIFICATIONS3": "Email me when someone follows me",
+      "NOTIFICATIONS4": "Application",
+      "NOTIFICATIONS5": "News and announcements",
+      "NOTIFICATIONS6": "Weekly product updates",
+      "NOTIFICATIONS7": "Weekly blog digest",
+      "SAVECHANGES": "Salva cambiamenti"
+    },
+    "LOGIN": {
+      "SIGNIN": "Entra nel tuo account",
+      "EMAIL": "Email",
+      "MAILPLACEHOLDER": "Indirizzo email",
+      "PSW": "Password",
+      "WRONGPSW": "*Email o password sbagliate",
+      "LOGIN": "Login",
+      "FORGOTPSW": "Dimentica password?",
+      "SIGNUP": "Non hai un account?",
+      "REGISTER": "Registrati",
+      "USERTERMS": "Termini di utilizzo",
+      "PRIVACY": "Privacy policy"
+    },
+    "NEWPASSWORD": {
+      "INSERT": "Insert the new password",
+      "PSWINFO": "The new password must be 8 characters long, contain one capital letter and one special character (!@;#$%^&*(),.?:|<>).",
+      "NEWPSW": "New password",
+      "REPEATPSW": "Repeat new password",
+      "ERROR1": "*The password has to be at least 8 characters long and has to contain at least one special character",
+      "ERROR2": "*The two passwords are different",
+      "USERTERMS": "Terms of use",
+      "PRIVACY": "Privacy policy"
+    },
+    "SENDEMAILPSW": {
+      "RECOVER": "Recover your password",
+      "EMAILMESSAGE": "A message with a link to change password will be sent to your email",
+      "EMAIL": "Email",
+      "ERROR": "*Wrong e-mail format inserted",
+      "RESPONSEMESSAGE": "An e-mail to recover your password has been sent to your address",
+      "USERTERMS": "Terms of use",
+      "PRIVACY": "Privacy policy"
+    },
+    "SIGNUP": {
+      "SUBSCRIBE": "Subscribe to extend warranties",
+      "MANDATORY": "* fields are mandatory",
+      "NAME": "Name",
+      "SURNAME": "Surname",
+      "COMPANY": "Company Name",
+      "COUNTRY": "Country",
+      "SELECTCOUNTRY": "Select a Country",
+      "LICENSENUMBER": "License Number",
+      "VAT": "VAT",
+      "EMAIL": "Email",
+      "MAILPLACEHOLDER": "Email address",
+      "PWD": "Password",
+      "PWD_CONFIRM": "Password Confirmed",
+      "PHONE": "Phone Number",
+      "PHONEPLACEHOLDER": "(+999) 9999999",
+      "OPTIONALPLACEHOLDER": "Optional",
+      "FISCALCODE": "Fiscal Code",
+      "WHATSAPP": "WhatsApp Number",
+      "INFO": "Request Info",
+      "INVALID": "Compile all the mandatory fields to enable the button *",
+      "SEND": "Send Request",
+      "INFOPLACEHOLDER": "Write some additional infos (optional)",
+      "USERTERMS": "Terms of use",
+      "PRIVACY": "Privacy policy"
+    }
+  },
+
+  "STEPONE": {
+    "NAME": "Customer Name",
+    "NAMEPLACEHOLDER": "Name",
+    "SURNAME": "Customer Surname",
+    "SURNAMEPLACEHOLDER": "Surname",
+    "COUNTRY": "Customer Country",
+    "SELECTCOUNTRY": "Select a Country",
+    "PHONE": "Phone Number",
+    "PHONEPLACEHOLDER": "(+999) 9999999",
+    "VAT": "VAT",
+    "LICENSENUMBER": "License Number",
+    "FISCALCODE": "Fiscal Code",
+    "NEXT": "Next"
+  },
+  "SYSTEM": {
+    "SYSTEMLIST": {
+      "TITLE": "SYSTEMS LIST",
+      "BUTTONSEARCH": "Search",
+      "SEARCHPLACEHOLDER": "Name of the system",
+      "EMPTY": "No system available, add a system to view the warranty, request an RMA or open a support ticket."
+    },
+    "SYSTEMTICKETLIST": {
+      "TITLE": "LIST OF SYSTEM TICKETS",
+      "BUTTONSEARCH": "Search",
+      "SEARCHPLACEHOLDER": "Name of the system",
+      "EMPTY": ""
+    }
+  },
+  "TICKET": {
+    "TICKETLIST": {
+      "TITLE": "TICKETS LIST",
+      "BUTTONSEARCH": "Search",
+      "SEARCHPLACEHOLDER": "Name of the ticket",
+      "EMPTY": "No tickets available. To add a ticket create or enter a system."
+    },
+    "NEWTICKET": {
+      "NEWTICKET": "NEW TICKET",
+      "TITLE": "Title",
+      "DATE": "Date",
+      "RELATEDSYS": "Related system",
+      "NONE": "None",
+      "DESCRIPTION": "Description",
+      "IMPORTIMG": "You're trying to import too many images",
+      "ATTACHMENT": "Import attachments (max 6)",
+      "IMPORT": "Import",
+      "SUBMIT": "Submit"
+    }
+  }
 }

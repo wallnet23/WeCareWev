@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators, FormsModule, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { MatButtonModule } from '@angular/material/button';
@@ -44,16 +44,21 @@ import { UserData } from '../../../profile/interfaces/user-data';
 })
 export class StepOneComponent implements OnInit {
 
+  @Output() idEmitter = new EventEmitter<number>();
+
   @Input() idsystem = 0;
   countriesData: Country[] = [];
 
   stepOneForm = this.formBuilder.group({
+    system_name: new FormControl<string | null>(null, Validators.required),
+    system_description: new FormControl<string | null>(null),
+    system_owner: new FormControl<number>(1, Validators.required),
     customer_userdata: new FormControl<boolean | number>(0),
     customer_name: new FormControl('', Validators.required),
     customer_surname: new FormControl('', Validators.required),
     ccn3: new FormControl<string | null>(null, Validators.required),
     customer_phone: new FormControl<string>(''),
-    customer_vat: new FormControl<string>('', Validators.required),
+    customer_vat: new FormControl<string>(''),
     customer_licensenumber: new FormControl<string>('', Validators.required),
     customer_fiscalcode: new FormControl<string>('', Validators.required),
   });
@@ -124,12 +129,14 @@ export class StepOneComponent implements OnInit {
   }
 
   private saveData(stepOne: any) {
-    this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepOne',
+    this.connectServerService.postRequest<ApiResponse<{idsystem: number}>>(Connect.urlServerLaraApi, 'system/saveStepOne',
       {
         idsystem: this.idsystem,
         obj_step: stepOne
       })
-      .subscribe((val: ApiResponse<null>) => {
+      .subscribe((val: ApiResponse<{idsystem: number}>) => {
+        this.idsystem = val.data.idsystem;
+        this.idEmitter.emit(val.data.idsystem);
         this.popupDialogService.alertElement(val);
         this.infoStep();
       })
@@ -147,6 +154,7 @@ export class StepOneComponent implements OnInit {
                 if (val && val.data && val.data.userData) {
                   const obj_userData: UserData = val.data.userData;
                   this.stepOneForm.patchValue({
+                    //TODO: CAMBIARE LA LOGICA AGGIUNGENDO NOME, DESCRIZIONE SISTEMA E OWNER
                     customer_name: val.data.userData.name,
                     customer_surname: val.data.userData.surname,
                     ccn3: val.data.userData.ccn3,
@@ -184,5 +192,12 @@ export class StepOneComponent implements OnInit {
       });
   }
 
+  onCheckboxChange(event: Event) {
+    const checkbox = event.target as HTMLInputElement;
+    const isChecked = checkbox.checked;
+    const value = isChecked ? 1 : 0;
+    this.stepOneForm.patchValue({ system_owner: value });
+    console.log("Owner", this.stepOneForm.get('system_owner')?.value);
+  }
 
 }

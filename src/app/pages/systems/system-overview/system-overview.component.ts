@@ -90,7 +90,7 @@ export class SystemOverviewComponent {
   }
 
   modifySystem() {
-    this.router.navigate(['/systemModify', this.idsystem])
+    this.router.navigate(['/systemManagement', this.idsystem])
   }
 
   warrantyInfo() {

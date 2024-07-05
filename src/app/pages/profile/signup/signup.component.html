@@ -96,7 +96,7 @@
                         placeholder="" [ngClass]="{'error': signupForm.get('email')?.invalid && signupForm.get('email')?.dirty }">
                         <div class="text-form" *ngIf="signupForm.get('email')?.invalid && signupForm.get('email')?.dirty"
                         style="color: red; font-size: small;">
-                            Invalid email
+                            Invalid email{{"PROFILE.SIGNUP.INVALIDEMAIL" | translate}}
                         </div>
                     </div>
 
@@ -121,7 +121,7 @@
                     <div class="col-12 mb-3">
                       <span class="mt-1" *ngIf="signupForm.hasError('mismatch') && (signupForm.get('password')?.dirty && signupForm.get('password_confirmation')?.dirty)"
                       style="color: red; font-size: small;">
-                        Password mismatch
+                        {{"PROFILE.SIGNUP.PSWMISMATCH" | translate}}
                       </span>
                     </div>
 
