@@ -41,6 +41,7 @@
     "LOGIN": {
       "SIGNIN": "Sign into your account",
       "EMAIL": "Email",
+      "MAILPLACEHOLDER": "Email address",
       "PSW": "Password",
       "WRONGPSW": "*Wrong email or password",
       "LOGIN": "Login",
@@ -80,6 +81,7 @@
       "LICENSENUMBER": "License Number",
       "VAT": "VAT",
       "EMAIL": "Email",
+      "MAILPLACEHOLDER": "Email address",
       "PHONE": "Phone Number",
       "PHONEPLACEHOLDER": "(+999) 9999999",
       "OPTIONALPLACEHOLDER": "Optional",

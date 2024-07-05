@@ -1,7 +1,7 @@
 <div class="container mt-4 light-style flex-grow-1 container-p-y">
 
     <h4 class="font-weight-bold py-3 mb-4 text-center">
-        {{'SETTINGS.SETTINGS' | translate}}
+        {{'PROFILE.SETTINGS.SETTINGS' | translate}}
     </h4>
 
     <div class="card overflow-hidden">
@@ -10,14 +10,14 @@
                 <div class="list-group list-group-flush account-settings-links options">
                     <a class="list-group-item list-group-item-action active" id="accountGeneralList"
                         data-bs-toggle="list" href="#accountGeneral" role="tab"
-                        aria-controls="accountGeneral">{{'SETTINGS.GENERAL' | translate}}</a>
+                        aria-controls="accountGeneral">{{'PROFILE.SETTINGS.GENERAL' | translate}}</a>
                     <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#companyInfo">
-                        {{'SETTINGS.COMPANY' | translate}}</a>
+                        {{'PROFILE.SETTINGS.COMPANY' | translate}}</a>
                     <a class="list-group-item list-group-item-action" data-bs-toggle="list"
-                        href="#account-notifications">{{'SETTINGS.NOTIFICATIONS' | translate}}</a>
+                        href="#account-notifications">{{'PROFILE.SETTINGS.NOTIFICATIONS' | translate}}</a>
                     <a class="list-group-item list-group-item-action" id="changePasswordList" data-bs-toggle="list"
                         href="#accountChangePassword" role="tab" aria-controls="accountChangePassword">
-                        {{'SETTINGS.PASSWORD' | translate}}</a>
+                        {{'PROFILE.SETTINGS.PASSWORD' | translate}}</a>
                 </div>
             </div>
             <div class="col-md-9">
@@ -26,19 +26,19 @@
                         id="accountGeneral">
                         <div class="card-body">
                             <div class="form-group">
-                                <label class="form-label section">{{'SETTINGS.NAME' | translate}}</label>
+                                <label class="form-label section">{{'PROFILE.SETTINGS.NAME' | translate}}</label>
                                 <input type="text" class="form-control" value="">
                             </div>
                             <div class="form-group">
-                                <label class="form-label section">{{'SETTINGS.SURNAME' | translate}}</label>
+                                <label class="form-label section">{{'PROFILE.SETTINGS.SURNAME' | translate}}</label>
                                 <input type="text" class="form-control" value="">
                             </div>
                             <div class="form-group">
-                                <label class="form-label section">{{'SETTINGS.EMAIL' | translate}}</label>
+                                <label class="form-label section">{{'PROFILE.SETTINGS.EMAIL' | translate}}</label>
                                 <input type="text" class="form-control mb-1" value="">
                             </div>
                             <div class="form-group section">
-                                <label class="form-label">{{'SETTINGS.PHONENUMBER' | translate}}</label>
+                                <label class="form-label">{{'PROFILE.SETTINGS.PHONENUMBER' | translate}}</label>
                                 <input type="text" class="form-control" value="">
                             </div>
                         </div>
@@ -49,19 +49,19 @@
                         <div class="card-body pb-2">
                             <form [formGroup]="modifyPasswordForm" style="margin: 0 auto">
                                 <div class="form-group input-container">
-                                    <label for="password" class="form-label section">{{'SETTINGS.CURRENTPSW' | translate}}</label>
+                                    <label for="password" class="form-label section">{{'PROFILE.SETTINGS.CURRENTPSW' | translate}}</label>
                                     <input [type]="type1" id="password1" name="password" formControlName="password" class="form-control">
                                     <i class="bi bi-eye icon" [ngClass]="{'bi-eye': !toggled1, 'bi-eye-slash': toggled1}"
                                             id="togglePassword" (click)="seePassword('password1')"></i>
                                 </div>
                                 <div class="form-group input-container">
-                                    <label for="newPassword" class="form-label section">{{'SETTINGS.NEWPSW' | translate}}</label>
+                                    <label for="newPassword" class="form-label section">{{'PROFILE.SETTINGS.NEWPSW' | translate}}</label>
                                     <input [type]="type2" id="password2" name="newPassword" formControlName="newPassword" class="form-control">
                                     <i class="bi bi-eye icon" [ngClass]="{'bi-eye': !toggled2, 'bi-eye-slash': toggled2}"
                                             id="togglePassword" (click)="seePassword('password2')"></i>
                                 </div>
                                 <div class="form-group input-container">
-                                    <label for="repeatNewPassword" class="form-label section">{{'SETTINGS.REPEATPSW' | translate}}</label>
+                                    <label for="repeatNewPassword" class="form-label section">{{'PROFILE.SETTINGS.REPEATPSW' | translate}}</label>
                                     <input [type]="type3" id="password3" name="repeatNewPassword" formControlName="repeatNewPassword" class="form-control">
                                     <i class="bi bi-eye icon" [ngClass]="{'bi-eye': !toggled3, 'bi-eye-slash': toggled3}"
                                             id="togglePassword" (click)="seePassword('password3')"></i>
@@ -74,20 +74,20 @@
                         <div class="card-body pb-2">
                             <form [formGroup]="signupForm" style="margin: 0 auto">
                                 <div class="form-group">
-                                    <label for="companyName" class="form-label section">{{'SETTINGS.COMPANYNAME' | translate}}</label>
+                                    <label for="companyName" class="form-label section">{{'PROFILE.SETTINGS.COMPANYNAME' | translate}}</label>
                                     <input class="form-control" type="text" name="companyName"
                                         formControlName="companyName">
                                 </div>
                                 <div class="form-group">
-                                    <label for="licenseNumber" class="form-label section">{{'SETTINGS.LICENSENUMBER' | translate}}</label>
+                                    <label for="licenseNumber" class="form-label section">{{'PROFILE.SETTINGS.LICENSENUMBER' | translate}}</label>
                                     <input type="text" class="form-control" name="licenseNumber"
                                         formControlName="licenseNumber">
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label section">{{'SETTINGS.COMPANYCOUNTRY' | translate}}</label>
+                                    <label class="form-label section">{{'PROFILE.SETTINGS.COMPANYCOUNTRY' | translate}}</label>
                                     <select class="form-select" id="country" aria-label="select example"
                                         formControlName="country" required (change)="setLicence()">
-                                        <option [ngValue]="null" disabled selected>{{'SETTINGS.SELECTCOUNTRY' | translate}}</option>
+                                        <option [ngValue]="null" disabled selected>{{'PROFILE.SETTINGS.SELECTCOUNTRY' | translate}}</option>
                                         <option *ngFor="let country of countriesData">
                                             <img src="{{country.flags.png}}" width="20px" height="15px"> {{
                                             country.name.common }}
@@ -95,12 +95,12 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="phoneNumber" class="form-label section">{{'SETTINGS.PHONE' | translate}}</label>
+                                    <label for="phoneNumber" class="form-label section">{{'PROFILE.SETTINGS.PHONE' | translate}}</label>
                                     <input type="text" class="form-control" name="phoneNumber"
                                         formControlName="phoneNumber">
                                 </div>
                                 <div class="form-group">
-                                    <label for="website" class="form-label section">{{'SETTINGS.WEBSITE' | translate}}</label>
+                                    <label for="website" class="form-label section">{{'PROFILE.SETTINGS.WEBSITE' | translate}}</label>
                                     <input type="text" class="form-control" name="website" formControlName="website">
                                 </div>
                             </form>
@@ -111,7 +111,7 @@
                     <div class="tab-pane fade" id="account-notifications">
                         <div class="card-body pb-2">
 
-                            <h6 class="mb-4 section">{{'SETTINGS.ACTIVITY' | translate}}</h6>
+                            <h6 class="mb-4 section">{{'PROFILE.SETTINGS.ACTIVITY' | translate}}</h6>
 
                             <div class="form-group">
                                 <label class="switcher">
@@ -120,7 +120,7 @@
                                         <span class="switcher-yes"></span>
                                         <span class="switcher-no"></span>
                                     </span>
-                                    <span class="switcher-label">{{'SETTINGS.NOTIFICATIONS1' | translate}}</span>
+                                    <span class="switcher-label">{{'PROFILE.SETTINGS.NOTIFICATIONS1' | translate}}</span>
                                 </label>
                             </div>
                             <div class="form-group">
@@ -130,7 +130,7 @@
                                         <span class="switcher-yes"></span>
                                         <span class="switcher-no"></span>
                                     </span>
-                                    <span class="switcher-label">{{'SETTINGS.NOTIFICATIONS2' | translate}}</span>
+                                    <span class="switcher-label">{{'PROFILE.SETTINGS.NOTIFICATIONS2' | translate}}</span>
                                 </label>
                             </div>
                             <div class="form-group">
@@ -140,14 +140,14 @@
                                         <span class="switcher-yes"></span>
                                         <span class="switcher-no"></span>
                                     </span>
-                                    <span class="switcher-label">{{'SETTINGS.NOTIFICATIONS3' | translate}}</span>
+                                    <span class="switcher-label">{{'PROFILE.SETTINGS.NOTIFICATIONS3' | translate}}</span>
                                 </label>
                             </div>
                         </div>
                         <hr class="border-light m-0">
                         <div class="card-body pb-2">
 
-                            <h6 class="mb-4 section">{{'SETTINGS.NOTIFICATIONS4' | translate}}</h6>
+                            <h6 class="mb-4 section">{{'PROFILE.SETTINGS.NOTIFICATIONS4' | translate}}</h6>
 
                             <div class="form-group">
                                 <label class="switcher">
@@ -156,7 +156,7 @@
                                         <span class="switcher-yes"></span>
                                         <span class="switcher-no"></span>
                                     </span>
-                                    <span class="switcher-label">{{'SETTINGS.NOTIFICATIONS5' | translate}}</span>
+                                    <span class="switcher-label">{{'PROFILE.SETTINGS.NOTIFICATIONS5' | translate}}</span>
                                 </label>
                             </div>
                             <div class="form-group">
@@ -166,7 +166,7 @@
                                         <span class="switcher-yes"></span>
                                         <span class="switcher-no"></span>
                                     </span>
-                                    <span class="switcher-label">{{'SETTINGS.NOTIFICATIONS6' | translate}}</span>
+                                    <span class="switcher-label">{{'PROFILE.SETTINGS.NOTIFICATIONS6' | translate}}</span>
                                 </label>
                             </div>
                             <div class="form-group">
@@ -176,7 +176,7 @@
                                         <span class="switcher-yes"></span>
                                         <span class="switcher-no"></span>
                                     </span>
-                                    <span class="switcher-label">{{'SETTINGS.NOTIFICATIONS7' | translate}}</span>
+                                    <span class="switcher-label">{{'PROFILE.SETTINGS.NOTIFICATIONS7' | translate}}</span>
                                 </label>
                             </div>
 
@@ -188,7 +188,7 @@
     </div>
 
     <div class="text-right mt-3">
-        <button type="button" class="btn btn-dark">{{'SETTINGS.SAVECHANGES' | translate}}</button>
+        <button type="button" class="btn btn-dark">{{'PROFILE.SETTINGS.SAVECHANGES' | translate}}</button>
     </div>
 
 </div>
