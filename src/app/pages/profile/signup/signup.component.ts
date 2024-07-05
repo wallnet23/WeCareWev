@@ -1,5 +1,5 @@
 import { CommonModule, Location } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
@@ -10,7 +10,6 @@ import { Country } from '../../../interfaces/country';
 import { ConnectServerService } from '../../../services/connect-server.service';
 import { Connect } from '../../../classes/connect';
 import { ApiResponse } from '../../../interfaces/api-response';
-import { ToastrService } from 'ngx-toastr';
 import { PopupDialogService } from '../../../services/popup-dialog.service';
 
 @Component({
@@ -32,6 +31,11 @@ import { PopupDialogService } from '../../../services/popup-dialog.service';
   styleUrl: './signup.component.scss'
 })
 export class SignupComponent implements OnInit {
+
+  type1: string = 'password'
+  type2: string = 'password'
+  toggled1: boolean = true;
+  toggled2: boolean = true;
 
   isItalian: boolean = false;
   validEmail: boolean = true;
@@ -117,4 +121,26 @@ export class SignupComponent implements OnInit {
     return password.value === passwordConfirm.value ? null : { 'mismatch': true };
   }
 
+  seePassword(id: string) {
+    if(id === 'password') {
+      if(this.type1 === 'password') {
+        this.type1 = 'text';
+        this.toggled1 = false;
+      }
+      else {
+        this.type1 = 'password';
+        this.toggled1 = true;
+      }
+    }
+    else if (id === 'password_confirmation') {
+      if(this.type2 === 'password') {
+        this.type2 = 'text';
+        this.toggled2 = false;
+      }
+      else {
+        this.type2 = 'password';
+        this.toggled2 = true;
+      }
+    }
+  }
 }

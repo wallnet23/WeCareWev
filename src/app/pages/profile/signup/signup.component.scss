@@ -133,7 +133,7 @@ form {
     }
 
     @media (min-width: 992px) {
-        max-width: 800px;
+        max-width: 850px;
     }
 
     @media (min-width: 1200px) {
@@ -151,4 +151,13 @@ form {
 
 .small-asterisk {
     font-size: smaller; /* Makes the asterisk smaller */
+}
+
+.icon {
+    position: absolute;
+    right: 20px;
+    top: 74%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    z-index: 2;
 }
