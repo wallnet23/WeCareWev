@@ -17,6 +17,9 @@
                     <a class="nav-link" href="/ticketsList"
                         [ngStyle]="{'border-bottom': isCurrentPage('/ticketsList') ? '2px solid #FF0000' : 'none'}">
                         {{'NAVBAR.TICKETS' | translate}}
+                        <span *ngIf="userPermissions$ | async as permissions">
+                          {{ permissions.menu }}
+                        </span>
                     </a>
                 </li>
                 <li *ngIf="!isToggle" class="nav-item d-flex align-items-center mb-1 mr-5">

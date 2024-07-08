@@ -1,4 +1,4 @@
-import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom, isDevMode } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { routes } from './app.routes';
@@ -11,6 +11,11 @@ import { spinnerInterceptor } from './interceptors/spinner.interceptor';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { provideToastr } from 'ngx-toastr';
+import { provideStore } from '@ngrx/store';
+import { provideEffects } from '@ngrx/effects';
+import { provideStoreDevtools } from '@ngrx/store-devtools';
+import { UserEffects } from './ngrx/user/user.effects';
+import { userReducer } from './ngrx/user/user.reducer';
 
 // required for AoT
 export function HttpLoaderFactory(http: HttpClient) {
@@ -25,21 +30,19 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch(), withInterceptors([authInterceptor, requestErrorInterceptor, spinnerInterceptor])),
     { provide: RECAPTCHA_V3_SITE_KEY, useValue: environment.recaptcha.apiUrl },
     {
-      provide: RECAPTCHA_SETTINGS,
-      useValue: {
-        siteKey: environment.recaptcha.siteKey,
-      } as RecaptchaSettings,
+        provide: RECAPTCHA_SETTINGS,
+        useValue: {
+            siteKey: environment.recaptcha.siteKey,
+        } as RecaptchaSettings,
     },
-    importProvidersFrom(
-      TranslateModule.forRoot({
-          defaultLanguage: 'en',
-          loader: {
+    importProvidersFrom(TranslateModule.forRoot({
+        defaultLanguage: 'en',
+        loader: {
             provide: TranslateLoader,
             useFactory: HttpLoaderFactory,
             deps: [HttpClient]
-          }
-        })
-    )
+        }
+    }))
     // TranslateModule.forRoot({
     //   defaultLanguage: 'en',
     //   loader: {
@@ -48,5 +51,9 @@ export const appConfig: ApplicationConfig = {
     //     deps: [HttpClient]
     //   }
     // }).providers!
-  ]
+    ,
+    provideStore({user: userReducer}),
+    provideEffects([UserEffects]),
+    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })
+]
 };

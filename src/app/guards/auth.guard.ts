@@ -23,16 +23,16 @@ export const authGuard: CanActivateFn = (route, state) => {
         path: url,
         path_composer: url_withparams
       }).then(
-        (esito: ApiResponse<{ accesso_pagina: number }>) => {
+        (esito: ApiResponse<{ access_page: {check:number; title: string | null; readonly: number; } }>) => {
           // console.log('esito',esito);
-          if (esito.data && esito.data.accesso_pagina) {
+          if (esito.data && esito.data.access_page) {
             // console.log('url', url);
             // if ((url == '/login' || url == 'signup') && authService.isLoggedIn()) {
             //   router.navigate(['systemsList']);
             //   return false;
             // }
             //console.log("qui", esito.data.accesso_pagina);
-            if (esito.data.accesso_pagina == 1) {
+            if (esito.data.access_page.check == 1) {
               return true;
             } else {
               router.navigate(['deniedAccess']);
