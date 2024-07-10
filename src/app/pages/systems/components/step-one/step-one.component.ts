@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, Validators, FormsModule, ReactiveFormsModule, FormControl } from '@angular/forms';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, Validators, FormsModule, ReactiveFormsModule, FormControl, FormGroup } from '@angular/forms';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -17,6 +17,8 @@ import { PopupDialogService } from '../../../../services/popup-dialog.service';
 import { Country } from '../../../../interfaces/country';
 import { TranslateModule } from '@ngx-translate/core';
 import { UserData } from '../../../profile/interfaces/user-data';
+import { MatTooltip } from '@angular/material/tooltip';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-step-one',
@@ -38,13 +40,16 @@ import { UserData } from '../../../profile/interfaces/user-data';
     CommonModule,
     MatIconModule,
     TranslateModule,
+    MatTooltip
   ],
   templateUrl: './step-one.component.html',
   styleUrl: './step-one.component.scss'
 })
 export class StepOneComponent implements OnInit {
 
+  @Output() formEmit = new EventEmitter<FormGroup>();
   @Output() idEmitter = new EventEmitter<number>();
+  @Output() nextStep = new EventEmitter<void>();
 
   @Input() idsystem = 0;
   countriesData: Country[] = [];
@@ -53,7 +58,6 @@ export class StepOneComponent implements OnInit {
     system_name: new FormControl<string | null>(null, Validators.required),
     system_description: new FormControl<string | null>(null),
     system_owner: new FormControl<number>(1, Validators.required),
-    customer_userdata: new FormControl<boolean | number>(0),
     customer_name: new FormControl('', Validators.required),
     customer_surname: new FormControl('', Validators.required),
     ccn3: new FormControl<string | null>(null, Validators.required),
@@ -62,26 +66,60 @@ export class StepOneComponent implements OnInit {
     customer_licensenumber: new FormControl<string>('', Validators.required),
     customer_fiscalcode: new FormControl<string>('', Validators.required),
   });
+
   constructor(private formBuilder: FormBuilder, private connectServerService: ConnectServerService,
-    private popupDialogService: PopupDialogService) { }
+    private popupDialogService: PopupDialogService, private router: Router) { }
 
   ngOnInit() {
     this.connectServerService.getRequestCountryData().subscribe((obj) => {
       this.countriesData = obj;
     });
     this.infoStep();
-    this.logicStep();
+
+    if (this.idsystem == 0) {
+      this.disableFields();
+      this.logicStep();
+    }
   }
 
   infoStep() {
-    this.connectServerService.getRequest<ApiResponse<{ stepOne: StepOne }>>(Connect.urlServerLaraApi, 'system/infoStepOne', { id: this.idsystem }).
-      subscribe((val: ApiResponse<{ stepOne: StepOne }>) => {
-        if (val.data && val.data.stepOne) {
-          this.stepOneForm.patchValue(val.data.stepOne);
-          //console.log(val.data.stepOne.ccn3);
-          this.logicStep();
-        }
-      })
+    if (this.idsystem > 0) {
+      this.connectServerService.getRequest<ApiResponse<{ stepOne: StepOne }>>(Connect.urlServerLaraApi,
+        'system/infoStepOne', { id: this.idsystem }).
+        subscribe((val: ApiResponse<{ stepOne: StepOne }>) => {
+          if (val.data && val.data.stepOne) {
+            if (val.data.stepOne.system_owner == 1) {
+              this.stepOneForm.patchValue({
+                system_name: val.data.stepOne.system_name,
+                system_description: val.data.stepOne.system_description,
+                system_owner: val.data.stepOne.system_owner,
+              });
+              this.stepOneForm.get('customer_name')?.disable();
+              this.stepOneForm.get('customer_surname')?.disable();
+              this.stepOneForm.get('ccn3')?.disable();
+              this.stepOneForm.get('customer_phone')?.disable();
+              this.stepOneForm.get('customer_vat')?.disable();
+              this.stepOneForm.get('customer_licensenumber')?.disable();
+              this.stepOneForm.get('customer_fiscalcode')?.disable();
+            }
+            else {
+              this.stepOneForm.patchValue(val.data.stepOne);
+              const ccn3 = this.stepOneForm.get('ccn3')?.value;
+              if (ccn3 == '380') {
+                this.stepOneForm.get('customer_vat')?.enable();
+                this.stepOneForm.get('customer_fiscalcode')?.enable();
+                this.stepOneForm.get('customer_licensenumber')?.disable();
+              } else {
+                this.stepOneForm.get('customer_vat')?.disable();
+                this.stepOneForm.get('customer_fiscalcode')?.disable();
+                this.stepOneForm.get('customer_licensenumber')?.enable();
+              }
+            }
+            //console.log(val.data.stepOne.ccn3);
+            this.logicStep();
+          }
+        })
+    }
   }
 
   saveStep() {
@@ -97,16 +135,6 @@ export class StepOneComponent implements OnInit {
           country = { name: { common: val[0].name.common }, cca2: val[0].cca2, ccn3: val[0].ccn3 };
           delete stepOne.ccn3;
           stepOne.customer_country = country;
-          // this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepOne',
-          //   {
-          //     idsystem: this.idsystem,
-          //     obj_step: stepOne
-          //   })
-          //   .subscribe((val: ApiResponse<null>) => {
-          //     this.popupDialogService.alertElement(val);
-          //     this.infoStep();
-          //   })
-          // console.log('valori', stepOne);
           this.saveData(stepOne);
         }
       })
@@ -116,56 +144,60 @@ export class StepOneComponent implements OnInit {
       delete stepOne.ccn3;
       stepOne.customer_country = country;
       this.saveData(stepOne);
-      // this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepTwo',
-      //   {
-      //     idsystem: this.idsystem,
-      //     obj_step: stepOne,
-      //   })
-      //   .subscribe((val: ApiResponse<null>) => {
-      //     this.popupDialogService.alertElement(val);
-      //     this.infoStep();
-      //   })
     }
   }
 
   private saveData(stepOne: any) {
-    this.connectServerService.postRequest<ApiResponse<{idsystem: number}>>(Connect.urlServerLaraApi, 'system/saveStepOne',
+    this.connectServerService.postRequest<ApiResponse<{ idsystem: number }>>(Connect.urlServerLaraApi, 'system/saveStepOne',
       {
         idsystem: this.idsystem,
         obj_step: stepOne
       })
-      .subscribe((val: ApiResponse<{idsystem: number}>) => {
-        this.idsystem = val.data.idsystem;
-        this.idEmitter.emit(val.data.idsystem);
-        this.popupDialogService.alertElement(val);
-        this.infoStep();
+      .subscribe((val: ApiResponse<{ idsystem: number }>) => {
+        if (this.idsystem == 0) {
+          this.router.navigate(['systemManagement', val.data.idsystem]);
+        }
+        else {
+          this.idsystem = val.data.idsystem;
+          this.idEmitter.emit(val.data.idsystem);
+          this.popupDialogService.alertElement(val);
+          this.infoStep();
+          this.formEmit.emit(this.formBuilder.group({}));
+          setTimeout(() => {
+            console.log('Emitting nextStep');
+            this.nextStep.emit();
+          }, 0);
+        }
       })
+
   }
 
   private logicStep() {
-    this.stepOneForm.get('customer_userdata')?.valueChanges.subscribe(
+    this.stepOneForm.get('system_owner')?.valueChanges.subscribe(
       (val) => {
-        if (val == (0 || false)) {
-          this.stepOneForm.reset();
+        if (val == 0) {
+          this.stepOneForm.get('customer_name')?.enable();
+          this.stepOneForm.get('customer_surname')?.enable();
+          this.stepOneForm.get('customer_phone')?.enable();
+          this.stepOneForm.get('ccn3')?.enable();
+          const ccn3 = this.stepOneForm.get('ccn3')?.value;
+          if (ccn3 == '380') {
+            this.stepOneForm.get('customer_vat')?.enable();
+            this.stepOneForm.get('customer_fiscalcode')?.enable();
+            this.stepOneForm.get('customer_licensenumber')?.disable();
+          } else {
+            this.stepOneForm.get('customer_vat')?.disable();
+            this.stepOneForm.get('customer_fiscalcode')?.disable();
+            this.stepOneForm.get('customer_licensenumber')?.enable();
+          }
         } else if (val == (1 || true)) {
-          this.connectServerService.getRequest<ApiResponse<{ userData: UserData }>>(Connect.urlServerLaraApi, 'user/infoTechnician',
-            {}).subscribe(
-              (val: ApiResponse<{ userData: UserData }>) => {
-                if (val && val.data && val.data.userData) {
-                  const obj_userData: UserData = val.data.userData;
-                  this.stepOneForm.patchValue({
-                    //TODO: CAMBIARE LA LOGICA AGGIUNGENDO NOME, DESCRIZIONE SISTEMA E OWNER
-                    customer_name: val.data.userData.name,
-                    customer_surname: val.data.userData.surname,
-                    ccn3: val.data.userData.ccn3,
-                    customer_phone: val.data.userData.phone,
-                    customer_vat: val.data.userData.vat,
-                    customer_licensenumber: val.data.userData.licensenumber,
-                    customer_fiscalcode: val.data.userData.fiscalcode
-                  })
-                }
-              }
-            )
+          this.stepOneForm.get('customer_name')?.disable();
+          this.stepOneForm.get('customer_surname')?.disable();
+          this.stepOneForm.get('ccn3')?.disable();
+          this.stepOneForm.get('customer_phone')?.disable();
+          this.stepOneForm.get('customer_vat')?.disable();
+          this.stepOneForm.get('customer_licensenumber')?.disable();
+          this.stepOneForm.get('customer_fiscalcode')?.disable();
         }
 
       }
@@ -173,7 +205,17 @@ export class StepOneComponent implements OnInit {
     this.logicStepCcn3();
   }
 
-  private logicStepCcn3(){
+  disableFields() {
+    this.stepOneForm.get('customer_name')?.disable();
+    this.stepOneForm.get('customer_surname')?.disable();
+    this.stepOneForm.get('ccn3')?.disable();
+    this.stepOneForm.get('customer_phone')?.disable();
+    this.stepOneForm.get('customer_vat')?.disable();
+    this.stepOneForm.get('customer_licensenumber')?.disable();
+    this.stepOneForm.get('customer_fiscalcode')?.disable();
+  }
+
+  private logicStepCcn3() {
     this.stepOneForm.get('ccn3')?.valueChanges.subscribe(
       (val) => {
         // se ita
@@ -197,7 +239,15 @@ export class StepOneComponent implements OnInit {
     const isChecked = checkbox.checked;
     const value = isChecked ? 1 : 0;
     this.stepOneForm.patchValue({ system_owner: value });
+    const owner = this.stepOneForm.get('system_owner')?.value;
     console.log("Owner", this.stepOneForm.get('system_owner')?.value);
+    if (owner) {
+      this.stepOneForm.get('')
+    }
+  }
+
+  getFormValid() {
+    return this.stepOneForm.valid;
   }
 
 }

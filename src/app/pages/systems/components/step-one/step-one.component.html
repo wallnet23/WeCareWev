@@ -3,14 +3,8 @@
     <div class="form-group">
 
       <div class="row">
-        <div class="col-12 mt-2 form-check form-switch">
-          <input class="form-check-input" type="checkbox" role="switch" id="system_owner" formControlName="system_owner"
-            [checked]="stepOneForm.get('system_owner')?.value === 1" (change)="onCheckboxChange($event)">
-          <label class="form-check-label" for="system_owner" style="font-weight: bold;">
-            Are you the owner of the system?</label>
-        </div>
 
-        <div class="col-12 col-lg-6 mb-3 mt-2">
+        <div class="col-12 mb-3 mt-2">
           <label class="form-check-label" for="system_name" style="font-weight: bold;">
             System Name<sup class="small-asterisk">*</sup>
             <mat-icon class="ms-2" matTooltip="Choose a general name for your system. You'll see it as a reference to your system"
@@ -20,7 +14,7 @@
             placeholder="System name">
         </div>
 
-        <div class="col-12 col-lg-6 mb-3 mt-2">
+        <div class="col-12 mb-3 mt-2">
           <label for="system_description" style="font-weight: bold;">
             Short Description
             <mat-icon class="ms-2" matTooltip="Write a short description about the system, just as an overview"
@@ -28,6 +22,13 @@
           </label>
           <textarea type="text" name="system_description" id="system_description" formControlName="system_description" class="form-control"
             placeholder="Write some short info"></textarea>
+        </div>
+
+        <div class="col-12 ms-3 mb-3 mt-2 form-check form-switch">
+          <input class="form-check-input" type="checkbox" role="switch" id="system_owner" formControlName="system_owner"
+            [checked]="stepOneForm.get('system_owner')?.value === 1" (change)="onCheckboxChange($event)">
+          <label class="form-check-label" for="system_owner" style="font-weight: bold;">
+            {{"STEPONE.OWNER" | translate}}</label>
         </div>
 
         <ng-template [ngIf]="stepOneForm.get('system_owner')?.value === 0">
@@ -47,7 +48,7 @@
             <label for="ccn3" style="font-weight: bold;">{{"STEPONE.COUNTRY" | translate}}<sup
                 class="small-asterisk">*</sup></label>
             <select class="form-select" aria-label="select example" formControlName="ccn3">
-              <option [ngValue]="null" disabled selected>{{"STEPONE.SELECTCOUNTRY" | translate}}</option>
+              <option [ngValue]="null" disabled>{{"STEPONE.SELECTCOUNTRY" | translate}}</option>
               <option *ngFor="let country of countriesData" [ngValue]="country.ccn3">
                 <img src="{{country.flags?.png}}" width="20px" height="15px"> {{ country.name.common }}
               </option>
@@ -85,7 +86,7 @@
             <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
         </mat-form-field> -->
     <div class="text-center">
-      <button mat-raised-button matStepperNext (click)="saveStep()" [disabled]="stepOneForm.invalid">
+      <button class="btn btn-outline-dark" (click)="saveStep()" [disabled]="stepOneForm.invalid">
         {{"STEPONE.NEXT" | translate}}
       </button>
     </div>

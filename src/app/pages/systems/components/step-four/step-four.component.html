@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <form [formGroup]="stepFourForm">
     <div class="form-group">
-      <div class="row">
+      <div class="row mt-2">
         <div class="col-12 col-md-6 mb-3">
           <label for="product_installdate" style="font-weight: bold;">*Installation Date</label>
           <input type="date" name="product_installdate" id="product_installdate" formControlName="product_installdate"
@@ -47,13 +47,10 @@
     </div>
 
     <div class="text-center">
-      <button class="mr-2" mat-raised-button matStepperPrevious style="width: 80px;" (click)="sendData()">
+      <button class="btn btn-outline-dark mr-2" matStepperPrevious>
         Previous
       </button>
-      <button class="ml-2" mat-raised-button (click)="saveData()">
-        Save
-      </button>
-      <button class="ml-2" mat-raised-button matStepperNext [disabled]="!formValid" (click)="sendData()">
+      <button class="btn btn-outline-dark ml-2" [disabled]="!formValid" (click)="sendData()">
         Next
       </button>
     </div>

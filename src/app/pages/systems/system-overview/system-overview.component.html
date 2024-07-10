@@ -8,13 +8,13 @@
 
     <div class="row justify-content-center align-items-center mt-2 p-2">
         <div class="col-6 text-center">
-            <h2 class="systemName">{{systemInfo?.title}}</h2>
+            <h2 class="systemName">{{systemInfo?.system_name}}</h2>
         </div>
     </div>
 
     <div class="row justify-content-center align-items-center p-2">
         <div class="col-12 text-center">
-            <span style="font-size: medium; font-style: italic;">{{systemInfo?.description}}</span>
+            <span style="font-size: medium; font-style: italic;">{{systemInfo?.system_description}}</span>
             <button type="button" class="btn btn-sm btn-outline-dark ms-2" data-bs-toggle="modal"
                 data-bs-target="#descriptionModal">
                 <i class="bi bi-pencil"></i>
@@ -31,7 +31,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <textarea type="text" [value]="systemInfo?.description" style="width: 100%;"
+                    <textarea type="text" [value]="systemInfo?.system_description" style="width: 100%;"
                         #newDescription></textarea>
                 </div>
                 <div class="modal-footer">
@@ -53,21 +53,22 @@
                         <ul class="list-unstyled">
                             <li class="listElement">
                                 <i class="bi bi-circle-fill" style="font-size: large;" [ngClass]="{
-                                'text-success': systemInfo?.status?.title === 'Approved',
-                                'text-danger': systemInfo?.status?.title === 'Incomplete',
-                                'text-warning': systemInfo?.status?.title === 'Waiting for approval'}">
+                                'text-success': systemInfo.status?.id === 4,
+                                'text-danger': systemInfo.status?.id === 3,
+                                'text-warning': systemInfo.status?.id === 2,
+                                'text-info': systemInfo.status?.id === 1 }">
                                 </i>
                                 <span *ngIf="systemInfo?.status"
-                                    style="margin-left: 1rem;">{{systemInfo?.status}}</span>
+                                    style="margin-left: 1rem;">{{systemInfo.status?.name}}</span>
                                 <span *ngIf="!systemInfo?.status" style="margin-left: 1rem;">Status not available</span>
                             </li>
                             <li class="listElement">
                                 <span class="listTitle">Customer Name:</span><br>
-                                <span class="listDescription">{{systemInfo?.customerInfo}}</span>
+                                <span class="listDescription">{{systemInfo.customerInfo}}</span>
                             </li>
                             <li class="listElement">
                                 <span class="listTitle">Installation Site:</span><br>
-                                <span class="listDescription">{{systemInfo?.installationSite}}</span>
+                                <span class="listDescription">{{systemInfo.installationSite}}</span>
                             </li>
                             <li class="listElement">
                                 <span class="listTitle">Device Info:</span><br>
@@ -83,8 +84,9 @@
                         <span class="mt-2">Insert the system's datas to enable the others functionalities</span>
                     </ng-template>
                 </div>
-                <div class="card-footer blueBg text-center">
-                    <button class="btn btn-outline-dark btn-light" (click)="modifySystem()">Modify system data</button>
+                <div class="card-footer blueBg d-flex justify-content-between">
+                    <button class="btn btn-outline-dark btn-light me-2" (click)="modifySystem()">Modify system data</button>
+                    <button class="btn btn-outline-dark btn-light ms-2">View system data</button>
                 </div>
             </div>
         </div>
@@ -104,7 +106,14 @@
                         <p class="paragraph">
                             Per visualizzare la garanzia di ogni dispositivo è necessario che l'impianto sia stato
                             approvato.<br>
-                            Stato impianto:
+                            Stato attuale impianto: 
+                            <i class="bi bi-circle-fill" style="font-size: large;" [ngClass]="{
+                                'text-success': systemInfo?.status?.id === 4,
+                                'text-danger': systemInfo?.status?.id === 3,
+                                'text-warning': systemInfo?.status?.id === 2,
+                                'text-info': systemInfo?.status?.id === 1 }">
+                            </i>
+                            {{systemInfo?.status?.name}}
                         </p>
                     </ng-template>
                     <!-- <p class="paragraph" *ngIf="!isWarrantyRequest; else warrantyBlock">
@@ -126,7 +135,7 @@
         </div>
     </div>
 
-    <div class="row justify-content-center align-items-center mt-2 p-1 p-lg-4">
+    <div *ngIf="false" class="row justify-content-center align-items-center mt-2 p-1 p-lg-4">
         <div class="col-12">
             <div class="card">
                 <h5 class="card-header orangeBg">TICKETS</h5>

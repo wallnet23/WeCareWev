@@ -1,12 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormsModule, ReactiveFormsModule, FormControl } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, Validators, FormsModule, ReactiveFormsModule, FormControl, FormGroup } from '@angular/forms';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatStepperModule } from '@angular/material/stepper';
-import { map, Observable } from 'rxjs';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { UploadImageService } from '../../../../services/upload-images.service';
@@ -43,6 +43,9 @@ import { Image } from '../interfaces/image';
 })
 export class StepThreeComponent implements OnInit {
 
+  @Output() formEmit = new EventEmitter<FormGroup>();
+  @Output() nextStep = new EventEmitter<void>();
+
   @Input() idsystem = 0;
   selectedFilesStep3: File[] = [];
   maxImagesStep3: number = 2;
@@ -53,12 +56,12 @@ export class StepThreeComponent implements OnInit {
   urlServerLara = Connect.urlServerLara;
 
   stepThreeForm = this.formBuilder.group({
-    supplier_name: new FormControl<string>('', Validators.required),
-    supplier_address: new FormControl<string>('', Validators.required),
+    installer_companyname: new FormControl<string>('', Validators.required),
+    installer_address: new FormControl<string>('', Validators.required),
     ccn3: new FormControl<string | null>(null, Validators.required),
-    supplier_contact: new FormControl<string>(''),
-    supplier_email: new FormControl<string>('', Validators.email),
-    supplier_dateofpurchase: new FormControl<string>('', Validators.required)
+    vendor_contact: new FormControl<string>(''),
+    installer_email: new FormControl<string>('', Validators.email),
+    installer_dateofpurchase: new FormControl<string>('', Validators.required)
   });
 
   ngOnInit() {
@@ -108,6 +111,11 @@ export class StepThreeComponent implements OnInit {
             .subscribe((val: ApiResponse<null>) => {
               this.popupDialogService.alertElement(val);
               this.infoStep();
+              this.formEmit.emit(this.formBuilder.group({}));
+              setTimeout(() => {
+                console.log('Emitting nextStep');
+                this.nextStep.emit();
+              }, 0);
             })
         }
       })
@@ -125,6 +133,11 @@ export class StepThreeComponent implements OnInit {
         .subscribe((val: ApiResponse<null>) => {
           this.popupDialogService.alertElement(val);
           this.infoStep();
+          this.formEmit.emit(this.formBuilder.group({}));
+          setTimeout(() => {
+            console.log('Emitting nextStep');
+            this.nextStep.emit();
+          }, 0);
         })
     }
 

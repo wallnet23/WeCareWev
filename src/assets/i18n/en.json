@@ -105,6 +105,7 @@
     "NAMEPLACEHOLDER": "Name",
     "SURNAME": "Customer Surname",
     "SURNAMEPLACEHOLDER": "Surname",
+    "OWNER": "Are you the owner of the system?",
     "COUNTRY": "Customer Country",
     "SELECTCOUNTRY": "Select a Country",
     "PHONE": "Phone Number",
@@ -112,14 +113,18 @@
     "VAT": "VAT",
     "LICENSENUMBER": "License Number",
     "FISCALCODE": "Fiscal Code",
+    "SAVE": "Save",
     "NEXT": "Next"
   },
+  
   "SYSTEM": {
     "SYSTEMLIST": {
       "TITLE": "SYSTEMS LIST",
       "BUTTONSEARCH": "Search",
       "SEARCHPLACEHOLDER": "Name of the system",
-      "EMPTY": "No system available, add a system to view the warranty, request an RMA or open a support ticket."
+      "EMPTY": "No system available, add a system to view the warranty, request an RMA or open a support ticket.",
+      "DESCRIPTION": "Press the button below to add a new system to extend the warranty",
+      "ADDSYSTEM": "Add New System"
     },
     "SYSTEMTICKETLIST": {
       "TITLE": "LIST OF SYSTEM TICKETS",
@@ -131,6 +136,8 @@
   "TICKET": {
     "TICKETLIST": {
       "TITLE": "TICKETS LIST",
+      "DESCRIPTION": "Press the button below to open a new ticket",
+      "NEWTICKET": "Open New Ticket",
       "BUTTONSEARCH": "Search",
       "SEARCHPLACEHOLDER": "Name of the ticket",
       "EMPTY": "No tickets available. To add a ticket create or enter a system."

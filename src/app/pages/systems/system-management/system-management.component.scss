@@ -3,12 +3,17 @@
 }
 .arrowBtn {
   position: absolute !important;
-  top: 20;
-  left: 0;
-  margin: 16px;
+  margin-top: 16px;
+  margin-left: 50px;
+  z-index: 100;
 }
 
 .arrowBtn:hover {
   color: white;
 }
 
+.inline-bordered {
+  display: inline;
+  font-weight: bold;
+  border-bottom: 1px solid #ca2314;
+}

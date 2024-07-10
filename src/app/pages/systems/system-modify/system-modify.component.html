@@ -15,15 +15,14 @@
     </div>
 
     <div class="col-12 p-0">
-      <mat-stepper orientation="vertical" [linear]="false" #stepper>
+      <mat-stepper orientation="vertical" linear #stepper>
 
-        <mat-step [stepControl]="stepOneForm" errorMessage="All fields with * required.">
+        <mat-step [stepControl]="stepOneForm" errorMessage="All fields with * are required.">
           <ng-template matStepLabel>CUSTOMER INFO</ng-template>
           <app-step-one #stepOne [idsystem]="idsystem"></app-step-one>
         </mat-step>
 
-        <mat-step *ngIf="obj_stepOne ? obj_stepOne.stepOneForm?.valid : false" [stepControl]="stepTwoForm"
-          errorMessage="Address is required.">
+        <mat-step [stepControl]="stepTwoForm" errorMessage="Address is required.">
           <ng-template matStepLabel>INSTALLATION SITE</ng-template>
           <app-step-two #stepTwo [idsystem]="idsystem"></app-step-two>
         </mat-step>
@@ -46,7 +45,7 @@
         </mat-step> -->
 
         <mat-step>
-          <ng-template matStepLabel>Done</ng-template>
+          <ng-template matStepLabel>Confirmation</ng-template>
           <p>You are now done.</p>
           <div>
             <button mat-button matStepperPrevious>Back</button>

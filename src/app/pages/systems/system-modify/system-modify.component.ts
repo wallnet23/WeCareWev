@@ -82,7 +82,7 @@ export class SystemModifyComponent implements OnInit{
     (Connect.urlServerLaraApi, 'system/systemOverview', {id: this.idsystem})
     .subscribe((val: ApiResponse<{systemInfo: SystemInfo, systemTickets: Ticket[], systemWarranty: Warranty, systemRMA: RMA}>) => {
       if(val.data) {
-        this.systemName = val.data.systemInfo.title
+        //this.systemName = val.data.systemInfo.title
       }
     })
   }

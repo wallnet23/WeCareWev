@@ -1,8 +1,8 @@
 export interface StepThree {
     ccn3: string;
-    supplier_name: string;
-    supplier_address: string;
-    supplier_contact: string;
-    supplier_email: string;
-    supplier_dateOfPurchase: string;
+    installer_companyname: string;
+    installer_address: string;
+    vendor_contact: string;
+    installer_email: string;
+    installer_dateofpurchase: string;
 }

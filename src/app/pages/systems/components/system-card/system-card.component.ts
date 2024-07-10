@@ -8,6 +8,8 @@ import { ConnectServerService } from '../../../../services/connect-server.servic
 import { ApiResponse } from '../../../../interfaces/api-response';
 import { Connect } from '../../../../classes/connect';
 import { TranslateModule } from '@ngx-translate/core';
+import { PopupDialogService } from '../../../../services/popup-dialog.service';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-system-card',
@@ -15,7 +17,8 @@ import { TranslateModule } from '@ngx-translate/core';
   imports: [
     MatCardModule,
     CommonModule,
-    TranslateModule
+    TranslateModule,
+    MatTooltipModule,
   ],
   templateUrl: './system-card.component.html',
   styleUrl: './system-card.component.scss'
@@ -25,7 +28,7 @@ export class SystemCardComponent {
   isSystem: boolean = false;
   systemsList: SystemInfo[] = [];
 
-  constructor(private router: Router,
+  constructor(private router: Router, private popupDialog: PopupDialogService,
     private connectServerService: ConnectServerService) {
     this.getSystemList()
   }
@@ -45,6 +48,14 @@ export class SystemCardComponent {
 
   systemOverview(id: number) {
     this.router.navigate(['/systemOverview', id]);
+  }
+
+  deleteSystem(id: number) {
+    this.connectServerService.postRequest<ApiResponse<any>>(
+      Connect.urlServerLaraApi, 'system/systemDelete', {idsystem: id})
+      .subscribe((val: ApiResponse<any>) => {
+         this.getSystemList();
+      })
   }
 
 }

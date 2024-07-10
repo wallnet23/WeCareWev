@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormsModule, ReactiveFormsModule, FormControl } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, Validators, FormsModule, ReactiveFormsModule, FormControl, FormGroup } from '@angular/forms';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -42,6 +42,9 @@ import { Image } from '../interfaces/image';
   styleUrl: './step-two.component.scss'
 })
 export class StepTwoComponent {
+
+  @Output() formEmit = new EventEmitter<FormGroup>();
+  @Output() nextStep = new EventEmitter<void>();
 
   @Input() idsystem = 0;
   selectedFilesStep2: File[] = [];
@@ -104,6 +107,11 @@ export class StepTwoComponent {
             .subscribe((val: ApiResponse<null>) => {
               this.popupDialogService.alertElement(val);
               this.infoStep();
+              this.formEmit.emit(this.formBuilder.group({}));
+              setTimeout(() => {
+                console.log('Emitting nextStep');
+                this.nextStep.emit();
+              }, 0);
             })
         }
       })
@@ -121,6 +129,11 @@ export class StepTwoComponent {
         .subscribe((val: ApiResponse<null>) => {
           this.popupDialogService.alertElement(val);
           this.infoStep();
+          this.formEmit.emit(this.formBuilder.group({}));
+          setTimeout(() => {
+            console.log('Emitting nextStep');
+            this.nextStep.emit();
+          }, 0);
         })
     }
 

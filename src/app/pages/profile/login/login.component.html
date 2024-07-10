@@ -15,21 +15,25 @@
               <div class="form-group">
                 <label for="email" class="sr-only">{{"PROFILE.LOGIN.EMAIL" | translate}}</label>
                 <input type="email" name="email" id="email" formControlName="email" class="form-control"
-                placeholder="{{'PROFILE.LOGIN.MAILPLACEHOLDER' | translate}}" [ngClass]="{'error': !valid}">
+                  placeholder="{{'PROFILE.LOGIN.MAILPLACEHOLDER' | translate}}" [ngClass]="{'error': !valid}">
               </div>
               <div class="form-group input-container" [ngClass]="{'mb-4': valid}">
                 <label for="password" class="sr-only">{{"PROFILE.LOGIN.PSW" | translate}}</label>
-                <input [type]="type" name="password" id="password" formControlName="password" class="form-control" placeholder="***********" [ngClass]="{'error': !valid}">
-                <i class="bi" [ngClass]="{'bi-eye': !toggled, 'bi-eye-slash': toggled}"
-                  id="togglePassword" (click)="seePassword()"></i>
+                <input [type]="type" name="password" id="password" formControlName="password" class="form-control"
+                  placeholder="***********" [ngClass]="{'error': !valid}">
+                <i class="bi" [ngClass]="{'bi-eye': !toggled, 'bi-eye-slash': toggled}" id="togglePassword"
+                  (click)="seePassword()"></i>
               </div>
               <div *ngIf="!valid" class="mb-4 text-center" style="color: #DC3545;">
                 <small>{{"PROFILE.LOGIN.WRONGPSW" | translate}}</small>
               </div>
-              <button [class.disabled]="loginForm.invalid" class="btn btn-block login-btn mb-4" (click)="login()">{{"PROFILE.LOGIN.LOGIN" | translate}}</button>
+              <button [class.disabled]="loginForm.invalid" class="btn btn-block login-btn mb-4"
+                (click)="login()">{{"PROFILE.LOGIN.LOGIN" | translate}}</button>
             </form>
-            <a href="/sendemailModifyPassword" class="forgot-password-link">{{"PROFILE.LOGIN.FORGOTPSW" | translate}}</a>
-            <p class="login-card-footer-text">{{"PROFILE.LOGIN.SIGNUP" | translate}}<a href="/signup" class="text-reset ms-2">{{"PROFILE.LOGIN.REGISTER" | translate}}</a>
+            <a href="/sendemailModifyPassword" class="forgot-password-link">{{"PROFILE.LOGIN.FORGOTPSW" |
+              translate}}</a>
+            <p class="login-card-footer-text">{{"PROFILE.LOGIN.SIGNUP" | translate}}<a href="/signup"
+                class="text-reset ms-2">{{"PROFILE.LOGIN.REGISTER" | translate}}</a>
             </p>
             <nav class="login-card-footer-nav">
               <a href="#!" class="me-4">{{"PROFILE.LOGIN.USERTERMS" | translate}}</a>

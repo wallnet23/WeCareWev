@@ -1,23 +1,23 @@
 <div class="container">
     <form [formGroup]="stepThreeForm">
         <div class="form-group">
-            <div class="row">
+            <div class="row mt-2">
                 <div class="col-12 col-lg-6 mb-3">
-                    <label for="supplier_name" style="font-weight: bold;">*Supplier Name</label>
-                    <input type="text" name="supplier_name" id="supplier_name" formControlName="supplier_name"
-                        class="form-control" placeholder="Supplier name" required>
+                    <label for="installer_companyname" style="font-weight: bold;">Company Name<sup class="small-asterisk">*</sup></label>
+                    <input type="text" name="installer_companyname" id="installer_companyname" formControlName="installer_companyname"
+                        class="form-control" placeholder="Installer company name" required>
                 </div>
 
                 <div class="col-12 col-lg-6 mb-3">
-                    <label for="supplier_address" style="font-weight: bold;">*Supplier Address</label>
-                    <input type="text" name="address" id="supplier_address" formControlName="supplier_address"
-                        class="form-control" placeholder="Supplier address" required>
+                    <label for="installer_address" style="font-weight: bold;">Company Address<sup class="small-asterisk">*</sup></label>
+                    <input type="text" name="address" id="installer_address" formControlName="installer_address"
+                        class="form-control" placeholder="Installer company address" required>
                 </div>
 
                 <div class="col-12 col-lg-6 mb-3">
-                    <label for="ccn3" style="font-weight: bold;">*Supplier Country</label>
+                    <label for="ccn3" style="font-weight: bold;">Company Country<sup class="small-asterisk">*</sup></label>
                     <select class="form-select" aria-label="select example" formControlName="ccn3">
-                        <option [ngValue]="null" disabled selected>Select a Country</option>
+                        <option [ngValue]="null" disabled>Select a Country</option>
                         <option *ngFor="let country of countriesData" [ngValue]="country.ccn3">
                             <img src="{{country.flags?.png}}" width="20px" height="15px"> {{ country.name.common }}
                         </option>
@@ -25,21 +25,21 @@
                 </div>
 
                 <div class="col-12 col-lg-6 mb-3">
-                    <label for="supplier_contact" style="font-weight: bold;">Vendor Contact</label>
-                    <input type="text" name="supplier_contact" id="supplier_contact" formControlName="supplier_contact"
+                    <label for="vendor_contact" style="font-weight: bold;">Vendor Contact</label>
+                    <input type="text" name="vendor_contact" id="vendor_contact" formControlName="vendor_contact"
                         class="form-control" placeholder="Contact name">
                 </div>
 
                 <div class="col-12 col-lg-6 mb-3">
-                    <label for="supplier_email" style="font-weight: bold;">*Email</label>
-                    <input type="supplier_email" name="supplier_email" id="supplier_email"
-                        formControlName="supplier_email" class="form-control" placeholder="Supplier email">
+                    <label for="installer_email" style="font-weight: bold;">Email<sup class="small-asterisk">*</sup></label>
+                    <input type="installer_email" name="installer_email" id="installer_email"
+                        formControlName="installer_email" class="form-control" placeholder="Email">
                 </div>
 
                 <div class="col-12 col-lg-6 mb-3">
-                    <label for="supplier_dateofpurchase" style="font-weight: bold;">*Date Of Purchase</label>
-                    <input type="date" name="supplier_dateofpurchase" id="supplier_dateofpurchase"
-                        formControlName="supplier_dateofpurchase" class="form-control" placeholder="gg/mm/aaaa">
+                    <label for="installer_dateofpurchase" style="font-weight: bold;">Date Of Purchase<sup class="small-asterisk">*</sup></label>
+                    <input type="date" name="installer_dateofpurchase" id="installer_dateofpurchase"
+                        formControlName="installer_dateofpurchase" class="form-control" placeholder="gg/mm/aaaa">
                 </div>
             </div>
         </div>
@@ -68,10 +68,10 @@
         </div>
 
         <div class="text-center">
-            <button class="mr-2" mat-raised-button matStepperPrevious style="width: 80px;">
+            <button class="btn btn-outline-dark mr-2" matStepperPrevious>
                 Previous
             </button>
-            <button class="ml-2" mat-raised-button matStepperNext [disabled]="stepThreeForm.invalid"
+            <button class="btn btn-outline-dark ml-2" [disabled]="stepThreeForm.invalid"
                 (click)="saveStep()">
                 Next
             </button>

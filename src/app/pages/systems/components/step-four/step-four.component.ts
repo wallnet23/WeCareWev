@@ -1,5 +1,5 @@
-import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, Validators, FormsModule, ReactiveFormsModule, FormControl, FormArray } from '@angular/forms';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { FormBuilder, Validators, FormsModule, ReactiveFormsModule, FormControl, FormArray, FormGroup } from '@angular/forms';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -56,6 +56,10 @@ interface SystemComposition {
   styleUrl: './step-four.component.scss'
 })
 export class StepFourComponent implements OnInit {
+
+  @Output() formEmit = new EventEmitter<FormGroup>();
+  @Output() nextStep = new EventEmitter<void>();
+
   @ViewChild('invertersComponent') obj_invert!: InvertersComponent;
   @ViewChild('clustersComponent') obj_cluster!: ClustersComponent;
   @Input() idsystem = 0;
@@ -122,6 +126,11 @@ export class StepFourComponent implements OnInit {
       .subscribe((val: ApiResponse<null>) => {
         this.popupDialogService.alertElement(val);
         this.infoStep();
+        this.formEmit.emit(this.formBuilder.group({}));
+        setTimeout(() => {
+          console.log('Emitting nextStep');
+          this.nextStep.emit();
+        }, 0);
       })
   }
 

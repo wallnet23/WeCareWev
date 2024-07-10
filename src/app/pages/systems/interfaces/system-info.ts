@@ -1,10 +1,10 @@
 export interface SystemInfo {
     id: number;
-    title: string;
-    description: string | null;
+    system_name: string;
+    system_description: string | null;
     status: null | {
       id: number;
-      title: string;
+      name: string;
     };
     customerInfo: string | null;
     installationSite: string | null;

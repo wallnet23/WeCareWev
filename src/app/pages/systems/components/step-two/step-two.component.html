@@ -1,9 +1,9 @@
 <div class="container">
   <form [formGroup]="stepTwoForm">
     <div class="form-group">
-      <div class="row">
+      <div class="row mt-2">
         <div class="col-12 col-lg-6 mb-3">
-          <label for="ccn3" style="font-weight: bold;">*Installation Country</label>
+          <label for="ccn3" style="font-weight: bold;">Installation Country<sup class="small-asterisk">*</sup></label>
           <select class="form-select" aria-label="select example" formControlName="ccn3">
             <option [ngValue]="null" disabled selected>Select a Country</option>
             <option *ngFor="let country of countriesData" [ngValue]="country.ccn3">
@@ -12,17 +12,17 @@
           </select>
         </div>
         <div class="col-12 col-lg-6 mb-3">
-          <label for="location_address" style="font-weight: bold;">*Address</label>
+          <label for="location_address" style="font-weight: bold;">Address<sup class="small-asterisk">*</sup></label>
           <input type="text" name="location_address" id="location_address" formControlName="location_address"
             class="form-control" placeholder="Address" required>
         </div>
         <div class="col-12 col-lg-6 mb-3">
-          <label for="location_city" style="font-weight: bold;">*City</label>
+          <label for="location_city" style="font-weight: bold;">City<sup class="small-asterisk">*</sup></label>
           <input type="text" name="location_city" id="location_city" formControlName="location_city"
             class="form-control" placeholder="City" required>
         </div>
         <div class="col-12 col-lg-6 mb-3">
-          <label for="location_postalcode" style="font-weight: bold;">Postal Code</label>
+          <label for="location_postalcode" style="font-weight: bold;">Postal Code<sup class="small-asterisk">*</sup></label>
           <input type="text" name="location_postalcode" id="location_postalcode" formControlName="location_postalcode"
             class="form-control" placeholder="" required>
         </div>
@@ -30,7 +30,7 @@
     </div>
     <div class="row justify-content-center">
       <div class="col-auto fs-5">
-        Installation pictures (attach at least 5 pictures of where the batteries are or were installed)
+        <span style="font-size: small;">Installation pictures (attach 5 pictures of the batteries in their installation site)</span>
       </div>
     </div>
     <div class="row justify-content-center">
@@ -63,10 +63,10 @@
             <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
         </mat-form-field> -->
     <div class="text-center">
-      <button class="mr-2" mat-raised-button matStepperPrevious style="width: 80px;">
+      <button class="btn btn-outline-dark mr-2" matStepperPrevious>
         Previous
       </button>
-      <button class="ml-2" mat-raised-button matStepperNext [disabled]="stepTwoForm.invalid"
+      <button class="btn btn-outline-dark ml-2" [disabled]="stepTwoForm.invalid"
       (click)="saveStep()" style="width: 80px;">
         Next
       </button>

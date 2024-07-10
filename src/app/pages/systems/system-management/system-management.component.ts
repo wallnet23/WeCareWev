@@ -1,10 +1,10 @@
-import { Component, OnInit, SimpleChanges, ViewChild, viewChild } from '@angular/core';
-import { FormBuilder, Validators, FormsModule, ReactiveFormsModule, FormGroup } from '@angular/forms';
+import { AfterViewInit, Component, OnInit, SimpleChanges, ViewChild, viewChild } from '@angular/core';
+import { FormBuilder, Validators, FormsModule, ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatStepperModule } from '@angular/material/stepper';
+import { MatStepper, MatStepperModule } from '@angular/material/stepper';
 import { StepOneComponent } from '../components/step-one/step-one.component';
 import { StepTwoComponent } from '../components/step-two/step-two.component';
 import { MatIconModule } from '@angular/material/icon';
@@ -62,17 +62,57 @@ export class SystemManagementComponent {
   stepFourForm!: FormGroup;
   stepFiveForm!: FormGroup;
 
+  systemStatus: { id: number, name: string } | null = null;
+
   constructor(private route: ActivatedRoute, private connectServerService: ConnectServerService,
-    private location: Location
-  ) {
+    private location: Location) {
     this.route.params.subscribe(params => {
       this.idsystem = params['id'];
-      this.getSystemOverview()
+      this.getSystemOverview();
     });
   }
 
   ngOnInit(): void {
     this.getAllFormValid();
+    this.initForms();
+    this.getStatus();
+    //this.stepOneForm = this.obj_stepOne.stepOneForm;
+  }
+
+  initForms() {
+    this.stepOneForm = new FormGroup({
+      invalid: new FormControl(null, Validators.required)
+    });
+    this.stepTwoForm = new FormGroup({
+      invalid: new FormControl(null, Validators.required)
+    });
+    this.stepThreeForm = new FormGroup({
+      invalid: new FormControl(null, Validators.required)
+    });
+    this.stepFourForm = new FormGroup({
+      invalid: new FormControl(null, Validators.required)
+    });
+    this.stepFiveForm = new FormGroup({
+      invalid: new FormControl(null, Validators.required)
+    });
+  }
+
+  onFormOneReceived(form: FormGroup) {
+    this.stepOneForm = form;
+    this.getSystemOverview();
+    this.getStatus();
+  }
+
+  onFormTwoReceived(form: FormGroup) {
+    this.stepTwoForm = form;
+  }
+
+  onFormThreeReceived(form: FormGroup) {
+    this.stepThreeForm = form;
+  }
+
+  onFormFourReceived(form: FormGroup) {
+    this.stepFourForm = form;
   }
 
   onIdReceived(id: number) {
@@ -81,13 +121,15 @@ export class SystemManagementComponent {
   }
 
   getSystemOverview() {
-    this.connectServerService.getRequest<ApiResponse<{ systemInfo: SystemInfo, systemTickets: Ticket[], systemWarranty: Warranty, systemRMA: RMA }>>
-      (Connect.urlServerLaraApi, 'system/systemOverview', { id: this.idsystem })
-      .subscribe((val: ApiResponse<{ systemInfo: SystemInfo, systemTickets: Ticket[], systemWarranty: Warranty, systemRMA: RMA }>) => {
-        if (val.data) {
-          this.systemName = val.data.systemInfo.title
-        }
-      })
+    if (this.idsystem > 0) {
+      this.connectServerService.getRequest<ApiResponse<{ systemInfo: SystemInfo, systemTickets: Ticket[], systemWarranty: Warranty, systemRMA: RMA }>>
+        (Connect.urlServerLaraApi, 'system/systemOverview', { id: this.idsystem })
+        .subscribe((val: ApiResponse<{ systemInfo: SystemInfo, systemTickets: Ticket[], systemWarranty: Warranty, systemRMA: RMA }>) => {
+          if (val.data) {
+            this.systemName = val.data.systemInfo.system_name;
+          }
+        })
+    }
   }
 
   // ngOnChanges(changes: SimpleChanges): void {
@@ -102,15 +144,29 @@ export class SystemManagementComponent {
 
   }
 
-  private getAllFormValid() {
+  getStatus() {
+    if (this.idsystem > 0) {
+      this.connectServerService.getRequest<ApiResponse<{ status: { id: number, name: string } }>>
+        (Connect.urlServerLaraApi, 'system/systemState', { idsystem: this.idsystem })
+        .subscribe((val: ApiResponse<{ status: { id: number, name: string } }>) => {
+          if (val.data) {
+            this.systemStatus = val.data.status;
+          }
+        })
+    }
+  }
+
+  getAllFormValid() {
     const valid = this.obj_stepOne?.stepOneForm?.valid &&
       this.obj_stepTwo?.stepTwoForm?.valid &&
       this.obj_stepThree?.stepThreeForm?.valid &&
       this.obj_stepFour?.stepFourForm?.valid;
     this.allFormValid = valid == null ? false : true;
+    return this.allFormValid;
   }
 
   goBack() {
     this.location.back();
   }
+
 }

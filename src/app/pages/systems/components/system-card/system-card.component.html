@@ -1,43 +1,79 @@
 <div class="container p-4">
   <div class="row justify-content-center">
-    <div class="col-12">
+    <div class="col-12 col-lg-8">
       <div *ngIf="!isSystem" class="col-12 text-center p-4" style="color: grey;">
         {{'SYSTEM.SYSTEMLIST.EMPTY' | translate }}
       </div>
-      <div class="card mt-4" *ngFor="let system of systemsList" (click)="systemOverview(system.id)">
-        <h5 class="card-header">{{system.title}}
-          <i class="bi bi-circle-fill status" [ngClass]="{
-                    'text-success': system.status?.title === 'Approved',
-                    'text-danger': system.status?.title === 'Incomplete',
-                    'text-warning': system.status?.title === 'Waiting for approval'}"></i>
-        </h5>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-12 mt-2">
-              <span style="font-weight: bold;">System Description:</span><br>
-              <div class="content fst-italic">{{system.description}}</div>
+      <div class="card mt-4" *ngFor="let system of systemsList">
+        <div class="card-header noPointer">
+          <div class="row justify-content-end align-items-center">
+            <div class="col-4 text-start">
+              <i class="bi bi-circle-fill status d-none d-md-inline" matTooltip="Status: {{system.status?.name}}" 
+                [ngClass]="{
+                        'text-success': system.status?.id === 4,
+                        'text-danger': system.status?.id === 3,
+                        'text-warning': system.status?.id === 2,
+                        'text-info': system.status?.id === 1 }">
+              </i>
             </div>
-            <div class="col-12 col-md-6 mt-2">
-              <span style="font-weight: bold;">Installation Site:</span><br>
+            <div class="col-4 text-center" >
+              <button type="button" class="btn" (click)="systemOverview(system.id)">
+                <h5 style="font-weight: bold;">{{system.system_name}}</h5>
+              </button>       
+            </div>
+            <div class="col-4 text-end">
+              <i class="bi bi-trash iconCursor" style="color: #ca2314" (click)="deleteSystem(system.id)"></i>
+            </div>    
+          </div>    
+        </div>
+        <div class="card-body" (click)="systemOverview(system.id)">
+          <div class="row">
+            <div class="col-12 col-md-6 mt-2 element text-center">
+              <span style="font-weight: bold; border-bottom: 1px solid #ca2314;">System Description</span><br>
+              <div class="content fst-italic">{{system.system_description}}</div>
+            </div>
+
+            <div class="col-12 col-md-6 mt-2 element text-center">
+              <span style="font-weight: bold; border-bottom: 1px solid #ca2314;">Warranty Status</span><br>
+              <!-- <div class="content">
+                <i class="bi bi-circle-fill status" [ngClass]="{
+                                'text-success': system.status?.name === 'Approved',
+                                'text-danger': system.status?.name === 'Incomplete',
+                                'text-warning': system.status?.name === 'Waiting for approval'}">
+                </i>
+                <span *ngIf="system.status?.name === 'Approved' || system.status?.name === 'Incomplete' || system.status?.name === 'Waiting for approval'; else warrantyBlock">
+                  {{system.status?.name}}
+                </span>
+                <ng-template #warrantyBlock>
+                  Unknown Status
+                </ng-template>
+              </div> -->
+            </div>
+
+            <div class="col-12 col-md-6 mt-2 element text-center">
+              <span style="font-weight: bold; border-bottom: 1px solid #ca2314;">Installation Site</span><br>
               <div class="content">{{system.installationSite}}</div>
             </div>
-            <div class="col-12 col-md-6 mt-2">
-              <span style="font-weight: bold;">Customer:</span><br>
+
+            <div class="col-12 col-md-6 mt-2 element text-center">
+              <span style="font-weight: bold; border-bottom: 1px solid #ca2314;">Customer</span><br>
               <div class="content">{{system.customerInfo}}</div>
             </div>
-            <div class="col-12 col-md-6 mt-2">
-              <span style="font-weight: bold;">Devices:</span><br>
+
+            <div class="col-12 col-md-6 mt-2 element text-center">
+              <span style="font-weight: bold; border-bottom: 1px solid #ca2314;">Tickets</span><br>
               <div class="content">
-                <span *ngFor="let device of system.devicesInfo">
-                  - {{device}}<br>
+                <span *ngFor="let ticket of system.ticketsInfo">
+                  {{ticket}}<br>
                 </span>
               </div>
             </div>
-            <div class="col-12 col-md-6 mt-2">
-              <span style="font-weight: bold;">Tickets:</span><br>
+
+            <div class="col-12 col-md-6 mt-2 element text-center">
+              <span style="font-weight: bold; border-bottom: 1px solid #ca2314;">Devices</span><br>
               <div class="content">
-                <span *ngFor="let ticket of system.ticketsInfo">
-                  - {{ticket}}<br>
+                <span *ngFor="let device of system.devicesInfo">
+                  {{device}}<br>
                 </span>
               </div>
             </div>
@@ -53,20 +89,10 @@
             <div class="col-12 col-md-6 mt-2">
               <span style="font-weight: bold;">installation Site:</span><br>
               <div class="content">{{system.installationSite}}</div>
-            </div>
-            <div class="col-12 col-md-6 mt-2">
-              <span style="font-weight: bold;">Warranty Status:</span><br>
-              <div class="content">TODO: ADD THIS FIELD TO THE SYSTEM INTERFACE
-                <i class="bi bi-circle-fill status" [ngClass]="{
-                                'text-success': system.status?.title === 'Approved',
-                                'text-danger': system.status?.title === 'Incomplete',
-                                'text-warning': system.status?.title === 'Waiting for approval'}">
-                </i>
-              </div>
-            </div>
-          </div>-->
+            </div>-->
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>

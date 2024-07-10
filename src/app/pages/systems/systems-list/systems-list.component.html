@@ -1,18 +1,28 @@
 <div class="container mt-4 p-1 p-lg-3 p-xxl-4" style="min-width: 350px;">
     <div class="row justify-content-center align-items-center">
         <div class="col-12 col-md-8 col-lg-6 text-center">
-            <label class="searchLabel">{{"SYSTEM.SYSTEMLIST.TITLE" | translate}}</label>
-            <div class="input p-2 input-group">
+            <label class="searchLabel">
+                {{"SYSTEM.SYSTEMLIST.TITLE" | translate}}
+            </label>
+            <!-- <div class="input p-2 input-group">
                 <input [(ngModel)]="searchText" type="text" class="form-control searchBar"
                 placeholder='{{"SYSTEM.SYSTEMLIST.SEARCHPLACEHOLDER" | translate}}'>
                 <button class="btn btn-dark">{{"SYSTEM.SYSTEMLIST.BUTTONSEARCH" | translate}}</button>
+            </div> -->
+        </div>
+
+        <div class="col-12 text-center mb-1 text-secondary fst-italic">
+            {{"SYSTEM.SYSTEMLIST.DESCRIPTION" | translate}}
+        </div>
+
+        <div class="col-12 text-center">
+            <div class="btn btn-outline-dark mt-2" (click)="navigate('/systemManagement')">
+                {{"SYSTEM.SYSTEMLIST.ADDSYSTEM" | translate}}
             </div>
         </div>
+
         <div class="col-12">
             <app-system-card></app-system-card>
-        </div>
-        <div class="btn button fixed-button" (click)="navigate('/systemManagement')">
-            <span class="mb-1" style="font-weight: bold; font-size: x-large; color: white;">+</span>
         </div>
     </div>
 </div>

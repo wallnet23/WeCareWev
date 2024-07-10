@@ -6,6 +6,7 @@ import { SystemCardComponent } from '../components/system-card/system-card.compo
 import { FormsModule } from '@angular/forms';
 import { SystemInfo } from '../interfaces/system-info';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-systems-list',
@@ -15,7 +16,8 @@ import { TranslateModule } from '@ngx-translate/core';
     MatIconModule,
     SystemCardComponent,
     FormsModule,
-    TranslateModule
+    TranslateModule,
+    MatTooltip
   ],
   templateUrl: './systems-list.component.html',
   styleUrl: './systems-list.component.scss'

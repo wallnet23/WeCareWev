@@ -72,7 +72,7 @@ export class SystemOverviewComponent {
     this.connectServerService.postRequest<ApiResponse<{}>>(Connect.urlServerLaraApi, '', {description: description})
     .subscribe((val: ApiResponse<{}>) => {
       if(val.data) {
-        this.systemInfo!.description = description;
+        this.systemInfo!.system_description = description;
         console.log("changed");
       }
     })
