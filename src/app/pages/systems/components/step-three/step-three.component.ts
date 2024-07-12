@@ -87,7 +87,7 @@ export class StepThreeComponent implements OnInit {
       })
   }
 
-  saveStep() {
+  saveStep(action: string) {
     let stepThree = JSON.parse(JSON.stringify(this.stepThreeForm.getRawValue()));
     let country$: Observable<Country>;
     let country: Country;
@@ -112,10 +112,12 @@ export class StepThreeComponent implements OnInit {
               this.popupDialogService.alertElement(val);
               this.infoStep();
               this.formEmit.emit(this.formBuilder.group({}));
-              setTimeout(() => {
-                console.log('Emitting nextStep');
-                this.nextStep.emit();
-              }, 0);
+              if (action == 'next') {
+                setTimeout(() => {
+                  console.log('Emitting nextStep');
+                  this.nextStep.emit();
+                }, 0);
+              }
             })
         }
       })
@@ -134,10 +136,12 @@ export class StepThreeComponent implements OnInit {
           this.popupDialogService.alertElement(val);
           this.infoStep();
           this.formEmit.emit(this.formBuilder.group({}));
-          setTimeout(() => {
-            console.log('Emitting nextStep');
-            this.nextStep.emit();
-          }, 0);
+          if (action == 'next') {
+            setTimeout(() => {
+              console.log('Emitting nextStep');
+              this.nextStep.emit();
+            }, 0);
+          }
         })
     }
 
@@ -221,5 +225,5 @@ export class StepThreeComponent implements OnInit {
   getForm() {
     return this.stepThreeForm;
   }
-  
+
 }

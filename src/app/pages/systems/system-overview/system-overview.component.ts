@@ -13,6 +13,7 @@ import { Connect } from '../../../classes/connect';
 import { SystemInfo } from '../interfaces/system-info';
 import { Ticket } from '../interfaces/ticket';
 import { RMA } from '../interfaces/rma';
+import { PopupDialogService } from '../../../services/popup-dialog.service';
 
 @Component({
   selector: 'app-system-overview',
@@ -39,7 +40,7 @@ export class SystemOverviewComponent {
   systemWarranty!: Warranty;
   systemRMA!: RMA;
 
-  constructor(private loadSystemService: LoadSystemsService, private route: ActivatedRoute,
+  constructor(private popupDialogService: PopupDialogService, private route: ActivatedRoute,
     public dialog: MatDialog, private router: Router, private assistanceRequestsService: AssistanceRequestsService,
     private connectServerService: ConnectServerService, private location: Location) {
 
@@ -69,11 +70,12 @@ export class SystemOverviewComponent {
 
   modifyDescription(description: string) {
     console.log(description);
-    this.connectServerService.postRequest<ApiResponse<{}>>(Connect.urlServerLaraApi, '', {description: description})
-    .subscribe((val: ApiResponse<{}>) => {
+    this.connectServerService.postRequest<ApiResponse<{system_description: string}>>
+    (Connect.urlServerLaraApi, 'system/systemModifyDescription', {idsystem: this.idsystem, system_description: description})
+    .subscribe((val: ApiResponse<{system_description: string}>) => {
+      this.popupDialogService.alertElement(val);
       if(val.data) {
-        this.systemInfo!.system_description = description;
-        console.log("changed");
+        this.systemInfo!.system_description = val.data.system_description;
       }
     })
   }

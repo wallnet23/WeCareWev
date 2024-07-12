@@ -3,7 +3,8 @@
     <i class="bi bi-arrow-left arrowIcon"></i>
   </a>
 </div>
-<div class="container">
+
+<div *ngIf="(systemStatus == null || systemStatus!.id == 1 || systemStatus!.id == 3); else unauthorizedBlock" class="container">
   <div class="row">
     <div class="col-12 p-2 text-center">
       <h2 class="inline-bordered">
@@ -15,7 +16,7 @@
       <span class="fst-italic">Mandatory fields <sup>*</sup></span>
     </div>
 
-    <div class="col-12 col-md-6 text-center mt-2">
+    <div *ngIf="idsystem > 0" class="col-12 col-md-6 text-center mt-2">
       <span class="fw-bold">
         Status:
       </span>
@@ -38,19 +39,22 @@
         <mat-step [stepControl]="stepOneForm" errorMessage="Incomplete">
           <ng-template matStepLabel><span style="font-weight: bold;">SYSTEM & CUSTOMER INFO</span></ng-template>
           <app-step-one #stepOne (idEmitter)="onIdReceived($event)" (formEmit)="onFormOneReceived($event)"
-            (nextStep)="stepper.next()" [idsystem]="idsystem"></app-step-one>
+            (nextStep)="stepper.next()" [idsystem]="idsystem">
+          </app-step-one>
         </mat-step>
 
         <mat-step [stepControl]="stepTwoForm" errorMessage="Incomplete">
           <ng-template matStepLabel><span style="font-weight: bold;">INSTALLATION SITE</span></ng-template>
           <app-step-two #stepTwo (formEmit)="onFormTwoReceived($event)" (nextStep)="stepper.next()"
-            [idsystem]="idsystem"></app-step-two>
+            [idsystem]="idsystem">
+          </app-step-two>
         </mat-step>
 
         <mat-step [stepControl]="stepThreeForm" errorMessage="Incomplete">
           <ng-template matStepLabel><span style="font-weight: bold;">TECHNICIAN / INSTALLER INFO</span></ng-template>
           <app-step-three #stepThree (formEmit)="onFormThreeReceived($event)" (nextStep)="stepper.next()"
-            [idsystem]="idsystem"></app-step-three>
+            [idsystem]="idsystem">
+          </app-step-three>
         </mat-step>
 
         <!-- <mat-step [stepControl]="stepFourForm" errorMessage="Address is required.">
@@ -66,8 +70,8 @@
 
         <mat-step>
           <ng-template matStepLabel><span style="font-weight: bold;">CONFIRMATION</span></ng-template>
-          <p>Request the approval of the system to get access to all the services and extend the warranty of inverters.</p>
           <div class="text-center">
+            <p>Request the approval of the system to get access to all the services and extend the warranty of inverters.</p>
             <button class="btn btn-outline-dark me-2" matStepperPrevious>Previous</button>
             <!-- <button mat-button (click)="stepper.reset()">Reset</button> -->
             <button class="btn btn-outline-dark ms-2" (click)="approvalRequested()" [disabled]="!getAllFormValid()">
@@ -82,3 +86,25 @@
     </div>
   </div>
 </div>
+
+<ng-template #unauthorizedBlock>
+  <div class="container mt-2 p-1 p-sm-2 p-md-3 p-lg-4">
+    <div class="row justify-content-center align-items-center mt-5">
+      <div class="col-12 p-2 text-center">
+        <h2 class="inline-bordered">
+          {{systemName}}
+        </h2>
+      </div>
+      <div class="col-12 text-center mt-5">
+        <span style="font-size: x-large;">
+          You can't modify a system that is under approval
+        </span>
+      </div>
+      <div class="col-12 text-center mt-4">
+        <button class="btn btn-outline-dark" (click)="goToSystem()">
+          System Overview
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

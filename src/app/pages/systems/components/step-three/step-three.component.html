@@ -71,8 +71,11 @@
             <button class="btn btn-outline-dark mr-2" matStepperPrevious>
                 Previous
             </button>
+            <button class="btn btn-outline-dark ms-2 me-2" id="next" (click)="saveStep('save')" [disabled]="stepThreeForm.invalid">
+                Save
+            </button>
             <button class="btn btn-outline-dark ml-2" [disabled]="stepThreeForm.invalid"
-                (click)="saveStep()">
+                (click)="saveStep('next')">
                 Next
             </button>
         </div>

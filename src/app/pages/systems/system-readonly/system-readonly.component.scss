@@ -23,3 +23,24 @@
     object-fit: cover;
     border: 1px solid black;
 }
+
+.arrowBtn {
+    position: absolute !important;
+    margin-top: 16px;
+    margin-left: 50px;
+    z-index: 100;
+}
+
+.arrowBtn:hover {
+    color: white;
+}
+
+img:hover {
+    cursor: pointer;
+}
+
+.inline-bordered {
+    display: inline;
+    font-weight: bold;
+    border-bottom: 1px solid #ca2314;
+}

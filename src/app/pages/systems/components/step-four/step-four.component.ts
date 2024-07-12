@@ -106,7 +106,7 @@ export class StepFourComponent implements OnInit {
     console.log('inverter', this.obj_invert.getDataFormInverter());
   }
 
-  saveData() {
+  saveStep(action: string) {
     const stepFour = this.stepFourForm.value;
     // console.log('data 1', this.stepFourForm.value);
     let stepInverter = null;
@@ -127,10 +127,12 @@ export class StepFourComponent implements OnInit {
         this.popupDialogService.alertElement(val);
         this.infoStep();
         this.formEmit.emit(this.formBuilder.group({}));
-        setTimeout(() => {
-          console.log('Emitting nextStep');
-          this.nextStep.emit();
-        }, 0);
+        if (action == 'string') {
+          setTimeout(() => {
+            console.log('Emitting nextStep');
+            this.nextStep.emit();
+          }, 0);
+        }
       })
   }
 

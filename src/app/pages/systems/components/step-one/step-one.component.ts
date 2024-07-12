@@ -122,7 +122,8 @@ export class StepOneComponent implements OnInit {
     }
   }
 
-  saveStep() {
+
+  saveStep(action: string) {
 
     let stepOne = JSON.parse(JSON.stringify(this.stepOneForm.getRawValue()));
     let country$: Observable<Country>;
@@ -135,7 +136,7 @@ export class StepOneComponent implements OnInit {
           country = { name: { common: val[0].name.common }, cca2: val[0].cca2, ccn3: val[0].ccn3 };
           delete stepOne.ccn3;
           stepOne.customer_country = country;
-          this.saveData(stepOne);
+          this.saveData(stepOne, action);
         }
       })
     }
@@ -143,11 +144,11 @@ export class StepOneComponent implements OnInit {
       country = { name: { common: '' }, cca2: '', ccn3: '' };
       delete stepOne.ccn3;
       stepOne.customer_country = country;
-      this.saveData(stepOne);
+      this.saveData(stepOne, action);
     }
   }
 
-  private saveData(stepOne: any) {
+  private saveData(stepOne: any, action: string) {
     this.connectServerService.postRequest<ApiResponse<{ idsystem: number }>>(Connect.urlServerLaraApi, 'system/saveStepOne',
       {
         idsystem: this.idsystem,
@@ -155,6 +156,7 @@ export class StepOneComponent implements OnInit {
       })
       .subscribe((val: ApiResponse<{ idsystem: number }>) => {
         if (this.idsystem == 0) {
+          this.formEmit.emit(this.formBuilder.group({}));
           this.router.navigate(['systemManagement', val.data.idsystem]);
         }
         else {
@@ -163,13 +165,14 @@ export class StepOneComponent implements OnInit {
           this.popupDialogService.alertElement(val);
           this.infoStep();
           this.formEmit.emit(this.formBuilder.group({}));
-          setTimeout(() => {
-            console.log('Emitting nextStep');
-            this.nextStep.emit();
-          }, 0);
+          if (action == 'next') {
+            setTimeout(() => {
+              console.log('Emitting nextStep');
+              this.nextStep.emit();
+            }, 0);
+          }
         }
       })
-
   }
 
   private logicStep() {

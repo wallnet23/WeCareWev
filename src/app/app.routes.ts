@@ -27,6 +27,7 @@ export const routes: Routes = [
     { path: 'signup', component: SignupComponent, canActivate: [loginSignupGuard]},
     { path: 'systemsList', component: SystemsListComponent, canActivate: [authGuard]},
     //{ path: 'systemModify/:id', component: SystemModifyComponent, canActivate: [authGuard] },
+    { path: 'systemManagement', component: SystemManagementComponent },
     { path: 'systemManagement/:id', component: SystemManagementComponent },
     { path: 'profile/settings', component: SettingsComponent, canActivate: [authGuard] },
     //{ path: 'newSystem', component: SystemNewComponent, canActivate: [authGuard] },

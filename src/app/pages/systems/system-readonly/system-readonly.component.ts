@@ -1,11 +1,10 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location, LocationChangeEvent } from '@angular/common';
 import { Component, ElementRef, HostListener } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ConnectServerService } from '../../../services/connect-server.service';
 import { ApiResponse } from '../../../interfaces/api-response';
 import { SystemInfoFull } from '../interfaces/system-info-full';
 import { Connect } from '../../../classes/connect';
-import { SystemInfo } from '../interfaces/system-info';
 import { Image } from '../components/interfaces/image';
 import { StepOne } from '../components/interfaces/step-one';
 import { StepTwo } from '../components/interfaces/step-two';
@@ -34,7 +33,8 @@ export class SystemReadonlyComponent {
   customerCountry: string = '';
   installerCountry: string = '';
 
-  constructor(private route: ActivatedRoute, private connectServerService: ConnectServerService, private elementRef: ElementRef) {
+  constructor(private route: ActivatedRoute, private connectServerService: ConnectServerService, 
+    private elementRef: ElementRef, private location: Location) {
     this.route.params.subscribe(params => {
       this.idsystem = params['id'];
     });
@@ -87,6 +87,10 @@ export class SystemReadonlyComponent {
 
   getStepFour() {
 
+  }
+
+  goBack() {
+    this.location.back();
   }
 
   getCountry(ccn3: string, target: 'customerCountry' | 'installerCountry') {

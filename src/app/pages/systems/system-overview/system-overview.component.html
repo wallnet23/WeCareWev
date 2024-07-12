@@ -1,20 +1,22 @@
+<div class="arrowBtn d-none d-sm-inline">
+    <a (click)="goBack()" class="btn btn-outline-dark">
+        <i class="bi bi-arrow-left arrowIcon"></i>
+    </a>
+</div>
+
 <div *ngIf="idsystem > 0; else blockError;" class="container fullPage">
-
-    <div class="arrowBtn m-2">
-        <a (click)="goBack()" class="btn btn-outline-dark">
-            <i class="bi bi-arrow-left arrowIcon"></i>
-        </a>
-    </div>
-
     <div class="row justify-content-center align-items-center mt-2 p-2">
         <div class="col-6 text-center">
-            <h2 class="systemName">{{systemInfo?.system_name}}</h2>
+            <h2 class="systemName inline-bordered">{{systemInfo?.system_name}}</h2>
         </div>
     </div>
 
     <div class="row justify-content-center align-items-center p-2">
         <div class="col-12 text-center">
-            <span style="font-size: medium; font-style: italic;">{{systemInfo?.system_description}}</span>
+            <span *ngIf="systemInfo?.system_description != null && systemInfo?.system_description != ''; else addDescriptionBlock" style="font-size: medium; font-style: italic;">{{systemInfo?.system_description}}</span>
+            <ng-template #addDescriptionBlock>
+                <span style="font-size: medium; font-style: italic;">Add a description</span>
+            </ng-template>
             <button type="button" class="btn btn-sm btn-outline-dark ms-2" data-bs-toggle="modal"
                 data-bs-target="#descriptionModal">
                 <i class="bi bi-pencil"></i>
@@ -32,7 +34,8 @@
                 </div>
                 <div class="modal-body">
                     <textarea type="text" [value]="systemInfo?.system_description" style="width: 100%;"
-                        #newDescription></textarea>
+                        #newDescription>
+                    </textarea>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Dismiss</button>
@@ -76,7 +79,7 @@
                                     <li *ngFor="let device of systemInfo?.devicesInfo">
                                         <span class="listDescription">{{device}}</span>
                                     </li>
-                                </ul>                    
+                                </ul>
                             </li>
                         </ul>
                     </div>
@@ -84,9 +87,15 @@
                         <span class="mt-2">Insert the system's datas to enable the others functionalities</span>
                     </ng-template>
                 </div>
-                <div class="card-footer blueBg d-flex justify-content-between">
-                    <button class="btn btn-outline-dark btn-light me-2" (click)="modifySystem()">Modify System Data</button>
-                    <button class="btn btn-outline-dark btn-light ms-2" (click)="viewSystem()">View System Data</button>
+                <div class="card-footer blueBg text-center">
+                    <button *ngIf="systemInfo?.status!.id == 1 || systemInfo?.status!.id == 3; else readOnlyBlock" class="btn btn-outline-dark btn-light me-2" (click)="modifySystem()">
+                        Modify System Data
+                    </button>
+                    <ng-template #readOnlyBlock>
+                        <button class="btn btn-outline-dark btn-light ms-2" (click)="viewSystem()">
+                            View System Data
+                        </button>
+                    </ng-template>
                 </div>
             </div>
         </div>
@@ -106,7 +115,7 @@
                         <p class="paragraph">
                             Per visualizzare la garanzia di ogni dispositivo è necessario che l'impianto sia stato
                             approvato.<br>
-                            Stato attuale impianto: 
+                            Stato attuale impianto:
                             <i class="bi bi-circle-fill" style="font-size: large;" [ngClass]="{
                                 'text-success': systemInfo?.status?.id === 4,
                                 'text-danger': systemInfo?.status?.id === 3,

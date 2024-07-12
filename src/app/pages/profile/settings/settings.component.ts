@@ -43,15 +43,15 @@ export class SettingsComponent {
     name: new FormControl<string | null>(null, Validators.required),
     surname: new FormControl<string | null>(null, Validators.required),
     email: new FormControl<string |null>(null, Validators.email),
-    phoneNumber: new FormControl<string |null>(null, Validators.minLength(8)),
+    licenseNumber: new FormControl<string |null>(null, Validators.required),
+    fiscalCode: new FormControl<string | null>(null, Validators.required),
+    country: new FormControl<Country | null>(null, Validators.required),
   })
 
-  signupForm = new FormGroup({
+  companyForm = new FormGroup({
     companyName: new FormControl<string | null>(null, Validators.required),
-    country: new FormControl<Country | null>(null, Validators.required),
-    licenseNumber: new FormControl<string |null>(null, Validators.required),
     partitaIva: new FormControl<string |null>(null, Validators.required),
-    phoneNumber: new FormControl<string |null>(null, Validators.minLength(8)),
+    phoneNumber: new FormControl<string |null>(null),
     website: new FormControl<string | null>(null),
   })
 
@@ -75,13 +75,13 @@ export class SettingsComponent {
   }
 
   setLicence() {
-    const selectedCountry = this.signupForm.get('country')?.value!;
-    if (selectedCountry.toString() === 'Italy') {
+    const selectedCountry = this.generalForm.get('country')?.value!.ccn3;
+    if (selectedCountry === '380') {
       this.isItalian = true;
-      this.signupForm.patchValue({licenseNumber: 'none', partitaIva: ''});
+      this.generalForm.patchValue({licenseNumber: 'none', fiscalCode: null});
     } else {
       this.isItalian = false;
-      this.signupForm.patchValue({partitaIva: 'none', licenseNumber: ''});
+      this.generalForm.patchValue({fiscalCode: null, licenseNumber: ''});
     }
   }
 

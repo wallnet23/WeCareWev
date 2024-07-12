@@ -19,6 +19,7 @@ import { Warranty } from '../interfaces/warranty';
 import { RMA } from '../interfaces/rma';
 import { Connect } from '../../../classes/connect';
 import { CommonModule, Location } from '@angular/common';
+import { PopupDialogService } from '../../../services/popup-dialog.service';
 
 @Component({
   selector: 'app-system-management',
@@ -65,7 +66,7 @@ export class SystemManagementComponent {
   systemStatus: { id: number, name: string } | null = null;
 
   constructor(private route: ActivatedRoute, private connectServerService: ConnectServerService,
-    private location: Location) {
+    private location: Location, private router: Router, private popupDialogService: PopupDialogService) {
     this.route.params.subscribe(params => {
       this.idsystem = params['id'];
       this.getSystemOverview();
@@ -77,7 +78,7 @@ export class SystemManagementComponent {
     this.initForms();
     this.getStatus();
     //this.stepOneForm = this.obj_stepOne.stepOneForm;
-    if(this.getAllFormValid()) {
+    if (this.getAllFormValid()) {
       this.stepOneForm = this.obj_stepOne.getForm();
       this.stepTwoForm = this.obj_stepTwo.getForm();
       this.stepThreeForm = this.obj_stepThree.getForm();
@@ -104,9 +105,12 @@ export class SystemManagementComponent {
   }
 
   onFormOneReceived(form: FormGroup) {
-    this.stepOneForm = form;
-    this.getSystemOverview();
-    this.getStatus();
+    this.route.params.subscribe(params => {
+      this.idsystem = params['id'];
+      this.stepOneForm = form;
+      this.getSystemOverview();
+      this.getStatus();
+    });
   }
 
   onFormTwoReceived(form: FormGroup) {
@@ -123,7 +127,7 @@ export class SystemManagementComponent {
 
   onIdReceived(id: number) {
     this.idsystem = id;
-    console.log('ID received from child:', id);
+    //console.log('ID received from child:', id);
   }
 
   getSystemOverview() {
@@ -148,16 +152,17 @@ export class SystemManagementComponent {
 
   approvalRequested() {
     this.connectServerService.postRequest<ApiResponse<null>>
-    (Connect.urlServerLaraApi, 'system/approvalRequest', {idsystem: this.idsystem})
-    .subscribe((val: ApiResponse<null>) => {
-      if (val) {
-        
-      }
-    })
+      (Connect.urlServerLaraApi, 'system/systemApproval', { idsystem: this.idsystem })
+      .subscribe((val: ApiResponse<null>) => {
+        this.popupDialogService.alertElement(val);
+        this.router.navigate(['systemOverview', this.idsystem]);
+      })
   }
 
   getStatus() {
+    console.log("Received 1")
     if (this.idsystem > 0) {
+      console.log("Received 1")
       this.connectServerService.getRequest<ApiResponse<{ status: { id: number, name: string } }>>
         (Connect.urlServerLaraApi, 'system/systemState', { idsystem: this.idsystem })
         .subscribe((val: ApiResponse<{ status: { id: number, name: string } }>) => {
@@ -171,16 +176,20 @@ export class SystemManagementComponent {
   getAllFormValid() {
     const valid = this.obj_stepOne?.stepOneForm?.valid &&
       this.obj_stepTwo?.stepTwoForm?.valid &&
-      this.obj_stepThree?.stepThreeForm?.valid 
-      //&&
-      //this.obj_stepFour?.stepFourForm?.valid;
-      this.allFormValid = valid 
-      //== null ? false : true;
+      this.obj_stepThree?.stepThreeForm?.valid
+    //&&
+    //this.obj_stepFour?.stepFourForm?.valid;
+    this.allFormValid = valid
+    //== null ? false : true;
     return this.allFormValid;
   }
 
   goBack() {
     this.location.back();
+  }
+
+  goToSystem() {
+    this.router.navigate(['systemOverview', this.idsystem]);
   }
 
 }

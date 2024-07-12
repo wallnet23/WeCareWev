@@ -1,13 +1,12 @@
 <div class="container">
   <form [formGroup]="stepOneForm">
     <div class="form-group">
-
       <div class="row">
-
         <div class="col-12 mb-3 mt-2">
           <label class="form-check-label" for="system_name" style="font-weight: bold;">
             System Name<sup class="small-asterisk">*</sup>
-            <mat-icon class="ms-2" matTooltip="Choose a general name for your system. You'll see it as a reference to your system"
+            <mat-icon class="ms-2"
+              matTooltip="Choose a general name for your system. You'll see it as a reference to your system"
               style="font-size: medium;">info</mat-icon>
           </label>
           <input type="text" name="system_name" id="system_name" class="form-control" formControlName="system_name"
@@ -20,8 +19,8 @@
             <mat-icon class="ms-2" matTooltip="Write a short description about the system, just as an overview"
               style="font-size: medium;">info</mat-icon>
           </label>
-          <textarea type="text" name="system_description" id="system_description" formControlName="system_description" class="form-control"
-            placeholder="Write some short info"></textarea>
+          <textarea type="text" name="system_description" id="system_description" formControlName="system_description"
+            class="form-control" placeholder="Write some short info"></textarea>
         </div>
 
         <div class="col-12 ms-3 mb-3 mt-2 form-check form-switch">
@@ -85,10 +84,16 @@
             <mat-label>Name</mat-label>
             <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
         </mat-form-field> -->
-    <div class="text-center">
-      <button class="btn btn-outline-dark" (click)="saveStep()" [disabled]="stepOneForm.invalid">
-        {{"STEPONE.NEXT" | translate}}
-      </button>
+    <div class="row justify-content-center">
+      <div class="col-12 text-center">
+        <button class="btn btn-outline-dark me-2" id="next" (click)="saveStep('save')" [disabled]="stepOneForm.invalid">
+          {{"STEPONE.SAVE" | translate}}
+        </button>
+        <button class="btn btn-outline-dark ms-2" id="next" (click)="saveStep('next')"
+          [disabled]="stepOneForm.invalid || idsystem == 0">
+          {{"STEPONE.NEXT" | translate}}
+        </button>
+      </div>
     </div>
   </form>
 </div>

@@ -22,7 +22,8 @@
             class="form-control" placeholder="City" required>
         </div>
         <div class="col-12 col-lg-6 mb-3">
-          <label for="location_postalcode" style="font-weight: bold;">Postal Code<sup class="small-asterisk">*</sup></label>
+          <label for="location_postalcode" style="font-weight: bold;">Postal Code<sup
+              class="small-asterisk">*</sup></label>
           <input type="text" name="location_postalcode" id="location_postalcode" formControlName="location_postalcode"
             class="form-control" placeholder="" required>
         </div>
@@ -30,7 +31,8 @@
     </div>
     <div class="row justify-content-center">
       <div class="col-auto fs-5">
-        <span style="font-size: small;">Installation pictures (attach 5 pictures of the batteries in their installation site)</span>
+        <span style="font-size: small;">Installation pictures (attach 5 pictures of the batteries in their installation
+          site)</span>
       </div>
     </div>
     <div class="row justify-content-center">
@@ -63,11 +65,14 @@
             <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
         </mat-form-field> -->
     <div class="text-center">
-      <button class="btn btn-outline-dark mr-2" matStepperPrevious>
+      <button class="btn btn-outline-dark me-2" matStepperPrevious>
         Previous
       </button>
-      <button class="btn btn-outline-dark ml-2" [disabled]="stepTwoForm.invalid"
-      (click)="saveStep()" style="width: 80px;">
+      <button class="btn btn-outline-dark ms-2 me-2" id="next" (click)="saveStep('save')" [disabled]="stepTwoForm.invalid">
+        Save
+      </button>
+      <button class="btn btn-outline-dark ml-2" [disabled]="stepTwoForm.invalid" (click)="saveStep('next')"
+        style="width: 80px;">
         Next
       </button>
     </div>

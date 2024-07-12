@@ -85,7 +85,7 @@ export class StepTwoComponent {
       })
   }
 
-  saveStep() {
+  saveStep(action: string) {
     let stepTwo = JSON.parse(JSON.stringify(this.stepTwoForm.getRawValue()));
     let country$: Observable<Country>;
     let country: Country;
@@ -108,10 +108,12 @@ export class StepTwoComponent {
               this.popupDialogService.alertElement(val);
               this.infoStep();
               this.formEmit.emit(this.formBuilder.group({}));
-              setTimeout(() => {
-                console.log('Emitting nextStep');
-                this.nextStep.emit();
-              }, 0);
+              if (action == 'next') {
+                setTimeout(() => {
+                  console.log('Emitting nextStep');
+                  this.nextStep.emit();
+                }, 0);
+              }
             })
         }
       })
@@ -130,10 +132,12 @@ export class StepTwoComponent {
           this.popupDialogService.alertElement(val);
           this.infoStep();
           this.formEmit.emit(this.formBuilder.group({}));
-          setTimeout(() => {
-            console.log('Emitting nextStep');
-            this.nextStep.emit();
-          }, 0);
+          if (action == 'next') {
+            setTimeout(() => {
+              console.log('Emitting nextStep');
+              this.nextStep.emit();
+            }, 0);
+          }
         })
     }
 

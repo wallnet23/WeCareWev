@@ -10,7 +10,7 @@
         <div class="col-12 col-md-6 mb-3">
           <label for="product_systemcomposition" style="font-weight: bold;">*System Composition</label>
           <select class="form-select" aria-label="select example" id="product_systemcomposition"
-           formControlName="product_systemcomposition">
+            formControlName="product_systemcomposition">
             <option *ngFor="let comp of systemComposition" [ngValue]="comp.id">{{comp.name}}</option>
           </select>
         </div>
@@ -18,25 +18,27 @@
         <div class="col-12 col-md-6 mb-3">
           <label for="product_systemweco" style="font-weight: bold;">*Weco Products in the System</label>
           <select class="form-select" aria-label="select example" id="product_systemweco"
-           formControlName="product_systemweco">
+            formControlName="product_systemweco">
             <option *ngFor="let weco of wecoComposition" [ngValue]="weco.id">{{weco.name}}</option>
           </select>
         </div>
 
         <div class="col-12 col-md-6 mb-3" *ngIf="stepFourForm.get('product_systemcomposition')?.value == 2 &&
           stepFourForm.get('product_systemweco')?.value != null && stepFourForm.get('product_systemweco')?.value != 3">
-          <label *ngIf="stepFourForm.get('product_systemweco')?.value == 1" for="brand" style="font-weight: bold;">What brand
+          <label *ngIf="stepFourForm.get('product_systemweco')?.value == 1" for="brand" style="font-weight: bold;">What
+            brand
             of batteries are you working with?</label>
           <label *ngIf="stepFourForm.get('product_systemweco')?.value == 2" for="product_brand"
             style="font-weight: bold;">*What brand of inverter are you working with?</label>
           <input type="text" name="product_brand" id="product_brand" formControlName="product_brand"
-          class="form-control" placeholder="...">
+            class="form-control" placeholder="...">
         </div>
       </div>
 
       <div class="row">
         <div class="col-12">
-          <app-inverters #invertersComponent [idsystem]="idsystem" [stepInverter]="stepInverter" *ngIf="stepFourForm.get('product_systemweco')?.value != null"></app-inverters>
+          <app-inverters #invertersComponent [idsystem]="idsystem" [stepInverter]="stepInverter"
+            *ngIf="stepFourForm.get('product_systemweco')?.value != null"></app-inverters>
         </div>
       </div>
       <div class="row">
@@ -50,7 +52,11 @@
       <button class="btn btn-outline-dark mr-2" matStepperPrevious>
         Previous
       </button>
-      <button class="btn btn-outline-dark ml-2" [disabled]="!formValid" (click)="sendData()">
+      <button class="btn btn-outline-dark ms-2 me-2" id="next" (click)="saveStep('save')"
+        [disabled]="stepFourForm.invalid">
+        Save
+      </button>
+      <button class="btn btn-outline-dark ml-2" [disabled]="!formValid" (click)="saveStep('next')">
         Next
       </button>
     </div>
