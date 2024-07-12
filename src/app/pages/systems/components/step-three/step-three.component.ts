@@ -217,4 +217,9 @@ export class StepThreeComponent implements OnInit {
         this.getImages();
       })
   }
+
+  getForm() {
+    return this.stepThreeForm;
+  }
+  
 }

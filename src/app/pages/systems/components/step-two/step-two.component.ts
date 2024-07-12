@@ -210,4 +210,9 @@ export class StepTwoComponent {
         this.getImages();
       })
   }
+
+  getForm() {
+    return this.stepTwoForm;
+  }
+
 }

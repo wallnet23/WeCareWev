@@ -233,4 +233,9 @@ export class StepFourComponent implements OnInit {
       }
     )
   }
+
+  getForm() {
+    return this.stepFourForm;
+  }
+
 }

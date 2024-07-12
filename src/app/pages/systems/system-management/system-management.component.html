@@ -35,7 +35,7 @@
     <div class="col-12 p-0">
       <mat-stepper orientation="vertical" [linear]="true" #stepper>
 
-        <mat-step [stepControl]="stepOneForm" errorMessage="All fields with * required.">
+        <mat-step [stepControl]="stepOneForm" errorMessage="Incomplete">
           <ng-template matStepLabel><span style="font-weight: bold;">SYSTEM & CUSTOMER INFO</span></ng-template>
           <app-step-one #stepOne (idEmitter)="onIdReceived($event)" (formEmit)="onFormOneReceived($event)"
             (nextStep)="stepper.next()" [idsystem]="idsystem"></app-step-one>
@@ -47,17 +47,17 @@
             [idsystem]="idsystem"></app-step-two>
         </mat-step>
 
-        <mat-step [stepControl]="stepThreeForm" errorMessage="Address is required.">
+        <mat-step [stepControl]="stepThreeForm" errorMessage="Incomplete">
           <ng-template matStepLabel><span style="font-weight: bold;">TECHNICIAN / INSTALLER INFO</span></ng-template>
           <app-step-three #stepThree (formEmit)="onFormThreeReceived($event)" (nextStep)="stepper.next()"
             [idsystem]="idsystem"></app-step-three>
         </mat-step>
 
-        <mat-step [stepControl]="stepFourForm" errorMessage="Address is required.">
+        <!-- <mat-step [stepControl]="stepFourForm" errorMessage="Address is required.">
           <ng-template matStepLabel><span style="font-weight: bold;">PRODUCT INFO</span></ng-template>
           <app-step-four #stepFour (formEmit)="onFormFourReceived($event)" (nextStep)="stepper.next()"
             [idsystem]="idsystem"></app-step-four>
-        </mat-step>
+        </mat-step> -->
 
         <!-- <mat-step [stepControl]="stepFiveForm" errorMessage="Address is required.">
             <ng-template matStepLabel>ADDITIONAL INFO</ng-template>
@@ -66,14 +66,14 @@
 
         <mat-step>
           <ng-template matStepLabel><span style="font-weight: bold;">CONFIRMATION</span></ng-template>
-          <p>You are now done.</p>
-          <div>
-            <button class="btn btn-outline-dark" matStepperPrevious>Back</button>
+          <p>Request the approval of the system to get access to all the services and extend the warranty of inverters.</p>
+          <div class="text-center">
+            <button class="btn btn-outline-dark me-2" matStepperPrevious>Previous</button>
             <!-- <button mat-button (click)="stepper.reset()">Reset</button> -->
-            <button class="btn btn-outline-dark" (click)="approvalRequested()">
-              Richiesta approvazione
+            <button class="btn btn-outline-dark ms-2" (click)="approvalRequested()" [disabled]="!getAllFormValid()">
+              Send
             </button>
-            <div class="mt-2" style="font-size: small; font-weight: bold;" *ngIf="!allFormValid">
+            <div class="mt-2 text-danger" style="font-size: small; font-weight: bold;" *ngIf="!getAllFormValid()">
               Concludi ogni step per richiedere l'approvazione dell'impianto al tecnico Weco.
             </div>
           </div>

@@ -86,15 +86,19 @@ export class SystemOverviewComponent {
   }
 
   goToTicket(id: number) {
-    this.router.navigate(['/modifyTicket', id])
+    this.router.navigate(['/modifyTicket', id]);
   }
 
   modifySystem() {
-    this.router.navigate(['/systemManagement', this.idsystem])
+    this.router.navigate(['/systemManagement', this.idsystem]);
+  }
+
+  viewSystem() {
+    this.router.navigate(['/systemReadonly', this.idsystem]);
   }
 
   warrantyInfo() {
-    this.router.navigate(['/warrantyInfo', this.idsystem])
+    this.router.navigate(['/warrantyInfo', this.idsystem]);
   }
 
   goBack() {

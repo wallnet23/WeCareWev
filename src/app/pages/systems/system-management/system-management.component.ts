@@ -77,6 +77,12 @@ export class SystemManagementComponent {
     this.initForms();
     this.getStatus();
     //this.stepOneForm = this.obj_stepOne.stepOneForm;
+    if(this.getAllFormValid()) {
+      this.stepOneForm = this.obj_stepOne.getForm();
+      this.stepTwoForm = this.obj_stepTwo.getForm();
+      this.stepThreeForm = this.obj_stepThree.getForm();
+      //this.stepFourForm = this.obj_stepFour.getForm();
+    }
   }
 
   initForms() {
@@ -141,7 +147,13 @@ export class SystemManagementComponent {
   // }
 
   approvalRequested() {
-
+    this.connectServerService.postRequest<ApiResponse<null>>
+    (Connect.urlServerLaraApi, 'system/approvalRequest', {idsystem: this.idsystem})
+    .subscribe((val: ApiResponse<null>) => {
+      if (val) {
+        
+      }
+    })
   }
 
   getStatus() {
@@ -159,9 +171,11 @@ export class SystemManagementComponent {
   getAllFormValid() {
     const valid = this.obj_stepOne?.stepOneForm?.valid &&
       this.obj_stepTwo?.stepTwoForm?.valid &&
-      this.obj_stepThree?.stepThreeForm?.valid &&
-      this.obj_stepFour?.stepFourForm?.valid;
-    this.allFormValid = valid == null ? false : true;
+      this.obj_stepThree?.stepThreeForm?.valid 
+      //&&
+      //this.obj_stepFour?.stepFourForm?.valid;
+      this.allFormValid = valid 
+      //== null ? false : true;
     return this.allFormValid;
   }
 

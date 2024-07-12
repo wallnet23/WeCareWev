@@ -18,6 +18,7 @@ import { TicketNewComponent } from './pages/systems/ticket-new/ticket-new.compon
 import { WarrantyTrialComponent } from './warranty-trial/warranty-trial.component';
 import { WarrantyInfoComponent } from './pages/warranty/warranty-info/warranty-info.component';
 import { SystemManagementComponent } from './pages/systems/system-management/system-management.component';
+import { SystemReadonlyComponent } from './pages/systems/system-readonly/system-readonly.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -30,6 +31,7 @@ export const routes: Routes = [
     { path: 'profile/settings', component: SettingsComponent, canActivate: [authGuard] },
     //{ path: 'newSystem', component: SystemNewComponent, canActivate: [authGuard] },
     { path: 'systemOverview/:id', component: SystemOverviewComponent, canActivate: [authGuard] },
+    { path: 'systemReadonly/:id', component: SystemReadonlyComponent },
     { path: 'newPassword', component: NewPasswordComponent, canActivate: [authGuard] },
     { path: 'systemTicketsList/:id', component: SystemTicketsListComponent, canActivate: [authGuard] },
     { path: 'ticket/:id', component: TicketComponent, canActivate: [authGuard] },

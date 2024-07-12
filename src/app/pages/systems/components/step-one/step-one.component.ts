@@ -250,4 +250,8 @@ export class StepOneComponent implements OnInit {
     return this.stepOneForm.valid;
   }
 
+  getForm() {
+    return this.stepOneForm;
+  }
+
 }
