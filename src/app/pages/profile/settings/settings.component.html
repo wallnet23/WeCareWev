@@ -25,34 +25,47 @@
                     <div class="tab-pane fade active show" role="tabpanel" aria-labelledby="accountGeneralList"
                         id="accountGeneral">
                         <div class="card-body">
-                            <div class="form-group">
-                                <label class="form-label section">{{'PROFILE.SETTINGS.NAME' | translate}}</label>
-                                <input type="text" class="form-control" value="">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label section">{{'PROFILE.SETTINGS.SURNAME' | translate}}</label>
-                                <input type="text" class="form-control" value="">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label section">{{'PROFILE.SETTINGS.EMAIL' | translate}}</label>
-                                <input type="text" class="form-control mb-1" value="">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label section">{{'PROFILE.SETTINGS.COUNTRY' | translate}}</label>
-                                <select class="form-select" id="country" aria-label="select example"
-                                    formControlName="country" required (change)="setLicence()">
-                                    <option [ngValue]="null" disabled selected>{{'PROFILE.SETTINGS.SELECTCOUNTRY' | translate}}</option>
-                                    <option *ngFor="let country of countriesData">
-                                        <img src="{{country.flags.png}}" width="20px" height="15px"> {{
-                                        country.name.common }}
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="licenseNumber" class="form-label section">{{'PROFILE.SETTINGS.LICENSENUMBER' | translate}}</label>
-                                <input type="text" class="form-control" name="licenseNumber"
-                                    formControlName="licenseNumber">
-                            </div>
+                            <form [formGroup]="generalForm">
+                                <div class="form-group">
+                                    <label class="form-label section">{{'PROFILE.SETTINGS.NAME' | translate}}</label>
+                                    <input type="text" class="form-control" value="" formControlName="name">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label section">{{'PROFILE.SETTINGS.SURNAME' | translate}}</label>
+                                    <input type="text" class="form-control" value="" formControlName="surname">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label section">{{'PROFILE.SETTINGS.EMAIL' | translate}}</label>
+                                    <input type="text" class="form-control mb-1" value="" formControlName="email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="ccn3" class="form-label section">{{'PROFILE.SETTINGS.COUNTRY' | translate}}</label>
+                                    <select class="form-select" id="ccn3" aria-label="select example"
+                                        formControlName="ccn3" >
+                                        <option [ngValue]="null" disabled>{{'PROFILE.SETTINGS.SELECTCOUNTRY' |
+                                            translate}}</option>
+                                        <option *ngFor="let country of countriesData" [ngValue]="country.ccn3">
+                                            {{ country.name.common }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div *ngIf="generalForm.get('ccn3')?.value == '380'; else foreignBlock"
+                                    class="form-group">
+                                    <label for="fiscalcode" class="form-label section">{{'PROFILE.SETTINGS.FISCALCODE' |
+                                        translate}}</label>
+                                    <input type="text" class="form-control" id="fiscalcode"
+                                        formControlName="fiscalcode">
+                                </div>
+                                <ng-template #foreignBlock>
+                                    <div class="form-group">
+                                        <label for="licensenumber"
+                                            class="form-label section">{{'PROFILE.SETTINGS.LICENSENUMBER' |
+                                            translate}}</label>
+                                        <input type="text" class="form-control" id="licensenumber"
+                                            formControlName="licensenumber">
+                                    </div>
+                                </ng-template>
+                            </form>
                         </div>
                     </div>
 
@@ -61,22 +74,31 @@
                         <div class="card-body pb-2">
                             <form [formGroup]="modifyPasswordForm" style="margin: 0 auto">
                                 <div class="form-group input-container">
-                                    <label for="password" class="form-label section">{{'PROFILE.SETTINGS.CURRENTPSW' | translate}}</label>
-                                    <input [type]="type1" id="password1" name="password" formControlName="password" class="form-control">
-                                    <i class="bi bi-eye icon" [ngClass]="{'bi-eye': !toggled1, 'bi-eye-slash': toggled1}"
-                                            id="togglePassword" (click)="seePassword('password1')"></i>
+                                    <label for="password" class="form-label section">{{'PROFILE.SETTINGS.CURRENTPSW' |
+                                        translate}}</label>
+                                    <input [type]="type1" id="password1" name="password" formControlName="password"
+                                        class="form-control">
+                                    <i class="bi bi-eye icon"
+                                        [ngClass]="{'bi-eye': !toggled1, 'bi-eye-slash': toggled1}" id="togglePassword"
+                                        (click)="seePassword('password1')"></i>
                                 </div>
                                 <div class="form-group input-container">
-                                    <label for="newPassword" class="form-label section">{{'PROFILE.SETTINGS.NEWPSW' | translate}}</label>
-                                    <input [type]="type2" id="password2" name="newPassword" formControlName="newPassword" class="form-control">
-                                    <i class="bi bi-eye icon" [ngClass]="{'bi-eye': !toggled2, 'bi-eye-slash': toggled2}"
-                                            id="togglePassword" (click)="seePassword('password2')"></i>
+                                    <label for="newPassword" class="form-label section">{{'PROFILE.SETTINGS.NEWPSW' |
+                                        translate}}</label>
+                                    <input [type]="type2" id="password2" name="newPassword"
+                                        formControlName="newPassword" class="form-control">
+                                    <i class="bi bi-eye icon"
+                                        [ngClass]="{'bi-eye': !toggled2, 'bi-eye-slash': toggled2}" id="togglePassword"
+                                        (click)="seePassword('password2')"></i>
                                 </div>
                                 <div class="form-group input-container">
-                                    <label for="repeatNewPassword" class="form-label section">{{'PROFILE.SETTINGS.REPEATPSW' | translate}}</label>
-                                    <input [type]="type3" id="password3" name="repeatNewPassword" formControlName="repeatNewPassword" class="form-control">
-                                    <i class="bi bi-eye icon" [ngClass]="{'bi-eye': !toggled3, 'bi-eye-slash': toggled3}"
-                                            id="togglePassword" (click)="seePassword('password3')"></i>
+                                    <label for="repeatNewPassword"
+                                        class="form-label section">{{'PROFILE.SETTINGS.REPEATPSW' | translate}}</label>
+                                    <input [type]="type3" id="password3" name="repeatNewPassword"
+                                        formControlName="repeatNewPassword" class="form-control">
+                                    <i class="bi bi-eye icon"
+                                        [ngClass]="{'bi-eye': !toggled3, 'bi-eye-slash': toggled3}" id="togglePassword"
+                                        (click)="seePassword('password3')"></i>
                                 </div>
                             </form>
                         </div>
@@ -86,17 +108,26 @@
                         <div class="card-body pb-2">
                             <form [formGroup]="companyForm" style="margin: 0 auto">
                                 <div class="form-group">
-                                    <label for="companyName" class="form-label section">{{'PROFILE.SETTINGS.COMPANYNAME' | translate}}</label>
-                                    <input class="form-control" type="text" name="companyName"
-                                        formControlName="companyName">
+                                    <label for="company_name" class="form-label section">{{'PROFILE.SETTINGS.COMPANYNAME'
+                                        | translate}}</label>
+                                    <input class="form-control" type="text" id="company_name"
+                                        formControlName="company_name">
+                                </div>
+                                <div *ngIf="generalForm.get('ccn3')?.value == '380'" class="form-group">
+                                    <label for="vat" class="form-label section">{{'PROFILE.SETTINGS.VAT' |
+                                        translate}}</label>
+                                    <input type="text" class="form-control" id="vat"
+                                        formControlName="vat">
                                 </div>
                                 <div class="form-group">
-                                    <label for="phoneNumber" class="form-label section">{{'PROFILE.SETTINGS.PHONE' | translate}}</label>
-                                    <input type="text" class="form-control" name="phoneNumber"
-                                        formControlName="phoneNumber">
+                                    <label for="phone" class="form-label section">{{'PROFILE.SETTINGS.PHONE' |
+                                        translate}}</label>
+                                    <input type="text" class="form-control" id="phone"
+                                        formControlName="phone">
                                 </div>
                                 <div class="form-group">
-                                    <label for="website" class="form-label section">{{'PROFILE.SETTINGS.WEBSITE' | translate}}</label>
+                                    <label for="website" class="form-label section">{{'PROFILE.SETTINGS.WEBSITE' |
+                                        translate}}</label>
                                     <input type="text" class="form-control" name="website" formControlName="website">
                                 </div>
                             </form>
@@ -184,7 +215,7 @@
     </div>
 
     <div class="text-right mt-3">
-        <button type="button" class="btn btn-dark">{{'PROFILE.SETTINGS.SAVECHANGES' | translate}}</button>
+        <button type="button" class="btn btn-dark" (click)="saveStep()">{{'PROFILE.SETTINGS.SAVECHANGES' | translate}}</button>
     </div>
 
 </div>

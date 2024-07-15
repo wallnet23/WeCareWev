@@ -44,8 +44,8 @@
               class="form-control" placeholder='{{"STEPONE.SURNAMEPLACEHOLDER" | translate}}' required>
           </div>
           <div class="col-12 col-lg-6 mb-3">
-            <label for="ccn3" style="font-weight: bold;">{{"STEPONE.COUNTRY" | translate}}<sup
-                class="small-asterisk">*</sup></label>
+            <label for="ccn3" style="font-weight: bold;">{{"STEPONE.COUNTRY" | translate}}
+              <sup class="small-asterisk">*</sup></label>
             <select class="form-select" aria-label="select example" formControlName="ccn3">
               <option [ngValue]="null" disabled>{{"STEPONE.SELECTCOUNTRY" | translate}}</option>
               <option *ngFor="let country of countriesData" [ngValue]="country.ccn3">

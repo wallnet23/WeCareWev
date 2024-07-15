@@ -4,6 +4,10 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { map, Observable } from 'rxjs';
+import { ConnectServerService } from '../../../services/connect-server.service';
+import { Store } from '@ngrx/store';
+import { UserState } from '../../../ngrx/user/user.reducer';
+import { User } from '../interfaces/user';
 
 interface Country {
   name: {
@@ -11,9 +15,6 @@ interface Country {
   },
   cca2: string;
   ccn3: string;
-  flags: {
-    png: string;
-  }
 }
 
 @Component({
@@ -43,15 +44,15 @@ export class SettingsComponent {
     name: new FormControl<string | null>(null, Validators.required),
     surname: new FormControl<string | null>(null, Validators.required),
     email: new FormControl<string |null>(null, Validators.email),
-    licenseNumber: new FormControl<string |null>(null, Validators.required),
-    fiscalCode: new FormControl<string | null>(null, Validators.required),
-    country: new FormControl<Country | null>(null, Validators.required),
+    licensenumber: new FormControl<string |null>(null, Validators.required),
+    fiscalcode: new FormControl<string | null>(null, Validators.required),
+    ccn3: new FormControl<string | null>(null, Validators.required),
   })
 
   companyForm = new FormGroup({
-    companyName: new FormControl<string | null>(null, Validators.required),
-    partitaIva: new FormControl<string |null>(null, Validators.required),
-    phoneNumber: new FormControl<string |null>(null),
+    company_name: new FormControl<string | null>(null, Validators.required),
+    vat: new FormControl<string |null>(null, Validators.required),
+    phone: new FormControl<string |null>(null),
     website: new FormControl<string | null>(null),
   })
 
@@ -61,12 +62,20 @@ export class SettingsComponent {
     repeatNewPassword: new FormControl(null, Validators.required),
   })
   
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private connectServerService: ConnectServerService,
+    private store: Store<{ user: UserState }>) {}
 
   ngOnInit() {
-    this.fetchCountryData().subscribe((obj) => {
+    this.connectServerService.getRequestCountryData().subscribe((obj) => {
       this.countriesData = obj;
-    });
+    })
+
+    this.store.select(state => state.user.userInfo).subscribe(
+      (val) => {
+      this.generalForm.patchValue(val!);
+      this.companyForm.patchValue(val!);
+      }
+    )
   } 
 
   fetchCountryData(): Observable<Country[]> {
@@ -75,13 +84,13 @@ export class SettingsComponent {
   }
 
   setLicence() {
-    const selectedCountry = this.generalForm.get('country')?.value!.ccn3;
+    const selectedCountry = this.generalForm.get('ccn3')?.value!;
     if (selectedCountry === '380') {
       this.isItalian = true;
-      this.generalForm.patchValue({licenseNumber: 'none', fiscalCode: null});
+      this.generalForm.patchValue({licensenumber: '', fiscalcode: null});
     } else {
       this.isItalian = false;
-      this.generalForm.patchValue({fiscalCode: null, licenseNumber: ''});
+      this.generalForm.patchValue({fiscalcode: null, licensenumber: ''});
     }
   }
 
@@ -116,5 +125,38 @@ export class SettingsComponent {
         this.toggled3 = true;
       }
     }
+  }
+
+  saveStep() {
+
+    let form= JSON.parse(JSON.stringify(this.generalForm.getRawValue()));
+    let country$: Observable<Country>;
+    let country: Country;
+
+    if (form.ccn3) {
+      country$ = this.connectServerService.getSpecificCountryData(this.generalForm.get('ccn3')?.value!);
+      country$.subscribe((val: any) => {
+        if (val && val.length > 0) {
+          country = { name: { common: val[0].name.common }, cca2: val[0].cca2, ccn3: val[0].ccn3 };
+          delete form.ccn3;
+          form.customer_country = country;
+          //this.saveData(stepOne, action);
+        }
+      })
+    }
+    else {
+      country = { name: { common: '' }, cca2: '', ccn3: '' };
+      delete form.ccn3;
+      form.customer_country = country;
+      //this.saveData(stepOne, action);
+    }
+
+    console.log("general form:", form);
+    console.log("company form:", this.companyForm.getRawValue())
+  }
+
+  sendForm() {
+    console.log("general form:", this.generalForm.getRawValue());
+    console.log("company form:", this.companyForm.getRawValue())
   }
 }
