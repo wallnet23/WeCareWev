@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BarcodeReaderComponent } from './barcode-reader.component';
+import { ScannerSelectorComponent } from './scanner-selector.component';
 
-describe('BarcodeReaderComponent', () => {
-  let component: BarcodeReaderComponent;
-  let fixture: ComponentFixture<BarcodeReaderComponent>;
+describe('ScannerSelectorComponent', () => {
+  let component: ScannerSelectorComponent;
+  let fixture: ComponentFixture<ScannerSelectorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BarcodeReaderComponent]
+      imports: [ScannerSelectorComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(BarcodeReaderComponent);
+    fixture = TestBed.createComponent(ScannerSelectorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
