@@ -19,6 +19,8 @@ import { WarrantyTrialComponent } from './warranty-trial/warranty-trial.componen
 import { WarrantyInfoComponent } from './pages/warranty/warranty-info/warranty-info.component';
 import { SystemManagementComponent } from './pages/systems/system-management/system-management.component';
 import { SystemReadonlyComponent } from './pages/systems/system-readonly/system-readonly.component';
+import { ScannerSelectorComponent } from './pages/systems/barcode-scanner/scanner-selector/scanner-selector.component';
+import { ImgDecodeComponent } from './pages/systems/barcode-scanner/img-decode/img-decode.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -42,5 +44,6 @@ export const routes: Routes = [
     { path: 'warrantyInfo/:id', component:  WarrantyInfoComponent, canActivate: [authGuard]},
     { path: 'deniedAccess', component:  DeniedAccessComponent},
     { path: 'warrantyTrial', component: WarrantyTrialComponent },
+    { path: 'scannerTrial', component: ImgDecodeComponent },
     { path: '**', redirectTo: 'systemsList'}
 ];

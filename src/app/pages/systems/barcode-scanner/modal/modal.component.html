@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>Scan Barcode</h2>
+<mat-dialog-content class="mat-typography">
+  <app-video-decode (barcodeScanned)="onBarcodeScanned($event)"></app-video-decode>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>
+

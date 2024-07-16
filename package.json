@@ -29,6 +29,7 @@
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
+    "dynamsoft-barcode-reader-bundle": "10.2.1000",
     "ng-recaptcha": "^13.2.1",
     "ngx-spinner": "^17.0.0",
     "ngx-toastr": "^19.0.0",

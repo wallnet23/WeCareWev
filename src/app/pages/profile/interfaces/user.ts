@@ -13,5 +13,4 @@ export interface User {
   phone: string;
   phone_whatsapp: string;
   licensenumber: string;
-
 }

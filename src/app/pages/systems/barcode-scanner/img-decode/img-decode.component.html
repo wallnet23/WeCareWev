@@ -1,0 +1,28 @@
+<!-- <div class="ImgDecode"><input type="file" (change)="decodeImg($event)"/></div> -->
+<!-- 
+<div class="capture-img">
+    <div class="img-ipt"><input type="file" (change)="captureImage($event)"/></div>
+    <div class="result-area" #resDiv></div>
+</div> -->
+
+<div class="container-fluid">
+    <form [formGroup]="exampleForm">
+        <div class="row">
+            <div class="col-12">
+                <input type="text" class="form-control" formControlName="example">
+            </div>
+            <div class="col-12 mt-2">
+                <input type="text" class="form-control" formControlName="child">
+                <app-scanner-selector class="cameraIcon" (barcodeScanned)="onBarcodeScanned($event)"></app-scanner-selector>
+            </div>
+        </div>
+
+        <div class="row mt-4 justify-content-center">
+            <div class="col-8 text-center">
+                <button class="btn btn-outline-dark" (click)="print()">
+                    save
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
