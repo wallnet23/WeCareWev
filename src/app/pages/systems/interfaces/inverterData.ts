@@ -16,6 +16,7 @@ export interface InverterData {
 }
 
 export interface Inverter{
+  id: number;
   serialnumber: string;
   model: string;
 }

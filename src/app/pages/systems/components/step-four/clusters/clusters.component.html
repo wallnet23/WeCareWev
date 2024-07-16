@@ -10,7 +10,7 @@
             High or low voltage</label>
           <select class="form-select" formControlName="refidwecaresystemvolt" id="refidwecaresystemvolt">
             <option [ngValue]="null">Select a value</option>
-            <option *ngFor="let volt of systemVolt" [ngValue]="volt.id">{{language_now == 'it' ? volt.name_it :
+            <option *ngFor="let volt of systemVoltView" [ngValue]="volt.id">{{language_now == 'it' ? volt.name_it :
               volt.name_en}}</option>
           </select>
         </div>
@@ -20,7 +20,7 @@
             Model</label>
           <select class="form-select" formControlName="system_model">
             <option [ngValue]="null" id="system_model">Select a model</option>
-            <option *ngFor="let model of systemModel_view" [ngValue]="model.id">
+            <option *ngFor="let model of systemModelView" [ngValue]="model.id">
               {{language_now == 'it' ? model.name_it : model.name_en}}
             </option>
           </select>
@@ -32,7 +32,7 @@
             Type</label>
           <select class="form-select" formControlName="refidwecaresystemtype" id="refidwecaresystemtype">
             <option [ngValue]="null">Select a type</option>
-            <option *ngFor="let type of systemType_view" [ngValue]="type.id">
+            <option *ngFor="let type of systemTypeView" [ngValue]="type.id">
               {{language_now == 'it' ? type.name_it : type.name_en}}
             </option>
           </select>
@@ -96,42 +96,53 @@
         stepClusterForm.get('cluster_singlebattery')?.value == 1"> -->
         <div class="col-12" *ngIf="(stepClusterForm.get('cluster_number')?.value != null && stepClusterForm.get('cluster_numberdevices')?.value != null) ||
         stepClusterForm.get('cluster_singlebattery')?.value == 1">
-        <div class="container-fluid mt-4">
-          <div class="row">
-            <div *ngFor="let cluster of clusterFieldAsFormArray.controls ;let i = index;" formArrayName='clusters_list'
-              class="mb-4 col-12 col-sm-6 col-lg-4">
-              <div [formGroupName]="i">
-                <mat-card>
-                  <mat-card-header>
-                    <mat-card-title style="font-weight: bold; font-size: medium;">
-                      Cluster {{i + 1}}</mat-card-title>
-                  </mat-card-header>
-                  <mat-card-content>
-                    <div *ngFor="let bat of cluster.get('batteries').controls;let j = index" formArrayName="batteries">
-                      <div [formGroupName]="j" class="row">
-                        <div class="col-12"
-                          style="margin-top: 0px; margin-bottom: 0px;padding-top: 0px; padding-bottom: 0px;"
-                          [ngClass]="{'mt-2': j == 0}">
-                          <span class="">{{bat.get('masterorslave').value}}</span>
-                        </div>
-                        <div class="col-8 ">
-                          <label style="font-weight: bold; font-size: medium;" for="sn-{{i}}-{{j}}">Serial
-                            Number</label>
-                          <input id="sn-{{i}}-{{j}}" class="form-control" type="text" formControlName="serialnumber">
+          <div class="container-fluid mt-4">
+            <div class="row">
+              <div *ngFor="let cluster of clusterFieldAsFormArrayService.controls ;let i = index;"
+                formArrayName='clusters_list' class="mb-4 col-12 col-sm-6 col-lg-4">
+                <div [formGroupName]="i">
+                  <mat-card>
+                    <mat-card-header *ngIf="clusterFieldAsFormArrayService.controls.length > 1">
+                      <mat-card-title style="font-weight: bold; font-size: medium;">
+                        Cluster {{i + 1}}</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                      <div *ngFor="let bat of cluster.get('batteries').controls;let j = index"
+                        formArrayName="batteries">
+                        <div [formGroupName]="j" class="row">
+                          <div class="col-12"
+                            style="margin-top: 0px; margin-bottom: 0px;padding-top: 0px; padding-bottom: 0px;"
+                            [ngClass]="{'mt-2': j == 0}">
+                            <span class=""
+                              *ngIf="cluster.get('batteries').controls.length > 1">
+                              {{getStrMasterSlave(bat.get('masterorslave').value)}}
+                            </span>
+                          </div>
+                          <div class="col-12">
+                            <label style="font-weight: bold; font-size: medium;" for="sn-{{i}}-{{j}}">Serial
+                              Number</label>
+                            <input id="sn-{{i}}-{{j}}" class="form-control" type="text" formControlName="serialnumber">
+                          </div>
                         </div>
                       </div>
-                    </div>
+                      <mat-form-field class="col-12">
+                        <mat-label>Inverter to which it is connected</mat-label>
+                        <mat-select formControlName="inverters" multiple>
+                          @for (inverter of view_inverterslist; track inverter) {
+                            <mat-option [value]="inverter.id">{{inverter.serialnumber}}</mat-option>
+                          }
+                        </mat-select>
+                      </mat-form-field>
+                    </mat-card-content>
 
-                  </mat-card-content>
-
-                  <!-- <div class="field my-4 col-12">
+                    <!-- <div class="field my-4 col-12">
                   <p-multiSelect [options]="listaInverter" formControlName="inverter" optionLabel="sn"
                     placeholder="Select inverter"></p-multiSelect>
                 </div> -->
-                </mat-card>
+                  </mat-card>
+                </div>
               </div>
             </div>
-          </div>
           </div>
         </div>
 

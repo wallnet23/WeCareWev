@@ -1,13 +1,27 @@
 <nav class="navbar sticky-top navbar-expand-lg" style="min-width: 350px;">
-    <div class="container-fluid">
-        <img src="assets/img/logo.png" class="navbarLogo">
-        <button class="navbar-toggler custom-toggler mr-2" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="bi bi-list"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item d-flex align-items-center mb-1 mr-5" [ngClass]="{'ml-3': isToggle}">
+  <div class="container-fluid">
+    <img src="assets/img/logo.png" class="navbarLogo">
+    <button class="navbar-toggler custom-toggler mr-2" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="bi bi-list"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li *ngFor="let menu of (menuNavbar$ | async)" class="nav-item d-flex align-items-center mb-1 mr-5"
+          [ngClass]="{'ml-3': isToggle}">
+          <a class="nav-link" [href]="menu.path"
+            [ngStyle]="{'border-bottom': isCurrentPage(menu ? menu.path : '') ? '2px solid #FF0000' : 'none'}">
+            <!-- {{'NAVBAR.SYSTEMS' | translate}} -->
+            <span *ngIf="menu.voice == 'Systems'" #systemVoice>
+              {{'NAVBAR.SYSTEMS' | translate}}
+            </span>
+            <ng-template #systemVoice>
+              {{menu.voice}}
+            </ng-template>
+
+          </a>
+        </li>
+        <!-- <li class="nav-item d-flex align-items-center mb-1 mr-5" [ngClass]="{'ml-3': isToggle}">
                     <a class="nav-link" href="/systemsList"
                         [ngStyle]="{'border-bottom': isCurrentPage('/systemsList') ? '2px solid #FF0000' : 'none'}">
                         {{'NAVBAR.SYSTEMS' | translate}}
@@ -17,41 +31,39 @@
                     <a class="nav-link" href="/ticketsList"
                         [ngStyle]="{'border-bottom': isCurrentPage('/ticketsList') ? '2px solid #FF0000' : 'none'}">
                         {{'NAVBAR.TICKETS' | translate}}
-                        <span *ngIf="userPermissions$ | async as permissions">
-                          {{ permissions.menu }}
-                        </span>
                     </a>
-                </li>
-                <li *ngIf="!isToggle" class="nav-item d-flex align-items-center mb-1 mr-5">
-                    <div class="dropdown">
-                        <a class="nav-link dropdown-toggle"
-                            [ngStyle]="{'border-bottom': isCurrentPage('/profile') ? '2px solid #FF0000' : 'none'}"
-                            id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-person mr-2"></i>
-                            {{'NAVBAR.PROFILE' | translate}}
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a class="dropdown-item" href="/profile/settings">{{'NAVBAR.SETTINGS' | translate}}</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item logout" (click)="logout()">{{'NAVBAR.LOGOUT' | translate}}</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <li *ngIf="isToggle" class="nav-item d-flex align-items-center mb-1 ml-3">
-                    <a class="nav-link" href="/profile/settings"
-                        [ngStyle]="{'border-bottom': isCurrentPage('/profile') ? '2px solid #FF0000' : 'none'}">
-                        {{'NAVBAR.PROFILESETTINGS' | translate}}
-                    </a>
-                </li>
-                <li *ngIf="isToggle" class="nav-item d-flex align-items-center mb-1 ml-3">
-                    <a class="nav-link" (click)="logout()">
-                        {{'NAVBAR.LOGOUT' | translate}}
-                    </a>
-                </li>
+                </li> -->
+        <li *ngIf="!isToggle" class="nav-item d-flex align-items-center mb-1 mr-5">
+          <div class="dropdown">
+            <a class="nav-link dropdown-toggle"
+              [ngStyle]="{'border-bottom': isCurrentPage('/profile') ? '2px solid #FF0000' : 'none'}"
+              id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-person mr-2"></i>
+              <!-- {{'NAVBAR.PROFILE' | translate}} -->
+              {{nickname$ | async}}
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a class="dropdown-item" href="/profile/settings">{{'NAVBAR.SETTINGS' | translate}}</a>
+              </li>
+              <li>
+                <a class="dropdown-item logout" (click)="logout()">{{'NAVBAR.LOGOUT' | translate}}</a>
+              </li>
             </ul>
-        </div>
+          </div>
+        </li>
+        <li *ngIf="isToggle" class="nav-item d-flex align-items-center mb-1 ml-3">
+          <a class="nav-link" href="/profile/settings"
+            [ngStyle]="{'border-bottom': isCurrentPage('/profile') ? '2px solid #FF0000' : 'none'}">
+            {{'NAVBAR.PROFILESETTINGS' | translate}}
+          </a>
+        </li>
+        <li *ngIf="isToggle" class="nav-item d-flex align-items-center mb-1 ml-3">
+          <a class="nav-link" (click)="logout()">
+            {{'NAVBAR.LOGOUT' | translate}}
+          </a>
+        </li>
+      </ul>
     </div>
+  </div>
 </nav>

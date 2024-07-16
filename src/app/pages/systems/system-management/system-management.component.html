@@ -57,11 +57,11 @@
           </app-step-three>
         </mat-step>
 
-        <!-- <mat-step [stepControl]="stepFourForm" errorMessage="Address is required.">
+        <mat-step [stepControl]="stepFourForm" errorMessage="Incomplete">
           <ng-template matStepLabel><span style="font-weight: bold;">PRODUCT INFO</span></ng-template>
           <app-step-four #stepFour (formEmit)="onFormFourReceived($event)" (nextStep)="stepper.next()"
             [idsystem]="idsystem"></app-step-four>
-        </mat-step> -->
+        </mat-step>
 
         <!-- <mat-step [stepControl]="stepFiveForm" errorMessage="Address is required.">
             <ng-template matStepLabel>ADDITIONAL INFO</ng-template>

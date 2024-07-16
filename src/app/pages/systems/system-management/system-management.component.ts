@@ -20,6 +20,7 @@ import { RMA } from '../interfaces/rma';
 import { Connect } from '../../../classes/connect';
 import { CommonModule, Location } from '@angular/common';
 import { PopupDialogService } from '../../../services/popup-dialog.service';
+import { ClusterService } from '../components/step-four/clusters/cluster.service';
 
 @Component({
   selector: 'app-system-management',
@@ -66,10 +67,12 @@ export class SystemManagementComponent {
   systemStatus: { id: number, name: string } | null = null;
 
   constructor(private route: ActivatedRoute, private connectServerService: ConnectServerService,
-    private location: Location, private router: Router, private popupDialogService: PopupDialogService) {
+    private location: Location, private router: Router, private popupDialogService: PopupDialogService,
+    private clusterService: ClusterService) {
     this.route.params.subscribe(params => {
       this.idsystem = params['id'];
       this.getSystemOverview();
+      this.clusterService.setSystemsValues();
     });
   }
 
@@ -99,9 +102,9 @@ export class SystemManagementComponent {
     this.stepFourForm = new FormGroup({
       invalid: new FormControl(null, Validators.required)
     });
-    this.stepFiveForm = new FormGroup({
-      invalid: new FormControl(null, Validators.required)
-    });
+    // this.stepFiveForm = new FormGroup({
+    //   invalid: new FormControl(null, Validators.required)
+    // });
   }
 
   onFormOneReceived(form: FormGroup) {
@@ -160,9 +163,8 @@ export class SystemManagementComponent {
   }
 
   getStatus() {
-    console.log("Received 1")
+    // console.log("Received 1")
     if (this.idsystem > 0) {
-      console.log("Received 1")
       this.connectServerService.getRequest<ApiResponse<{ status: { id: number, name: string } }>>
         (Connect.urlServerLaraApi, 'system/systemState', { idsystem: this.idsystem })
         .subscribe((val: ApiResponse<{ status: { id: number, name: string } }>) => {

@@ -14,7 +14,6 @@
             <option *ngFor="let comp of systemComposition" [ngValue]="comp.id">{{comp.name}}</option>
           </select>
         </div>
-
         <div class="col-12 col-md-6 mb-3">
           <label for="product_systemweco" style="font-weight: bold;">*Weco Products in the System</label>
           <select class="form-select" aria-label="select example" id="product_systemweco"
@@ -38,12 +37,14 @@
       <div class="row">
         <div class="col-12">
           <app-inverters #invertersComponent [idsystem]="idsystem" [stepInverter]="stepInverter"
-            *ngIf="stepFourForm.get('product_systemweco')?.value != null"></app-inverters>
+            *ngIf="stepFourForm.get('product_systemweco')?.value != null"
+            (listInverters)="updateInvertersList($event)"></app-inverters>
         </div>
       </div>
       <div class="row">
-        <div class="col-12" *ngIf="view_stepinverter">
-          <app-clusters #clustersComponent [idsystem]="idsystem"></app-clusters>
+        <div class="col-12" *ngIf="this.stepFourForm.get('product_systemcomposition')?.value == 2">
+          <app-clusters #clustersComponent [idsystem]="idsystem"
+          [stepCluster]="stepCluster" [inverterList]="inverterList"></app-clusters>
         </div>
       </div>
     </div>
@@ -52,11 +53,10 @@
       <button class="btn btn-outline-dark mr-2" matStepperPrevious>
         Previous
       </button>
-      <button class="btn btn-outline-dark ms-2 me-2" id="next" (click)="saveStep('save')"
-        [disabled]="stepFourForm.invalid">
+      <button class="btn btn-outline-dark ms-2 me-2" id="next" (click)="saveStep('save')">
         Save
       </button>
-      <button class="btn btn-outline-dark ml-2" [disabled]="!formValid" (click)="saveStep('next')">
+      <button class="btn btn-outline-dark ml-2" [disabled]="!getStepValid()" (click)="saveStep('next')">
         Next
       </button>
     </div>

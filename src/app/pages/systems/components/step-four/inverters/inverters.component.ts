@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -28,6 +28,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 export class InvertersComponent implements OnInit, OnChanges {
   @Input() idsystem = 0;
   @Input() stepInverter!: InverterData;
+  @Output() listInverters = new EventEmitter<Inverter[]>();
   numInverter = Array(10).fill(0).map((_, i) => ({
     num: i + 1,
     // Proprietà aggiuntive...
@@ -38,14 +39,14 @@ export class InvertersComponent implements OnInit, OnChanges {
     inverter_number: new FormControl<number | null>(null, Validators.required),
     inverter_communication: new FormControl<number | null | boolean>({ value: null, disabled: true }),
     inverter_power: new FormControl<number | null | boolean>({ value: null, disabled: true }),
-    inverters_list: this.formBuilder.array([]),
+    inverters_list: this.formBuilder.array<any[]>([]),
   });
 
   constructor(private formBuilder: FormBuilder) { }
   ngOnInit(): void {
     this.logicStep();
-
   }
+
   ngOnChanges(changes: SimpleChanges) {
     // console.log('change: ',changes.idfather);
     if (changes['stepInverter'] && changes['stepInverter'].currentValue &&
@@ -75,6 +76,7 @@ export class InvertersComponent implements OnInit, OnChanges {
           for (let i = 0; i < val; i++) {
             this.inverterFieldAsFormArray.push(this.inverter(
               {
+                id: 0,
                 serialnumber: '',
                 model: ''
               }
@@ -93,6 +95,14 @@ export class InvertersComponent implements OnInit, OnChanges {
       inverter_communication: obj_inverter.inverter_communication,
       inverter_power: obj_inverter.inverter_power,
     });
+    if (obj_inverter.inverter_number != null && obj_inverter.inverter_number > 1) {
+      this.stepInverterForm.get('inverter_communication')?.enable();
+      this.stepInverterForm.get('inverter_power')?.enable();
+    } else {
+      this.stepInverterForm.get('inverter_communication')?.disable();
+      this.stepInverterForm.get('inverter_power')?.disable();
+    }
+
     this.inverterFieldAsFormArray.clear();
     console.log('inverter list: ', obj_inverter);
     obj_inverter.inverters_list.forEach(
@@ -103,6 +113,7 @@ export class InvertersComponent implements OnInit, OnChanges {
           ));
       }
     )
+    this.releaseUpdateListInverters();
     this.logicStep();
   }
 
@@ -111,6 +122,7 @@ export class InvertersComponent implements OnInit, OnChanges {
   }
   inverter(obj: Inverter): any {
     return this.formBuilder.group({
+      id: [obj.id],
       serialnumber: [obj.serialnumber, [Validators.required]],
       model: [obj.model, [Validators.required]]
     });
@@ -123,5 +135,33 @@ export class InvertersComponent implements OnInit, OnChanges {
 
   getValidFormInvert() {
     return this.stepInverterForm.valid;
+  }
+
+  getListInverters(): any[] {
+    let inverterList: any[] = [];
+    const form = this.stepInverterForm;
+    if (form) {
+      const formlist = form.get('inverters_list');
+      if (formlist) {
+        inverterList = formlist.value;
+      }
+    }
+    return inverterList;
+  }
+
+  /**
+   * Propaga aggiornamento lista inverter
+   */
+  releaseUpdateListInverters() {
+    // console.log('aggiorna');
+    let inverterList: Inverter[] = [];
+    const form = this.stepInverterForm;
+    if (form) {
+      const formlist = form.get('inverters_list');
+      if (formlist) {
+        inverterList = formlist.value;
+      }
+    }
+    this.listInverters.emit(inverterList)
   }
 }

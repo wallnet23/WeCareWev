@@ -60,9 +60,9 @@
                       Inverter {{i+1}}</mat-card-title>
                   </mat-card-header>
                   <mat-card-content>
-                    <label class="mt-2" style="font-weight: bold; font-size: medium;">Serial
+                    <label class="mt-2" style="font-weight: bold; font-size: medium;" >Serial
                       Number</label>
-                    <input class="form-control" type="text" formControlName="serialnumber">
+                    <input class="form-control" type="text" formControlName="serialnumber" (change)="releaseUpdateListInverters()">
                     <label class="mt-2" style="font-weight: bold; font-size: medium;">Model</label>
                     <input class="form-control" type="text" formControlName="model">
                   </mat-card-content>
