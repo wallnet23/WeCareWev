@@ -8,6 +8,8 @@ import { ConnectServerService } from '../../../services/connect-server.service';
 import { Store } from '@ngrx/store';
 import { UserState } from '../../../ngrx/user/user.reducer';
 import { User } from '../interfaces/user';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatIcon } from '@angular/material/icon';
 
 interface Country {
   name: {
@@ -23,7 +25,9 @@ interface Country {
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    TranslateModule
+    TranslateModule,
+    MatTooltip,
+    MatIcon
   ],
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.scss'

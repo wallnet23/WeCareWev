@@ -5,6 +5,7 @@ import { CurrentPageService } from './services/current-page.service';
 import { AuthService } from './services/auth.service';
 import { CommonModule } from '@angular/common';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { FooterComponent } from "./pages/footer/footer.component";
 
 @Component({
   selector: 'app-root',
@@ -13,8 +14,9 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     RouterOutlet,
     NavbarComponent,
     CommonModule,
-    NgxSpinnerModule
-  ],
+    NgxSpinnerModule,
+    FooterComponent
+],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
