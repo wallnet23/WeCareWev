@@ -42,7 +42,8 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-12" *ngIf="this.stepFourForm.get('product_systemcomposition')?.value == 2">
+        <div class="col-12" *ngIf="stepFourForm.get('product_systemcomposition')?.value == 2 &&
+        stepFourForm.get('product_systemweco')?.value != null">
           <app-clusters #clustersComponent [idsystem]="idsystem"
           [stepCluster]="stepCluster" [inverterList]="inverterList"></app-clusters>
         </div>

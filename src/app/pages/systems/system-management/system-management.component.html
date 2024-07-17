@@ -4,7 +4,8 @@
   </a>
 </div>
 
-<div *ngIf="(systemStatus == null || systemStatus!.id == 1 || systemStatus!.id == 3); else unauthorizedBlock" class="container">
+<div *ngIf="(systemStatus == null || systemStatus!.id == 1 || systemStatus!.id == 3); else unauthorizedBlock"
+  class="container">
   <div class="row">
     <div class="col-12 p-2 text-center">
       <h2 class="inline-bordered">
@@ -45,9 +46,9 @@
 
         <mat-step [stepControl]="stepTwoForm" errorMessage="Incomplete">
           <ng-template matStepLabel><span style="font-weight: bold;">INSTALLATION SITE</span></ng-template>
-          <app-step-two #stepTwo (formEmit)="onFormTwoReceived($event)" (nextStep)="stepper.next()"
-            [idsystem]="idsystem">
-          </app-step-two>
+            <app-step-two #stepTwo (formEmit)="onFormTwoReceived($event)" (nextStep)="stepper.next()"
+              [idsystem]="idsystem">
+            </app-step-two>
         </mat-step>
 
         <mat-step [stepControl]="stepThreeForm" errorMessage="Incomplete">
@@ -59,8 +60,8 @@
 
         <mat-step [stepControl]="stepFourForm" errorMessage="Incomplete">
           <ng-template matStepLabel><span style="font-weight: bold;">PRODUCT INFO</span></ng-template>
-          <app-step-four #stepFour (formEmit)="onFormFourReceived($event)" (nextStep)="stepper.next()"
-            [idsystem]="idsystem"></app-step-four>
+          <app-step-four *ngIf="stepThreeForm.valid" #stepFour (formEmit)="onFormFourReceived($event)"
+            (nextStep)="stepper.next()" [idsystem]="idsystem"></app-step-four>
         </mat-step>
 
         <!-- <mat-step [stepControl]="stepFiveForm" errorMessage="Address is required.">
@@ -71,7 +72,8 @@
         <mat-step>
           <ng-template matStepLabel><span style="font-weight: bold;">CONFIRMATION</span></ng-template>
           <div class="text-center">
-            <p>Request the approval of the system to get access to all the services and extend the warranty of inverters.</p>
+            <p>Request the approval of the system to get access to all the services and extend the warranty of
+              inverters.</p>
             <button class="btn btn-outline-dark me-2" matStepperPrevious>Previous</button>
             <!-- <button mat-button (click)="stepper.reset()">Reset</button> -->
             <button class="btn btn-outline-dark ms-2" (click)="approvalRequested()" [disabled]="!getAllFormValid()">
