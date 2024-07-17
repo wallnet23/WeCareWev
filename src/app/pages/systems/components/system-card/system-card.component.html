@@ -6,9 +6,9 @@
       </div>
       <div class="card mt-4" *ngFor="let system of systemsList">
         <div class="card-header noPointer">
-          <div class="row justify-content-end align-items-center">
-            <div class="col-4 text-start">
-              <i class="bi bi-circle-fill status d-none d-md-inline" matTooltip="Status: {{system.status?.name}}" 
+          <div class="row justify-content-center align-items-center">
+            <div class="col-4 text-start d-none d-md-inline">
+              <i class="bi bi-circle-fill status" matTooltip="Status: {{system.status?.name}}" 
                 [ngClass]="{
                         'text-success': system.status?.id === 4,
                         'text-danger': system.status?.id === 3,
@@ -16,7 +16,7 @@
                         'text-info': system.status?.id === 1 }">
               </i>
             </div>
-            <div class="col-4 text-center" >
+            <div class="col-8 col-md-4 text-md-center text-start" >
               <button type="button" class="btn" (click)="systemOverview(system.id)">
                 <h5 style="font-weight: bold;">{{system.system_name}}</h5>
               </button>       
