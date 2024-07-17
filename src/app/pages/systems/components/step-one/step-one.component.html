@@ -10,7 +10,8 @@
               style="font-size: medium;">info</mat-icon>
           </label>
           <input type="text" name="system_name" id="system_name" class="form-control" formControlName="system_name"
-            placeholder="System name">
+            placeholder="System name" [ngClass]="{'is-invalid': errors.system_name}">
+          <div class="text-danger mt-1" *ngIf="errors.system_name" style="font-size: small;">Insert the system name</div>
         </div>
 
         <div class="col-12 mb-3 mt-2">
@@ -32,32 +33,40 @@
 
         <ng-template [ngIf]="stepOneForm.get('system_owner')?.value === 0">
           <div class="col-12 col-lg-6 mb-3 mt-2">
-            <label for="customer_name" style="font-weight: bold;">{{"STEPONE.NAME" | translate}}<sup
-                class="small-asterisk">*</sup></label>
+            <label for="customer_name" style="font-weight: bold;">{{"STEPONE.NAME" | translate}}
+              <sup class="small-asterisk">*</sup></label>
             <input type="text" name="customer_name" id="customer_name" formControlName="customer_name"
-              class="form-control" placeholder='{{"STEPONE.NAMEPLACEHOLDER" | translate}}' required>
+              class="form-control" placeholder='{{"STEPONE.NAMEPLACEHOLDER" | translate}}'
+              [ngClass]="{'is-invalid': errors.customer_name}">
+              <div class="text-danger mt-1" *ngIf="errors.customer_name" style="font-size: small;">Insert the customer name</div>
           </div>
           <div class="col-12 col-lg-6 mb-3 mt-2">
             <label for="customer_surname" style="font-weight: bold;">{{"STEPONE.SURNAME" | translate}}<sup
                 class="small-asterisk">*</sup></label>
             <input type="text" name="customer_surname" id="customer_surname" formControlName="customer_surname"
-              class="form-control" placeholder='{{"STEPONE.SURNAMEPLACEHOLDER" | translate}}' required>
+              class="form-control" placeholder='{{"STEPONE.SURNAMEPLACEHOLDER" | translate}}' 
+              [ngClass]="{'is-invalid': errors.customer_surname}">
+              <div class="text-danger mt-1" *ngIf="errors.customer_surname" style="font-size: small;">Insert the customer surname</div>
           </div>
           <div class="col-12 col-lg-6 mb-3">
             <label for="ccn3" style="font-weight: bold;">{{"STEPONE.COUNTRY" | translate}}
               <sup class="small-asterisk">*</sup></label>
-            <select class="form-select" aria-label="select example" formControlName="ccn3">
+            <select class="form-select" aria-label="select example" formControlName="ccn3"
+            [ngClass]="{'is-invalid': errors.ccn3}">
               <option [ngValue]="null" disabled>{{"STEPONE.SELECTCOUNTRY" | translate}}</option>
               <option *ngFor="let country of countriesData" [ngValue]="country.ccn3">
                 <img src="{{country.flags?.png}}" width="20px" height="15px"> {{ country.name.common }}
               </option>
             </select>
+            <div class="text-danger mt-1" *ngIf="errors.ccn3" style="font-size: small;">Select a Country</div>
           </div>
           <div class="col-12 col-lg-6 mb-3">
             <label for="customer_phone" style="font-weight: bold;">{{"STEPONE.PHONE" | translate}}<sup
                 class="small-asterisk">*</sup></label>
             <input type="customer_phone" name="customer_phone" id="customer_phone" formControlName="customer_phone"
-              class="form-control" placeholder='{{"STEPONE.PHONEPLACEHOLDER" | translate}}'>
+              class="form-control" placeholder='{{"STEPONE.PHONEPLACEHOLDER" | translate}}'
+              [ngClass]="{'is-invalid': errors.customer_phone}">
+            <div class="text-danger mt-1" *ngIf="errors.customer_phone" style="font-size: small;">Insert the phone number</div>
           </div>
           <div class="col-12 col-lg-6 mb-3" *ngIf="stepOneForm.get('ccn3')?.value == '380'">
             <label for="customer_vat" style="font-weight: bold;">{{"STEPONE.VAT" | translate}}</label>
@@ -68,13 +77,16 @@
             <label for="customer_licensenumber" style="font-weight: bold;">{{"STEPONE.LICENSENUMBER" |
               translate}}<sup class="small-asterisk">*</sup></label>
             <input type="text" name="customer_licensenumber" id="customer_licensenumber"
-              formControlName="customer_licensenumber" class="form-control" placeholder="">
+              formControlName="customer_licensenumber" class="form-control" 
+              [ngClass]="{'is-invalid': errors.customer_licensenumber}">
+              <div class="text-danger mt-1" *ngIf="errors.customer_licensenumber" style="font-size: small;">Insert the license number</div>
           </div>
           <div class="col-12 col-lg-6 mb-3" *ngIf="stepOneForm.get('ccn3')?.value == '380'">
             <label for="customer_fiscalcode" style="font-weight: bold;">{{"STEPONE.FISCALCODE" | translate}}<sup
                 class="small-asterisk">*</sup></label>
             <input type="text" name="customer_fiscalcode" id="customer_fiscalcode" formControlName="customer_fiscalcode"
-              class="form-control" placeholder="">
+              class="form-control" [ngClass]="{'is-invalid': errors.customer_fiscalcode}">
+              <div class="text-danger mt-1" *ngIf="errors.customer_fiscalcode" style="font-size: small;">Insert the fiscal code</div>
           </div>
         </ng-template>
       </div>
@@ -86,11 +98,11 @@
         </mat-form-field> -->
     <div class="row justify-content-center">
       <div class="col-12 text-center">
-        <button class="btn btn-outline-dark me-2" id="next" (click)="saveStep('save')" [disabled]="stepOneForm.invalid">
+        <button class="btn btn-outline-dark me-2" id="next" (click)="saveStep('save')">
           {{"STEPONE.SAVE" | translate}}
         </button>
         <button class="btn btn-outline-dark ms-2" id="next" (click)="saveStep('next')"
-          [disabled]="stepOneForm.invalid || idsystem == 0">
+          [disabled]="stepOneForm.invalid || idsystem == 0 || isError">
           {{"STEPONE.NEXT" | translate}}
         </button>
       </div>

@@ -61,6 +61,14 @@ export class StepFourComponent implements OnInit {
   @Output() nextStep = new EventEmitter<void>();
   inverterList: Inverter[] = [];
 
+  isError = false;
+  errors = {
+    product_installdate: false,
+    product_systemcomposition: false,
+    product_systemweco: false,
+    product_brand: false,
+  }
+
   @ViewChild('invertersComponent') obj_invert!: InvertersComponent;
   @ViewChild('clustersComponent') obj_cluster!: ClustersComponent;
   @Input() idsystem = 0;
@@ -82,7 +90,7 @@ export class StepFourComponent implements OnInit {
   stepCluster!: ClusterData;
   view_stepinverter = false;
   stepFourForm = this.formBuilder.group({
-    product_installdate: new FormControl<Date | null | string>(null, Validators.required),
+    product_installdate: new FormControl<null | string>(null, Validators.required),
     product_systemcomposition: new FormControl<number | null>(null, Validators.required),
     product_systemweco: new FormControl<number | null>(null, Validators.required),
     product_brand: new FormControl(''),
@@ -101,38 +109,42 @@ export class StepFourComponent implements OnInit {
 
 
   saveStep(action: string) {
-    const stepFour = this.stepFourForm.value;
-    // console.log('data 1', this.stepFourForm.value);
-    let stepInverter = null;
-    let stepCluster = null;
-    if (this.obj_invert ) {
-      stepInverter = this.obj_invert.getDataFormInverter();
-      // console.log('inverter valid', this.obj_invert.getValidFormInvert());
-    }
-    if (this.obj_cluster) {
-      stepCluster = this.obj_cluster.getDataFormCluster();
-      // console.log('inverter valid', this.obj_invert.getValidFormInvert());
-    }
 
-    // console.log('data valid', this.stepFourForm.valid);
-    this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepFour',
-      {
-        idsystem: this.idsystem,
-        obj_step: stepFour,
-        obj_inverter: stepInverter,
-        obj_cluster: stepCluster,
-      })
-      .subscribe((val: ApiResponse<null>) => {
-        this.popupDialogService.alertElement(val);
-        this.infoStep();
-        this.formEmit.emit(this.formBuilder.group({}));
-        if (action == 'next') {
-          setTimeout(() => {
-            // console.log('Emitting nextStep');
-            this.nextStep.emit();
-          }, 0);
-        }
-      })
+    this.errorLogic();
+    if (!this.isError) {
+      const stepFour = this.stepFourForm.value;
+      // console.log('data 1', this.stepFourForm.value);
+      let stepInverter = null;
+      let stepCluster = null;
+      if (this.obj_invert) {
+        stepInverter = this.obj_invert.getDataFormInverter();
+        // console.log('inverter valid', this.obj_invert.getValidFormInvert());
+      }
+      if (this.obj_cluster) {
+        stepCluster = this.obj_cluster.getDataFormCluster();
+        // console.log('inverter valid', this.obj_invert.getValidFormInvert());
+      }
+
+      // console.log('data valid', this.stepFourForm.valid);
+      this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepFour',
+        {
+          idsystem: this.idsystem,
+          obj_step: stepFour,
+          obj_inverter: stepInverter,
+          obj_cluster: stepCluster,
+        })
+        .subscribe((val: ApiResponse<null>) => {
+          this.popupDialogService.alertElement(val);
+          this.infoStep();
+          this.formEmit.emit(this.formBuilder.group({}));
+          if (action == 'next') {
+            setTimeout(() => {
+              // console.log('Emitting nextStep');
+              this.nextStep.emit();
+            }, 0);
+          }
+        })
+    }
   }
 
   private infoStep() {
@@ -170,7 +182,7 @@ export class StepFourComponent implements OnInit {
       // console.log('test inverter', this.obj_invert.getValidFormInvert());
       // console.log('test cluster', this.obj_cluster.getValidFormCluster());
       return this.stepFourForm.valid && this.obj_invert.getValidFormInvert()
-      && this.obj_cluster.getValidFormCluster();
+        && this.obj_cluster.getValidFormCluster();
     } else {
       return false;
     }
@@ -188,6 +200,52 @@ export class StepFourComponent implements OnInit {
   //   }
   //   this.view_stepinverter = result;
   // }
+
+  private errorLogic() {
+    if (this.stepFourForm.get('product_installdate')?.value == null || this.stepFourForm.get('product_installdate')?.value!.replaceAll(' ', '') == '') {
+      this.errors.product_installdate = true;
+    }
+    else {
+      this.errors.product_installdate = false;
+    }
+    if (this.stepFourForm.get('product_systemcomposition')?.value == null) {
+      this.errors.product_systemcomposition = true;
+    }
+    else {
+      this.errors.product_systemcomposition = false;
+    }
+    if (this.stepFourForm.get('product_systemweco')?.value == null) {
+      this.errors.product_systemweco = true;
+    }
+    else {
+      this.errors.product_systemweco = false;
+    }
+    if (this.stepFourForm.get('product_systemweco')?.value == 0) {
+      if (this.stepFourForm.get('product_brand')?.value == null || this.stepFourForm.get('product_brand')?.value!.replaceAll(' ', '') == '') {
+        this.errors.product_brand = true;
+      }
+      else {
+        this.errors.product_brand = false;
+      }
+    }
+    else {
+      this.errors.product_brand = false;
+    }
+
+    this.checkIsError();
+  }
+
+  private checkIsError() {
+    if (!this.errors.product_installdate &&
+      !this.errors.product_systemcomposition &&
+      !this.errors.product_systemweco &&
+      !this.errors.product_brand) {
+      this.isError = false;
+    }
+    else {
+      this.isError = true;
+    }
+  }
 
   private logicStep() {
     console.log('product_systemcomposition 1');
@@ -250,7 +308,7 @@ export class StepFourComponent implements OnInit {
     return this.stepFourForm;
   }
 
-  updateInvertersList(list: Inverter[]){
+  updateInvertersList(list: Inverter[]) {
     this.inverterList = list;
   }
 

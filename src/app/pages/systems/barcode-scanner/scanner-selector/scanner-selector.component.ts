@@ -31,7 +31,9 @@ export class ScannerSelectorComponent implements ControlValueAccessor {
   readonly dialog = inject(MatDialog);
 
   openDialog() {
-    const dialogRef = this.dialog.open(ModalComponent);
+    const dialogRef = this.dialog.open(ModalComponent, {
+      width: '90%',
+    });
     
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.barcode) {

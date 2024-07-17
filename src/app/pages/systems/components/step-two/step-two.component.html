@@ -4,28 +4,33 @@
       <div class="row mt-2">
         <div class="col-12 col-lg-6 mb-3">
           <label for="ccn3" style="font-weight: bold;">Installation Country<sup class="small-asterisk">*</sup></label>
-          <select class="form-select" aria-label="select example" formControlName="ccn3">
+          <select class="form-select" aria-label="select example" formControlName="ccn3"
+          [ngClass]="{'is-invalid': errors.ccn3}">
             <option [ngValue]="null" disabled selected>Select a Country</option>
             <option *ngFor="let country of countriesData" [ngValue]="country.ccn3">
               <img src="{{country.flags?.png}}" width="20px" height="15px"> {{ country.name.common }}
             </option>
           </select>
+          <div class="text-danger mt-1" *ngIf="errors.ccn3" style="font-size: small;">Insert the Country</div>
         </div>
         <div class="col-12 col-lg-6 mb-3">
           <label for="location_address" style="font-weight: bold;">Address<sup class="small-asterisk">*</sup></label>
           <input type="text" name="location_address" id="location_address" formControlName="location_address"
-            class="form-control" placeholder="Address" required>
+            class="form-control" placeholder="Address" [ngClass]="{'is-invalid': errors.location_address}">
+            <div class="text-danger mt-1" *ngIf="errors.location_address" style="font-size: small;">Insert the address</div>
         </div>
         <div class="col-12 col-lg-6 mb-3">
           <label for="location_city" style="font-weight: bold;">City<sup class="small-asterisk">*</sup></label>
           <input type="text" name="location_city" id="location_city" formControlName="location_city"
-            class="form-control" placeholder="City" required>
+            class="form-control" placeholder="City" [ngClass]="{'is-invalid': errors.location_city}">
+            <div class="text-danger mt-1" *ngIf="errors.location_city" style="font-size: small;">Insert the city</div>
         </div>
         <div class="col-12 col-lg-6 mb-3">
           <label for="location_postalcode" style="font-weight: bold;">Postal Code<sup
               class="small-asterisk">*</sup></label>
           <input type="text" name="location_postalcode" id="location_postalcode" formControlName="location_postalcode"
-            class="form-control" placeholder="" required>
+            class="form-control" placeholder="" [ngClass]="{'is-invalid': errors.location_postalcode}">
+            <div class="text-danger mt-1" *ngIf="errors.location_postalcode" style="font-size: small;">Insert the postal code</div>
         </div>
       </div>
     </div>
@@ -68,10 +73,10 @@
       <button class="btn btn-outline-dark me-2" matStepperPrevious>
         Previous
       </button>
-      <button class="btn btn-outline-dark ms-2 me-2" id="next" (click)="saveStep('save')" [disabled]="stepTwoForm.invalid">
+      <button class="btn btn-outline-dark ms-2 me-2" id="next" (click)="saveStep('save')">
         Save
       </button>
-      <button class="btn btn-outline-dark ml-2" [disabled]="stepTwoForm.invalid" (click)="saveStep('next')"
+      <button class="btn btn-outline-dark ml-2" [disabled]="stepTwoForm.invalid || isError" (click)="saveStep('next')"
         style="width: 80px;">
         Next
       </button>

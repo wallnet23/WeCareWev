@@ -19,9 +19,8 @@
       </div>
       <div class="col-12 mt-3 p-0">
         <label for="inverter_number" style="font-weight: bold; font-size: medium;">Number of Inverter
-          <mat-icon
-          matTooltip="Enter the quantity of inverters that make up the entire system"
-          style="font-size: medium;">info</mat-icon>
+          <mat-icon matTooltip="Enter the quantity of inverters that make up the entire system"
+            style="font-size: medium;">info</mat-icon>
         </label>
         <select class="form-select" formControlName="inverter_number" id="inverter_number">
           <option [ngValue]="null">Select a value</option>
@@ -51,7 +50,7 @@
       <div class="col-12 p-0 mt-3" *ngIf="stepInverterForm.get('inverter_number')?.value != null">
         <div class="container">
           <div class="row mt-1">
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xxl-2 p-2"
+            <div class="col-12 col-md-6 col-lg-4 col-xxl-3 p-2"
               *ngFor="let formGroup of inverterFieldAsFormArray.controls; let i = index" formArrayName="inverters_list">
               <mat-card>
                 <div [formGroupName]="i">
@@ -59,12 +58,29 @@
                     <mat-card-title style="font-weight: bold; font-size: medium;">
                       Inverter {{i+1}}</mat-card-title>
                   </mat-card-header>
-                  <mat-card-content>
-                    <label class="mt-2" style="font-weight: bold; font-size: medium;" >Serial
-                      Number</label>
-                    <input class="form-control" type="text" formControlName="serialnumber" (change)="releaseUpdateListInverters()">
-                    <label class="mt-2" style="font-weight: bold; font-size: medium;">Model</label>
-                    <input class="form-control" type="text" formControlName="model">
+                  <mat-card-content class="pb-2 pl-0 pr-0">
+                    <div class="container-fluid">
+                      <div class="row">
+                        <div class="col-12">
+                          <label class="mt-2" style="font-weight: bold; font-size: medium;">Serial
+                            Number</label>
+                        </div>
+                        <div class="col-9 pr-0">
+                          <input class="form-control" type="text" formControlName="serialnumber"
+                            (change)="releaseUpdateListInverters()">
+                        </div>
+                        <div class="col-3">
+                          <app-scanner-selector class="cameraIcon"
+                            (barcodeScanned)="onBarcodeScanned($event, i)"></app-scanner-selector>
+                        </div>
+
+                        <div class="col-12">
+                          <label class="mt-2" style="font-weight: bold; font-size: medium;">Model</label>
+                          <input class="form-control" type="text" formControlName="model">
+                        </div>
+                        
+                      </div>
+                    </div>
                   </mat-card-content>
                 </div>
               </mat-card>

@@ -9,6 +9,9 @@ import { Image } from '../components/interfaces/image';
 import { StepOne } from '../components/interfaces/step-one';
 import { StepTwo } from '../components/interfaces/step-two';
 import { StepThree } from '../components/interfaces/step-three';
+import { StepFour } from '../components/interfaces/step-four';
+import { InverterData } from '../interfaces/inverterData';
+import { ClusterData } from '../interfaces/clusterData';
 
 declare var $: any;
 
@@ -33,7 +36,7 @@ export class SystemReadonlyComponent {
   customerCountry: string = '';
   installerCountry: string = '';
 
-  constructor(private route: ActivatedRoute, private connectServerService: ConnectServerService, 
+  constructor(private route: ActivatedRoute, private connectServerService: ConnectServerService,
     private elementRef: ElementRef, private location: Location) {
     this.route.params.subscribe(params => {
       this.idsystem = params['id'];
@@ -86,7 +89,32 @@ export class SystemReadonlyComponent {
   }
 
   getStepFour() {
+    this.connectServerService.getRequest<ApiResponse<{
+      stepFour: StepFour,
+      stepInverter: InverterData,
+      stepCluster: ClusterData
+    }>>(Connect.urlServerLaraApi, 'system/infoStepFour',
+      {
+        id: this.idsystem
+      })
+      .subscribe((val: ApiResponse<{
+        stepFour: StepFour,
+        stepInverter: InverterData,
+        stepCluster: ClusterData
+      }>) => {
+        if (val.data && val.data.stepFour) {
+          const data_step = val.data.stepFour;
+          this.systemInfo.stepFour = val.data.stepFour;
+        }
+        if (val.data && val.data.stepInverter) {
+          this.systemInfo.inverter = val.data.stepInverter;
+        }
+        if (val.data && val.data.stepCluster) {
+          this.systemInfo.cluster = val.data.stepCluster;
+        }
+        console.log('val 4 info:', this.systemInfo);
 
+      })
   }
 
   goBack() {
@@ -176,6 +204,24 @@ export class SystemReadonlyComponent {
         product_systemweco: null,
         product_installdate: null,
         product_brand: null,
+      },
+      inverter: {
+        inverter_number: null,
+        inverter_hybrid: null,
+        inverter_communication: null,
+        inverter_power: null,
+        inverter_online: null,
+        inverters_list: [],
+      },
+      cluster: {
+        cluster_singlebattery: null,
+        cluster_parallel: null,
+        cluster_number: null,
+        cluster_numberdevices: null,
+        refidwecaresystemvolt: null,
+        system_model: null,
+        refidwecaresystemtype: null,
+        clusters_list: [],
       }
     };
   }

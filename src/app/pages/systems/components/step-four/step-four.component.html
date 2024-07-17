@@ -3,34 +3,37 @@
     <div class="form-group">
       <div class="row mt-2">
         <div class="col-12 col-md-6 mb-3">
-          <label for="product_installdate" style="font-weight: bold;">*Installation Date</label>
+          <label for="product_installdate" style="font-weight: bold;">Installation Date<sup>*</sup></label>
           <input type="date" name="product_installdate" id="product_installdate" formControlName="product_installdate"
-            class="form-control" placeholder="gg/mm/aaaa">
+            class="form-control" placeholder="gg/mm/aaaa" [ngClass]="{'is-invalid': errors.product_installdate}">
+            <div class="text-danger mt-1" *ngIf="errors.product_installdate" style="font-size: small;">Insert the installation date</div>
         </div>
         <div class="col-12 col-md-6 mb-3">
-          <label for="product_systemcomposition" style="font-weight: bold;">*System Composition</label>
+          <label for="product_systemcomposition" style="font-weight: bold;">System Composition<sup>*</sup></label>
           <select class="form-select" aria-label="select example" id="product_systemcomposition"
-            formControlName="product_systemcomposition">
+            formControlName="product_systemcomposition" [ngClass]="{'is-invalid': errors.product_systemcomposition}">
             <option *ngFor="let comp of systemComposition" [ngValue]="comp.id">{{comp.name}}</option>
           </select>
+          <div class="text-danger mt-1" *ngIf="errors.product_systemcomposition" style="font-size: small;">Insert the system composition</div>
         </div>
         <div class="col-12 col-md-6 mb-3">
-          <label for="product_systemweco" style="font-weight: bold;">*Weco Products in the System</label>
+          <label for="product_systemweco" style="font-weight: bold;">Weco Products in the System<sup>*</sup></label>
           <select class="form-select" aria-label="select example" id="product_systemweco"
-            formControlName="product_systemweco">
+            formControlName="product_systemweco" [ngClass]="{'is-invalid': errors.product_systemweco}">
             <option *ngFor="let weco of wecoComposition" [ngValue]="weco.id">{{weco.name}}</option>
           </select>
+          <div class="text-danger mt-1" *ngIf="errors.product_installdate" style="font-size: small;">Which are the Weco components inside the system?</div>
         </div>
 
         <div class="col-12 col-md-6 mb-3" *ngIf="stepFourForm.get('product_systemcomposition')?.value == 2 &&
           stepFourForm.get('product_systemweco')?.value != null && stepFourForm.get('product_systemweco')?.value != 3">
-          <label *ngIf="stepFourForm.get('product_systemweco')?.value == 1" for="brand" style="font-weight: bold;">What
-            brand
-            of batteries are you working with?</label>
+          <label *ngIf="stepFourForm.get('product_systemweco')?.value == 1" for="brand" style="font-weight: bold;">
+            What brand of batteries are you working with?</label>
           <label *ngIf="stepFourForm.get('product_systemweco')?.value == 2" for="product_brand"
-            style="font-weight: bold;">*What brand of inverter are you working with?</label>
+            style="font-weight: bold;">What brand of inverter are you working with?</label>
           <input type="text" name="product_brand" id="product_brand" formControlName="product_brand"
-            class="form-control" placeholder="...">
+            class="form-control" placeholder="..." [ngClass]="{'is-invalid': errors.product_brand}">
+            <div class="text-danger mt-1" *ngIf="errors.product_brand" style="font-size: small;">Which is the other brand?</div>
         </div>
       </div>
 
