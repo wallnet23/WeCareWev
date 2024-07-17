@@ -10,6 +10,9 @@ import { UserState } from '../../../ngrx/user/user.reducer';
 import { User } from '../interfaces/user';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatIcon } from '@angular/material/icon';
+import { ApiResponse } from '../../../interfaces/api-response';
+import { Connect } from '../../../classes/connect';
+import { PopupDialogService } from '../../../services/popup-dialog.service';
 
 interface Country {
   name: {
@@ -40,34 +43,34 @@ export class SettingsComponent {
   toggled1: boolean = true;
   toggled2: boolean = true;
   toggled3: boolean = true;
-  
+
   isItalian: boolean = false;
   countriesData: Country[] = [];
-  
+
   generalForm = new FormGroup({
     name: new FormControl<string | null>(null, Validators.required),
     surname: new FormControl<string | null>(null, Validators.required),
-    email: new FormControl<string |null>(null, Validators.email),
-    licensenumber: new FormControl<string |null>(null, Validators.required),
+    email: new FormControl<string | null>(null, Validators.email),
+    licensenumber: new FormControl<string | null>(null, Validators.required),
     fiscalcode: new FormControl<string | null>(null, Validators.required),
     ccn3: new FormControl<string | null>(null, Validators.required),
   })
 
   companyForm = new FormGroup({
     company_name: new FormControl<string | null>(null, Validators.required),
-    vat: new FormControl<string |null>(null, Validators.required),
-    phone: new FormControl<string |null>(null),
+    vat: new FormControl<string | null>(null, Validators.required),
+    phone: new FormControl<string | null>(null),
     website: new FormControl<string | null>(null),
   })
 
   modifyPasswordForm = new FormGroup({
+    current_password: new FormControl(null, Validators.required),
     password: new FormControl(null, Validators.required),
-    newPassword: new FormControl(null, Validators.required),
-    repeatNewPassword: new FormControl(null, Validators.required),
+    password_confirmation: new FormControl(null, Validators.required),
   })
-  
+
   constructor(private http: HttpClient, private connectServerService: ConnectServerService,
-    private store: Store<{ user: UserState }>) {}
+    private store: Store<{ user: UserState }>, private popupDialogService: PopupDialogService) { }
 
   ngOnInit() {
     this.connectServerService.getRequestCountryData().subscribe((obj) => {
@@ -76,31 +79,31 @@ export class SettingsComponent {
 
     this.store.select(state => state.user.userInfo).subscribe(
       (val) => {
-      this.generalForm.patchValue(val!);
-      this.companyForm.patchValue(val!);
+        this.generalForm.patchValue(val!);
+        this.companyForm.patchValue(val!);
       }
     )
-  } 
+  }
 
   fetchCountryData(): Observable<Country[]> {
     return this.http.get<Country[]>('https://restcountries.com/v3.1/all?fields=name,flags,cca2,cca3')
-      .pipe(map((val: Country[]) => val.sort((a,b) => a.name.common.localeCompare(b.name.common))));
+      .pipe(map((val: Country[]) => val.sort((a, b) => a.name.common.localeCompare(b.name.common))));
   }
 
   setLicence() {
     const selectedCountry = this.generalForm.get('ccn3')?.value!;
     if (selectedCountry === '380') {
       this.isItalian = true;
-      this.generalForm.patchValue({licensenumber: '', fiscalcode: null});
+      this.generalForm.patchValue({ licensenumber: '', fiscalcode: null });
     } else {
       this.isItalian = false;
-      this.generalForm.patchValue({fiscalcode: null, licensenumber: ''});
+      this.generalForm.patchValue({ fiscalcode: null, licensenumber: '' });
     }
   }
 
   seePassword(id: string) {
-    if(id === 'password1') {
-      if(this.type1 === 'password') {
+    if (id === 'password1') {
+      if (this.type1 === 'password') {
         this.type1 = 'text';
         this.toggled1 = false;
       }
@@ -110,7 +113,7 @@ export class SettingsComponent {
       }
     }
     else if (id === 'password2') {
-      if(this.type2 === 'password') {
+      if (this.type2 === 'password') {
         this.type2 = 'text';
         this.toggled2 = false;
       }
@@ -120,7 +123,7 @@ export class SettingsComponent {
       }
     }
     else {
-      if(this.type3 === 'password') {
+      if (this.type3 === 'password') {
         this.type3 = 'text';
         this.toggled3 = false;
       }
@@ -133,10 +136,9 @@ export class SettingsComponent {
 
   saveStep() {
 
-    let form= JSON.parse(JSON.stringify(this.generalForm.getRawValue()));
+    let form = JSON.parse(JSON.stringify(this.generalForm.getRawValue()));
     let country$: Observable<Country>;
     let country: Country;
-
     if (form.ccn3) {
       country$ = this.connectServerService.getSpecificCountryData(this.generalForm.get('ccn3')?.value!);
       country$.subscribe((val: any) => {
@@ -159,8 +161,16 @@ export class SettingsComponent {
     console.log("company form:", this.companyForm.getRawValue())
   }
 
-  sendForm() {
-    console.log("general form:", this.generalForm.getRawValue());
-    console.log("company form:", this.companyForm.getRawValue())
+  saveNewPassword() {
+    if (this.modifyPasswordForm.valid) {
+      this.connectServerService.postRequest(Connect.urlServerLaraApi, 'user/resetPassword', {
+        current_password: this.modifyPasswordForm.get('current_password')?.value,
+        password: this.modifyPasswordForm.get('password')?.value,
+        password_confirmation: this.modifyPasswordForm.get('password_confirmation')?.value,
+      }).subscribe((esito: ApiResponse<null>) => {
+        this.popupDialogService.alertElement(esito);
+      })
+    }
+
   }
 }
