@@ -60,7 +60,7 @@ export class StepThreeComponent implements OnInit {
     installer_address: new FormControl<string>('', Validators.required),
     ccn3: new FormControl<string | null>(null, Validators.required),
     vendor_contact: new FormControl<string>(''),
-    installer_email: new FormControl<string>('', Validators.email),
+    installer_email: new FormControl<string>('', [Validators.email, Validators.required]),
     installer_dateofpurchase: new FormControl<string>('', Validators.required)
   });
 
