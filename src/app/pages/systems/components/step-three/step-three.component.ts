@@ -55,6 +55,15 @@ export class StepThreeComponent implements OnInit {
   countriesData: Country[] = [];
   urlServerLara = Connect.urlServerLara;
 
+  isError = false;
+  errors = {
+    installer_companyname: false,
+    installer_address: false,
+    installer_email: false,
+    installer_dateofpurchase: false,
+    ccn3: false
+  }
+
   stepThreeForm = this.formBuilder.group({
     installer_companyname: new FormControl<string>('', Validators.required),
     installer_address: new FormControl<string>('', Validators.required),
@@ -88,64 +97,66 @@ export class StepThreeComponent implements OnInit {
   }
 
   saveStep(action: string) {
-    let stepThree = JSON.parse(JSON.stringify(this.stepThreeForm.getRawValue()));
-    let country$: Observable<Country>;
-    let country: Country;
 
-    if (stepThree.ccn3) {
-      country$ = this.connectServerService.getSpecificCountryData(this.stepThreeForm.get('ccn3')?.value!);
-      country$.subscribe((val: any) => {
-        if (val && val.length > 0) {
-          country = { name: { common: val[0].name.common }, cca2: val[0].cca2, ccn3: val[0].ccn3 };
-          console.log(country);
-          delete stepThree.ccn3;
-          stepThree.supplier_country = country;
+    this.errorLogic();
+    if (!this.isError) {
+      let stepThree = JSON.parse(JSON.stringify(this.stepThreeForm.getRawValue()));
+      let country$: Observable<Country>;
+      let country: Country;
 
-          console.log("STEP3: ", stepThree)
+      if (stepThree.ccn3) {
+        country$ = this.connectServerService.getSpecificCountryData(this.stepThreeForm.get('ccn3')?.value!);
+        country$.subscribe((val: any) => {
+          if (val && val.length > 0) {
+            country = { name: { common: val[0].name.common }, cca2: val[0].cca2, ccn3: val[0].ccn3 };
+            console.log(country);
+            delete stepThree.ccn3;
+            stepThree.supplier_country = country;
 
-          this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepThree',
-            {
-              idsystem: this.idsystem,
-              obj_step: stepThree
-            })
-            .subscribe((val: ApiResponse<null>) => {
-              this.popupDialogService.alertElement(val);
-              this.infoStep();
-              this.formEmit.emit(this.formBuilder.group({}));
-              if (action == 'next') {
-                setTimeout(() => {
-                  console.log('Emitting nextStep');
-                  this.nextStep.emit();
-                }, 0);
-              }
-            })
-        }
-      })
-    }
-    else {
-      country = { name: { common: '' }, cca2: '', ccn3: '' };
-      delete stepThree.ccn3;
-      stepThree.location_country = country;
+            console.log("STEP3: ", stepThree)
 
-      this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepThree',
-        {
-          idsystem: this.idsystem,
-          obj_step: stepThree,
-        })
-        .subscribe((val: ApiResponse<null>) => {
-          this.popupDialogService.alertElement(val);
-          this.infoStep();
-          this.formEmit.emit(this.formBuilder.group({}));
-          if (action == 'next') {
-            setTimeout(() => {
-              console.log('Emitting nextStep');
-              this.nextStep.emit();
-            }, 0);
+            this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepThree',
+              {
+                idsystem: this.idsystem,
+                obj_step: stepThree
+              })
+              .subscribe((val: ApiResponse<null>) => {
+                this.popupDialogService.alertElement(val);
+                this.infoStep();
+                this.formEmit.emit(this.formBuilder.group({}));
+                if (action == 'next') {
+                  setTimeout(() => {
+                    console.log('Emitting nextStep');
+                    this.nextStep.emit();
+                  }, 0);
+                }
+              })
           }
         })
+      }
+      else {
+        country = { name: { common: '' }, cca2: '', ccn3: '' };
+        delete stepThree.ccn3;
+        stepThree.location_country = country;
+
+        this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepThree',
+          {
+            idsystem: this.idsystem,
+            obj_step: stepThree,
+          })
+          .subscribe((val: ApiResponse<null>) => {
+            this.popupDialogService.alertElement(val);
+            this.infoStep();
+            this.formEmit.emit(this.formBuilder.group({}));
+            if (action == 'next') {
+              setTimeout(() => {
+                console.log('Emitting nextStep');
+                this.nextStep.emit();
+              }, 0);
+            }
+          })
+      }
     }
-
-
   }
 
   /**
@@ -224,6 +235,56 @@ export class StepThreeComponent implements OnInit {
 
   getForm() {
     return this.stepThreeForm;
+  }
+
+  private errorLogic() {
+    console.log("date: ", this.stepThreeForm.get('installer_dateofpurchase')?.value)
+    if (this.stepThreeForm.get('ccn3')?.value == null || this.stepThreeForm.get('ccn3')?.value!.replaceAll(' ', '') == '') {
+      this.errors.ccn3 = true;
+    }
+    else {
+      this.errors.ccn3 = false;
+    }
+    if (this.stepThreeForm.get('installer_address')?.value == null || this.stepThreeForm.get('installer_address')?.value!.replaceAll(' ', '') == '') {
+      this.errors.installer_address = true;
+    }
+    else {
+      this.errors.installer_address = false;
+    }
+    if (this.stepThreeForm.get('installer_companyname')?.value == null || this.stepThreeForm.get('installer_companyname')?.value!.replaceAll(' ', '') == '') {
+      this.errors.installer_companyname = true;
+    }
+    else {
+      this.errors.installer_companyname = false;
+    }
+    if (this.stepThreeForm.get('installer_dateofpurchase')?.value == null || this.stepThreeForm.get('installer_dateofpurchase')?.value === '') {
+      this.errors.installer_dateofpurchase = true;
+    }
+    else {
+      this.errors.installer_dateofpurchase = false;
+    }
+    if (this.stepThreeForm.get('installer_email')?.value == null || this.stepThreeForm.get('installer_email')?.value!.replaceAll(' ', '') == '' ||
+      this.stepThreeForm.get('installer_email')?.value!.indexOf('@') === -1) {
+      this.errors.installer_email = true;
+    }
+    else {
+      this.errors.installer_email = false;
+    }
+
+    this.checkIsError();
+  }
+
+  private checkIsError() {
+    if (!this.errors.installer_address &&
+      !this.errors.ccn3 &&
+      !this.errors.installer_companyname &&
+      !this.errors.installer_dateofpurchase &&
+      !this.errors.installer_email) {
+      this.isError = false;
+    }
+    else {
+      this.isError = true;
+    }
   }
 
 }

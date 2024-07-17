@@ -5,23 +5,26 @@
                 <div class="col-12 col-lg-6 mb-3">
                     <label for="installer_companyname" style="font-weight: bold;">Company Name<sup class="small-asterisk">*</sup></label>
                     <input type="text" name="installer_companyname" id="installer_companyname" formControlName="installer_companyname"
-                        class="form-control" placeholder="Installer company name" required>
+                        class="form-control" placeholder="Installer company name" [ngClass]="{'is-invalid': errors.installer_companyname}">
+                        <div class="text-danger mt-1" *ngIf="errors.installer_companyname" style="font-size: small;">Insert the company name of the installer</div>
                 </div>
 
                 <div class="col-12 col-lg-6 mb-3">
                     <label for="installer_address" style="font-weight: bold;">Company Address<sup class="small-asterisk">*</sup></label>
                     <input type="text" name="address" id="installer_address" formControlName="installer_address"
-                        class="form-control" placeholder="Installer company address" required>
+                        class="form-control" placeholder="Installer company address" [ngClass]="{'is-invalid': errors.installer_address}">
+                        <div class="text-danger mt-1" *ngIf="errors.installer_address" style="font-size: small;">Insert the installer address</div>
                 </div>
 
                 <div class="col-12 col-lg-6 mb-3">
                     <label for="ccn3" style="font-weight: bold;">Company Country<sup class="small-asterisk">*</sup></label>
-                    <select class="form-select" aria-label="select example" formControlName="ccn3">
+                    <select class="form-select" aria-label="select example" formControlName="ccn3" [ngClass]="{'is-invalid': errors.ccn3}">
                         <option [ngValue]="null" disabled>Select a Country</option>
                         <option *ngFor="let country of countriesData" [ngValue]="country.ccn3">
                             <img src="{{country.flags?.png}}" width="20px" height="15px"> {{ country.name.common }}
                         </option>
                     </select>
+                    <div class="text-danger mt-1" *ngIf="errors.ccn3" style="font-size: small;">Insert the installer Country</div>
                 </div>
 
                 <div class="col-12 col-lg-6 mb-3">
@@ -33,13 +36,15 @@
                 <div class="col-12 col-lg-6 mb-3">
                     <label for="installer_email" style="font-weight: bold;">Email<sup class="small-asterisk">*</sup></label>
                     <input type="installer_email" name="installer_email" id="installer_email"
-                        formControlName="installer_email" class="form-control" placeholder="Email">
+                        formControlName="installer_email" class="form-control" placeholder="Email" [ngClass]="{'is-invalid': errors.installer_email}">
+                        <div class="text-danger mt-1" *ngIf="errors.installer_email" style="font-size: small;">Insert the installer email with correct format</div>
                 </div>
 
                 <div class="col-12 col-lg-6 mb-3">
                     <label for="installer_dateofpurchase" style="font-weight: bold;">Date Of Purchase<sup class="small-asterisk">*</sup></label>
                     <input type="date" name="installer_dateofpurchase" id="installer_dateofpurchase"
-                        formControlName="installer_dateofpurchase" class="form-control" placeholder="gg/mm/aaaa">
+                        formControlName="installer_dateofpurchase" class="form-control" placeholder="gg/mm/aaaa" [ngClass]="{'is-invalid': errors.installer_dateofpurchase}">
+                        <div class="text-danger mt-1" *ngIf="errors.installer_dateofpurchase" style="font-size: small;">Insert the date of purchase</div>
                 </div>
             </div>
         </div>
@@ -71,10 +76,10 @@
             <button class="btn btn-outline-dark mr-2" matStepperPrevious>
                 Previous
             </button>
-            <button class="btn btn-outline-dark ms-2 me-2" id="next" (click)="saveStep('save')" [disabled]="stepThreeForm.invalid">
+            <button class="btn btn-outline-dark ms-2 me-2" id="next" (click)="saveStep('save')">
                 Save
             </button>
-            <button class="btn btn-outline-dark ml-2" [disabled]="stepThreeForm.invalid"
+            <button class="btn btn-outline-dark ml-2" [disabled]="stepThreeForm.invalid || isError"
                 (click)="saveStep('next')">
                 Next
             </button>

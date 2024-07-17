@@ -53,6 +53,17 @@ export class StepOneComponent implements OnInit {
 
   @Input() idsystem = 0;
   countriesData: Country[] = [];
+  isError = false;
+  errors = {
+    system_name: false,
+    system_owner: false,
+    customer_name: false,
+    customer_surname: false,
+    ccn3: false,
+    customer_phone: false,
+    customer_licensenumber: false,
+    customer_fiscalcode: false,
+  }
 
   stepOneForm = this.formBuilder.group({
     system_name: new FormControl<string | null>(null, Validators.required),
@@ -125,26 +136,108 @@ export class StepOneComponent implements OnInit {
 
   saveStep(action: string) {
 
-    let stepOne = JSON.parse(JSON.stringify(this.stepOneForm.getRawValue()));
-    let country$: Observable<Country>;
-    let country: Country;
+    this.errorLogic();
 
-    if (stepOne.ccn3) {
-      country$ = this.connectServerService.getSpecificCountryData(this.stepOneForm.get('ccn3')?.value!);
-      country$.subscribe((val: any) => {
-        if (val && val.length > 0) {
-          country = { name: { common: val[0].name.common }, cca2: val[0].cca2, ccn3: val[0].ccn3 };
-          delete stepOne.ccn3;
-          stepOne.customer_country = country;
-          this.saveData(stepOne, action);
-        }
-      })
+    if (!this.isError) {
+      let stepOne = JSON.parse(JSON.stringify(this.stepOneForm.getRawValue()));
+      let country$: Observable<Country>;
+      let country: Country;
+
+      if (stepOne.ccn3) {
+        country$ = this.connectServerService.getSpecificCountryData(this.stepOneForm.get('ccn3')?.value!);
+        country$.subscribe((val: any) => {
+          if (val && val.length > 0) {
+            country = { name: { common: val[0].name.common }, cca2: val[0].cca2, ccn3: val[0].ccn3 };
+            delete stepOne.ccn3;
+            stepOne.customer_country = country;
+            this.saveData(stepOne, action);
+          }
+        })
+      }
+      else {
+        country = { name: { common: '' }, cca2: '', ccn3: '' };
+        delete stepOne.ccn3;
+        stepOne.customer_country = country;
+        this.saveData(stepOne, action);
+      }
+    }
+  }
+
+  private errorLogic() {
+    if (this.stepOneForm.get('system_name')?.value == null || this.stepOneForm.get('system_name')?.value!.replaceAll(' ', '') == '') {
+      this.errors.system_name = true;
     }
     else {
-      country = { name: { common: '' }, cca2: '', ccn3: '' };
-      delete stepOne.ccn3;
-      stepOne.customer_country = country;
-      this.saveData(stepOne, action);
+      this.errors.system_name = false;
+    }
+
+    if (this.stepOneForm.get('system_owner')?.value == 0) {
+      if (this.stepOneForm.get('customer_name')?.value == null || this.stepOneForm.get('customer_name')?.value!.replaceAll(' ', '') == '') {
+        this.errors.customer_name = true;
+      }
+      else {
+        this.errors.customer_name = false;
+      }
+      if (this.stepOneForm.get('customer_surname')?.value == null || this.stepOneForm.get('customer_surname')?.value!.replaceAll(' ', '') == '') {
+        this.errors.customer_surname = true;
+      }
+      else {
+        this.errors.customer_surname = false;
+      }
+      if (this.stepOneForm.get('ccn3')?.value == null) {
+        this.errors.ccn3 = true;
+      }
+      else {
+        this.errors.ccn3 = false;
+      }
+      if (this.stepOneForm.get('customer_phone')?.value == null || this.stepOneForm.get('customer_phone')?.value!.replaceAll(' ', '') == '') {
+        this.errors.customer_phone = true;
+      }
+      else {
+        this.errors.customer_phone = false;
+      }
+      if (this.stepOneForm.get('ccn3')?.value == '380') {
+        this.errors.customer_licensenumber = false;
+        if (this.stepOneForm.get('customer_fiscalcode')?.value == null || this.stepOneForm.get('customer_fiscalcode')?.value!.replaceAll(' ', '') == '') {
+          this.errors.customer_fiscalcode = true;
+        }
+        else {
+          this.errors.customer_fiscalcode = false;
+        }
+      }
+      else {
+        this.errors.customer_fiscalcode = false;
+        if (this.stepOneForm.get('customer_licensenumber')?.value == null || this.stepOneForm.get('customer_licensenumber')?.value!.replaceAll(' ', '') == '') {
+          this.errors.customer_licensenumber = true;
+        }
+        else {
+          this.errors.customer_licensenumber = false;
+        }
+      }
+    }
+    else {
+      this.errors.customer_name = false;
+      this.errors.customer_surname = false;
+      this.errors.ccn3 = false;
+      this.errors.customer_phone = false;
+      this.errors.customer_fiscalcode = false;
+      this.errors.customer_licensenumber = false;
+    }
+
+    this.checkIsError();
+  }
+
+  private checkIsError() {
+    if (!this.errors.customer_name &&
+      !this.errors.customer_surname &&
+      !this.errors.ccn3 &&
+      !this.errors.customer_phone &&
+      !this.errors.customer_fiscalcode &&
+      !this.errors.customer_licensenumber) {
+      this.isError = false;
+    }
+    else {
+      this.isError = true;
     }
   }
 

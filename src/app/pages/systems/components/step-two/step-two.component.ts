@@ -55,6 +55,14 @@ export class StepTwoComponent {
   countriesData: Country[] = [];
   urlServerLara = Connect.urlServerLara;
 
+  isError: boolean = false;
+  errors = {
+    ccn3: false,
+    location_address: false,
+    location_city: false,
+    location_postalcode: false
+  }
+
   stepTwoForm = this.formBuilder.group({
     ccn3: new FormControl<string | null>(null, Validators.required),
     location_address: new FormControl<string>('', Validators.required),
@@ -86,59 +94,64 @@ export class StepTwoComponent {
   }
 
   saveStep(action: string) {
-    let stepTwo = JSON.parse(JSON.stringify(this.stepTwoForm.getRawValue()));
-    let country$: Observable<Country>;
-    let country: Country;
-    //console.log("CCN3: ", this.stepTwoForm.get('ccn3')?.value!)
-    if (stepTwo.ccn3) {
-      country$ = this.connectServerService.getSpecificCountryData(this.stepTwoForm.get('ccn3')?.value!);
-      country$.subscribe((val: any) => {
-        if (val && val.length > 0) {
-          country = { name: { common: val[0].name.common }, cca2: val[0].cca2, ccn3: val[0].ccn3 };
-          //console.log(country);
-          delete stepTwo.ccn3;
-          stepTwo.location_country = country;
 
-          this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepTwo',
-            {
-              idsystem: this.idsystem,
-              obj_step: stepTwo,
-            })
-            .subscribe((val: ApiResponse<null>) => {
-              this.popupDialogService.alertElement(val);
-              this.infoStep();
-              this.formEmit.emit(this.formBuilder.group({}));
-              if (action == 'next') {
-                setTimeout(() => {
-                  console.log('Emitting nextStep');
-                  this.nextStep.emit();
-                }, 0);
-              }
-            })
-        }
-      })
-    }
-    else {
-      country = { name: { common: '' }, cca2: '', ccn3: '' };
-      delete stepTwo.ccn3;
-      stepTwo.location_country = country;
+    this.errorLogic()
 
-      this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepTwo',
-        {
-          idsystem: this.idsystem,
-          obj_step: stepTwo,
-        })
-        .subscribe((val: ApiResponse<null>) => {
-          this.popupDialogService.alertElement(val);
-          this.infoStep();
-          this.formEmit.emit(this.formBuilder.group({}));
-          if (action == 'next') {
-            setTimeout(() => {
-              console.log('Emitting nextStep');
-              this.nextStep.emit();
-            }, 0);
+    if (!this.isError) {
+      let stepTwo = JSON.parse(JSON.stringify(this.stepTwoForm.getRawValue()));
+      let country$: Observable<Country>;
+      let country: Country;
+      //console.log("CCN3: ", this.stepTwoForm.get('ccn3')?.value!)
+      if (stepTwo.ccn3) {
+        country$ = this.connectServerService.getSpecificCountryData(this.stepTwoForm.get('ccn3')?.value!);
+        country$.subscribe((val: any) => {
+          if (val && val.length > 0) {
+            country = { name: { common: val[0].name.common }, cca2: val[0].cca2, ccn3: val[0].ccn3 };
+            //console.log(country);
+            delete stepTwo.ccn3;
+            stepTwo.location_country = country;
+
+            this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepTwo',
+              {
+                idsystem: this.idsystem,
+                obj_step: stepTwo,
+              })
+              .subscribe((val: ApiResponse<null>) => {
+                this.popupDialogService.alertElement(val);
+                this.infoStep();
+                this.formEmit.emit(this.formBuilder.group({}));
+                if (action == 'next') {
+                  setTimeout(() => {
+                    console.log('Emitting nextStep');
+                    this.nextStep.emit();
+                  }, 0);
+                }
+              })
           }
         })
+      }
+      else {
+        country = { name: { common: '' }, cca2: '', ccn3: '' };
+        delete stepTwo.ccn3;
+        stepTwo.location_country = country;
+
+        this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepTwo',
+          {
+            idsystem: this.idsystem,
+            obj_step: stepTwo,
+          })
+          .subscribe((val: ApiResponse<null>) => {
+            this.popupDialogService.alertElement(val);
+            this.infoStep();
+            this.formEmit.emit(this.formBuilder.group({}));
+            if (action == 'next') {
+              setTimeout(() => {
+                console.log('Emitting nextStep');
+                this.nextStep.emit();
+              }, 0);
+            }
+          })
+      }
     }
 
   }
@@ -161,6 +174,47 @@ export class StepTwoComponent {
     const fileInput = document.getElementById('fileUpload2') as HTMLInputElement;
     fileInput.value = '';
     this.selectedFilesStep2 = [];
+  }
+
+  private errorLogic() {
+    if (this.stepTwoForm.get('ccn3')?.value == null || this.stepTwoForm.get('ccn3')?.value!.replaceAll(' ', '') == '') {
+      this.errors.ccn3 = true;
+    }
+    else {
+      this.errors.ccn3 = false;
+    }
+    if (this.stepTwoForm.get('location_address')?.value == null || this.stepTwoForm.get('location_address')?.value!.replaceAll(' ', '') == '') {
+      this.errors.location_address = true;
+    }
+    else {
+      this.errors.location_address = false;
+    }
+    if (this.stepTwoForm.get('location_city')?.value == null || this.stepTwoForm.get('location_city')?.value!.replaceAll(' ', '') == '') {
+      this.errors.location_city = true;
+    }
+    else {
+      this.errors.location_city = false;
+    }
+    if (this.stepTwoForm.get('location_postalcode')?.value == null || this.stepTwoForm.get('location_postalcode')?.value!.replaceAll(' ', '') == '') {
+      this.errors.location_postalcode = true;
+    }
+    else {
+      this.errors.location_postalcode = false;
+    }
+
+    this.checkIsError();
+  }
+
+  private checkIsError() {
+    if (!this.errors.location_address &&
+      !this.errors.ccn3 &&
+      !this.errors.location_city &&
+      !this.errors.location_postalcode) {
+      this.isError = false;
+    }
+    else {
+      this.isError = true;
+    }
   }
 
   private uploadFilesServer() {

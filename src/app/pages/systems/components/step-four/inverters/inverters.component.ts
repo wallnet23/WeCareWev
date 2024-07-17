@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { Inverter, InverterData } from '../../../interfaces/inverterData';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { ScannerSelectorComponent } from "../../../barcode-scanner/scanner-selector/scanner-selector.component";
 
 @Component({
   selector: 'app-inverters',
@@ -20,8 +21,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatButtonModule,
     MatTooltipModule,
     MatIconModule,
-    MatCardModule
-  ],
+    MatCardModule,
+    ScannerSelectorComponent
+],
   templateUrl: './inverters.component.html',
   styleUrl: './inverters.component.scss'
 })
@@ -50,10 +52,15 @@ export class InvertersComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     // console.log('change: ',changes.idfather);
     if (changes['stepInverter'] && changes['stepInverter'].currentValue &&
-      changes['stepInverter'].currentValue != null
-    ) {
+      changes['stepInverter'].currentValue != null) {
       this.infoInverters(changes['stepInverter'].currentValue);
     }
+  }
+
+  onBarcodeScanned(barcode: string, i: number) {
+    this.inverterFieldAsFormArray.at(i).get('serialnumber').setValue(barcode);
+
+    console.log("FORM FIELD", this.inverterFieldAsFormArray.value[i].serialnumber)
   }
 
   private logicStep() {

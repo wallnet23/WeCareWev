@@ -25,34 +25,34 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-6 col-lg-4 mb-4">
+        <div class="col-6 col-md-4 col-lg-3 col-xl-2">
             <span class="subtitles me-5">Name: </span>
             <p class="content">{{systemInfo.stepOne!.customer_name}}</p>
         </div>
-        <div class="col-6 col-lg-4 mb-4">
+        <div class="col-6 col-md-4 col-lg-3 col-xl-2">
             <span class="subtitles me-5">Surname: </span>
             <p class="content">{{systemInfo.stepOne!.customer_surname}}</p>
         </div>
-        <div class="col-6 col-lg-4 mb-4">
+        <div class="col-6 col-md-4 col-lg-3 col-xl-2">
             <span class="subtitles me-5">Phone: </span>
             <p class="content">{{systemInfo.stepOne!.customer_phone}}</p>
         </div>
-        <div class="col-6 col-lg-4 mb-4">
+        <div class="col-6 col-md-4 col-lg-3 col-xl-2">
             <span class="subtitles me-5">Country: </span>
             <p class="content">{{customerCountry}}</p>
         </div>
         <div *ngIf="systemInfo?.stepOne?.ccn3 !== '380'; else italianBlock">
-            <div class="col-6 col-lg-4 mb-4">
+            <div class="col-6 col-md-4 col-lg-3 col-xl-2">
                 <span class="subtitles me-5">License Number: </span>
                 <p class="content">{{systemInfo.stepOne!.customer_licensenumber}}</p>
             </div>
         </div>
         <ng-template #italianBlock>
-            <div class="col-6 col-lg-4 mb-4">
+            <div class="col-6 col-md-4 col-lg-3 col-xl-2">
                 <span class="subtitles me-5">Fiscal Code: </span>
                 <p class="content">{{systemInfo.stepOne!.customer_fiscalcode}}</p>
             </div>
-            <div class="col-6 col-lg-4 mb-4">
+            <div class="col-6 col-md-4 col-lg-3 col-xl-2">
                 <span class="subtitles me-5">VAT: </span>
                 <p class="content">{{systemInfo.stepOne!.customer_vat}}</p>
             </div>
@@ -61,22 +61,68 @@
 
     <div class="row">
         <div class="col-12 mb-3 title">
+            Technician/Installer Info
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+            <span class="subtitles">Company Name: </span>
+            <p class="content">{{systemInfo.stepThree!.installer_companyname}}</p>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+            <span class="subtitles">Country: </span>
+            <p class="content">{{installerCountry}}</p>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+            <span class="subtitles">Address: </span>
+            <p class="content">{{systemInfo.stepThree!.installer_address}}</p>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+            <span class="subtitles">Date of Purchase: </span>
+            <p class="content">{{systemInfo.stepThree!.installer_dateofpurchase}}</p>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+            <span class="subtitles">Vendor Contact: </span>
+            <p class="content">{{systemInfo.stepThree!.vendor_contact}}</p>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+            <span class="subtitles">Email: </span>
+            <p class="content">{{systemInfo.stepThree!.installer_email}}</p>
+        </div>
+
+        <div *ngIf="imagesStep3.length > 0" class="col-12 mb-2 text-center">
+            <span class="subtitles">Attached Files</span>
+        </div>
+
+        <div class="container-fluid">
+            <div class="row justify-content-center align-items-center mt-4">
+                <ng-container *ngFor="let image3 of imagesStep3">
+                    <div class="col-6 col-md-2 mb-4 text-center" style="width: 100px; height: 100px;">
+                        <img [src]="urlServerLara + image3.src" [alt]="image3.title" class="img-fluid thumbnailImg">
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 mb-3 title">
             Installation Site
         </div>
         <div class="row">
-            <div class="col-6 mb-4">
+            <div class="col-6 col-lg-3">
                 <span class="subtitles">Country: </span>
                 <p class="content">{{installerCountry}}</p>
             </div>
-            <div class="col-6 mb-4">
+            <div class="col-6 col-lg-3">
                 <span class="subtitles">Address: </span>
                 <p class="content">{{systemInfo.stepTwo!.location_address}}</p>
             </div>
-            <div class="col-6 mb-4">
+            <div class="col-6 col-lg-3">
                 <span class="subtitles">City: </span>
                 <p class="content">{{systemInfo.stepTwo!.location_city}}</p>
             </div>
-            <div class="col-6 mb-4">
+            <div class="col-6 col-lg-3">
                 <span class="subtitles">Postal Code: </span>
                 <p class="content">{{systemInfo.stepTwo!.location_postalcode}}</p>
             </div>
@@ -100,65 +146,23 @@
 
     <div class="row">
         <div class="col-12 mb-3 title">
-            Technician/Installer Info
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-6 col-lg-4 mb-4">
-            <span class="subtitles">Company Name: </span>
-            <p class="content">{{systemInfo.stepThree!.installer_companyname}}</p>
-        </div>
-        <div class="col-6 col-lg-4 mb-4">
-            <span class="subtitles">Country: </span>
-            <p class="content">{{installerCountry}}</p>
-        </div>
-        <div class="col-6 col-lg-4 mb-4">
-            <span class="subtitles">Address: </span>
-            <p class="content">{{systemInfo.stepThree!.installer_address}}</p>
-        </div>
-        <div class="col-6 col-lg-4 mb-4">
-            <span class="subtitles">Vendor Contact: </span>
-            <p class="content">{{systemInfo.stepThree!.vendor_contact}}</p>
-        </div>
-        <div class="col-6 col-lg-4 mb-4">
-            <span class="subtitles">Email: </span>
-            <p class="content">{{systemInfo.stepThree!.installer_email}}</p>
-        </div>
-
-        <div *ngIf="imagesStep3.length > 0" class="col-12 mb-2 text-center">
-            <span class="subtitles">Attached Files</span>
-        </div>
-
-        <div class="container-fluid">
-            <div class="row justify-content-center align-items-center mt-4">
-                <ng-container *ngFor="let image3 of imagesStep3">
-                    <div class="col-6 col-md-2 mb-4 text-center" style="width: 100px; height: 100px;">
-                        <img [src]="urlServerLara + image3.src" [alt]="image3.title" class="img-fluid thumbnailImg">
-                    </div>
-                </ng-container>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-12 mb-3 title">
             Product Info
         </div>
     </div>
     <div class="row">
-        <div class="col-12 col-sm-6 mb-4">
+        <div class="col-6 col-md-4 col-lg-3">
             <span class="subtitles">Install Date: </span>
             <p class="content">{{systemInfo.stepFour.product_installdate}}</p>
         </div>
-        <div class="col-12 col-sm-6 mb-4">
+        <div class="col-6 col-md-4 col-lg-3">
             <span class="subtitles">System Composition: </span>
             <p class="content">{{systemInfo.stepFour.product_systemcomposition}}</p>
         </div>
-        <div class="col-12 col-sm-6 mb-4">
+        <div class="col-6 col-md-4 col-lg-3">
             <span class="subtitles">Weco Components: </span>
             <p class="content">{{systemInfo.stepFour.product_systemweco}}</p>
         </div>
-        <div class="col-12 col-sm-6 mb-4">
+        <div class="col-6 col-md-4 col-lg-3">
             <span class="subtitles">Other Brand: </span>
             <p class="content">{{systemInfo.stepFour.product_brand}}</p>
         </div>
@@ -170,28 +174,29 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-6 col-lg-4 mb-4">
+        <div class="col-6 col-md-4 col-lg-3">
             <span class="subtitles">Hybrid: </span>
             <p class="content">{{systemInfo.inverter.inverter_hybrid? 'yes' : 'no'}}</p>
         </div>
-        <div class="col-6 col-lg-4 mb-4">
+        <div class="col-6 col-md-4 col-lg-3">
             <span class="subtitles">Online: </span>
             <p class="content">{{systemInfo.inverter.inverter_online? 'yes' : 'no'}}</p>
         </div>
-        <div class="col-12 col-sm-6 col-lg-4 mb-4">
-            <span class="subtitles">Number of Inverters: </span>
+        <div class="col-6 col-md-4 col-lg-3">
+            <span class="subtitles">Inverters Number: </span>
             <p class="content">{{systemInfo.inverter.inverter_number}}</p>
         </div>
-        <div *ngIf="systemInfo.inverter.inverter_number! > 1" class="col-12 col-sm-6 col-lg-4 mb-4">
+        <div *ngIf="systemInfo.inverter.inverter_number! > 1" class="col-6 col-md-4 col-lg-3">
             <span class="subtitles">Parallel Power: </span>
             <p class="content">{{systemInfo.inverter.inverter_communication? 'yes' : 'no'}}</p>
         </div>
-        <div *ngIf="systemInfo.inverter.inverter_number! > 1" class="col-12 col-sm-6 col-lg-4 mb-4">
+        <div *ngIf="systemInfo.inverter.inverter_number! > 1" class="col-12 col-sm-6 col-md-4 col-lg-3">
             <span class="subtitles">Parallel Communication: </span>
             <p class="content">{{systemInfo.inverter.inverter_communication? 'yes' : 'no'}}</p>
-        </div><br>
+        </div>
+        <div class="col-lg-8 d-none d-sm-inline"></div>
         <div *ngFor="let inverter of systemInfo.inverter.inverters_list; let i = index"
-            class="col-12 col-sm-6 col-lg-4 mb-4 text-center d-flex justify-content-center">
+            class="col mt-4 text-center d-flex justify-content-center">
             <div class="card" style="min-width: 250px;">
                 <div class="card-header" style="font-weight: bold;">
                     Inverter {{i}}
@@ -212,36 +217,37 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-6 col-lg-3 mb-4">
+        <div class="col-6 col-lg-3">
             <span class="subtitles">Voltage: </span>
             <p class="content">{{systemInfo.cluster.refidwecaresystemvolt}}</p>
         </div>
-        <div class="col-6 col-lg-3 mb-4">
+        <div class="col-6 col-lg-3">
             <span class="subtitles">Model: </span>
             <p class="content">{{systemInfo.cluster.system_model}}</p>
         </div>
-        <div class="col-12 col-sm-6 col-lg-3 mb-4">
+        <div class="col-6 col-lg-3">
             <span class="subtitles">Type: </span>
             <p class="content">{{systemInfo.cluster.refidwecaresystemtype}}</p>
         </div>
-        <div class="col-12 col-sm-6 col-lg-3 mb-4">
+        <div class="col-6 col-lg-3">
             <span class="subtitles">Single Cluster: </span>
             <p class="content">{{systemInfo.cluster.cluster_singlebattery? 'yes' : 'no'}}</p>
         </div>
-        <div *ngIf="systemInfo.cluster.cluster_singlebattery! == 0" class="col-12 col-sm-6 col-lg-3 mb-4">
+        <div *ngIf="systemInfo.cluster.cluster_singlebattery! == 0" class="col-6 col-lg-3">
             <span class="subtitles">Parallel Clusters: </span>
             <p class="content">{{systemInfo.inverter.inverter_communication? 'yes' : 'no'}}</p>
         </div>
-        <div *ngIf="systemInfo.cluster.cluster_singlebattery! == 0" class="col-12 col-sm-6 col-lg-3 mb-4">
+        <div *ngIf="systemInfo.cluster.cluster_singlebattery! == 0" class="col-6 col-lg-3">
             <span class="subtitles">Number of Clusters: </span>
             <p class="content">{{systemInfo.cluster.cluster_number}}</p>
         </div>
-        <div *ngIf="systemInfo.cluster.cluster_singlebattery! == 0" class="col-12 col-sm-6 col-lg-3 mb-4">
+        <div *ngIf="systemInfo.cluster.cluster_singlebattery! == 0" class="col-12 col-lg-3">
             <span class="subtitles">Devices for Cluster: </span>
             <p class="content">{{systemInfo.cluster.cluster_numberdevices}}</p>
-        </div><br>
+        </div>
+        <div class="col-lg-3 d-none d-lg-inline"></div>
         <div *ngFor="let cluster of systemInfo.cluster.clusters_list; let i = index"
-            class="col-12 col-sm-6 col-lg-4 mb-4 text-center d-flex justify-content-center">
+            class="col text-center d-flex justify-content-center mt-4">
             <div class="card" style="min-width: 250px;">
                 <div class="card-header" style="font-weight: bold;">
                     {{cluster.name}}
