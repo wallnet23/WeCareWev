@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
-import { ApiResponse, ObjButtonClose } from '../interfaces/api-response';
+import { ApiResponse, ObjButtonPopup } from '../interfaces/api-response';
 import { ActiveToast, ToastrService } from 'ngx-toastr';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { PopupDialogComponent } from '../components/popup-dialog/popup-dialog.component';
 import { Router } from '@angular/router';
 
@@ -10,15 +10,24 @@ import { Router } from '@angular/router';
 })
 export class PopupDialogService {
 
+  private isPopupVisible = false;
   readonly router = inject(Router);
   constructor(private toastr: ToastrService, public dialog: MatDialog) { }
 
   alertElement(obj_val: ApiResponse<any>) {
-    console.log('dentro: ', obj_val);
+    if (this.isPopupVisible) {
+      // console.log('Un popup è già visibile.');
+      return;
+    }
+    this.isPopupVisible = true;
+
+    // console.log('dentro: ', obj_val);
     if (obj_val.type_alert && obj_val.type_alert === 1) {
       this.toastDialog(obj_val);
+      this.isPopupVisible = false;
     } else {
       this.popupDialog(obj_val);
+      this.isPopupVisible = false;
     }
   }
 
@@ -31,15 +40,19 @@ export class PopupDialogService {
     });
 
     dialogRef.afterClosed().subscribe(
-      (result: ObjButtonClose) => {
+      (result: ObjButtonPopup) => {
         console.log('Dialog result:', result);
         if (result && result.action === 1) {
           if (result.action_type === 1) {
             const array_router = [result.urlfront];
-            if(result.urlparam && result.urlparam != null){
+            if (result.urlparam && result.urlparam != null) {
               array_router.push(result.urlparam);
             }
             this.router.navigate(array_router);
+          } else if (result.action_type === 2) {
+            if (typeof result.run_function === 'function') {
+              result.run_function();
+            }
           }
         }
         // console.log(`Dialog result: ${result}`);
@@ -68,15 +81,27 @@ export class PopupDialogService {
       obj_toast = this.toastr.success(obj_val.message, obj_val.title, config);
     } else if (obj_val.code == 513 || obj_val.code == 511 || obj_val.code == 240) {
       obj_toast = this.toastr.warning(obj_val.message, obj_val.title, config);
-    } else {
+    } else if (obj_val.code == 244){
+
+    }else {
       obj_toast = this.toastr.error(obj_val.message, obj_val.title, config);
     }
-    if (obj_toast) {
-      obj_toast.onHidden.subscribe(
-        (val) => {
-          console.log(val);
-        }
-      )
-    }
+    // if (obj_toast) {
+    //   obj_toast.onHidden.subscribe(
+    //     (val) => {
+    //       console.log(val);
+    //     }
+    //   )
+    // }
+  }
+
+  public popUpDialogConfirm(obj_val: ApiResponse<any>): MatDialogRef<PopupDialogComponent> {
+    const dialogRef = this.dialog.open(PopupDialogComponent, {
+      panelClass: 'modal_popup',
+      data: {
+        obj: obj_val
+      }
+    });
+    return dialogRef;
   }
 }

@@ -1,8 +1,11 @@
-<h2 mat-dialog-title>{{title}}</h2>
-<mat-dialog-content>
+<h2 mat-dialog-title [class]="bgStylePopup">{{title}}</h2>
+<mat-dialog-content class="mt-4">
   {{descrizione}}
 </mat-dialog-content>
 <mat-dialog-actions class="justify-content-end">
-  <button mat-button (click)="closeButtonDialog()"
+  <button *ngIf="obj_buttonAction && obj_buttonAction != null" mat-button (click)="buttonAction()"
+  [class]="buttonStylePopup">{{label_buttonAction}}</button>
+
+  <button mat-button (click)="buttonClose()"
   [class]="buttonStylePopup">{{label_buttonClose}}</button>
 </mat-dialog-actions>

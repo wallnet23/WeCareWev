@@ -38,6 +38,7 @@
       "NOTIFICATIONS5": "News and announcements",
       "NOTIFICATIONS6": "Weekly product updates",
       "NOTIFICATIONS7": "Weekly blog digest",
+      "BUTTON_UPDATEPWD": "Update password",
       "SAVECHANGES": "Save changes"
     },
     "LOGIN": {
@@ -118,7 +119,7 @@
     "SAVE": "Save",
     "NEXT": "Next"
   },
-  
+
   "SYSTEM": {
     "SYSTEMLIST": {
       "TITLE": "SYSTEMS LIST",

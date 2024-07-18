@@ -59,8 +59,7 @@ export class InvertersComponent implements OnInit, OnChanges {
 
   onBarcodeScanned(barcode: string, i: number) {
     this.inverterFieldAsFormArray.at(i).get('serialnumber').setValue(barcode);
-
-    console.log("FORM FIELD", this.inverterFieldAsFormArray.value[i].serialnumber)
+    // console.log("FORM FIELD", this.inverterFieldAsFormArray.value[i].serialnumber)
   }
 
   private logicStep() {

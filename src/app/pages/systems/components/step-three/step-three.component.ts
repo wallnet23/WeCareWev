@@ -99,7 +99,7 @@ export class StepThreeComponent implements OnInit {
   saveStep(action: string) {
 
     this.errorLogic();
-    if (!this.isError) {
+    if (action == 'save' || (!this.isError && action == 'next')) {
       let stepThree = JSON.parse(JSON.stringify(this.stepThreeForm.getRawValue()));
       let country$: Observable<Country>;
       let country: Country;

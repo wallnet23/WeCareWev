@@ -46,21 +46,26 @@
 
         <mat-step [stepControl]="stepTwoForm" errorMessage="Incomplete">
           <ng-template matStepLabel><span style="font-weight: bold;">INSTALLATION SITE</span></ng-template>
+          <ng-template matStepContent>
             <app-step-two #stepTwo (formEmit)="onFormTwoReceived($event)" (nextStep)="stepper.next()"
-              [idsystem]="idsystem">
-            </app-step-two>
+            [idsystem]="idsystem">
+          </app-step-two>
+          </ng-template>
+
         </mat-step>
 
         <mat-step [stepControl]="stepThreeForm" errorMessage="Incomplete">
           <ng-template matStepLabel><span style="font-weight: bold;">TECHNICIAN / INSTALLER INFO</span></ng-template>
+          <ng-template matStepContent>
           <app-step-three #stepThree (formEmit)="onFormThreeReceived($event)" (nextStep)="stepper.next()"
             [idsystem]="idsystem">
           </app-step-three>
+        </ng-template>
         </mat-step>
 
         <mat-step [stepControl]="stepFourForm" errorMessage="Incomplete">
-          <ng-template matStepLabel><span style="font-weight: bold;">PRODUCT INFO</span></ng-template>
-          <app-step-four *ngIf="stepThreeForm.valid" #stepFour (formEmit)="onFormFourReceived($event)"
+          <ng-template matStepLabel sty><span style="font-weight: bold;">DEVICES INFO</span></ng-template>
+          <app-step-four  *ngIf="stepThreeForm.valid" #stepFour (formEmit)="onFormFourReceived($event)"
             (nextStep)="stepper.next()" [idsystem]="idsystem"></app-step-four>
         </mat-step>
 
@@ -72,7 +77,7 @@
         <mat-step>
           <ng-template matStepLabel><span style="font-weight: bold;">CONFIRMATION</span></ng-template>
           <div class="text-center">
-            <p>Request the approval of the system to get access to all the services and extend the warranty of
+            <p>Request the approval of the system to get access to all the services and request extend the warranty of
               inverters.</p>
             <button class="btn btn-outline-dark me-2" matStepperPrevious>Previous</button>
             <!-- <button mat-button (click)="stepper.reset()">Reset</button> -->

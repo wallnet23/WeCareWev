@@ -97,7 +97,7 @@ export class StepTwoComponent {
 
     this.errorLogic()
 
-    if (!this.isError) {
+    if (action == 'save' || (action == 'next' && !this.isError)) {
       let stepTwo = JSON.parse(JSON.stringify(this.stepTwoForm.getRawValue()));
       let country$: Observable<Country>;
       let country: Country;

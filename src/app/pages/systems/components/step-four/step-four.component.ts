@@ -177,13 +177,18 @@ export class StepFourComponent implements OnInit {
   }
 
   getStepValid(): boolean {
-    if (this.stepFourForm && this.obj_invert && this.obj_cluster) {
-      // console.log('test form', this.stepFourForm.valid);
-      // console.log('test inverter', this.obj_invert.getValidFormInvert());
-      // console.log('test cluster', this.obj_cluster.getValidFormCluster());
-      return this.stepFourForm.valid && this.obj_invert.getValidFormInvert()
-        && this.obj_cluster.getValidFormCluster();
-    } else {
+    if(this.stepFourForm && this.obj_invert){
+      if(this.stepFourForm.get('product_systemcomposition')?.value == 2){
+        if(this.obj_cluster){
+          return this.stepFourForm.valid && this.obj_invert.getValidFormInvert()
+          && this.obj_cluster.getValidFormCluster();
+        }else{
+          return false;
+        }
+      }else{
+        return this.stepFourForm.valid && this.obj_invert.getValidFormInvert();
+      }
+    }else{
       return false;
     }
   }

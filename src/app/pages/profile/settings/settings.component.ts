@@ -163,14 +163,33 @@ export class SettingsComponent {
 
   saveNewPassword() {
     if (this.modifyPasswordForm.valid) {
-      this.connectServerService.postRequest(Connect.urlServerLaraApi, 'user/resetPassword', {
-        current_password: this.modifyPasswordForm.get('current_password')?.value,
-        password: this.modifyPasswordForm.get('password')?.value,
-        password_confirmation: this.modifyPasswordForm.get('password_confirmation')?.value,
-      }).subscribe((esito: ApiResponse<null>) => {
-        this.popupDialogService.alertElement(esito);
-      })
+      const obj_request: ApiResponse<any> = {
+        code: 244,
+        data: {},
+        title: 'Info',
+        message: 'Sei sicuro di voler cambiare la password di accesso?',
+        obj_dialog: {
+          disableClose: 1,
+          obj_buttonAction:
+          {
+            action: 1,
+            action_type: 2,
+            label: 'Update',
+            run_function: () => this.actionUpdatePassword()
+          }
+        }
+      }
+      this.popupDialogService.alertElement(obj_request);
     }
+  }
 
+  private actionUpdatePassword(){
+    this.connectServerService.postRequest(Connect.urlServerLaraApi, 'user/resetPassword', {
+      current_password: this.modifyPasswordForm.get('current_password')?.value,
+      password: this.modifyPasswordForm.get('password')?.value,
+      password_confirmation: this.modifyPasswordForm.get('password_confirmation')?.value,
+    }).subscribe((esito: ApiResponse<null>) => {
+      this.popupDialogService.alertElement(esito);
+    })
   }
 }
