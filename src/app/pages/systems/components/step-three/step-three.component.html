@@ -3,48 +3,48 @@
         <div class="form-group">
             <div class="row mt-2">
                 <div class="col-12 col-lg-6 mb-3">
-                    <label for="installer_companyname" style="font-weight: bold;">Company Name<sup class="small-asterisk">*</sup></label>
+                    <label for="installer_companyname" style="font-weight: bold;">{{"SYSTEM.STEPTHREE.COMPANYNAME" | translate}}<sup class="small-asterisk">*</sup></label>
                     <input type="text" name="installer_companyname" id="installer_companyname" formControlName="installer_companyname"
                         class="form-control" placeholder="Installer company name" [ngClass]="{'is-invalid': errors.installer_companyname}">
-                        <div class="text-danger mt-1" *ngIf="errors.installer_companyname" style="font-size: small;">Insert the company name of the installer</div>
+                        <div class="text-danger mt-1" *ngIf="errors.installer_companyname" style="font-size: small;">{{"SYSTEM.STEPTHREE.NAMEERROR" | translate}}</div>
                 </div>
 
                 <div class="col-12 col-lg-6 mb-3">
-                    <label for="installer_address" style="font-weight: bold;">Company Address<sup class="small-asterisk">*</sup></label>
+                    <label for="installer_address" style="font-weight: bold;">{{"SYSTEM.STEPTHREE.COMPANYADDRESS" | translate}}<sup class="small-asterisk">*</sup></label>
                     <input type="text" name="address" id="installer_address" formControlName="installer_address"
                         class="form-control" placeholder="Installer company address" [ngClass]="{'is-invalid': errors.installer_address}">
-                        <div class="text-danger mt-1" *ngIf="errors.installer_address" style="font-size: small;">Insert the installer address</div>
+                        <div class="text-danger mt-1" *ngIf="errors.installer_address" style="font-size: small;">{{"SYSTEM.STEPTHREE.ADDRESSERROR" | translate}}</div>
                 </div>
 
                 <div class="col-12 col-lg-6 mb-3">
-                    <label for="ccn3" style="font-weight: bold;">Company Country<sup class="small-asterisk">*</sup></label>
+                    <label for="ccn3" style="font-weight: bold;">{{"SYSTEM.STEPTHREE.COMPANYCOUNTRY" | translate}}<sup class="small-asterisk">*</sup></label>
                     <select class="form-select" aria-label="select example" formControlName="ccn3" [ngClass]="{'is-invalid': errors.ccn3}">
-                        <option [ngValue]="null" disabled>Select a Country</option>
+                        <option [ngValue]="null" disabled>{{"SYSTEM.STEPTHREE.COUNTRYSELECT" | translate}}</option>
                         <option *ngFor="let country of countriesData" [ngValue]="country.ccn3">
                             <img src="{{country.flags?.png}}" width="20px" height="15px"> {{ country.name.common }}
                         </option>
                     </select>
-                    <div class="text-danger mt-1" *ngIf="errors.ccn3" style="font-size: small;">Insert the installer Country</div>
+                    <div class="text-danger mt-1" *ngIf="errors.ccn3" style="font-size: small;">{{"SYSTEM.STEPTHREE.COUNTRYERROR" | translate}}</div>
                 </div>
 
                 <div class="col-12 col-lg-6 mb-3">
-                    <label for="vendor_contact" style="font-weight: bold;">Vendor Contact</label>
+                    <label for="vendor_contact" style="font-weight: bold;">{{"SYSTEM.STEPTHREE.VENDORCONTACT" | translate}}</label>
                     <input type="text" name="vendor_contact" id="vendor_contact" formControlName="vendor_contact"
                         class="form-control" placeholder="Contact name">
                 </div>
 
                 <div class="col-12 col-lg-6 mb-3">
-                    <label for="installer_email" style="font-weight: bold;">Email<sup class="small-asterisk">*</sup></label>
+                    <label for="installer_email" style="font-weight: bold;">{{"SYSTEM.STEPTHREE.EMAIL" | translate}}<sup class="small-asterisk">*</sup></label>
                     <input type="installer_email" name="installer_email" id="installer_email"
                         formControlName="installer_email" class="form-control" placeholder="Email" [ngClass]="{'is-invalid': errors.installer_email}">
-                        <div class="text-danger mt-1" *ngIf="errors.installer_email" style="font-size: small;">Insert the installer email with correct format</div>
+                        <div class="text-danger mt-1" *ngIf="errors.installer_email" style="font-size: small;">{{"SYSTEM.STEPTHREE.EMAILERROR" | translate}}</div>
                 </div>
 
                 <div class="col-12 col-lg-6 mb-3">
-                    <label for="installer_dateofpurchase" style="font-weight: bold;">Date Of Purchase<sup class="small-asterisk">*</sup></label>
+                    <label for="installer_dateofpurchase" style="font-weight: bold;">{{"SYSTEM.STEPTHREE.DATEOFPURCHASE" | translate}}<sup class="small-asterisk">*</sup></label>
                     <input type="date" name="installer_dateofpurchase" id="installer_dateofpurchase"
                         formControlName="installer_dateofpurchase" class="form-control" placeholder="gg/mm/aaaa" [ngClass]="{'is-invalid': errors.installer_dateofpurchase}">
-                        <div class="text-danger mt-1" *ngIf="errors.installer_dateofpurchase" style="font-size: small;">Insert the date of purchase</div>
+                        <div class="text-danger mt-1" *ngIf="errors.installer_dateofpurchase" style="font-size: small;">{{"SYSTEM.STEPTHREE.DATEERROR" | translate}}</div>
                 </div>
             </div>
         </div>
@@ -59,29 +59,29 @@
         </div>
         <div class="row justify-content-center mt-3 mb-3">
             <div class="col-md-4 text-center">
-                <label *ngIf="!imageSpaceLeftStep3" class="text-danger">Image limit reached</label><br>
+                <label *ngIf="!imageSpaceLeftStep3" class="text-danger">{{"SYSTEM.STEPTHREE.IMAGELIMIT" | translate}}</label><br>
                 <label *ngIf="imagesStep3.length < maxImagesStep3" for="fileUpload3" class="btn btn-outline-dark">
                     <i class="bi bi-upload" style="margin-right: 4px;"></i>
-                    Importa
+                    {{"SYSTEM.STEPTHREE.IMPORT" | translate}}
                     <input type="file" id="fileUpload3" style="display: none;" (change)="onFileSelected($event)"
                         accept="image/*" multiple>
                 </label>
             </div>
             <div class="col-12 text-center" style="font-size: small;">
-                Import a picture of the invoice (max 2 files)
+                {{"SYSTEM.STEPTHREE.IMPORTINVOICE" | translate}}
             </div>
         </div>
 
         <div class="text-center">
             <button class="btn btn-outline-dark mr-2" matStepperPrevious>
-                Previous
+                {{"SYSTEM.STEPBUTTONS.PREV" | translate}}
             </button>
             <button class="btn btn-outline-dark ms-2 me-2" id="next" (click)="saveStep('save')">
-                Save
+                {{"SYSTEM.STEPBUTTONS.SAVE" | translate}}
             </button>
             <button class="btn btn-outline-dark ml-2" [disabled]="stepThreeForm.invalid || isError"
                 (click)="saveStep('next')">
-                Next
+                {{"SYSTEM.STEPBUTTONS.NEXT" | translate}}
             </button>
         </div>
     </form>

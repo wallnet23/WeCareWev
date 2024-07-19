@@ -127,8 +127,8 @@
                             </div>
                           </div>
                         </div>
-                        <mat-form-field class="col-12">
-                          <mat-label>Inverter to which it is connected</mat-label>
+                        <label class="mt-2" style="font-weight: bold; font-size: medium;" for="inverters">Inverter to which it is connected</label>
+                        <mat-form-field class="col-12" appearance="outline">
                           <mat-select formControlName="inverters" multiple>
                             @for (inverter of view_inverterslist; track inverter) {
                             <mat-option [value]="inverter.id">{{inverter.serialnumber}}</mat-option>

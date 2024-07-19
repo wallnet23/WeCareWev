@@ -18,6 +18,7 @@ import { PopupDialogService } from '../../../../services/popup-dialog.service';
 import { StepFour } from '../interfaces/step-four';
 import { Inverter, InverterData } from '../../interfaces/inverterData';
 import { ClusterData } from '../../interfaces/clusterData';
+import { TranslateModule } from '@ngx-translate/core';
 
 interface BatteryInfo {
   serialNumber: string;
@@ -50,7 +51,8 @@ interface SystemComposition {
     MatIconModule,
     MatCardModule,
     InvertersComponent,
-    ClustersComponent
+    ClustersComponent,
+    TranslateModule
   ],
   templateUrl: './step-four.component.html',
   styleUrl: './step-four.component.scss'
@@ -118,7 +120,7 @@ export class StepFourComponent implements OnInit {
       let stepCluster = null;
       if (this.obj_invert) {
         stepInverter = this.obj_invert.getDataFormInverter();
-        // console.log('inverter valid', this.obj_invert.getValidFormInvert());
+        console.log('inverter valid', this.obj_invert.getValidFormInvert());
       }
       if (this.obj_cluster) {
         stepCluster = this.obj_cluster.getDataFormCluster();

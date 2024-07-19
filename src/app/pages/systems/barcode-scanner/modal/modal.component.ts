@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { VideoDecodeComponent } from "../video-decode/video-decode.component";
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-modal',
@@ -9,7 +10,8 @@ import { VideoDecodeComponent } from "../video-decode/video-decode.component";
   imports: [
     MatDialogModule,
     MatButtonModule,
-    VideoDecodeComponent
+    VideoDecodeComponent,
+    TranslateModule
 ],
   templateUrl: './modal.component.html',
   styleUrl: './modal.component.scss'

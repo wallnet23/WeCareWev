@@ -17,6 +17,7 @@ import { PopupDialogService } from '../../../../services/popup-dialog.service';
 import { Country } from '../../../../interfaces/country';
 import { StepTwo } from '../interfaces/step-two';
 import { Image } from '../interfaces/image';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-step-two',
@@ -37,6 +38,7 @@ import { Image } from '../interfaces/image';
     HttpClientModule,
     CommonModule,
     MatIconModule,
+    TranslateModule
   ],
   templateUrl: './step-two.component.html',
   styleUrl: './step-two.component.scss'

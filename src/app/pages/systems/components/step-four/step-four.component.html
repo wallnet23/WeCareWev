@@ -3,37 +3,37 @@
     <div class="form-group">
       <div class="row mt-2">
         <div class="col-12 col-md-6 mb-3">
-          <label for="product_installdate" style="font-weight: bold;">Installation Date<sup>*</sup></label>
+          <label for="product_installdate" style="font-weight: bold;">{{"SYSTEM.STEPFOUR.INSTALLATIONDATE" | translate}}<sup>*</sup></label>
           <input type="date" name="product_installdate" id="product_installdate" formControlName="product_installdate"
             class="form-control" placeholder="gg/mm/aaaa" [ngClass]="{'is-invalid': errors.product_installdate}">
-            <div class="text-danger mt-1" *ngIf="errors.product_installdate" style="font-size: small;">Insert the installation date</div>
+            <div class="text-danger mt-1" *ngIf="errors.product_installdate" style="font-size: small;">{{"SYSTEM.STEPFOUR.DATEERROR" | translate}}</div>
         </div>
         <div class="col-12 col-md-6 mb-3">
-          <label for="product_systemcomposition" style="font-weight: bold;">System Composition<sup>*</sup></label>
+          <label for="product_systemcomposition" style="font-weight: bold;">{{"SYSTEM.STEPFOUR.SYSCOMPOSITION" | translate}}<sup>*</sup></label>
           <select class="form-select" aria-label="select example" id="product_systemcomposition"
             formControlName="product_systemcomposition" [ngClass]="{'is-invalid': errors.product_systemcomposition}">
             <option *ngFor="let comp of systemComposition" [ngValue]="comp.id">{{comp.name}}</option>
           </select>
-          <div class="text-danger mt-1" *ngIf="errors.product_systemcomposition" style="font-size: small;">Insert the system composition</div>
+          <div class="text-danger mt-1" *ngIf="errors.product_systemcomposition" style="font-size: small;">{{"SYSTEM.STEPFOUR.SYSERROR" | translate}}</div>
         </div>
         <div class="col-12 col-md-6 mb-3">
-          <label for="product_systemweco" style="font-weight: bold;">Weco Products in the System<sup>*</sup></label>
+          <label for="product_systemweco" style="font-weight: bold;">{{"SYSTEM.STEPFOUR.WECOPRODUCTS" | translate}}<sup>*</sup></label>
           <select class="form-select" aria-label="select example" id="product_systemweco"
             formControlName="product_systemweco" [ngClass]="{'is-invalid': errors.product_systemweco}">
             <option *ngFor="let weco of wecoComposition" [ngValue]="weco.id">{{weco.name}}</option>
           </select>
-          <div class="text-danger mt-1" *ngIf="errors.product_installdate" style="font-size: small;">Which are the Weco components inside the system?</div>
+          <div class="text-danger mt-1" *ngIf="errors.product_installdate" style="font-size: small;">{{"SYSTEM.STEPFOUR.PRODUCTERROR" | translate}}</div>
         </div>
 
         <div class="col-12 col-md-6 mb-3" *ngIf="stepFourForm.get('product_systemcomposition')?.value == 2 &&
           stepFourForm.get('product_systemweco')?.value != null && stepFourForm.get('product_systemweco')?.value != 3">
           <label *ngIf="stepFourForm.get('product_systemweco')?.value == 1" for="brand" style="font-weight: bold;">
-            What brand of batteries are you working with?</label>
+            {{"SYSTEM.STEPFOUR.BRANDBATT" | translate}}</label>
           <label *ngIf="stepFourForm.get('product_systemweco')?.value == 2" for="product_brand"
-            style="font-weight: bold;">What brand of inverter are you working with?</label>
+            style="font-weight: bold;">{{"SYSTEM.STEPFOUR.BRANDINV" | translate}}</label>
           <input type="text" name="product_brand" id="product_brand" formControlName="product_brand"
             class="form-control" placeholder="..." [ngClass]="{'is-invalid': errors.product_brand}">
-            <div class="text-danger mt-1" *ngIf="errors.product_brand" style="font-size: small;">Which is the other brand?</div>
+            <div class="text-danger mt-1" *ngIf="errors.product_brand" style="font-size: small;">{{"SYSTEM.STEPFOUR.BRANDERROR" | translate}}</div>
         </div>
       </div>
 
@@ -55,13 +55,13 @@
 
     <div class="text-center">
       <button class="btn btn-outline-dark mr-2" matStepperPrevious>
-        Previous
+        {{"SYSTEM.STEPBUTTONS.PREV" | translate}}
       </button>
       <button class="btn btn-outline-dark ms-2 me-2" id="next" (click)="saveStep('save')">
-        Save
+        {{"SYSTEM.STEPBUTTONS.SAVE" | translate}}
       </button>
       <button class="btn btn-outline-dark ml-2" [disabled]="!getStepValid()" (click)="saveStep('next')">
-        Next
+        {{"SYSTEM.STEPBUTTONS.NEXT" | translate}}
       </button>
     </div>
   </form>
