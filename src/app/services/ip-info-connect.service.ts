@@ -29,7 +29,7 @@ export class IpInfoConnectService {
   apiUrl = `${Connect.IPINFO_URL}?token=${Connect.IPINFO_API_TOKEN}`;
   constructor(private connectServerService: ConnectServerService,
     private store: Store<{ user: UserState }>, private translateService: TranslateService,
-  private authService: AuthService) { }
+    private authService: AuthService) { }
 
   getLanguage(): Observable<string> {
     return this.connectServerService.getRequest(this.apiUrl, '', {}).pipe(
@@ -40,7 +40,7 @@ export class IpInfoConnectService {
         return language;
       }),
       catchError((error) => {
-        console.error('Error getting location:', error);
+        // console.error('Error getting location:', error);
         return of('en'); // Fallback a una lingua predefinita in caso di errore
       })
     );
@@ -50,28 +50,36 @@ export class IpInfoConnectService {
    * Setta la linga nell'app
    */
   setUserLanguageApp() {
-    this.store.select(state => state.user.userInfo).subscribe(
-      (val: User | null) => {
-        console.log('stor', val?.lang_code);
-        if (val && val.lang_code) {
-          console.log('dentroooooooo');
-          this.translateService.setDefaultLang(val.lang_code);
-        } else {
-          this.getLanguage().subscribe(
-            (lang: string) => {
-              this.translateService.setDefaultLang(lang);
+    if(this.authService.isLoggedIn()){
+      this.store.select(state => state.user.userInfo).subscribe(
+        (val: User | null) => {
+          if (val) {
+            if (val.lang_code) {
+              this.translateService.setDefaultLang(val.lang_code);
+            } else {
+              this.getLanguage().subscribe(
+                (lang: string) => {
+                  this.translateService.setDefaultLang(lang);
+                }
+              )
             }
-          )
+          }
+
         }
-      }
-    );
+      );
+    }else{
+      this.getLanguage().subscribe(
+        (lang: string) => {
+          this.translateService.setDefaultLang(lang);
+        }
+      )
+    }
+
   }
 
   setUserLanguageDb(code_lang: string) {
-    console.log('select 2', code_lang);
     if (code_lang.length > 0 && this.checkIfCodeExists(code_lang)) {
-      console.log('login:', this.authService.isLoggedIn());
-      if(this.authService.isLoggedIn()){
+      if (this.authService.isLoggedIn()) {
         this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'user/updateLanguage',
           {
             code: code_lang
@@ -81,7 +89,7 @@ export class IpInfoConnectService {
               this.setUserLanguageApp();
             }
           )
-      }else{
+      } else {
         this.translateService.setDefaultLang(code_lang);
       }
     }

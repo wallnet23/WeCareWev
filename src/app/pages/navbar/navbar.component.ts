@@ -57,7 +57,7 @@ export class NavbarComponent implements OnInit {
       map((val) => val ? val.menu : []),
       map((menus: Menu[]) => menus.filter(menu => menu.level === 0))
     )
-    this.ipInfoConnectService.setUserLanguageApp();
+
   }
 
   ngOnInit(): void {
