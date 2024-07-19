@@ -14,12 +14,12 @@
     </div>
 
     <div class="col-12 col-md-6 text-center mt-2">
-      <span class="fst-italic">Mandatory fields <sup>*</sup></span>
+      <span class="fst-italic">{{"SYSTEM.SYSTEMMANAGEMENT.MANDATORY" | translate}}<sup>*</sup></span>
     </div>
 
     <div *ngIf="idsystem > 0" class="col-12 col-md-6 text-center mt-2">
       <span class="fw-bold">
-        Status:
+        {{"SYSTEM.SYSTEMMANAGEMENT.STATUS" | translate}}:
       </span>
       <span class="ms-1">
         <i class="bi bi-circle-fill" style="font-size: large;" [ngClass]="{
@@ -38,35 +38,41 @@
       <mat-stepper orientation="vertical" [linear]="true" #stepper>
 
         <mat-step [stepControl]="stepOneForm" errorMessage="Incomplete">
-          <ng-template matStepLabel><span style="font-weight: bold;">SYSTEM & CUSTOMER INFO</span></ng-template>
+          <ng-template matStepLabel><span style="font-weight: bold;">{{"SYSTEM.SYSTEMMANAGEMENT.SYSANDCUSTINFO" |
+              translate}}</span></ng-template>
           <app-step-one #stepOne (idEmitter)="onIdReceived($event)" (formEmit)="onFormOneReceived($event)"
             (nextStep)="stepper.next()" [idsystem]="idsystem">
           </app-step-one>
         </mat-step>
 
         <mat-step [stepControl]="stepTwoForm" errorMessage="Incomplete">
-          <ng-template matStepLabel><span style="font-weight: bold;">INSTALLATION SITE</span></ng-template>
+          <ng-template matStepLabel><span style="font-weight: bold;">{{"SYSTEM.SYSTEMMANAGEMENT.INSTALLATIONSITE" |
+              translate}}</span></ng-template>
           <ng-template matStepContent>
             <app-step-two #stepTwo (formEmit)="onFormTwoReceived($event)" (nextStep)="stepper.next()"
-            [idsystem]="idsystem">
-          </app-step-two>
+              [idsystem]="idsystem">
+            </app-step-two>
           </ng-template>
 
         </mat-step>
 
         <mat-step [stepControl]="stepThreeForm" errorMessage="Incomplete">
-          <ng-template matStepLabel><span style="font-weight: bold;">TECHNICIAN / INSTALLER INFO</span></ng-template>
+          <ng-template matStepLabel><span style="font-weight: bold;">{{"SYSTEM.SYSTEMMANAGEMENT.TECHNICIANINFO" |
+              translate}}</span></ng-template>
           <ng-template matStepContent>
-          <app-step-three #stepThree (formEmit)="onFormThreeReceived($event)" (nextStep)="stepper.next()"
-            [idsystem]="idsystem">
-          </app-step-three>
-        </ng-template>
+            <app-step-three #stepThree (formEmit)="onFormThreeReceived($event)" (nextStep)="stepper.next()"
+              [idsystem]="idsystem">
+            </app-step-three>
+          </ng-template>
         </mat-step>
 
         <mat-step [stepControl]="stepFourForm" errorMessage="Incomplete">
-          <ng-template matStepLabel sty><span style="font-weight: bold;">DEVICES INFO</span></ng-template>
-          <app-step-four  *ngIf="stepThreeForm.valid" #stepFour (formEmit)="onFormFourReceived($event)"
-            (nextStep)="stepper.next()" [idsystem]="idsystem"></app-step-four>
+          <ng-template matStepLabel><span style="font-weight: bold;">{{"SYSTEM.SYSTEMMANAGEMENT.DEVICESINFO" |
+              translate}}</span></ng-template>
+          <ng-template matStepContent>
+            <app-step-four *ngIf="stepThreeForm.valid" #stepFour (formEmit)="onFormFourReceived($event)"
+              (nextStep)="stepper.next()" [idsystem]="idsystem"></app-step-four>
+          </ng-template>
         </mat-step>
 
         <!-- <mat-step [stepControl]="stepFiveForm" errorMessage="Address is required.">
@@ -75,17 +81,18 @@
           </mat-step> -->
 
         <mat-step>
-          <ng-template matStepLabel><span style="font-weight: bold;">CONFIRMATION</span></ng-template>
+          <ng-template matStepLabel><span style="font-weight: bold;">{{"SYSTEM.SYSTEMMANAGEMENT.CONFIRMATION" |
+              translate}}</span></ng-template>
           <div class="text-center">
-            <p>Request the approval of the system to get access to all the services and request extend the warranty of
-              inverters.</p>
-            <button class="btn btn-outline-dark me-2" matStepperPrevious>Previous</button>
+            <p>{{"SYSTEM.SYSTEMMANAGEMENT.REQUEST" | translate}}</p>
+            <button class="btn btn-outline-dark me-2" matStepperPrevious>{{"SYSTEM.STEPBUTTONS.PREVIOUS" |
+              translate}}</button>
             <!-- <button mat-button (click)="stepper.reset()">Reset</button> -->
             <button class="btn btn-outline-dark ms-2" (click)="approvalRequested()" [disabled]="!getAllFormValid()">
-              Send
+              {{"SYSTEM.STEPBUTTONS.SEND" | translate}}
             </button>
             <div class="mt-2 text-danger" style="font-size: small; font-weight: bold;" *ngIf="!getAllFormValid()">
-              Concludi ogni step per richiedere l'approvazione dell'impianto al tecnico Weco.
+              {{"SYSTEM.SYSTEMMANAGEMENT.COMPLETE" | translate}}
             </div>
           </div>
         </mat-step>
@@ -104,12 +111,12 @@
       </div>
       <div class="col-12 text-center mt-5">
         <span style="font-size: x-large;">
-          You can't modify a system that is under approval
+          {{"SYSTEM.SYSTEMMANAGEMENT.CANNOTMODIFY" | translate}}
         </span>
       </div>
       <div class="col-12 text-center mt-4">
         <button class="btn btn-outline-dark" (click)="goToSystem()">
-          System Overview
+          {{"SYSTEM.SYSTEMMANAGEMENT.OVERVIEW" | translate}}
         </button>
       </div>
     </div>

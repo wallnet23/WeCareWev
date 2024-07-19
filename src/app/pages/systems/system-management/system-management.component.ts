@@ -21,6 +21,7 @@ import { Connect } from '../../../classes/connect';
 import { CommonModule, Location } from '@angular/common';
 import { PopupDialogService } from '../../../services/popup-dialog.service';
 import { ClusterService } from '../components/step-four/clusters/cluster.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-system-management',
@@ -43,7 +44,8 @@ import { ClusterService } from '../components/step-four/clusters/cluster.service
     StepThreeComponent,
     StepFourComponent,
     MatIconModule,
-    CommonModule
+    CommonModule,
+    TranslateModule
   ],
   templateUrl: './system-management.component.html',
   styleUrl: './system-management.component.scss'

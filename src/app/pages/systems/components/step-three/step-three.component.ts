@@ -17,6 +17,7 @@ import { Connect } from '../../../../classes/connect';
 import { PopupDialogService } from '../../../../services/popup-dialog.service';
 import { StepThree } from '../interfaces/step-three';
 import { Image } from '../interfaces/image';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-step-three',
@@ -37,6 +38,7 @@ import { Image } from '../interfaces/image';
     HttpClientModule,
     CommonModule,
     MatIconModule,
+    TranslateModule
   ],
   templateUrl: './step-three.component.html',
   styleUrl: './step-three.component.scss'

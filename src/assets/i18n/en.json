@@ -104,39 +104,122 @@
     }
   },
 
-  "STEPONE": {
-    "NAME": "Customer Name",
-    "NAMEPLACEHOLDER": "Name",
-    "SURNAME": "Customer Surname",
-    "SURNAMEPLACEHOLDER": "Surname",
-    "OWNER": "Are you the owner of the system?",
-    "COUNTRY": "Customer Country",
-    "SELECTCOUNTRY": "Select a Country",
-    "PHONE": "Phone Number",
-    "PHONEPLACEHOLDER": "(+999) 9999999",
-    "VAT": "VAT",
-    "LICENSENUMBER": "License Number",
-    "FISCALCODE": "Fiscal Code",
-    "SAVE": "Save",
-    "NEXT": "Next"
-  },
 
-  "SYSTEM": {
+
+"SYSTEM": {
+    "SCANNER": {
+      "SCAN": "Scan Barcode",
+      "CLOSE": "Close"
+    },
+    "SYSTEMMANAGEMENT": {
+      "MANDATORY": "Mandatory fields",
+      "STATUS": "Status",
+      "SYSANDCUSTINFO": "SYSTEM & CUSTOMER INFO",
+      "INSTALLATIONSITE": "INSTALLATION SITE",
+      "TECHNICIANINFO": "TECHNICIAN / INSTALLER INFO",
+      "DEVICESINFO": "DEVICES INFO",
+      "CONFIRMATION": "CONFIRMATION",
+      "REQUEST": "Request the approval of the system to get access to all the services and request extend the warranty of inverters.",
+      "COMPLETE": "Concludi ogni step per richiedere l'approvazione dell'impianto al tecnico Weco.",
+      "CANNOTMODIFY": "You can't modify a system that is under approval",
+      "OVERVIEW": "System Overview"
+    },
     "SYSTEMLIST": {
       "TITLE": "SYSTEMS LIST",
       "BUTTONSEARCH": "Search",
       "SEARCHPLACEHOLDER": "Name of the system",
       "EMPTY": "No system available, add a system to view the warranty, request an RMA or open a support ticket.",
       "DESCRIPTION": "Press the button below to add a new system to extend the warranty",
-      "ADDSYSTEM": "Add New System"
+      "ADDSYSTEM": "Add New System",
+      "SYSTEMCARD": {
+        "DESCRIPTION": "System Description",
+        "WARRANTY": "Warranty Status",
+        "INSTALLATIONSITE": "Installation Site",
+        "CUSTOMER": "Customer",
+        "TICKETS": "Tickets",
+        "DEVICES": "Devices"
+      }
     },
     "SYSTEMTICKETLIST": {
       "TITLE": "LIST OF SYSTEM TICKETS",
       "BUTTONSEARCH": "Search",
       "SEARCHPLACEHOLDER": "Name of the system",
       "EMPTY": ""
+    },
+    "STEPONE": {
+      "FISCALCODEERROR": "Insert the fiscal code",
+      "LICENSEERROR": "Insert the license number",
+      "PHONEERROR": "Insert the phone number",
+      "SURNAMEERROR": "Insert the customer surname",
+      "NAMEERROR": "Insert the customer name",
+      "SHORTINFO": "Write some short info",
+      "NAMETOOLTIP": "Choose a general name for your system. You'll see it as a reference to your system",
+      "SYSTEMNAME": "System Name",
+      "INSERTNAME": "Insert the name of the system",
+      "DESCTOOLTIP": "Write a short description about the system, just as an overview",
+      "NAME": "Customer Name",
+      "NAMEPLACEHOLDER": "Name",
+      "SURNAME": "Customer Surname",
+      "SURNAMEPLACEHOLDER": "Surname",
+      "OWNER": "Are you the owner of the system?",
+      "COUNTRY": "Customer Country",
+      "SELECTCOUNTRY": "Select a Country",
+      "PHONE": "Phone Number",
+      "PHONEPLACEHOLDER": "(+999) 9999999",
+      "VAT": "VAT",
+      "LICENSENUMBER": "License Number",
+      "FISCALCODE": "Fiscal Code"
+    },
+    "STEPTWO": {
+      "INSTALLATIONCOUNTRY": "Installation Country",
+      "SELECTCOUNTRY": "Select a Country",
+      "COUNTRYERROR": "Insert the Country",
+      "ADDRESS": "Address",
+      "ADDRESSERROR": "Insert the address",
+      "CITY": "City",
+      "CITYERROR": "Insert the city",
+      "POSTALCODE": "Postal Code",
+      "POSTALCODEERROR": "Insert the postal code",
+      "INSTALLATIONPICTURES": "Installation pictures (attach 5 pictures of the batteries in their installationsite)",
+      "IMAGELIMIT": "Image limit reached"
+    },
+    "STEPTHREE": {
+      "COMPANYNAME": "Company Name",
+      "NAMEERROR": "Insert the company name of the installer",
+      "COMPANYADDRESS": "Company Address",
+      "ADDRESSERROR": "Insert the installer address",
+      "COMPANYCOUNTRY": "Company Country",
+      "COUNTRYERROR": "Insert the installer Country",
+      "COUNTRYSELECT": "Select a Country",
+      "VENDORCONTACT": "Vendor Contact",
+      "EMAIL": "Email",
+      "EMAILERROR": "Insert the installer email with correct format",
+      "DATEOFPURCHASE": "Date Of Purchase",
+      "DATEERROR": "Insert the date of purchase",
+      "IMAGELIMIT": "Image limit reached",
+      "IMPORT": "Importa",
+      "IMPORTINVOICE": "Import a picture of the invoice (max 2 files)"
+    },
+    "STEPFOUR": {
+      "INSTALLATIONDATE": "Installation Date",
+      "DATEERROR": "Insert the installation date",
+      "SYSCOMPOSITION": "System Composition",
+      "SYSERROR": "Insert the system composition",
+      "WECOPRODUCTS": "Weco Products in the System",
+      "PRODUCTERROR": "Which are the Weco components inside the system?",
+      "BRANDBATT": "What brand of batteries are you working with?",
+      "BRANDINV": "What brand of inverter are you working with?",
+      "BRANDERROR": "Which is the other brand?"
+    },
+    "STEPBUTTONS": {
+      "PREV": "Previous",
+      "SAVE": "Save",
+      "NEXT": "Next",
+      "SEND": "Send"
     }
   },
+
+
   "TICKET": {
     "TICKETLIST": {
       "TITLE": "TICKETS LIST",
