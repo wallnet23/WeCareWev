@@ -3,6 +3,9 @@ import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { IpInfoConnectService } from '../../services/ip-info-connect.service';
+import { Store } from '@ngrx/store';
+import { UserState } from '../../ngrx/user/user.reducer';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-language',
@@ -23,17 +26,35 @@ export class LanguageComponent {
   // ]
   languagesList: { code: string, name: string, sign: string, flag: string }[] = this.ipInfoConnectService.languagesList;
   language = new FormControl<string>('en');
+  selectedLanguage: { code: string, name: string, sign: string, flag: string } = this.languagesList[0];
 
-  constructor(private ipInfoConnectService: IpInfoConnectService) {
+  constructor(private ipInfoConnectService: IpInfoConnectService, private store: Store<{ user: UserState }>,
+    private authService: AuthService) {
     this.ipInfoConnectService.setUserLanguageApp();
+    this.getSelectedLanguage();
   }
 
   selectLanguage(code: string) {
     this.ipInfoConnectService.setUserLanguageDb(code);
+    if(this.authService.isLoggedIn()) {
+      this.getSelectedLanguage();
+    }
+    else {
+      this.selectedLanguage = this.languagesList.find(val => val.code == code)!;
+    }
   }
 
   getSelectedLanguage() {
-    return this.languagesList.find(lang => lang.code === this.language.value);
+    (this.store.select(state => state.user.userInfo).subscribe(
+      (val) => {
+        if (val?.lang_code == 'it') {
+          this.selectedLanguage = this.languagesList[1];
+        }
+        else {
+          this.selectedLanguage = this.languagesList[0];
+        }
+      }
+    ))
   }
 
 }
