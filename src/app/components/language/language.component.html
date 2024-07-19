@@ -1,0 +1,31 @@
+<div class="container-fluid p-1">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-12 text-center">
+            <div class="dropdown" [formControl]="language">
+                <button class="btn dropdown-toggle languageButton" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img class="flagIcon" *ngIf="getSelectedLanguage()?.flag" [src]="'assets/img/flags/'+getSelectedLanguage()?.flag">
+                    <span class="ms-2">{{ getSelectedLanguage()?.name }}</span>
+                </button>
+                <ul class="dropdown-menu" style="min-width: 88px !important;">
+                  <li class="mt-1 ml-3" *ngFor="let language of languagesList" (click)="selectLanguage()">
+                    <img class="flagIcon" [src]="'assets/img/flags/'+language.flag">
+                    <span class="ms-2">{{ language.name }}</span>
+                  </li>
+                </ul>
+              </div>
+            <!-- <mat-form-field appearance="outline">
+                <mat-select [formControl]="language">
+                    <mat-select-trigger>
+                        <img class="flagIcon" *ngIf="getSelectedLanguage()?.flag" [src]="getSelectedLanguage()?.flag">
+                        <span class="ms-2">{{ getSelectedLanguage()?.name }}</span>
+                    </mat-select-trigger>
+                    @for (language of languagesList; track language) {
+                    <mat-option [value]="language.code">
+                        <img class="flagIcon" src="{{language.flag}}"><span class="ms-2">{{language.name}}</span>
+                    </mat-option>
+                    }
+                </mat-select>
+            </mat-form-field> -->
+        </div>
+    </div>
+</div>

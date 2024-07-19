@@ -3,9 +3,9 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { IpInfoConnectService } from '../../../services/ip-info-connect.service';
-import { ConnectServerService } from '../../../services/connect-server.service';
 import { AuthService } from '../../../services/auth.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { LanguageComponent } from "../../../components/language/language.component";
 
 @Component({
   selector: 'app-login',
@@ -16,7 +16,8 @@ import { TranslateModule } from '@ngx-translate/core';
     RouterModule,
     ReactiveFormsModule,
     TranslateModule,
-  ],
+    LanguageComponent,
+],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
