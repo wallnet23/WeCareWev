@@ -50,17 +50,16 @@ export class SettingsComponent {
   generalForm = new FormGroup({
     name: new FormControl<string | null>(null, Validators.required),
     surname: new FormControl<string | null>(null, Validators.required),
-    email: new FormControl<string | null>(null, Validators.email),
-    licensenumber: new FormControl<string | null>(null, Validators.required),
-    fiscalcode: new FormControl<string | null>(null, Validators.required),
-    ccn3: new FormControl<string | null>(null, Validators.required),
+    email: new FormControl<string | null>({ value: null, disabled: true }, [Validators.required, Validators.email]),
+    licensenumber: new FormControl<string | null>(null),
+    fiscalcode: new FormControl<string | null>(null),
+    ccn3: new FormControl<string | null>(null),
   })
 
   companyForm = new FormGroup({
-    company_name: new FormControl<string | null>(null, Validators.required),
-    vat: new FormControl<string | null>(null, Validators.required),
+    company_name: new FormControl<string | null>(null),
+    vat: new FormControl<string | null>(null),
     phone: new FormControl<string | null>(null),
-    website: new FormControl<string | null>(null),
   })
 
   modifyPasswordForm = new FormGroup({
@@ -75,14 +74,15 @@ export class SettingsComponent {
   ngOnInit() {
     this.connectServerService.getRequestCountryData().subscribe((obj) => {
       this.countriesData = obj;
+      this.store.select(state => state.user.userInfo).subscribe(
+        (val) => {
+          this.generalForm.patchValue(val!);
+          this.companyForm.patchValue(val!);
+        }
+      );
     })
 
-    this.store.select(state => state.user.userInfo).subscribe(
-      (val) => {
-        this.generalForm.patchValue(val!);
-        this.companyForm.patchValue(val!);
-      }
-    )
+
   }
 
   fetchCountryData(): Observable<Country[]> {
@@ -99,6 +99,46 @@ export class SettingsComponent {
       this.isItalian = false;
       this.generalForm.patchValue({ fiscalcode: null, licensenumber: '' });
     }
+  }
+
+  updateGeneral() {
+    if (this.generalForm.valid) {
+      let form_general = JSON.parse(JSON.stringify(this.generalForm.value));
+      let country: Country;
+      if (form_general.ccn3) {
+        this.connectServerService.getSpecificCountryData(this.generalForm.get('ccn3')?.value!)
+          .subscribe((val: any) => {
+            if (val && val.length > 0) {
+              country = { name: { common: val[0].name.common }, cca2: val[0].cca2, ccn3: val[0].ccn3 };
+              delete form_general.ccn3;
+              form_general.country = country;
+              this.actionUpdateGeneral(form_general);
+            }
+          })
+      }
+      else {
+        country = { name: { common: '' }, cca2: '', ccn3: '' };
+        delete form_general.ccn3;
+        form_general.country = country;
+        this.actionUpdateGeneral(form_general);
+      }
+
+    }
+  }
+  private actionUpdateGeneral(form_general: FormGroup) {
+    this.connectServerService.postRequest(Connect.urlServerLaraApi, 'user/updateProfile',
+      form_general
+    ).subscribe((esito: ApiResponse<null>) => {
+      this.popupDialogService.alertElement(esito);
+    })
+  }
+
+  updateCompany() {
+    this.connectServerService.postRequest(Connect.urlServerLaraApi, 'user/updateCompany',
+      this.companyForm.getRawValue()
+    ).subscribe((esito: ApiResponse<null>) => {
+      this.popupDialogService.alertElement(esito);
+    })
   }
 
   seePassword(id: string) {
@@ -134,33 +174,6 @@ export class SettingsComponent {
     }
   }
 
-  saveStep() {
-
-    let form = JSON.parse(JSON.stringify(this.generalForm.getRawValue()));
-    let country$: Observable<Country>;
-    let country: Country;
-    if (form.ccn3) {
-      country$ = this.connectServerService.getSpecificCountryData(this.generalForm.get('ccn3')?.value!);
-      country$.subscribe((val: any) => {
-        if (val && val.length > 0) {
-          country = { name: { common: val[0].name.common }, cca2: val[0].cca2, ccn3: val[0].ccn3 };
-          delete form.ccn3;
-          form.customer_country = country;
-          //this.saveData(stepOne, action);
-        }
-      })
-    }
-    else {
-      country = { name: { common: '' }, cca2: '', ccn3: '' };
-      delete form.ccn3;
-      form.customer_country = country;
-      //this.saveData(stepOne, action);
-    }
-
-    console.log("general form:", form);
-    console.log("company form:", this.companyForm.getRawValue())
-  }
-
   saveNewPassword() {
     if (this.modifyPasswordForm.valid) {
       const obj_request: ApiResponse<any> = {
@@ -183,13 +196,14 @@ export class SettingsComponent {
     }
   }
 
-  private actionUpdatePassword(){
+  private actionUpdatePassword() {
     this.connectServerService.postRequest(Connect.urlServerLaraApi, 'user/resetPassword', {
       current_password: this.modifyPasswordForm.get('current_password')?.value,
       password: this.modifyPasswordForm.get('password')?.value,
       password_confirmation: this.modifyPasswordForm.get('password_confirmation')?.value,
     }).subscribe((esito: ApiResponse<null>) => {
       this.popupDialogService.alertElement(esito);
+      this.modifyPasswordForm.reset();
     })
   }
 }

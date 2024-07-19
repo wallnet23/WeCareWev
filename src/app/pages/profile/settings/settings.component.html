@@ -69,7 +69,7 @@
               </form>
 
               <div class="text-right mt-3">
-                <button type="button" class="btn btn-dark" (click)="saveStep()">{{'PROFILE.SETTINGS.SAVECHANGES' |
+                <button type="button" [disabled]="generalForm.invalid" class="btn btn-dark" (click)="updateGeneral()">{{'PROFILE.SETTINGS.SAVECHANGES' |
                   translate}}
                 </button>
               </div>
@@ -112,7 +112,7 @@
               </div>
             </div>
           </div>
-
+<!-- COMPANY -->
           <div class="tab-pane fade" id="companyInfo">
             <div class="card-body pb-2">
               <form [formGroup]="companyForm" style="margin: 0 auto">
@@ -131,15 +131,10 @@
                     translate}}</label>
                   <input type="text" class="form-control" id="phone" formControlName="phone">
                 </div>
-                <div class="form-group">
-                  <label for="website" class="form-label section">{{'PROFILE.SETTINGS.WEBSITE' |
-                    translate}}</label>
-                  <input type="text" class="form-control" name="website" formControlName="website">
-                </div>
               </form>
 
               <div class="text-right mt-3">
-                <button type="button" class="btn btn-dark" (click)="saveStep()">{{'PROFILE.SETTINGS.SAVECHANGES' |
+                <button type="button" class="btn btn-dark" (click)="updateCompany()">{{'PROFILE.SETTINGS.BUTTON_UPDATECOMPANY' |
                   translate}}
                 </button>
               </div>

@@ -51,7 +51,7 @@ export class PopupDialogComponent {
       this.bgStylePopup = 'bg-warning bg-opacity-25 border-bottom border-1 border-warning';
     } else if (obj_request.code == 244) {
       this.buttonStylePopup = 'btn btn-info';
-      this.bgStylePopup = 'bg-info bg-opacity-25 border-bottom border-1 border-info';
+      this.bgStylePopup = 'bg-primary bg-opacity-25 border-bottom border-1 border-primary';
     }else if (obj_request.code == 200) {
       this.buttonStylePopup = 'btn btn-success';
       this.bgStylePopup = 'bg-success bg-opacity-25 border-bottom border-1 border-success';

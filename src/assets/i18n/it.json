@@ -37,7 +37,8 @@
       "NOTIFICATIONS6": "Weekly product updates",
       "NOTIFICATIONS7": "Weekly blog digest",
       "BUTTON_UPDATEPWD": "Update password",
-      "SAVECHANGES": "Salva cambiamenti"
+      "BUTTON_UPDATECOMPANY": "Update company",
+      "SAVECHANGES": "Update profile"
     },
     "LOGIN": {
       "SIGNIN": "Entra nel tuo account",
