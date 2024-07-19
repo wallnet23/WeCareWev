@@ -1,15 +1,15 @@
 <div class="container-fluid p-1">
     <div class="row justify-content-center align-items-center">
         <div class="col-12 text-center">
-            <div class="dropdown" [formControl]="language">
-                <button class="btn dropdown-toggle languageButton" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img class="flagIcon" *ngIf="selectedLanguage.flag" [src]="'assets/img/flags/'+selectedLanguage.flag">
-                    <span class="ms-2 me-1">{{ selectedLanguage.sign }}</span>
+            <div class="dropdown">
+                <button class="btn dropdown-toggle languageButton p-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img class="flagIcon mb-1" *ngIf="selectedLanguage.flag" [src]="'assets/img/flags/'+selectedLanguage.flag">
+                    <span class="ms-1 me-1">{{ selectedLanguage.sign }}</span>
                 </button>
-                <ul class="dropdown-menu" style="min-width: 88px !important;">
-                  <li class="mt-1 ml-3 languagesList" *ngFor="let language of languagesList" (click)="selectLanguage(language.code)">
+                <ul class="dropdown-menu" style="min-width: 65px !important;">
+                  <li class="ms-2 languagesList" *ngFor="let language of languagesList" (click)="selectLanguage(language.code)">
                     <img class="flagIcon" [src]="'assets/img/flags/'+language.flag">
-                    <span class="ms-2">{{ language.sign }}</span>
+                    <span class="ms-1">{{ language.sign }}</span>
                   </li>
                 </ul>
               </div>

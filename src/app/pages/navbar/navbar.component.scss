@@ -5,6 +5,10 @@
     object-fit: contain;
 }
 
+.profileButton:focus {
+    box-shadow: none;
+}
+
 .navbar {
     background-color: #F8F8F8;
     border-bottom: 1px solid lightgrey;

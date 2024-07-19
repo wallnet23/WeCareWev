@@ -1,16 +1,20 @@
 <nav class="navbar sticky-top navbar-expand-lg" style="min-width: 350px;">
   <div class="container-fluid">
     <img src="assets/img/logo.png" class="navbarLogo">
-    <button class="navbar-toggler custom-toggler mr-2" type="button" data-bs-toggle="collapse"
-      data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <i class="bi bi-list"></i>
-    </button>
+
+    <div class="d-flex align-items-center justify-content-end">
+      <app-language *ngIf="isToggle" class="me-1"></app-language>
+      <button class="navbar-toggler custom-toggler mr-2" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="bi bi-list"></i>
+      </button>
+    </div>
+
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
         <li *ngFor="let menu of (menuNavbar$ | async)" class="nav-item d-flex align-items-center mb-1 mr-5"
-          [ngClass]="{'ml-3': isToggle}">
-          <a class="nav-link" [href]="menu.path"
-            [ngStyle]="{'border-bottom': isCurrentPage(menu ? menu.path : '') ? '2px solid #FF0000' : 'none'}">
+          [ngClass]="{'ml-3': isToggle}" [ngStyle]="{'border-bottom': isCurrentPage(menu ? menu.path : '') ? '2px solid #FF0000' : 'none'}">
+          <a class="nav-link" [href]="menu.path">
             <!-- {{'NAVBAR.SYSTEMS' | translate}} -->
             <span *ngIf="menu.voice == 'Systems'" #systemVoice>
               {{'NAVBAR.SYSTEMS' | translate}}
@@ -18,10 +22,8 @@
             <ng-template #systemVoice>
               {{menu.voice}}
             </ng-template>
-
           </a>
         </li>
-
         <!-- <li class="nav-item d-flex align-items-center mb-1 mr-5" [ngClass]="{'ml-3': isToggle}">
                     <a class="nav-link" href="/systemsList"
                         [ngStyle]="{'border-bottom': isCurrentPage('/systemsList') ? '2px solid #FF0000' : 'none'}">
@@ -34,16 +36,15 @@
                         {{'NAVBAR.TICKETS' | translate}}
                     </a>
                 </li> -->
-        <li *ngIf="!isToggle" class="nav-item d-flex align-items-center mb-1 mr-5">
+        <li *ngIf="!isToggle" class="nav-item d-flex align-items-center mb-1 mr-4" [ngStyle]="{'border-bottom': isCurrentPage('/profile') ? '2px solid #FF0000' : 'none'}">
           <div class="dropdown">
-            <a class="nav-link dropdown-toggle"
-              [ngStyle]="{'border-bottom': isCurrentPage('/profile') ? '2px solid #FF0000' : 'none'}"
+            <button class="btn profileButton nav-link dropdown-toggle"
               id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="bi bi-person mr-2"></i>
               <!-- {{'NAVBAR.PROFILE' | translate}} -->
               {{nickname$ | async}}
-            </a>
-            <ul class="dropdown-menu">
+            </button>
+            <ul class="dropdown-menu" style="min-width: 78px;">
               <li>
                 <a class="dropdown-item" href="/profile/settings">{{'NAVBAR.SETTINGS' | translate}}</a>
               </li>
@@ -53,6 +54,10 @@
             </ul>
           </div>
         </li>
+        <li *ngIf="!isToggle" class="nav-item d-flex align-items-center mb-1">
+          <app-language></app-language>
+        </li>
+
         <li *ngIf="isToggle" class="nav-item d-flex align-items-center mb-1 ml-3">
           <a class="nav-link" href="/profile/settings"
             [ngStyle]="{'border-bottom': isCurrentPage('/profile') ? '2px solid #FF0000' : 'none'}">
@@ -60,12 +65,9 @@
           </a>
         </li>
         <li *ngIf="isToggle" class="nav-item d-flex align-items-center mb-1 ml-3">
-          <a class="nav-link" (click)="logout()">
+          <button class="btn nav-link" (click)="logout()">
             {{'NAVBAR.LOGOUT' | translate}}
-          </a>
-        </li>
-        <li>
-          <app-language></app-language>
+          </button>
         </li>
       </ul>
     </div>

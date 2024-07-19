@@ -108,10 +108,6 @@ export class SignupComponent implements OnInit {
     );
   }
 
-  goBack() {
-    this.location.back();
-  }
-
   passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
     const password = control.get('password');
     const passwordConfirm = control.get('password_confirmation');

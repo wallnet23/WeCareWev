@@ -12,6 +12,7 @@ import { StepThree } from '../components/interfaces/step-three';
 import { StepFour } from '../components/interfaces/step-four';
 import { InverterData } from '../interfaces/inverterData';
 import { ClusterData } from '../interfaces/clusterData';
+import { TranslateModule } from '@ngx-translate/core';
 
 declare var $: any;
 
@@ -19,7 +20,8 @@ declare var $: any;
   selector: 'app-system-readonly',
   standalone: true,
   imports: [
-    CommonModule
+    CommonModule,
+    TranslateModule
   ],
   templateUrl: './system-readonly.component.html',
   styleUrl: './system-readonly.component.scss'

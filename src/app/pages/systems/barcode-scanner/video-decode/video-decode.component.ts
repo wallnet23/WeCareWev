@@ -31,7 +31,7 @@ export class VideoDecodeComponent {
 
     try{
       // Create a `CameraEnhancer` instance for camera control and a `CameraView` instance for UI control.
-      const cameraView = await CameraView.createInstance();
+      const cameraView = await CameraView.createInstance("assets/dynamsoft/dist/dce.ui.html");
       if(this.bDestoryed){ throw Error(strErrorDistoryed); } // Check if component is destroyed after every async
       this.cameraEnhancer = await CameraEnhancer.createInstance(cameraView);
       if(this.bDestoryed){ throw Error(strErrorDistoryed); }

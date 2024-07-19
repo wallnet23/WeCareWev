@@ -15,7 +15,7 @@
         <div class="col-12 text-center">
             <span *ngIf="systemInfo?.system_description != null && systemInfo?.system_description != ''; else addDescriptionBlock" style="font-size: medium; font-style: italic;">{{systemInfo?.system_description}}</span>
             <ng-template #addDescriptionBlock>
-                <span style="font-size: medium; font-style: italic;">Add a description</span>
+                <span style="font-size: medium; font-style: italic;">{{"SYSTEM.OVERVIEW.ADD" | translate}}</span>
             </ng-template>
             <button type="button" class="btn btn-sm btn-outline-dark ms-2" data-bs-toggle="modal"
                 data-bs-target="#descriptionModal">
@@ -29,7 +29,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="descriptionModalLabel">Change system description</h1>
+                    <h1 class="modal-title fs-5" id="descriptionModalLabel">{{"SYSTEM.OVERVIEW.CHANGEDESCRIPTION" | translate}}</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -38,9 +38,9 @@
                     </textarea>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Dismiss</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{"SYSTEM.OVERVIEW.DISMISS" | translate}}</button>
                     <button type="button" class="btn btn-primary" (click)="modifyDescription(newDescription.value)"
-                        data-bs-dismiss="modal">Save</button>
+                        data-bs-dismiss="modal">{{"SYSTEM.OVERVIEW.SAVE" | translate}}</button>
                 </div>
             </div>
         </div>
@@ -50,7 +50,7 @@
     <div class="row justify-content-center p-1 p-lg-4">
         <div class="col-12 col-md-6 mt-2">
             <div class="card">
-                <h5 class="card-header blueBg">SYSTEM DATA</h5>
+                <h5 class="card-header blueBg">{{"SYSTEM.OVERVIEW.SYSTEMDATA" | translate}}</h5>
                 <div class="card-body">
                     <div *ngIf="systemInfo && systemInfo?.customerInfo?.length! > 1; else systemBlock">
                         <ul class="list-unstyled">
@@ -66,15 +66,15 @@
                                 <span *ngIf="!systemInfo?.status" style="margin-left: 1rem;">Status not available</span>
                             </li>
                             <li class="listElement">
-                                <span class="listTitle">Customer Name:</span><br>
+                                <span class="listTitle">{{"SYSTEM.OVERVIEW.CUSTOMERNAME" | translate}}:</span><br>
                                 <span class="listDescription">{{systemInfo.customerInfo}}</span>
                             </li>
                             <li class="listElement">
-                                <span class="listTitle">Installation Site:</span><br>
+                                <span class="listTitle">{{"SYSTEM.OVERVIEW.INSTALLATIONSITE" | translate}}:</span><br>
                                 <span class="listDescription">{{systemInfo.installationSite}}</span>
                             </li>
                             <li class="listElement">
-                                <span class="listTitle">Device Info:</span><br>
+                                <span class="listTitle">{{"SYSTEM.OVERVIEW.DEVICEINFO" | translate}}:</span><br>
                                 <ul>
                                     <li *ngFor="let device of systemInfo?.devicesInfo">
                                         <span class="listDescription">{{device}}</span>
@@ -84,16 +84,16 @@
                         </ul>
                     </div>
                     <ng-template #systemBlock class="mt-4 p-2 text-center">
-                        <span class="mt-2">Insert the system's datas to enable the others functionalities</span>
+                        <span class="mt-2">{{"SYSTEM.OVERVIEW.ENABLEFUNC" | translate}}</span>
                     </ng-template>
                 </div>
                 <div class="card-footer blueBg text-center">
                     <button *ngIf="systemInfo?.status!.id == 1 || systemInfo?.status!.id == 3; else readOnlyBlock" class="btn btn-outline-dark btn-light me-2" (click)="modifySystem()">
-                        Modify System Data
+                        {{"SYSTEM.OVERVIEW.MODIFYDATA" | translate}}
                     </button>
                     <ng-template #readOnlyBlock>
                         <button class="btn btn-outline-dark btn-light ms-2" (click)="viewSystem()">
-                            View System Data
+                            {{"SYSTEM.OVERVIEW.VIEWDATA" | translate}}
                         </button>
                     </ng-template>
                 </div>
@@ -102,10 +102,10 @@
 
         <div class="col-12 col-md-6 mt-2">
             <div class="card">
-                <h5 class="card-header greenBg">WARRANTY</h5>
+                <h5 class="card-header greenBg">{{"SYSTEM.OVERVIEW.WARRANTY" | translate}}</h5>
                 <div class="card-body">
                     <p style="margin-top: 1rem;">
-                        <span class="listTitle">Warranty Status: </span><br>
+                        <span class="listTitle">{{"SYSTEM.OVERVIEW.WARRANTYSTATUS" | translate}}: </span><br>
                         <!-- <span class="listDescription">{{warrantyExtensionStatus}}</span> -->
                     </p>
                     <p class="paragraph" *ngIf="systemInfo?.status?.id == 4; else warrantyBlock">
@@ -113,9 +113,8 @@
                     </p>
                     <ng-template #warrantyBlock>
                         <p class="paragraph">
-                            Per visualizzare la garanzia di ogni dispositivo è necessario che l'impianto sia stato
-                            approvato.<br>
-                            Stato attuale impianto:
+                            {{"SYSTEM.OVERVIEW.WARRANTYERROR" | translate}}.<br>
+                            {{"SYSTEM.OVERVIEW.ACTUALSTATE" | translate}}:
                             <i class="bi bi-circle-fill" style="font-size: large;" [ngClass]="{
                                 'text-success': systemInfo?.status?.id === 4,
                                 'text-danger': systemInfo?.status?.id === 3,
@@ -136,8 +135,8 @@
                     </ng-template> -->
                 </div>
                 <div class="card-footer greenBg text-center">
-                    <div href="#" class="btn btn-outline-dark btn-light" (click)="warrantyInfo()">Warranty
-                        info
+                    <div href="#" class="btn btn-outline-dark btn-light" (click)="warrantyInfo()">
+                        {{"SYSTEM.OVERVIEW.WARRANTYINFO" | translate}}
                     </div>
                 </div>
             </div>
@@ -147,7 +146,7 @@
     <div *ngIf="false" class="row justify-content-center align-items-center mt-2 p-1 p-lg-4">
         <div class="col-12">
             <div class="card">
-                <h5 class="card-header orangeBg">TICKETS</h5>
+                <h5 class="card-header orangeBg">{{"SYSTEM.OVERVIEW.TICKETS" | translate}}</h5>
                 <div class="card-body">
                     <!-- <div *ngIf="!isChat">
                         <h5 class="card-title">No requests available</h5>
@@ -162,7 +161,7 @@
                         <p>
                             </div>-->
 
-                    <span style="font-weight: bold;">Latest Requests:</span>
+                    <span style="font-weight: bold;">{{"SYSTEM.OVERVIEW.LATESTREQUESTS" | translate}}:</span>
                     <ul *ngFor="let ticket of systemTickets" class="list-unstyled">
                         <li>
                             <div class="card" (click)="goToTicket(ticket.id)">
@@ -170,15 +169,15 @@
                                     <div class="card-text">
                                         <div *ngIf="isTicket; else ticketBlock" class="row justify-content-center">
                                             <div class="col-12 col-lg-4 text-start">
-                                                <span style="font-weight: bold;">Title: </span>
+                                                <span style="font-weight: bold;">{{"SYSTEM.OVERVIEW.TITLE" | translate}}: </span>
                                                 <span>{{ticket.title}}</span>
                                             </div>
                                             <div class="col-12 col-md-6 col-lg-4 mt-md-4 mt-lg-0 text-center">
-                                                <span style="font-weight: bold;">Date: </span>
+                                                <span style="font-weight: bold;">{{"SYSTEM.OVERVIEW.DATE" | translate}}: </span>
                                                 <span>{{ticket.date_ticket}}</span>
                                             </div>
                                             <div class="col-12 col-md-6 col-lg-4 mt-md-4 mt-lg-0 text-end">
-                                                <span style="font-weight: bold;">Status: </span>
+                                                <span style="font-weight: bold;">{{"SYSTEM.OVERVIEW.STATUS" | translate}}: </span>
                                                 <span>
                                                     {{ticket.status}}
                                                     <i class="bi bi-circle-fill" [ngClass]="{
@@ -189,7 +188,7 @@
                                                 </span>
                                             </div>
                                             <div class="col-12">
-                                                <span style="font-weight: bold;">Description: </span>
+                                                <span style="font-weight: bold;">{{"SYSTEM.OVERVIEW.DESCRIPTION" | translate}}: </span>
                                                 <span>
                                                     {{ticket.description}}
 
@@ -198,7 +197,7 @@
                                         </div>
                                         <div class="row justify-content-center">
                                             <ng-template #ticketBlock>
-                                                No tickets available for this system
+                                                {{"SYSTEM.OVERVIEW.NOTICKETSAVAILABLE" | translate}}
                                             </ng-template>
                                         </div>
                                     </div>
@@ -210,11 +209,11 @@
                 <div class="card-footer orangeBg text-center">
                     <div class="row justify-content-center">
                         <div class="col-12 mt-1" [ngClass]="{'col-sm-6': isTicket}">
-                            <div class="btn btn-outline-dark btn-light" (click)="newTicket()">Add a new ticket</div>
+                            <div class="btn btn-outline-dark btn-light" (click)="newTicket()">{{"SYSTEM.OVERVIEW.ADDTICKET" | translate}}</div>
                         </div>
                         <div class="col-12 col-sm-6 mt-1">
                             <div *ngIf="isTicket" class="btn btn-outline-dark btn-light" (click)="ticketsListSystem()">
-                                Ticket list system
+                                {{"SYSTEM.OVERVIEW.TICKETLIST" | translate}}
                             </div>
                         </div>
                     </div>
@@ -226,21 +225,19 @@
     <div class="row justify-content-center align-items-center mt-2 p-1 p-lg-4" *ngIf="false">
         <div class="col-12">
             <div class="card">
-                <h5 class="card-header yellowBg">RMA</h5>
+                <h5 class="card-header yellowBg">{{"SYSTEM.OVERVIEW.RMA" | translate}}</h5>
                 <div class="card-body">
                     <div *ngIf="!isRma">
-                        <h5 class="card-title">No RMA available</h5>
-                        <p class="card-text">Press on the button below to start a new process for RMA.</p>
+                        <h5 class="card-title">{{"SYSTEM.OVERVIEW.NORMA" | translate}}</h5>
+                        <p class="card-text">{{"SYSTEM.OVERVIEW.PRESSFORRMA" | translate}}.</p>
                     </div>
                     <div *ngIf="isRma">
-                        <h5 class="card-title">Number of RMA available</h5>
-                        <p class="card-text">Click on the card to visualize old RMA or press on the button below to
-                            start a new process for
-                            RMA.</p>
+                        <h5 class="card-title">{{"SYSTEM.OVERVIEW.RMAAVAILABLE" | translate}}</h5>
+                        <p class="card-text">{{"SYSTEM.OVERVIEW.OLDRMA" | translate}}.</p>
                     </div>
                 </div>
                 <div class="card-footer yellowBg text-center">
-                    <div href="#" class="btn btn-outline-dark btn-light">New RMA</div>
+                    <div href="#" class="btn btn-outline-dark btn-light">{{"SYSTEM.OVERVIEW.NEWRMA" | translate}}</div>
                 </div>
             </div>
         </div>
@@ -248,6 +245,6 @@
 </div>
 
 <ng-template #blockError class="mt-4 p-2 text-center">
-    <h1>LOADING ERROR</h1><br>
-    <h3 class="mt-4">Refresh the page to try again</h3>
+    <h1>{{"SYSTEM.OVERVIEW.LOADINGERROR" | translate}}</h1><br>
+    <h3 class="mt-4">{{"SYSTEM.OVERVIEW.REFRESH" | translate}}</h3>
 </ng-template>

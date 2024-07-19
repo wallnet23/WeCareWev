@@ -12,6 +12,7 @@ import { SystemInfo } from '../interfaces/system-info';
 import { Ticket } from '../interfaces/ticket';
 import { RMA } from '../interfaces/rma';
 import { PopupDialogService } from '../../../services/popup-dialog.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-system-overview',
@@ -21,6 +22,7 @@ import { PopupDialogService } from '../../../services/popup-dialog.service';
     MatCardModule,
     MatTooltip,
     MatDialogModule,
+    TranslateModule
   ],
   templateUrl: './system-overview.component.html',
   styleUrl: './system-overview.component.scss'
