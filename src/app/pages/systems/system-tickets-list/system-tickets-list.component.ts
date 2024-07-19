@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { AssistanceRequestsService } from '../../../services/assistance-requests.service';
 import { CommonModule } from '@angular/common';
-import { Inverter } from '../interfaces/inverterData';
 import { Router } from '@angular/router';
 import { Ticket } from '../interfaces/ticket';
 import { TranslateModule } from '@ngx-translate/core';
@@ -24,7 +22,7 @@ export class SystemTicketsListComponent {
   // inverterProblem: { serialNumber: string, model: string }[] = [];
   // batteryProblem: { serialNumber: string, relatedInverter: string }[] = [];
 
-  constructor(private assistanceRequestsService: AssistanceRequestsService, private router: Router) {
+  constructor( private router: Router) {
 
   }
 

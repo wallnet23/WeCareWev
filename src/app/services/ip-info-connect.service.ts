@@ -2,17 +2,35 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Connect } from '../classes/connect';
 import { catchError, map, Observable, of } from 'rxjs';
+import { ConnectServerService } from './connect-server.service';
+import { Store } from '@ngrx/store';
+import { UserState } from '../ngrx/user/user.reducer';
+import { User } from '../pages/profile/interfaces/user';
+import { TranslateService } from '@ngx-translate/core';
+import { ApiResponse } from '../interfaces/api-response';
+import * as UserActions from '../ngrx/user/user.actions';
 
 @Injectable({
   providedIn: 'root'
 })
 export class IpInfoConnectService {
 
+  languagesList: {
+    code: string;
+    name: string;
+    sign: string;
+    flag: string;
+  }[] = [
+      { code: 'en', sign: 'EN', name: 'England', flag: 'en.png' },
+      { code: 'it', sign: 'IT', name: 'Italian', flag: 'it.png' },
+    ];
+
   apiUrl = `${Connect.IPINFO_URL}?token=${Connect.IPINFO_API_TOKEN}`;
-  constructor(private http: HttpClient) { }
+  constructor(private connectServerService: ConnectServerService,
+    private store: Store<{ user: UserState }>, private translateService: TranslateService) { }
 
   getLanguage(): Observable<string> {
-    return this.http.get(this.apiUrl).pipe(
+    return this.connectServerService.getRequest(this.apiUrl, '', {}).pipe(
       map((response: any) => {
         // Estrarre la lingua preferita dal servizio di geolocalizzazione
         const language = response.country.toLowerCase(); // Esempio: utilizzare il paese come lingua
@@ -26,4 +44,41 @@ export class IpInfoConnectService {
     );
   }
 
+  /**
+   * Setta la linga nell'app
+   */
+  setUserLanguageApp() {
+    this.store.select(state => state.user.userInfo).subscribe(
+      (val: User | null) => {
+        console.log('stor', val);
+        if (val && val.language) {
+          this.translateService.setDefaultLang(val.language);
+        } else {
+          this.getLanguage().subscribe(
+            (lang: string) => {
+              this.translateService.setDefaultLang(lang);
+            }
+          )
+        }
+      }
+    );
+  }
+
+  setUserLanguageDb(code_lang: string) {
+    if (code_lang.length > 0 && this.checkIfCodeExists(code_lang)) {
+      this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'user/updateLanguage',
+        {
+          code: code_lang
+        }).subscribe(
+          (val) => {
+            this.store.dispatch(UserActions.loadUserInfo());
+            this.setUserLanguageApp();
+          }
+        )
+    }
+  }
+
+  private checkIfCodeExists(code_flag: string): boolean {
+    return this.languagesList.some(language => language.code === code_flag);
+  }
 }

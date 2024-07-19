@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { LoadSystemsService } from '../../../../services/load-systems.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SystemInfo } from '../../interfaces/system-info';
 import { ConnectServerService } from '../../../../services/connect-server.service';
-import { ApiResponse, ObjButtonPopup } from '../../../../interfaces/api-response';
+import { ApiResponse } from '../../../../interfaces/api-response';
 import { Connect } from '../../../../classes/connect';
 import { TranslateModule } from '@ngx-translate/core';
 import { PopupDialogService } from '../../../../services/popup-dialog.service';

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { LoadSystemsService } from '../../../services/load-systems.service';
 //import { SystemInfo } from '../interfaces/full-system-interface';
 import { UploadImageService } from '../../../services/upload-images.service';
 import { CommonModule } from '@angular/common';
@@ -42,7 +41,7 @@ export class TicketNewComponent {
     attachments: new FormControl<string[] | null>(null)
   })
 
-  constructor(private loadSystemService: LoadSystemsService, public uploadImageService: UploadImageService,
+  constructor( public uploadImageService: UploadImageService,
     private connectServerService: ConnectServerService, private router: Router, private activatedRoute: ActivatedRoute) {
       this.activatedRoute.paramMap.subscribe((paramMap) => {
         this.setSystem(parseInt(paramMap.get('id')!));

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AssistanceRequestsService } from '../../../services/assistance-requests.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Ticket } from '../interfaces/ticket';
 import { ConnectServerService } from '../../../services/connect-server.service';
@@ -24,7 +23,7 @@ export class TicketComponent {
   ticket: Ticket | null = null;
   system: SystemInfo | null = null;
 
-  constructor(private assistanceRequestService: AssistanceRequestsService, private activatedRoute: ActivatedRoute,
+  constructor( private activatedRoute: ActivatedRoute,
     private router: Router, private connectServerService: ConnectServerService) {
     this.activatedRoute.paramMap.subscribe((paramMap) => {
       this.id = paramMap.get('id');

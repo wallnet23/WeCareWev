@@ -2,10 +2,8 @@ import { CommonModule, Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LoadSystemsService } from '../../../services/load-systems.service';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { AssistanceRequestsService } from '../../../services/assistance-requests.service';
 import { Warranty } from '../interfaces/warranty';
 import { ConnectServerService } from '../../../services/connect-server.service';
 import { ApiResponse } from '../../../interfaces/api-response';
@@ -41,7 +39,7 @@ export class SystemOverviewComponent {
   systemRMA!: RMA;
 
   constructor(private popupDialogService: PopupDialogService, private route: ActivatedRoute,
-    public dialog: MatDialog, private router: Router, private assistanceRequestsService: AssistanceRequestsService,
+    public dialog: MatDialog, private router: Router,
     private connectServerService: ConnectServerService, private location: Location) {
 
     this.route.params.subscribe(params => {

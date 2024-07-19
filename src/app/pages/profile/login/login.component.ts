@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { IpInfoConnectService } from '../../../services/ip-info-connect.service';
@@ -20,7 +20,7 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
 
   valid: boolean = true;
   toggled: boolean = true;
@@ -34,10 +34,10 @@ export class LoginComponent {
   constructor(private router: Router, private ipInfoConnectService: IpInfoConnectService,
      private authService: AuthService) { }
 
+     ngOnInit(): void {
+     }
+
   async login() {
-    this.ipInfoConnectService.getLanguage().subscribe((val) => {
-      //console.log(val)
-    });
     // try {
     await this.authService.loginUser(
       this.loginForm.get('email')?.value!,
