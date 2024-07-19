@@ -9,6 +9,7 @@ import { User } from '../pages/profile/interfaces/user';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiResponse } from '../interfaces/api-response';
 import * as UserActions from '../ngrx/user/user.actions';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,13 +22,14 @@ export class IpInfoConnectService {
     sign: string;
     flag: string;
   }[] = [
-      { code: 'en', sign: 'EN', name: 'England', flag: 'en.png' },
+      { code: 'en', sign: 'EN', name: 'English', flag: 'en.png' },
       { code: 'it', sign: 'IT', name: 'Italian', flag: 'it.png' },
     ];
 
   apiUrl = `${Connect.IPINFO_URL}?token=${Connect.IPINFO_API_TOKEN}`;
   constructor(private connectServerService: ConnectServerService,
-    private store: Store<{ user: UserState }>, private translateService: TranslateService) { }
+    private store: Store<{ user: UserState }>, private translateService: TranslateService,
+  private authService: AuthService) { }
 
   getLanguage(): Observable<string> {
     return this.connectServerService.getRequest(this.apiUrl, '', {}).pipe(
@@ -50,9 +52,10 @@ export class IpInfoConnectService {
   setUserLanguageApp() {
     this.store.select(state => state.user.userInfo).subscribe(
       (val: User | null) => {
-        console.log('stor', val);
-        if (val && val.language) {
-          this.translateService.setDefaultLang(val.language);
+        console.log('stor', val?.lang_code);
+        if (val && val.lang_code) {
+          console.log('dentroooooooo');
+          this.translateService.setDefaultLang(val.lang_code);
         } else {
           this.getLanguage().subscribe(
             (lang: string) => {
@@ -65,16 +68,22 @@ export class IpInfoConnectService {
   }
 
   setUserLanguageDb(code_lang: string) {
+    console.log('select 2', code_lang);
     if (code_lang.length > 0 && this.checkIfCodeExists(code_lang)) {
-      this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'user/updateLanguage',
-        {
-          code: code_lang
-        }).subscribe(
-          (val) => {
-            this.store.dispatch(UserActions.loadUserInfo());
-            this.setUserLanguageApp();
-          }
-        )
+      console.log('login:', this.authService.isLoggedIn());
+      if(this.authService.isLoggedIn()){
+        this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'user/updateLanguage',
+          {
+            code: code_lang
+          }).subscribe(
+            (val) => {
+              this.store.dispatch(UserActions.loadUserInfo());
+              this.setUserLanguageApp();
+            }
+          )
+      }else{
+        this.translateService.setDefaultLang(code_lang);
+      }
     }
   }
 

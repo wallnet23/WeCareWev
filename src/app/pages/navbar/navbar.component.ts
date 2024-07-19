@@ -12,6 +12,8 @@ import { map, Observable } from 'rxjs';
 import { PermissionsUser } from '../../interfaces/permissions-user';
 import { User } from '../profile/interfaces/user';
 import { Menu } from '../../interfaces/menu';
+import { LanguageComponent } from "../../components/language/language.component";
+import { IpInfoConnectService } from '../../services/ip-info-connect.service';
 
 @Component({
   selector: 'app-navbar',
@@ -20,8 +22,9 @@ import { Menu } from '../../interfaces/menu';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    TranslateModule
-  ],
+    TranslateModule,
+    LanguageComponent
+],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
@@ -34,7 +37,8 @@ export class NavbarComponent implements OnInit {
   menuNavbar$!: Observable<Menu[]>;
   constructor(private currentPageService: CurrentPageService,
     private viewportRuler: ViewportRuler, private authService: AuthService,
-    private store: Store<{ user: UserState }>) {
+    private store: Store<{ user: UserState }>,
+  private ipInfoConnectService: IpInfoConnectService) {
 
     this.currentPageService.currentUrl$.subscribe(url => {
       this.currentPage = "/" + url.split('/')[1];
@@ -53,6 +57,7 @@ export class NavbarComponent implements OnInit {
       map((val) => val ? val.menu : []),
       map((menus: Menu[]) => menus.filter(menu => menu.level === 0))
     )
+    this.ipInfoConnectService.setUserLanguageApp();
   }
 
   ngOnInit(): void {

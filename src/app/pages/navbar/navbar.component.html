@@ -21,6 +21,7 @@
 
           </a>
         </li>
+
         <!-- <li class="nav-item d-flex align-items-center mb-1 mr-5" [ngClass]="{'ml-3': isToggle}">
                     <a class="nav-link" href="/systemsList"
                         [ngStyle]="{'border-bottom': isCurrentPage('/systemsList') ? '2px solid #FF0000' : 'none'}">
@@ -62,6 +63,9 @@
           <a class="nav-link" (click)="logout()">
             {{'NAVBAR.LOGOUT' | translate}}
           </a>
+        </li>
+        <li>
+          <app-language></app-language>
         </li>
       </ul>
     </div>

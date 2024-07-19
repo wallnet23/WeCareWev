@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { IpInfoConnectService } from '../../../services/ip-info-connect.service';
 import { AuthService } from '../../../services/auth.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { LanguageComponent } from "../../../components/language/language.component";
@@ -32,7 +31,7 @@ export class LoginComponent implements OnInit{
     password: new FormControl('', Validators.required),
   })
 
-  constructor(private router: Router, private ipInfoConnectService: IpInfoConnectService,
+  constructor(private router: Router,
      private authService: AuthService) { }
 
      ngOnInit(): void {
