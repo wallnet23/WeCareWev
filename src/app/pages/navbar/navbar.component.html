@@ -13,8 +13,9 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
         <li *ngFor="let menu of (menuNavbar$ | async)" class="nav-item d-flex align-items-center mb-1 mr-5"
-          [ngClass]="{'ml-3': isToggle}" [ngStyle]="{'border-bottom': isCurrentPage(menu ? menu.path : '') ? '2px solid #FF0000' : 'none'}">
-          <a class="nav-link" [href]="menu.path">
+          [ngClass]="{'ml-3': isToggle}">
+          <a class="nav-link" [href]="menu.path"
+          [ngStyle]="{'border-bottom': isCurrentPage(menu ? menu.path : '') ? '2px solid #FF0000' : 'none'}">
             <!-- {{'NAVBAR.SYSTEMS' | translate}} -->
             <span *ngIf="menu.voice == 'Systems'" #systemVoice>
               {{'NAVBAR.SYSTEMS' | translate}}
