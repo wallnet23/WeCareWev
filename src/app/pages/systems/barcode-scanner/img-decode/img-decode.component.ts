@@ -5,13 +5,15 @@ import type { BarcodeResultItem } from "dynamsoft-barcode-reader";
 import { CaptureVisionRouter } from "dynamsoft-capture-vision-router";
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ScannerSelectorComponent } from "../scanner-selector/scanner-selector.component";
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-img-decode',
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    ScannerSelectorComponent
+    ScannerSelectorComponent,
+    TranslateModule
 ],
   templateUrl: './img-decode.component.html',
   styleUrl: './img-decode.component.scss'

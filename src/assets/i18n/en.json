@@ -71,7 +71,8 @@
       "ERROR": "*Wrong e-mail format inserted",
       "RESPONSEMESSAGE": "An e-mail to recover your password has been sent to your address",
       "USERTERMS": "Terms of use",
-      "PRIVACY": "Privacy policy"
+      "PRIVACY": "Privacy policy",
+      "PLACEHOLDEREMAIL": "Email address"
     },
     "SIGNUP": {
       "SUBSCRIBE": "Subscribe to extend warranties",
@@ -168,7 +169,10 @@
       "PHONEPLACEHOLDER": "(+999) 9999999",
       "VAT": "VAT",
       "LICENSENUMBER": "License Number",
-      "FISCALCODE": "Fiscal Code"
+      "FISCALCODE": "Fiscal Code",
+      "INFO": "Info",
+      "SHORTDESCRIPTION": "Short Description",
+      "SYSTEMPLACEHOLDER": "System Name"
     },
     "STEPTWO": {
       "INSTALLATIONCOUNTRY": "Installation Country",
@@ -198,7 +202,11 @@
       "DATEERROR": "Insert the date of purchase",
       "IMAGELIMIT": "Image limit reached",
       "IMPORT": "Importa",
-      "IMPORTINVOICE": "Import a picture of the invoice (max 2 files)"
+      "IMPORTINVOICE": "Import a picture of the invoice (max 2 files)",
+      "COMPANYNAMEPLACEHOLDER": "Installer Company name",
+      "ADDRESSPLACEHOLDER": "Installer Company address",
+      "VENDORPLACEHOLDER": "Vendor phone or email",
+      "DATEPLACEHOLDER": "dd/mm/yyyy"
     },
     "STEPFOUR": {
       "INSTALLATIONDATE": "Installation Date",
@@ -209,7 +217,39 @@
       "PRODUCTERROR": "Which are the Weco components inside the system?",
       "BRANDBATT": "What brand of batteries are you working with?",
       "BRANDINV": "What brand of inverter are you working with?",
-      "BRANDERROR": "Which is the other brand?"
+      "BRANDERROR": "Which is the other brand?",
+      "DATEPLACEHOLDER": "dd/mm/yyyy",
+      "CLUSTER": {
+        "BATTERYINFO": "Battery Info",
+        "VOLTAGE": "High or Low Voltage",
+        "SELECTVALUE": "Select a value",
+        "SYSTEMMODEL": "System Model",
+        "SELECTMODEL": "Select a model",
+        "PARALLELCLUSTERS": "Parallel Clusters",
+        "BATTERYTYPE": "Battery Type",
+        "SELECTTYPE": "Select a type",
+        "SINGLEBATTERY": "Single Battery",
+        "YES": "Yes",
+        "No": "No",
+        "HOWMANYCLUSTERS": "How many Clusters",
+        "DEVICESFORCLUSTER": "How many devices for each Cluster",
+        "CLUSTER": "Cluster",
+        "SERIALNUMBER": "Serial Number",
+        "CONNECTEDINVERTER": "Inverter to which it is connected"
+      },
+      "INVERTER": {
+        "INVERTERINFO": "Inverter Info",
+        "HYBRIDINVERTER": "Hybrid Inverter",
+        "ONLINEINVERTER": "Is the Inverter Online",
+        "ONLINEERROR": "The inverter has to be online",
+        "INVERTERNUMBER": "Number of Inverter",
+        "SELECTVALUE": "Select a value",
+        "PARALLELCOMUNICATION": "The Inverters are in parallel on power side",
+        "PARALLELPOWER": "The Inverters are in parallel on power side",
+        "INVERTER": "Inverter",
+        "SERIALNUMBER": "Serial Number",
+        "MODEL": "Model"
+      }
     },
     "STEPBUTTONS": {
       "PREV": "Previous",
@@ -250,7 +290,8 @@
       "OLDRMA": "Click on the card to visualize old RMA or press on the button below to start a new process for RMA",
       "NEWRMA": "New RMA",
       "LOADINGERROR": "LOADING ERROR",
-      "REFRESH": "Refresh the page to try again"
+      "REFRESH": "Refresh the page to try again",
+      "VIEWDATA": "View Inserted Data"
     },
     "READONLY": {
       "OWNER": "System Owner",
@@ -296,7 +337,9 @@
       "SLAVE": "Slave",
       "RELATEDINVERTER": "Related Inverters",
       "LOADINGERROR": "LOADING ERROR",
-      "REFRESH": "Refresh the page to try again"
+      "REFRESH": "Refresh the page to try again",
+      "YES": "Yes",
+      "NO": "No"
     }
   },
   "TICKET": {

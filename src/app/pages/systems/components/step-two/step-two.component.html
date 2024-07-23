@@ -16,13 +16,13 @@
         <div class="col-12 col-lg-6 mb-3">
           <label for="location_address" style="font-weight: bold;">{{"SYSTEM.STEPTWO.ADDRESS" | translate}}<sup class="small-asterisk">*</sup></label>
           <input type="text" name="location_address" id="location_address" formControlName="location_address"
-            class="form-control" placeholder="Address" [ngClass]="{'is-invalid': errors.location_address}">
+            class="form-control" placeholder="{{'SYSTEM.STEPTWO.ADDRESS' | translate}}" [ngClass]="{'is-invalid': errors.location_address}">
             <div class="text-danger mt-1" *ngIf="errors.location_address" style="font-size: small;">{{"SYSTEM.STEPTWO.ADDRESSERROR" | translate}}</div>
         </div>
         <div class="col-12 col-lg-6 mb-3">
           <label for="location_city" style="font-weight: bold;">{{"SYSTEM.STEPTWO.CITY" | translate}}<sup class="small-asterisk">*</sup></label>
           <input type="text" name="location_city" id="location_city" formControlName="location_city"
-            class="form-control" placeholder="City" [ngClass]="{'is-invalid': errors.location_city}">
+            class="form-control" placeholder="{{'SYSTEM.STEPTWO.CITY' | translate}}" [ngClass]="{'is-invalid': errors.location_city}">
             <div class="text-danger mt-1" *ngIf="errors.location_city" style="font-size: small;">{{"SYSTEM.STEPTWO.CITYERROR" | translate}}</div>
         </div>
         <div class="col-12 col-lg-6 mb-3">
@@ -41,7 +41,7 @@
     </div>
     <div class="row justify-content-center">
       <div class="col-12 text-center" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        <img src="assets/img/pictures.jpg" style="width: 90%; height: auto;">
+        <img src="assets/img/pictures.jpg" style="width: 60%; height: auto;">
       </div>
     </div>
 
@@ -82,6 +82,7 @@
     </div>
   </form>
 </div>
+
 <!-- Visualizzazione immagine -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">

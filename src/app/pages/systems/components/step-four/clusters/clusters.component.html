@@ -2,25 +2,26 @@
   <div class=" mt-3">
     <mat-card>
       <mat-card-header class="titleBorder bg-success bg-opacity-25">
-        <mat-card-title style="font-weight: bold;">Battery Info</mat-card-title>
+        <mat-card-title style="font-weight: bold;">{{ "SYSTEM.STEPFOUR.CLUSTER.BATTERYINFO" | translate }}</mat-card-title>
       </mat-card-header>
       <mat-card-content class="container-fluid">
         <div class="row">
           <div class="col-12 col-md-6 ">
             <label class="mt-3 fw-bold" for="refidwecaresystemvolt" style=" font-size: medium;">
-              High or low voltage</label>
+              {{ "SYSTEM.STEPFOUR.CLUSTER.VOLTAGE" | translate }}</label>
             <select class="form-select" formControlName="refidwecaresystemvolt" id="refidwecaresystemvolt">
-              <option [ngValue]="null">Select a value</option>
+              <option [ngValue]="null">{{ "SYSTEM.STEPFOUR.CLUSTER.SELECTVALUE" | translate }}</option>
               <option *ngFor="let volt of systemVoltView" [ngValue]="volt.id">{{language_now == 'it' ? volt.name_it :
                 volt.name_en}}</option>
             </select>
           </div>
           <!-- <div class="col-12 col-md-6 p-0" *ngIf="stepClusterForm.get('refidwecaresystemvolt')?.value != null"> -->
           <div class="col-12 col-md-6">
-            <label class="mt-3" for="system_model" style="font-weight: bold; font-size: medium;">System
-              Model</label>
+            <label class="mt-3" for="system_model" style="font-weight: bold; font-size: medium;">
+              {{ "SYSTEM.STEPFOUR.CLUSTER.SYSTEMMODEL" | translate }}
+            </label>
             <select class="form-select" formControlName="system_model">
-              <option [ngValue]="null" id="system_model">Select a model</option>
+              <option [ngValue]="null" id="system_model">{{ "SYSTEM.STEPFOUR.CLUSTER.SELECTMODEL" | translate }}</option>
               <option *ngFor="let model of systemModelView" [ngValue]="model.id">
                 {{language_now == 'it' ? model.name_it : model.name_en}}
               </option>
@@ -29,10 +30,11 @@
 
           <!-- <div class="col-12 col-md-6 p-0" *ngIf="stepClusterForm.get('system_model')?.value != null"> -->
           <div class="col-12 col-md-6">
-            <label class="mt-3" for="refidwecaresystemtype" style="font-weight: bold; font-size: medium;">Battery
-              Type</label>
+            <label class="mt-3" for="refidwecaresystemtype" style="font-weight: bold; font-size: medium;">
+              {{ "SYSTEM.STEPFOUR.CLUSTER.BATTERYTYPE" | translate }}
+            </label>
             <select class="form-select" formControlName="refidwecaresystemtype" id="refidwecaresystemtype">
-              <option [ngValue]="null">Select a type</option>
+              <option [ngValue]="null">{{ "SYSTEM.STEPFOUR.CLUSTER.SELECTTYPE" | translate }}</option>
               <option *ngFor="let type of systemTypeView" [ngValue]="type.id">
                 {{language_now == 'it' ? type.name_it : type.name_en}}
               </option>
@@ -43,14 +45,15 @@
           <!-- <div *ngIf="stepClusterForm.get('refidwecaresystemtype')?.value != null" class="col-12 p-0"> -->
           <div *ngIf="stepClusterForm.get('refidwecaresystemtype')?.value != null" class="col-12">
             <label class="form-check-label mt-3 mr-2" for="singleBattery">
-              Single Battery</label>
+              {{ "SYSTEM.STEPFOUR.CLUSTER.SINGLEBATTERY" | translate }}
+            </label>
             <div class="form-check form-check-inline">
               <input class="form-check-input mt-1" type="radio" [value]="1" formControlName="cluster_singlebattery">
-              <label class="form-check-label" for="yes">Yes</label>
+              <label class="form-check-label" for="yes">{{ "SYSTEM.STEPFOUR.CLUSTER.YES" | translate }}</label>
             </div>
             <div class="form-check form-check-inline">
               <input class="form-check-input mt-1" type="radio" [value]="0" formControlName="cluster_singlebattery">
-              <label class="form-check-label" for="no">No</label>
+              <label class="form-check-label" for="no">{{ "SYSTEM.STEPFOUR.CLUSTER.NO" | translate }}</label>
             </div>
           </div>
           <!-- <div *ngIf="stepClusterForm.get('cluster_singlebattery')?.value == 0" class="col-12 p-0"> -->
@@ -58,35 +61,36 @@
 
             <div class="col-12 p-0">
               <label class="form-check-label mt-3 mr-2" for="cluster_parallel">
-                Parallel Cluster</label>
+                {{ "SYSTEM.STEPFOUR.CLUSTER.PARALLELCLUSTERS" | translate }}
+              </label>
               <div class="form-check form-check-inline">
                 <input class="form-check-input mt-1" type="radio" id="cluster_parallel_yes" [value]="1"
                   formControlName="cluster_parallel">
-                <label class="form-check-label" for="cluster_parallel_yes">Yes</label>
+                <label class="form-check-label" for="cluster_parallel_yes">{{ "SYSTEM.STEPFOUR.CLUSTER.YES" | translate }}</label>
               </div>
               <div class="form-check form-check-inline">
                 <input class="form-check-input mt-1" type="radio" [value]="0" id="cluster_parallel_no"
                   formControlName="cluster_parallel">
-                <label class="form-check-label" for="cluster_parallel_no">No</label>
+                <label class="form-check-label" for="cluster_parallel_no">{{ "SYSTEM.STEPFOUR.CLUSTER.NO" | translate }}</label>
               </div>
             </div>
 
             <div class="col-12 col-md-6 mt-3">
               <label for="cluster_number" style="font-weight: bold; font-size: medium;">
-                How many clusters?
+                {{ "SYSTEM.STEPFOUR.CLUSTER.HOWMANYCLUSTERS" | translate }}?
               </label>
               <select class="form-select" formControlName="cluster_number" id="cluster_number">
-                <option [ngValue]="null">Select a value</option>
+                <option [ngValue]="null">{{ "SYSTEM.STEPFOUR.CLUSTER.SELECTVALUE" | translate }}</option>
                 <option *ngFor="let cluster of numCluster" [ngValue]="cluster.num"> {{cluster.num}}
                 </option>
               </select>
             </div>
             <div class="col-12 col-md-6 mt-3">
               <label for="cluster_numberdevices" style="font-weight: bold; font-size: medium;">
-                How many devices for each cluster?
+                {{ "SYSTEM.STEPFOUR.CLUSTER.DEVICESFORCLUSTER" | translate }}?
               </label>
               <select class="form-select" formControlName="cluster_numberdevices" id="cluster_numberdevices">
-                <option [ngValue]="null">Select a value</option>
+                <option [ngValue]="null">{{ "SYSTEM.STEPFOUR.CLUSTER.SELECTVALUE" | translate }}</option>
                 <option *ngFor="let device of numDevicesCluster" [ngValue]="device.num"> {{device.num}}
                 </option>
               </select>
@@ -106,7 +110,7 @@
                       <mat-card-header *ngIf="clusterFieldAsFormArrayService.controls.length > 1"
                         class="bg-success bg-opacity-10">
                         <mat-card-title style="font-weight: bold; font-size: medium;">
-                          Cluster {{i + 1}}</mat-card-title>
+                          {{ "SYSTEM.STEPFOUR.CLUSTER.CLUSTER" | translate }} {{i + 1}}</mat-card-title>
                       </mat-card-header>
                       <mat-card-content>
                         <div *ngFor="let bat of cluster.get('batteries').controls;let j = index"
@@ -120,14 +124,17 @@
                               </span>
                             </div>
                             <div class="col-12">
-                              <label style="font-weight: bold; font-size: medium;" for="sn-{{i}}-{{j}}">Serial
-                                Number</label>
+                              <label style="font-weight: bold; font-size: medium;" for="sn-{{i}}-{{j}}">
+                                {{ "SYSTEM.STEPFOUR.CLUSTER.SERIALNUMBER" | translate }}
+                              </label>
                               <input id="sn-{{i}}-{{j}}" class="form-control" type="text"
                                 formControlName="serialnumber">
                             </div>
                           </div>
                         </div>
-                        <label class="mt-2" style="font-weight: bold; font-size: medium;" for="inverters">Inverter to which it is connected</label>
+                        <label class="mt-2" style="font-weight: bold; font-size: medium;" for="inverters">
+                          {{ "SYSTEM.STEPFOUR.CLUSTER.CONNECTEDINVERTER" | translate }}
+                        </label>
                         <mat-form-field class="col-12" appearance="outline">
                           <mat-select formControlName="inverters" multiple>
                             @for (inverter of view_inverterslist; track inverter) {

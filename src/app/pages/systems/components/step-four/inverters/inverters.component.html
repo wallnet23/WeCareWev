@@ -1,29 +1,30 @@
 <form [formGroup]="stepInverterForm">
   <mat-card>
     <mat-card-header class="titleBorder bg-primary bg-opacity-25">
-      <mat-card-title style="font-weight: bold;">Inverter Info</mat-card-title>
+      <mat-card-title style="font-weight: bold;">{{ "SYSTEM.STEPFOUR.INVERTER.INVERTERINFO" | translate}}</mat-card-title>
     </mat-card-header>
     <mat-card-content class="px-1 p-md-2">
       <div class="col-12 form-check form-switch mt-4">
         <input class="form-check-input" type="checkbox" role="switch" id="inverter_hybrid"
           formControlName="inverter_hybrid">
-        <label class="form-check-label" for="inverter_hybrid">Hybrid Inverter</label>
+        <label class="form-check-label" for="inverter_hybrid">{{ "SYSTEM.STEPFOUR.INVERTER.HYBRIDINVERTER" | translate}}</label>
       </div>
       <div class="col-12 form-check form-switch mt-4">
         <input class="form-check-input" type="checkbox" role="switch" id="inverter_online"
           formControlName="inverter_online">
-        <label class="form-check-label" for="inverter_online">Inverter Online?</label>
+        <label class="form-check-label" for="inverter_online">{{ "SYSTEM.STEPFOUR.INVERTER.ONLINEINVERTER" | translate}}?</label>
         <div class="fst-italic fw-bold text-danger" *ngIf="stepInverterForm.get('inverter_online')?.value != 1">
-          The inverter must be online!
+          {{ "SYSTEM.STEPFOUR.INVERTER.ONLINEERROR" | translate}}!
         </div>
       </div>
       <div class="col-12 mt-3 p-0">
-        <label for="inverter_number" style="font-weight: bold; font-size: medium;">Number of Inverter
+        <label for="inverter_number" style="font-weight: bold; font-size: medium;">
+          {{ "SYSTEM.STEPFOUR.INVERTER.INVERTERNUMBER" | translate}}
           <mat-icon matTooltip="Enter the quantity of inverters that make up the entire system"
             style="font-size: medium;">info</mat-icon>
         </label>
         <select class="form-select" formControlName="inverter_number" id="inverter_number">
-          <option [ngValue]="null">Select a value</option>
+          <option [ngValue]="null">{{ "SYSTEM.STEPFOUR.INVERTER.SELECTVALUE" | translate}}</option>
           <option *ngFor="let number of numInverter" [ngValue]="number.num"> {{number.num}}
           </option>
         </select>
@@ -34,8 +35,9 @@
       stepInverterForm.get('inverter_number')?.value != 1">
         <input class="form-check-input" type="checkbox" role="switch" id="inverter_communication"
           formControlName="inverter_communication">
-        <label class="form-check-label" for="inverter_communication">The inverter are in
-          parallel communication</label>
+        <label class="form-check-label" for="inverter_communication">
+          {{ "SYSTEM.STEPFOUR.INVERTER.PARALLELCOMUNICATION" | translate}}
+        </label>
       </div>
 
       <div class="col-12 mt-3 form-check form-switch" *ngIf="stepInverterForm.get('inverter_number')?.value != null &&
@@ -43,8 +45,9 @@
       stepInverterForm.get('inverter_number')?.value != 1">
         <input class="form-check-input" type="checkbox" role="switch" id="inverter_power"
           formControlName="inverter_power">
-        <label class="form-check-label" for="inverter_power">The inverter are in
-          parallel on power side</label>
+        <label class="form-check-label" for="inverter_power">
+          {{ "SYSTEM.STEPFOUR.INVERTER.PARALLELPOWER" | translate}}
+        </label>
       </div>
 
       <div class="col-12 p-0 mt-3" *ngIf="stepInverterForm.get('inverter_number')?.value != null">
@@ -56,14 +59,15 @@
                 <div [formGroupName]="i">
                   <mat-card-header style="border-bottom: 2px solid lightgray;" class="bg-primary bg-opacity-10">
                     <mat-card-title style="font-weight: bold; font-size: medium;">
-                      Inverter {{i+1}}</mat-card-title>
+                      {{ "SYSTEM.STEPFOUR.INVERTER.INVERTER" | translate}} {{i+1}}</mat-card-title>
                   </mat-card-header>
                   <mat-card-content class="pb-2 pl-0 pr-0">
                     <div class="container-fluid">
                       <div class="row">
                         <div class="col-12">
-                          <label class="mt-2" style="font-weight: bold; font-size: medium;">Serial
-                            Number</label>
+                          <label class="mt-2" style="font-weight: bold; font-size: medium;">
+                            {{ "SYSTEM.STEPFOUR.INVERTER.SERIALNUMBER" | translate}}
+                          </label>
                         </div>
                         <div class="col-12">
                           <input class="form-control" type="text" formControlName="serialnumber"
@@ -73,7 +77,7 @@
                         </div>
 
                         <div class="col-12">
-                          <label class="mt-2" style="font-weight: bold; font-size: medium;">Model</label>
+                          <label class="mt-2" style="font-weight: bold; font-size: medium;">{{ "SYSTEM.STEPFOUR.INVERTER.MODEL" | translate}}</label>
                           <input class="form-control" type="text" formControlName="model">
                         </div>
 

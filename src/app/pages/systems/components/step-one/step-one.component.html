@@ -4,21 +4,21 @@
       <div class="row">
         <div class="col-12 mb-3 mt-2">
           <label class="form-check-label" for="system_name" style="font-weight: bold;">
-            Info<sup class="small-asterisk">*</sup>
+            {{"SYSTEM.STEPONE.INFO" | translate}}<sup class="small-asterisk">*</sup>
             <mat-icon class="ms-2"
               matTooltip="{{'SYSTEM.STEPONE.NAMETOOLTIP' | translate}}"
-              style="font-size: medium;">info</mat-icon>
+              style="font-size: medium;">Info</mat-icon>
           </label>
           <input type="text" name="system_name" id="system_name" class="form-control" formControlName="system_name"
-            placeholder="System name" [ngClass]="{'is-invalid': errors.system_name}">
+            placeholder="{{'SYSTEM.STEPONE.SYSTEMPLACEHOLDER' | translate}}" [ngClass]="{'is-invalid': errors.system_name}">
           <div class="text-danger mt-1" *ngIf="errors.system_name" style="font-size: small;">{{"SYSTEM.STEPONE.INSERTNAME" | translate}}</div>
         </div>
 
         <div class="col-12 mb-3 mt-2">
           <label for="system_description" style="font-weight: bold;">
-            Short Description
+            {{"SYSTEM.STEPONE.SHORTDESCRIPTION" | translate}}
             <mat-icon class="ms-2" matTooltip="{{'SYSTEM.STEPONE.DESCTOOLTIP' | translate}}"
-              style="font-size: medium;">info</mat-icon>
+              style="font-size: medium;">Info</mat-icon>
           </label>
           <textarea type="text" name="system_description" id="system_description" formControlName="system_description"
             class="form-control" placeholder="{{'SYSTEM.STEPONE.SHORTINFO' | translate}}"></textarea>

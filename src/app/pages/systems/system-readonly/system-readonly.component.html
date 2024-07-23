@@ -98,7 +98,8 @@
             <div class="row justify-content-center align-items-center mt-4">
                 <ng-container *ngFor="let image3 of imagesStep3">
                     <div class="col-6 col-md-2 mb-4 text-center" style="width: 100px; height: 100px;">
-                        <img [src]="urlServerLara + image3.src" [alt]="image3.title" class="img-fluid thumbnailImg">
+                        <img [src]="urlServerLara + image3.src" [alt]="image3.title" class="img-fluid thumbnailImg"
+                        (click)="setImage(image3)" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     </div>
                 </ng-container>
             </div>
@@ -176,11 +177,11 @@
     <div class="row">
         <div class="col-6 col-md-4 col-lg-3">
             <span class="subtitles">{{"SYSTEM.READONLY.HYBRID" | translate}}: </span>
-            <p class="content">{{systemInfo.inverter.inverter_hybrid? 'yes' : 'no'}}</p>
+            <p class="content">{{systemInfo.inverter.inverter_hybrid? "Yes" : "No"}}</p>
         </div>
         <div class="col-6 col-md-4 col-lg-3">
             <span class="subtitles">{{"SYSTEM.READONLY.ONLINE" | translate}}: </span>
-            <p class="content">{{systemInfo.inverter.inverter_online? 'yes' : 'no'}}</p>
+            <p class="content">{{systemInfo.inverter.inverter_online? "Yes" : "No"}}</p>
         </div>
         <div class="col-6 col-md-4 col-lg-3">
             <span class="subtitles">{{"SYSTEM.READONLY.INVERTERSNUMBER" | translate}}: </span>
@@ -188,18 +189,19 @@
         </div>
         <div *ngIf="systemInfo.inverter.inverter_number! > 1" class="col-6 col-md-4 col-lg-3">
             <span class="subtitles">{{"SYSTEM.READONLY.PARALLELPOWER" | translate}}: </span>
-            <p class="content">{{systemInfo.inverter.inverter_communication? 'yes' : 'no'}}</p>
+            <p class="content">{{systemInfo.inverter.inverter_communication? "Yes" : "No"}}</p>
         </div>
         <div *ngIf="systemInfo.inverter.inverter_number! > 1" class="col-12 col-sm-6 col-md-4 col-lg-3">
             <span class="subtitles">{{"SYSTEM.READONLY.PARALLELCOMUNICATION" | translate}}: </span>
-            <p class="content">{{systemInfo.inverter.inverter_communication? 'yes' : 'no'}}</p>
+            <p class="content">{{systemInfo.inverter.inverter_communication? "Yes" : "No"}}</p>
         </div>
-        <div class="col-lg-8 d-none d-sm-inline"></div>
+        <div *ngIf="systemInfo.inverter.inverter_number! > 1" class="col-lg-8 d-none d-sm-inline"></div>
+        <div *ngIf="systemInfo.inverter.inverter_number! <= 1" class="col-sm-6 col-lg-3 d-none d-md-none d-lg-inline d-sm-inline"></div>
         <div *ngFor="let inverter of systemInfo.inverter.inverters_list; let i = index"
             class="col mt-4 text-center d-flex justify-content-center">
             <div class="card" style="min-width: 250px;">
                 <div class="card-header" style="font-weight: bold;">
-                    {{"SYSTEM.READONLY.INVERTER" | translate}} {{i}}
+                    {{"SYSTEM.READONLY.INVERTER" | translate}} n. {{i+1}}
                 </div>
                 <div class="card-body">
                     <span class="subtitles">{{"SYSTEM.READONLY.MODEL" | translate}}</span><br>
@@ -231,11 +233,11 @@
         </div>
         <div class="col-6 col-lg-3">
             <span class="subtitles">{{"SYSTEM.READONLY.SINGLECLUSTER" | translate}}: </span>
-            <p class="content">{{systemInfo.cluster.cluster_singlebattery? 'yes' : 'no'}}</p>
+            <p class="content">{{systemInfo.cluster.cluster_singlebattery? "Yes" : "No"}}</p>
         </div>
         <div *ngIf="systemInfo.cluster.cluster_singlebattery! == 0" class="col-6 col-lg-3">
             <span class="subtitles">{{"SYSTEM.READONLY.PARALLELCLUSTERS" | translate}}: </span>
-            <p class="content">{{systemInfo.inverter.inverter_communication? 'yes' : 'no'}}</p>
+            <p class="content">{{systemInfo.inverter.inverter_communication? "Yes" : "No"}}</p>
         </div>
         <div *ngIf="systemInfo.cluster.cluster_singlebattery! == 0" class="col-6 col-lg-3">
             <span class="subtitles">{{"SYSTEM.READONLY.CLUSTERNUMBER" | translate}}: </span>

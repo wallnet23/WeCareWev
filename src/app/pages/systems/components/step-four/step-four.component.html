@@ -5,7 +5,7 @@
         <div class="col-12 col-md-6 mb-3">
           <label for="product_installdate" style="font-weight: bold;">{{"SYSTEM.STEPFOUR.INSTALLATIONDATE" | translate}}<sup>*</sup></label>
           <input type="date" name="product_installdate" id="product_installdate" formControlName="product_installdate"
-            class="form-control" placeholder="gg/mm/aaaa" [ngClass]="{'is-invalid': errors.product_installdate}">
+            class="form-control" placeholder="{{'SYSTEM.STEPFOUR.DATEPLACEHOLDER' | translate}}" [ngClass]="{'is-invalid': errors.product_installdate}">
             <div class="text-danger mt-1" *ngIf="errors.product_installdate" style="font-size: small;">{{"SYSTEM.STEPFOUR.DATEERROR" | translate}}</div>
         </div>
         <div class="col-12 col-md-6 mb-3">

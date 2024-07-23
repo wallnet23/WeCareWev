@@ -5,14 +5,14 @@
                 <div class="col-12 col-lg-6 mb-3">
                     <label for="installer_companyname" style="font-weight: bold;">{{"SYSTEM.STEPTHREE.COMPANYNAME" | translate}}<sup class="small-asterisk">*</sup></label>
                     <input type="text" name="installer_companyname" id="installer_companyname" formControlName="installer_companyname"
-                        class="form-control" placeholder="Installer company name" [ngClass]="{'is-invalid': errors.installer_companyname}">
+                        class="form-control" placeholder="{{'SYSTEM.STEPTHREE.COMPANYNAMEPLACEHOLDER' | translate}}" [ngClass]="{'is-invalid': errors.installer_companyname}">
                         <div class="text-danger mt-1" *ngIf="errors.installer_companyname" style="font-size: small;">{{"SYSTEM.STEPTHREE.NAMEERROR" | translate}}</div>
                 </div>
 
                 <div class="col-12 col-lg-6 mb-3">
                     <label for="installer_address" style="font-weight: bold;">{{"SYSTEM.STEPTHREE.COMPANYADDRESS" | translate}}<sup class="small-asterisk">*</sup></label>
                     <input type="text" name="address" id="installer_address" formControlName="installer_address"
-                        class="form-control" placeholder="Installer company address" [ngClass]="{'is-invalid': errors.installer_address}">
+                        class="form-control" placeholder="{{'SYSTEM.STEPTHREE.ADDRESSPLACEHOLDER' | translate}}" [ngClass]="{'is-invalid': errors.installer_address}">
                         <div class="text-danger mt-1" *ngIf="errors.installer_address" style="font-size: small;">{{"SYSTEM.STEPTHREE.ADDRESSERROR" | translate}}</div>
                 </div>
 
@@ -30,20 +30,20 @@
                 <div class="col-12 col-lg-6 mb-3">
                     <label for="vendor_contact" style="font-weight: bold;">{{"SYSTEM.STEPTHREE.VENDORCONTACT" | translate}}</label>
                     <input type="text" name="vendor_contact" id="vendor_contact" formControlName="vendor_contact"
-                        class="form-control" placeholder="Contact name">
+                        class="form-control" placeholder="{{'SYSTEM.STEPTHREE.VENDORPLACEHOLDER' | translate}}">
                 </div>
 
                 <div class="col-12 col-lg-6 mb-3">
                     <label for="installer_email" style="font-weight: bold;">{{"SYSTEM.STEPTHREE.EMAIL" | translate}}<sup class="small-asterisk">*</sup></label>
                     <input type="installer_email" name="installer_email" id="installer_email"
-                        formControlName="installer_email" class="form-control" placeholder="Email" [ngClass]="{'is-invalid': errors.installer_email}">
+                        formControlName="installer_email" class="form-control" placeholder="{{'SYSTEM.STEPTHREE.EMAIL' | translate}}" [ngClass]="{'is-invalid': errors.installer_email}">
                         <div class="text-danger mt-1" *ngIf="errors.installer_email" style="font-size: small;">{{"SYSTEM.STEPTHREE.EMAILERROR" | translate}}</div>
                 </div>
 
                 <div class="col-12 col-lg-6 mb-3">
                     <label for="installer_dateofpurchase" style="font-weight: bold;">{{"SYSTEM.STEPTHREE.DATEOFPURCHASE" | translate}}<sup class="small-asterisk">*</sup></label>
                     <input type="date" name="installer_dateofpurchase" id="installer_dateofpurchase"
-                        formControlName="installer_dateofpurchase" class="form-control" placeholder="gg/mm/aaaa" [ngClass]="{'is-invalid': errors.installer_dateofpurchase}">
+                        formControlName="installer_dateofpurchase" class="form-control" placeholder="{{'SYSTEM.STEPTHREE.DATEPLACEHOLDER' | translate}}" [ngClass]="{'is-invalid': errors.installer_dateofpurchase}">
                         <div class="text-danger mt-1" *ngIf="errors.installer_dateofpurchase" style="font-size: small;">{{"SYSTEM.STEPTHREE.DATEERROR" | translate}}</div>
                 </div>
             </div>

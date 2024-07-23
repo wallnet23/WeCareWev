@@ -11,6 +11,7 @@ import { Inverter } from '../../../interfaces/inverterData';
 import { Battery, ClusterData } from '../../../interfaces/clusterData';
 import { MatSelectModule } from '@angular/material/select';
 import { ClusterSend, ClusterService } from './cluster.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 
@@ -26,7 +27,8 @@ import { ClusterSend, ClusterService } from './cluster.service';
     MatTooltipModule,
     MatIconModule,
     MatCardModule,
-    MatSelectModule
+    MatSelectModule,
+    TranslateModule
   ],
   templateUrl: './clusters.component.html',
   styleUrl: './clusters.component.scss'
