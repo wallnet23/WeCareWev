@@ -7,7 +7,6 @@
     "LOGOUT": "Logout",
     "PROFILESETTINGS": "Profile Settings"
   },
-
   "PROFILE": {
     "SETTINGS": {
       "SETTINGS": "SETTINGS",
@@ -103,10 +102,11 @@
       "PRIVACY": "Privacy policy"
     }
   },
-
-
-
-"SYSTEM": {
+  "FOOTER": {
+    "CONTACTUS": "CONTACT US",
+    "ABOUTUS": "ABOUT US"
+  },
+  "SYSTEM": {
     "SCANNER": {
       "SCAN": "Scan Barcode",
       "CLOSE": "Close"
@@ -299,8 +299,6 @@
       "REFRESH": "Refresh the page to try again"
     }
   },
-
-
   "TICKET": {
     "TICKETLIST": {
       "TITLE": "TICKETS LIST",
