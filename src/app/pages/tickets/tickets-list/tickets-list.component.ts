@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { TicketService } from '../../../services/ticket.service';
-import { Ticket } from '../interfaces/ticket';
 import { Router } from '@angular/router';
 import { ConnectServerService } from '../../../services/connect-server.service';
 import { ApiResponse } from '../../../interfaces/api-response';
 import { Connect } from '../../../classes/connect';
 import { TranslateModule } from '@ngx-translate/core';
+import { Ticket } from '../interfaces/ticket';
 
 @Component({
   selector: 'app-tickets-list',

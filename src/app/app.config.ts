@@ -30,18 +30,18 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch(), withInterceptors([authInterceptor, requestErrorInterceptor, spinnerInterceptor])),
     { provide: RECAPTCHA_V3_SITE_KEY, useValue: environment.recaptcha.apiUrl },
     {
-        provide: RECAPTCHA_SETTINGS,
-        useValue: {
-            siteKey: environment.recaptcha.siteKey,
-        } as RecaptchaSettings,
+      provide: RECAPTCHA_SETTINGS,
+      useValue: {
+        siteKey: environment.recaptcha.siteKey,
+      } as RecaptchaSettings,
     },
     importProvidersFrom(TranslateModule.forRoot({
-        defaultLanguage: 'en',
-        loader: {
-            provide: TranslateLoader,
-            useFactory: HttpLoaderFactory,
-            deps: [HttpClient]
-        }
+      defaultLanguage: 'en',
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
     }))
     // TranslateModule.forRoot({
     //   defaultLanguage: 'en',
@@ -52,8 +52,8 @@ export const appConfig: ApplicationConfig = {
     //   }
     // }).providers!
     ,
-    provideStore({user: userReducer}),
+    provideStore({ user: userReducer }),
     provideEffects([UserEffects]),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })
-]
+  ]
 };

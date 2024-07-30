@@ -41,7 +41,7 @@ export class PopupDialogService {
 
     dialogRef.afterClosed().subscribe(
       (result: ObjButtonPopup) => {
-        console.log('Dialog result:', result);
+        // console.log('Dialog result:', result);
         if (result && result.action === 1) {
           if (result.action_type === 1) {
             const array_router = [result.urlfront];
@@ -81,9 +81,9 @@ export class PopupDialogService {
       obj_toast = this.toastr.success(obj_val.message, obj_val.title, config);
     } else if (obj_val.code == 513 || obj_val.code == 511 || obj_val.code == 240) {
       obj_toast = this.toastr.warning(obj_val.message, obj_val.title, config);
-    } else if (obj_val.code == 244){
+    } else if (obj_val.code == 244) {
 
-    }else {
+    } else {
       obj_toast = this.toastr.error(obj_val.message, obj_val.title, config);
     }
     // if (obj_toast) {

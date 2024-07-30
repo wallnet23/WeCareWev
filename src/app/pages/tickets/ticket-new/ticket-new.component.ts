@@ -3,14 +3,13 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 //import { SystemInfo } from '../interfaces/full-system-interface';
 import { UploadImageService } from '../../../services/upload-images.service';
 import { CommonModule } from '@angular/common';
-import { Ticket } from '../interfaces/ticket';
 import { ApiResponse } from '../../../interfaces/api-response';
 import { Connect } from '../../../classes/connect';
 import { ConnectServerService } from '../../../services/connect-server.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { SystemInfo } from '../interfaces/system-info';
-import { Image } from '../components/interfaces/image';
+import { Ticket } from '../interfaces/ticket';
+import { Image } from '../../systems/components/interfaces/image';
 
 @Component({
   selector: 'app-ticket-new',

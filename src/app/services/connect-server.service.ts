@@ -22,19 +22,19 @@ export class ConnectServerService {
   }
   async getRequestAsync<T>(urlServer: string, urlFunction: string, parametri: any): Promise<any> {
     const chiamata$ = this.http.get(urlServer + urlFunction,
-        {
-            params: parametri,
-            // observe: 'response'
-            // observe: 'events'
-        }).pipe(
-        // timeout(4000),
-        // catchError(this.handleError)
+      {
+        params: parametri,
+        // observe: 'response'
+        // observe: 'events'
+      }).pipe(
+      // timeout(4000),
+      // catchError(this.handleError)
     );
     // const awaitRequest = await chiamata$.toPromise();
     // return await awaitRequest;
     return await lastValueFrom(chiamata$);
 
-}
+  }
   public getTimeoutForRequest(request: HttpRequest<any>): number {
     // Puoi implementare la logica per ottenere il timeout in base al tipo di richiesta.
     // Ad esempio, puoi controllare il metodo della richiesta (GET, POST, ecc.) o l'URL e restituire il timeout appropriato.
@@ -50,13 +50,13 @@ export class ConnectServerService {
   }
 
   getRequestCountryData(): Observable<Country[]> {
-    return this.getRequest<Country[]>('https://restcountries.com/v3.1/','all?fields=name,flags,cca2,ccn3',{})
-      .pipe(map((val: Country[]) => val.sort((a,b) => a.name.common.localeCompare(b.name.common))));
+    return this.getRequest<Country[]>('https://restcountries.com/v3.1/', 'all?fields=name,flags,cca2,ccn3', {})
+      .pipe(map((val: Country[]) => val.sort((a, b) => a.name.common.localeCompare(b.name.common))));
   }
 
   getSpecificCountryData(ccn3: string): Observable<Country> {
     return this.getRequest<Country>('https://restcountries.com/v3.1/alpha/', ccn3, {})
-    .pipe(map((val: Country) => val));
+      .pipe(map((val: Country) => val));
   }
 
 }

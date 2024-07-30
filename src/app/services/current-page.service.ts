@@ -19,9 +19,9 @@ export class CurrentPageService {
       const currentUrl = event.url;
       this.currentUrlSubject.next(currentUrl);
     });
-   }
+  }
 
-   handleNavigation(url: string) {
+  handleNavigation(url: string) {
     this.previousUrl = url;
-   }
+  }
 }

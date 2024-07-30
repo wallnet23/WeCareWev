@@ -6,10 +6,10 @@ export const loginSignupGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
   const authService = inject(AuthService);
 
-  if(authService.isLoggedIn()){
+  if (authService.isLoggedIn()) {
     router.navigate(['systemsList']);
     return true;
-  }else{
+  } else {
     return true;
   }
 

@@ -64,19 +64,19 @@ export const requestErrorInterceptor: HttpInterceptorFn = (req, next) => {
             // Other errors
             errorMessage = `Errore generico! Se persiste contatta il fornitore.`;
             code = error.status;
-            if((error.error && error.error.type_alert) || error.type_alert){
+            if ((error.error && error.error.type_alert) || error.type_alert) {
               alert_type = error.error.type_alert || error.type_alert;
             }
-            // console.log(`Unexpected error: ${error.message}`);
+          // console.log(`Unexpected error: ${error.message}`);
         }
-        if((error.error && error.error.message) || error.message){
+        if ((error.error && error.error.message) || error.message) {
           errorMessage = `${error.error.message || error.message}`;
           // console.log('error info: ',error)
         }
-        if((error.error && error.error.obj_dialog) || error.obj_dialog){
+        if ((error.error && error.error.obj_dialog) || error.obj_dialog) {
           obj_dialog = error.error.obj_dialog || error.obj_dialog;
         }
-        if((error.error && error.error.obj_toast) || error.obj_toast){
+        if ((error.error && error.error.obj_toast) || error.obj_toast) {
           obj_toast = error.error.obj_toast || error.obj_toast;
         }
         // console.log('error.obj_dialog', error.error);

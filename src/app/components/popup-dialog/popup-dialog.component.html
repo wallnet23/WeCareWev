@@ -4,8 +4,6 @@
 </mat-dialog-content>
 <mat-dialog-actions class="justify-content-end">
   <button *ngIf="obj_buttonAction && obj_buttonAction != null" mat-button (click)="buttonAction()"
-  [class]="buttonStylePopup">{{label_buttonAction}}</button>
-
-  <button mat-button (click)="buttonClose()"
-  [class]="buttonStylePopup">{{label_buttonClose}}</button>
+    [class]="buttonStylePopup">{{label_buttonAction}}</button>
+  <button mat-button (click)="buttonClose()" [class]="buttonStylePopup">{{label_buttonClose}}</button>
 </mat-dialog-actions>

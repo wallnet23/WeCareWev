@@ -146,23 +146,7 @@ export class UploadImageService {
       this.imagesStep3.splice(index, 1);
       deleteCallback();
     }
-    
+
   }
-
-  // deleteCover(coverIndex: number | null, deleteCallback: () => void) {
-  //   if (coverIndex != null) {
-  //     this.images.splice(coverIndex, 1);
-  //     if (this.images.length > 0) {
-  //       this.cover = this.images[0];
-  //     }
-  //     else this.cover = '';
-  //   }
-  //   deleteCallback();
-  // }
-
-  // changeCover(index: number, changeCallback: () => void) {
-  //   this.cover = this.images[index];
-  //   changeCallback();
-  // }
 
 }

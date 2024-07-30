@@ -50,7 +50,7 @@ export class IpInfoConnectService {
    * Setta la linga nell'app
    */
   setUserLanguageApp(callback: (code: string) => void) {
-    if(this.authService.isLoggedIn()){
+    if (this.authService.isLoggedIn()) {
       this.store.select(state => state.user.userInfo).subscribe(
         (val: User | null) => {
           if (val) {
@@ -60,7 +60,7 @@ export class IpInfoConnectService {
               this.getLanguage().subscribe(
                 (lang: string) => {
                   this.translateService.setDefaultLang(lang);
-callback(lang);
+                  callback(lang);
                 }
               )
             }
@@ -68,7 +68,7 @@ callback(lang);
 
         }
       );
-    }else{
+    } else {
       this.getLanguage().subscribe(
         (lang: string) => {
           this.translateService.setDefaultLang(lang);
@@ -88,7 +88,7 @@ callback(lang);
           }).subscribe(
             (val) => {
               this.store.dispatch(UserActions.loadUserInfo());
-              this.setUserLanguageApp(() => {});
+              this.setUserLanguageApp(() => { });
             }
           )
       } else {

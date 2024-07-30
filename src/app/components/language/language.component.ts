@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { IpInfoConnectService } from '../../services/ip-info-connect.service';
 import { Store } from '@ngrx/store';
@@ -32,7 +32,7 @@ export class LanguageComponent {
   constructor(private ipInfoConnectService: IpInfoConnectService, private store: Store<{ user: UserState }>,
     private authService: AuthService, private translateService: TranslateService) {
     this.ipInfoConnectService.setUserLanguageApp((code: string) => this.selectLanguage(code));
-    console.log("Lingua", translateService.currentLang);
+    // console.log("Lingua", translateService.currentLang);
     this.getSelectedLanguage();
   }
 

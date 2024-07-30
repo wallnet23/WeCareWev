@@ -14,7 +14,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ConnectServerService } from '../../../services/connect-server.service';
 import { ApiResponse } from '../../../interfaces/api-response';
 import { SystemInfo } from '../interfaces/system-info';
-import { Ticket } from '../interfaces/ticket';
+import { Ticket } from '../../tickets/interfaces/ticket';
 import { Warranty } from '../interfaces/warranty';
 import { RMA } from '../interfaces/rma';
 import { Connect } from '../../../classes/connect';

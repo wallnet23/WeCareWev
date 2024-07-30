@@ -6,17 +6,6 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 })
 export class UrlService {
 
-// // usato per border sotto voce barra di menu
-// private currenPageSubject = new Subject<string>();
-// getInfoCurrenPage(): Observable<string> {
-//   // console.log('ricevi menu');
-//   return this.currenPageSubject.asObservable();
-// }
-// setInfoCurrenPage(page: string) {
-//   // console.log('invia menu');
-//   this.currenPageSubject.next(page);
-// }
-
 constructor() { }
 
   /**

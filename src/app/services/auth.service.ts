@@ -37,8 +37,8 @@ export class AuthService {
   }
 
   async loginUser(email_value: string, password_value: string) {
-    const esito: ApiResponse<{authorization: {token: string; type: string;}}> = await lastValueFrom(
-      this.connectServerService.postRequest<ApiResponse<{authorization: {token: string; type: string;}}>>(Connect.urlServerLaraApi, 'user/login', {
+    const esito: ApiResponse<{ authorization: { token: string; type: string; } }> = await lastValueFrom(
+      this.connectServerService.postRequest<ApiResponse<{ authorization: { token: string; type: string; } }>>(Connect.urlServerLaraApi, 'user/login', {
         email: email_value,
         password: password_value,
       })

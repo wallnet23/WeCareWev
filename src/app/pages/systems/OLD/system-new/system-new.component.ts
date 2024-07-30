@@ -5,10 +5,10 @@ import { FormBuilder, Validators, FormsModule, ReactiveFormsModule, FormControl 
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
-import { ConnectServerService } from '../../../services/connect-server.service';
-import { ApiResponse } from '../../../interfaces/api-response';
-import { Connect } from '../../../classes/connect';
-import { PopupDialogService } from '../../../services/popup-dialog.service';
+import { ConnectServerService } from '../../../../services/connect-server.service';
+import { ApiResponse } from '../../../../interfaces/api-response';
+import { Connect } from '../../../../classes/connect';
+import { PopupDialogService } from '../../../../services/popup-dialog.service';
 
 @Component({
   selector: 'app-system-new',
@@ -32,7 +32,7 @@ export class SystemNewComponent {
     description: new FormControl<string>('')
   })
 
-  constructor(private formBuilder: FormBuilder, private router: Router, 
+  constructor(private formBuilder: FormBuilder, private router: Router,
     private connectServerService: ConnectServerService, private popupDialogService: PopupDialogService) {}
 
   sendNewSystem() {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Ticket } from '../pages/systems/interfaces/ticket';
+import { Ticket } from '../pages/tickets/interfaces/ticket';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +8,7 @@ export class TicketService {
 
   tickets: Ticket[] = []
 
-  constructor() { 
+  constructor() {
 
     this.tickets = [
       {id: 0, title: "Ticket 1", date_ticket: "20/11/23", description: "Breve descrizione sistema con eventuale ellispsis se troppo lunga per la colonna", idsystem: null, status: "Waiting"},

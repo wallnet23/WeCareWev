@@ -9,7 +9,7 @@ import { ConnectServerService } from '../../../services/connect-server.service';
 import { ApiResponse } from '../../../interfaces/api-response';
 import { Connect } from '../../../classes/connect';
 import { SystemInfo } from '../interfaces/system-info';
-import { Ticket } from '../interfaces/ticket';
+import { Ticket } from '../../tickets/interfaces/ticket';
 import { RMA } from '../interfaces/rma';
 import { PopupDialogService } from '../../../services/popup-dialog.service';
 import { TranslateModule } from '@ngx-translate/core';

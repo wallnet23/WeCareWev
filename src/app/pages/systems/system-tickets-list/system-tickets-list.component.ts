@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { Ticket } from '../interfaces/ticket';
+import { Ticket } from '../../tickets/interfaces/ticket';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({

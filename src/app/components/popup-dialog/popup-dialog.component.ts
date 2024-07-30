@@ -36,11 +36,11 @@ export class PopupDialogComponent {
     if (obj_request.obj_dialog) {
       const obj_dialogrecive = obj_request.obj_dialog;
       this.dialogRef.disableClose = obj_dialogrecive.disableClose === 1 ? true : false;
-      if(obj_dialogrecive.obj_buttonClose){
+      if (obj_dialogrecive.obj_buttonClose) {
         this.label_buttonClose = obj_dialogrecive.obj_buttonClose.label;
         this.obj_buttonClose = obj_dialogrecive.obj_buttonClose;
       }
-      if(obj_dialogrecive.obj_buttonAction){
+      if (obj_dialogrecive.obj_buttonAction) {
         this.label_buttonAction = obj_dialogrecive.obj_buttonAction.label;
         this.obj_buttonAction = obj_dialogrecive.obj_buttonAction;
       }
@@ -52,7 +52,7 @@ export class PopupDialogComponent {
     } else if (obj_request.code == 244) {
       this.buttonStylePopup = 'btn btn-info';
       this.bgStylePopup = 'bg-primary bg-opacity-25 border-bottom border-1 border-primary';
-    }else if (obj_request.code == 200) {
+    } else if (obj_request.code == 200) {
       this.buttonStylePopup = 'btn btn-success';
       this.bgStylePopup = 'bg-success bg-opacity-25 border-bottom border-1 border-success';
     }
