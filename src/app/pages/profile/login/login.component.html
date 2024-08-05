@@ -33,8 +33,11 @@
               <button [class.disabled]="loginForm.invalid" class="btn btn-block login-btn mb-4"
                 (click)="login()">{{"PROFILE.LOGIN.LOGIN" | translate}}</button>
             </form>
-            <a href="/sendemailModifyPassword" class="forgot-password-link">{{"PROFILE.LOGIN.FORGOTPSW" |
-              translate}}</a>
+            <div>
+              <button routerLink="/sendemailModifyPassword" class="forgot-password-link btn ps-0">
+                {{"PROFILE.LOGIN.FORGOTPSW" | translate}}
+              </button>
+            </div>
             <p class="login-card-footer-text">{{"PROFILE.LOGIN.SIGNUP" | translate}}
               <button routerLink="/signup" class="btn register">{{"PROFILE.LOGIN.REGISTER" | translate}}</button>
             </p>

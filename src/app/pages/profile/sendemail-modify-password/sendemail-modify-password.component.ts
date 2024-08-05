@@ -58,5 +58,17 @@ export class SendemailModifyPasswordComponent {
     this.router.navigate(['login']);
   }
 
+  checkEmail() {
+    const email_val = this.recoverPswForm.get('email')?.value;
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (emailRegex.test(email_val!)) {
+      this.validEmail = true;
+      this.isSent = true;
+    }
+    else {
+      this.validEmail = false;
+    }
+  }
+
 
 }

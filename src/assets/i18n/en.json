@@ -56,7 +56,7 @@
     },
     "NEWPASSWORD": {
       "INSERT": "Insert the new password",
-      "PSWINFO": "The new password must be 8 characters long, contain one capital letter and one special character (!@;#$%^&*(),.?:|<>).",
+      "PSWINFO": "The new password must be 8 characters long, contain one capital letter and one special character (!@;#$%^&*(),.?:|<>)",
       "NEWPSW": "New password",
       "REPEATPSW": "Repeat new password",
       "ERROR1": "*The password has to be at least 8 characters long and has to contain at least one special character",

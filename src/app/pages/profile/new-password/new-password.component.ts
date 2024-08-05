@@ -61,6 +61,29 @@ export class NewPasswordComponent implements OnInit {
         });
   }
 
+  checkPsw() {
+      const password = this.newPswForm.get('password')?.value;
+      const passwordRepeat = this.newPswForm.get('passwordRepeat')?.value;
+      const regex = /^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":|<>])(?=.{8,})/;
+      if (regex.test(password!)) {
+        if (password === passwordRepeat) {
+          this.equalPassword = true;
+          this.validPassword = true;
+          this.errorMessage = false;
+        }
+        else {
+          this.equalPassword = false;
+          this.validPassword = true;
+          this.errorMessage = true;
+        }
+      }
+      else {
+        this.equalPassword = true;
+        this.validPassword = false;
+        this.errorMessage = true;
+      }
+  }
+
   send() {
     if (this.email_val.length > 0 && this.token_val.length > 0) {
 

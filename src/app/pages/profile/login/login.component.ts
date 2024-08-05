@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit{
 
   valid: boolean = true;
   toggled: boolean = true;
-  type: string = 'password'
+  type: string = 'password';
 
   loginForm = new FormGroup({
     email: new FormControl('', Validators.required),
