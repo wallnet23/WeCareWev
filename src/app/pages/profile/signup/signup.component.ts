@@ -60,7 +60,7 @@ export class SignupComponent implements OnInit {
 
   constructor(private connectServerService: ConnectServerService,
     private recaptcha: ReCaptchaV3Service, private popupDialogService: PopupDialogService,
-    private router: Router, private route: ActivatedRoute, private location: Location) {
+    private router: Router) {
       // this.route.queryParamMap.subscribe(params => {
       //   console.log(params.get('text'));
       //   this.signupForm.get('request_description')?.setValue(params.get('text'));

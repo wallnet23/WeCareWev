@@ -6,9 +6,9 @@
         <div class="card-body">
           <div class="row justify-content-center">
             <div class="col-12 mt-0 ms-4">
-              <button class="arrowBtn btn btn-sm btn-outline-dark" routerLink="/login">
+              <a class="arrowBtn btn btn-sm btn-outline-dark" routerLink="/login">
                 <i class="bi bi-arrow-left"></i>
-              </button>
+              </a>
             </div>
             <div class="col-12 text-center">
               <div class="brand-wrapper">
@@ -104,7 +104,7 @@
                       <label for="password" style="font-weight: bold;">{{"PROFILE.SIGNUP.PWD" | translate}}<sup
                           class="small-asterisk">*</sup></label>
                       <input [type]="type1" id="password" formControlName="password" class="form-control form_control"
-                        placeholder="********" 
+                        placeholder="********"
                         [ngClass]="{'error': signupForm.hasError('mismatch') && (signupForm.get('password')?.dirty && signupForm.get('password_confirmation')?.dirty)}">
                       <i class="bi bi-eye icon" [ngClass]="{'bi-eye': !toggled1, 'bi-eye-slash': toggled1}"
                         id="togglePassword" (click)="seePassword('password')"></i>

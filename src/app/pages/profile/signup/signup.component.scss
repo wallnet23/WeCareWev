@@ -17,147 +17,148 @@
 
 
 .brand-wrapper {
-    margin-bottom: 19px;
+  margin-bottom: 19px;
 
-    .logo {
-        height: 37px;
-    }
+  .logo {
+    height: 37px;
+  }
 }
 
 .card-body {
-    padding-top: 10px;
+  padding-top: 10px;
 
-    @media (min-width: 500px) {
-        padding-top: 20px;
-    }
+  @media (min-width: 500px) {
+    padding-top: 20px;
+  }
 }
 
 .d_flex {
-    min-height: 140vh;
-    font-family: "Karla", sans-serif;
-    background-color: #9b9b9b;
-    min-width: 370px;
+  min-height: 140vh;
+  font-family: "Karla", sans-serif;
+  background-color: #9b9b9b;
+  min-width: 370px;
 }
 
 .login-card {
-    border: 0;
-    border-radius: 27.5px;
-    box-shadow: 0 10px 30px 0 rgba(172, 168, 168, 0.43);
+  border: 0;
+  border-radius: 27.5px;
+  box-shadow: 0 10px 30px 0 rgba(172, 168, 168, 0.43);
+  overflow: hidden;
+
+  &-img {
+    border-radius: 0;
+    width: 80%;
+    height: auto;
+    object-fit: cover;
     overflow: hidden;
+  }
 
-    &-img {
-        border-radius: 0;
-        width: 80%;
-        height: auto;
-        object-fit: cover;
-        overflow: hidden;
+  &-description {
+    font-size: 25px;
+    color: #000;
+    font-weight: normal;
+    margin-bottom: 0px;
+  }
+
+  &-footer-text {
+    font-size: 16px;
+    color: #0d2366;
+    margin-bottom: 60px;
+
+    @media (max-width: 767px) {
+      margin-bottom: 24px;
     }
+  }
 
-    &-description {
-        font-size: 25px;
-        color: #000;
-        font-weight: normal;
-        margin-bottom: 0px;
+  &-footer-nav {
+    a {
+      font-size: 14px;
+      color: #919aa3;
     }
-
-    &-footer-text {
-        font-size: 16px;
-        color: #0d2366;
-        margin-bottom: 60px;
-
-        @media (max-width: 767px) {
-            margin-bottom: 24px;
-        }
-    }
-
-    &-footer-nav {
-        a {
-            font-size: 14px;
-            color: #919aa3;
-        }
-    }
+  }
 }
 
 form {
-    width: 100%;
+  width: 100%;
 }
 
 .form_control {
-    border: 1px solid #d5dae2;
-    //padding: 15px 25px;
-    //margin-bottom: 20px;
-    min-height: 45px;
-    font-size: 13px;
-    line-height: 15;
-    font-weight: normal;
+  border: 1px solid #d5dae2;
+  //padding: 15px 25px;
+  //margin-bottom: 20px;
+  min-height: 45px;
+  font-size: 13px;
+  line-height: 15;
+  font-weight: normal;
 
-    &::placeholder {
-        color: #919aa3;
-    }
+  &::placeholder {
+    color: #919aa3;
+  }
 }
 
 .form_select {
-    border: 1px solid #d5dae2;
-    //padding: 15px 25px;
-    //margin-bottom: 20px;
-    height: 45px;
-    font-weight: normal;
+  border: 1px solid #d5dae2;
+  //padding: 15px 25px;
+  //margin-bottom: 20px;
+  height: 45px;
+  font-weight: normal;
 
-    &::placeholder {
-        color: #919aa3;
-    }
+  &::placeholder {
+    color: #919aa3;
+  }
 }
 
 .send-btn {
-    padding: 13px 20px 12px;
-    background-color: #000;
-    border-radius: 4px;
-    font-size: 17px;
-    font-weight: bold;
-    line-height: 20px;
-    color: #fff;
-    margin-bottom: 24px;
+  padding: 13px 20px 12px;
+  background-color: #000;
+  border-radius: 4px;
+  font-size: 17px;
+  font-weight: bold;
+  line-height: 20px;
+  color: #fff;
+  margin-bottom: 24px;
 
-    &:hover {
-        border: 1px solid #000;
-        background-color: transparent;
-        color: #000;
-    }
+  &:hover {
+    border: 1px solid #000;
+    background-color: transparent;
+    color: #000;
+  }
 }
 
 #fullPage {
-    max-width: 500px;
+  max-width: 500px;
 
-    @media (min-width: 768px) {
-        max-width: 650px;
-    }
+  @media (min-width: 768px) {
+    max-width: 650px;
+  }
 
-    @media (min-width: 992px) {
-        max-width: 850px;
-    }
+  @media (min-width: 992px) {
+    max-width: 850px;
+  }
 
-    @media (min-width: 1200px) {
-        max-width: 1000px;
-    }
+  @media (min-width: 1200px) {
+    max-width: 1000px;
+  }
 }
 
 .error {
-    border: 1px solid rgb(255, 0, 0) !important;
+  border: 1px solid rgb(255, 0, 0) !important;
 }
 
 .arrowBtn:hover {
-    color: white;
+  color: white;
 }
 
 .small-asterisk {
-    font-size: smaller; /* Makes the asterisk smaller */
+  font-size: smaller;
+  /* Makes the asterisk smaller */
 }
 
 .icon {
-    position: absolute;
-    right: 20px;
-    top: 74%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    z-index: 2;
+  position: absolute;
+  right: 20px;
+  top: 74%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  z-index: 2;
 }

@@ -25,7 +25,7 @@ export const routes: Routes = [
   //{ path: 'newSystem', component: SystemNewComponent, canActivate: [authGuard] },
   { path: 'systemOverview/:id', component: SystemOverviewComponent, canActivate: [authGuard] },
   { path: 'systemReadonly/:id', component: SystemReadonlyComponent, canActivate: [authGuard] },
-  { path: 'newPassword', component: NewPasswordComponent, canActivate: [loginSignupGuard]},
+  { path: 'newPassword/:token', component: NewPasswordComponent, canActivate: [loginSignupGuard]},
   // { path: 'systemTicketsList/:id', component: SystemTicketsListComponent, canActivate: [authGuard] },
   // { path: 'ticket/:id', component: TicketComponent, canActivate: [authGuard] },
   // { path: 'ticketsList', component: TicketsListComponent, canActivate: [authGuard] },
