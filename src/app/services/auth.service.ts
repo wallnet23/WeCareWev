@@ -63,19 +63,19 @@ export class AuthService {
     );
   }
 
-  getUser() {
-    return this.connectServerService.getRequest<User>(Connect.urlServerLaraApi, 'user/user', {}).subscribe(
-      (val: User) => {
-        console.log('Response: ', val);
-        if (this.isLoggedIn()) {
-          // this.user$ = this.userSubject.asObservable();
-          this.userSubject.next(val);
-        } else {
-          // this.user$ = this.userSubject.asObservable();
-          this.userSubject.next(null);
-        }
-      });
-  }
+  // getUser() {
+  //   return this.connectServerService.getRequest<User>(Connect.urlServerLaraApi, 'user/user', {}).subscribe(
+  //     (val: User) => {
+  //       console.log('Response: ', val);
+  //       if (this.isLoggedIn()) {
+  //         // this.user$ = this.userSubject.asObservable();
+  //         this.userSubject.next(val);
+  //       } else {
+  //         // this.user$ = this.userSubject.asObservable();
+  //         this.userSubject.next(null);
+  //       }
+  //     });
+  // }
 
   getToken(): string | null {
     if (localStorage) {
