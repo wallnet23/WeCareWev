@@ -17,14 +17,14 @@
                 </div>
 
                 <div class="col-12 col-lg-6 mb-3">
-                    <label for="ccn3" style="font-weight: bold;">{{"SYSTEM.STEPTHREE.COMPANYCOUNTRY" | translate}}<sup class="small-asterisk">*</sup></label>
-                    <select class="form-select" aria-label="select example" formControlName="ccn3" [ngClass]="{'is-invalid': errors.ccn3}">
+                    <label for="idcountry" style="font-weight: bold;">{{"SYSTEM.STEPTHREE.COMPANYCOUNTRY" | translate}}<sup class="small-asterisk">*</sup></label>
+                    <select class="form-select" aria-label="select example" formControlName="idcountry" [ngClass]="{'is-invalid': errors.idcountry}">
                         <option [ngValue]="null" disabled>{{"SYSTEM.STEPTHREE.COUNTRYSELECT" | translate}}</option>
-                        <option *ngFor="let country of countriesData" [ngValue]="country.ccn3">
-                            <img src="{{country.flags?.png}}" width="20px" height="15px"> {{ country.name.common }}
+                        <option *ngFor="let country of countriesData" [ngValue]="country.id">
+                            <img src="{{country.flag_png}}" width="20px" height="15px"> {{ country.common_name }}
                         </option>
                     </select>
-                    <div class="text-danger mt-1" *ngIf="errors.ccn3" style="font-size: small;">{{"SYSTEM.STEPTHREE.COUNTRYERROR" | translate}}</div>
+                    <div class="text-danger mt-1" *ngIf="errors.idcountry" style="font-size: small;">{{"SYSTEM.STEPTHREE.COUNTRYERROR" | translate}}</div>
                 </div>
 
                 <div class="col-12 col-lg-6 mb-3">

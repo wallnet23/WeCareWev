@@ -40,17 +40,17 @@
                   <input type="text" class="form-control mb-1" value="" formControlName="email">
                 </div>
                 <div class="form-group">
-                  <label for="ccn3" class="form-label section">{{'PROFILE.SETTINGS.COUNTRY' |
+                  <label for="country" class="form-label section">{{'PROFILE.SETTINGS.COUNTRY' |
                     translate}}</label>
-                  <select class="form-select" id="ccn3" aria-label="select example" formControlName="ccn3">
+                  <select class="form-select" id="country" aria-label="select example" formControlName="country">
                     <option [ngValue]="null" disabled>{{'PROFILE.SETTINGS.SELECTCOUNTRY' |
                       translate}}</option>
-                    <option *ngFor="let country of countriesData" [ngValue]="country.ccn3">
-                      {{ country.name.common }}
+                    <option *ngFor="let country of countriesData" [ngValue]="country.id">
+                      {{ country.common_name }}
                     </option>
                   </select>
                 </div>
-                <div *ngIf="generalForm.get('ccn3')?.value == '380'; else foreignBlock" class="form-group">
+                <div *ngIf="generalForm.get('country')?.value == 12; else foreignBlock" class="form-group">
                   <label for="fiscalcode" class="form-label section">{{'PROFILE.SETTINGS.FISCALCODE' |
                     translate}}</label>
                   <input type="text" class="form-control" id="fiscalcode" formControlName="fiscalcode">
@@ -119,7 +119,7 @@
                     | translate}}</label>
                   <input class="form-control" type="text" id="company_name" formControlName="company_name">
                 </div>
-                <div *ngIf="generalForm.get('ccn3')?.value == '380'" class="form-group">
+                <div *ngIf="generalForm.get('country')?.value == 12" class="form-group">
                   <label for="vat" class="form-label section">
                     {{'PROFILE.SETTINGS.VAT' | translate}}</label>
                   <input type="text" class="form-control" id="vat" formControlName="vat">

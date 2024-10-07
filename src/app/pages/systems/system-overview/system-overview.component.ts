@@ -36,7 +36,7 @@ export class SystemOverviewComponent {
 
   idsystem: number = 0;
   systemInfo!: SystemInfo | null;
-  systemTickets: Ticket[] = [];
+  // systemTickets: Ticket[] = [];
   systemWarranty!: Warranty;
   systemRMA!: RMA;
 
@@ -52,24 +52,24 @@ export class SystemOverviewComponent {
   }
 
   getSystemOverview() {
-    this.connectServerService.getRequest<ApiResponse<{systemInfo: SystemInfo, systemTickets: Ticket[], systemWarranty: Warranty, systemRMA: RMA}>>
+    this.connectServerService.getRequest<ApiResponse<{systemInfo: SystemInfo, systemWarranty: Warranty, systemRMA: RMA}>>
     (Connect.urlServerLaraApi, 'system/systemOverview', {id: this.idsystem})
-    .subscribe((val: ApiResponse<{systemInfo: SystemInfo, systemTickets: Ticket[], systemWarranty: Warranty, systemRMA: RMA}>) => {
+    .subscribe((val: ApiResponse<{systemInfo: SystemInfo,  systemWarranty: Warranty, systemRMA: RMA}>) => {
       if(val.data) {
         this.systemInfo = val.data.systemInfo;
-        this.systemTickets = val.data.systemTickets;
+        // this.systemTickets = val.data.systemTickets;
         this.systemWarranty = val.data.systemWarranty;
         this.systemRMA = val.data.systemRMA;
-        if(this.systemTickets.length > 0) {
-          this.isTicket = true;
-        }
-        console.log("System info:", this.systemInfo)
+        // if(this.systemTickets.length > 0) {
+        //   this.isTicket = true;
+        // }
+        // console.log("System info:", this.systemInfo)
       }
     })
   }
 
   modifyDescription(description: string) {
-    console.log(description);
+    // console.log(description);
     this.connectServerService.postRequest<ApiResponse<{system_description: string}>>
     (Connect.urlServerLaraApi, 'system/systemModifyDescription', {idsystem: this.idsystem, system_description: description})
     .subscribe((val: ApiResponse<{system_description: string}>) => {
@@ -80,16 +80,16 @@ export class SystemOverviewComponent {
     })
   }
 
-  ticketsListSystem() {
-    this.router.navigate(['/systemTicketsList', 1]);
-  }
-  newTicket() {
-    this.router.navigate(['/newTicket', this.idsystem]);
-  }
+  // ticketsListSystem() {
+  //   this.router.navigate(['/systemTicketsList', 1]);
+  // }
+  // newTicket() {
+  //   this.router.navigate(['/newTicket', this.idsystem]);
+  // }
 
-  goToTicket(id: number) {
-    this.router.navigate(['/modifyTicket', id]);
-  }
+  // goToTicket(id: number) {
+  //   this.router.navigate(['/modifyTicket', id]);
+  // }
 
   modifySystem() {
     this.router.navigate(['/systemManagement', this.idsystem]);

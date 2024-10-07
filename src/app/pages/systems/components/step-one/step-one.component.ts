@@ -1,11 +1,10 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {  Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators, FormsModule, ReactiveFormsModule, FormControl, FormGroup } from '@angular/forms';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatStepperModule } from '@angular/material/stepper';
-import { Observable } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,9 +15,11 @@ import { Connect } from '../../../../classes/connect';
 import { PopupDialogService } from '../../../../services/popup-dialog.service';
 import { Country } from '../../../../interfaces/country';
 import { TranslateModule } from '@ngx-translate/core';
-import { UserData } from '../../../profile/interfaces/user-data';
-import { MatTooltip } from '@angular/material/tooltip';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
+import { selectAllCountries } from '../../../../ngrx/country/country.selectors';
+import { Store } from '@ngrx/store';
+import { CountryState } from '../../../../ngrx/country/country.reducer';
 
 @Component({
   selector: 'app-step-one',
@@ -40,7 +41,7 @@ import { Router } from '@angular/router';
     CommonModule,
     MatIconModule,
     TranslateModule,
-    MatTooltip
+    MatTooltipModule
   ],
   templateUrl: './step-one.component.html',
   styleUrl: './step-one.component.scss'
@@ -59,7 +60,7 @@ export class StepOneComponent implements OnInit {
     system_owner: false,
     customer_name: false,
     customer_surname: false,
-    ccn3: false,
+    customer_country: false,
     customer_phone: false,
     customer_licensenumber: false,
     customer_fiscalcode: false,
@@ -71,7 +72,7 @@ export class StepOneComponent implements OnInit {
     system_owner: new FormControl<number>(1, Validators.required),
     customer_name: new FormControl('', Validators.required),
     customer_surname: new FormControl('', Validators.required),
-    ccn3: new FormControl<string | null>(null, Validators.required),
+    customer_country: new FormControl<number | null>(null, Validators.required),
     customer_phone: new FormControl<string>(''),
     customer_vat: new FormControl<string>(''),
     customer_licensenumber: new FormControl<string>('', Validators.required),
@@ -79,10 +80,11 @@ export class StepOneComponent implements OnInit {
   });
 
   constructor(private formBuilder: FormBuilder, private connectServerService: ConnectServerService,
-    private popupDialogService: PopupDialogService, private router: Router) { }
+    private popupDialogService: PopupDialogService, private router: Router,
+    private store: Store<{ country: CountryState}>) { }
 
   ngOnInit() {
-    this.connectServerService.getRequestCountryData().subscribe((obj) => {
+    this.store.select(selectAllCountries).subscribe((obj) => {
       this.countriesData = obj;
     });
     this.infoStep();
@@ -107,7 +109,7 @@ export class StepOneComponent implements OnInit {
               });
               this.stepOneForm.get('customer_name')?.disable();
               this.stepOneForm.get('customer_surname')?.disable();
-              this.stepOneForm.get('ccn3')?.disable();
+              this.stepOneForm.get('customer_country')?.disable();
               this.stepOneForm.get('customer_phone')?.disable();
               this.stepOneForm.get('customer_vat')?.disable();
               this.stepOneForm.get('customer_licensenumber')?.disable();
@@ -115,8 +117,8 @@ export class StepOneComponent implements OnInit {
             }
             else {
               this.stepOneForm.patchValue(val.data.stepOne);
-              const ccn3 = this.stepOneForm.get('ccn3')?.value;
-              if (ccn3 == '380') {
+              const customer_country = this.stepOneForm.get('customer_country')?.value;
+              if (customer_country == 12) {
                 this.stepOneForm.get('customer_vat')?.enable();
                 this.stepOneForm.get('customer_fiscalcode')?.enable();
                 this.stepOneForm.get('customer_licensenumber')?.disable();
@@ -140,26 +142,8 @@ export class StepOneComponent implements OnInit {
 
     if (!this.isError) {
       let stepOne = JSON.parse(JSON.stringify(this.stepOneForm.getRawValue()));
-      let country$: Observable<Country>;
-      let country: Country;
+      this.saveData(stepOne, action);
 
-      if (stepOne.ccn3) {
-        country$ = this.connectServerService.getSpecificCountryData(this.stepOneForm.get('ccn3')?.value!);
-        country$.subscribe((val: any) => {
-          if (val && val.length > 0) {
-            country = { name: { common: val[0].name.common }, cca2: val[0].cca2, ccn3: val[0].ccn3 };
-            delete stepOne.ccn3;
-            stepOne.customer_country = country;
-            this.saveData(stepOne, action);
-          }
-        })
-      }
-      else {
-        country = { name: { common: '' }, cca2: '', ccn3: '' };
-        delete stepOne.ccn3;
-        stepOne.customer_country = country;
-        this.saveData(stepOne, action);
-      }
     }
   }
 
@@ -184,11 +168,11 @@ export class StepOneComponent implements OnInit {
       else {
         this.errors.customer_surname = false;
       }
-      if (this.stepOneForm.get('ccn3')?.value == null) {
-        this.errors.ccn3 = true;
+      if (this.stepOneForm.get('customer_country')?.value == null) {
+        this.errors.customer_country = true;
       }
       else {
-        this.errors.ccn3 = false;
+        this.errors.customer_country = false;
       }
       if (this.stepOneForm.get('customer_phone')?.value == null || this.stepOneForm.get('customer_phone')?.value!.replaceAll(' ', '') == '') {
         this.errors.customer_phone = true;
@@ -196,7 +180,7 @@ export class StepOneComponent implements OnInit {
       else {
         this.errors.customer_phone = false;
       }
-      if (this.stepOneForm.get('ccn3')?.value == '380') {
+      if (this.stepOneForm.get('customer_country')?.value == 12) {
         this.errors.customer_licensenumber = false;
         if (this.stepOneForm.get('customer_fiscalcode')?.value == null || this.stepOneForm.get('customer_fiscalcode')?.value!.replaceAll(' ', '') == '') {
           this.errors.customer_fiscalcode = true;
@@ -218,7 +202,7 @@ export class StepOneComponent implements OnInit {
     else {
       this.errors.customer_name = false;
       this.errors.customer_surname = false;
-      this.errors.ccn3 = false;
+      this.errors.customer_country = false;
       this.errors.customer_phone = false;
       this.errors.customer_fiscalcode = false;
       this.errors.customer_licensenumber = false;
@@ -230,7 +214,7 @@ export class StepOneComponent implements OnInit {
   private checkIsError() {
     if (!this.errors.customer_name &&
       !this.errors.customer_surname &&
-      !this.errors.ccn3 &&
+      !this.errors.customer_country &&
       !this.errors.customer_phone &&
       !this.errors.customer_fiscalcode &&
       !this.errors.customer_licensenumber) {
@@ -260,7 +244,7 @@ export class StepOneComponent implements OnInit {
           this.formEmit.emit(this.formBuilder.group({}));
           if (action == 'next') {
             setTimeout(() => {
-              console.log('Emitting nextStep');
+              // console.log('Emitting nextStep');
               this.nextStep.emit();
             }, 0);
           }
@@ -275,9 +259,9 @@ export class StepOneComponent implements OnInit {
           this.stepOneForm.get('customer_name')?.enable();
           this.stepOneForm.get('customer_surname')?.enable();
           this.stepOneForm.get('customer_phone')?.enable();
-          this.stepOneForm.get('ccn3')?.enable();
-          const ccn3 = this.stepOneForm.get('ccn3')?.value;
-          if (ccn3 == '380') {
+          this.stepOneForm.get('customer_country')?.enable();
+          const customer_country = this.stepOneForm.get('customer_country')?.value;
+          if (customer_country == 12) {
             this.stepOneForm.get('customer_vat')?.enable();
             this.stepOneForm.get('customer_fiscalcode')?.enable();
             this.stepOneForm.get('customer_licensenumber')?.disable();
@@ -289,7 +273,7 @@ export class StepOneComponent implements OnInit {
         } else if (val == (1 || true)) {
           this.stepOneForm.get('customer_name')?.disable();
           this.stepOneForm.get('customer_surname')?.disable();
-          this.stepOneForm.get('ccn3')?.disable();
+          this.stepOneForm.get('customer_country')?.disable();
           this.stepOneForm.get('customer_phone')?.disable();
           this.stepOneForm.get('customer_vat')?.disable();
           this.stepOneForm.get('customer_licensenumber')?.disable();
@@ -298,24 +282,24 @@ export class StepOneComponent implements OnInit {
 
       }
     );
-    this.logicStepCcn3();
+    this.logicStepCountry();
   }
 
   disableFields() {
     this.stepOneForm.get('customer_name')?.disable();
     this.stepOneForm.get('customer_surname')?.disable();
-    this.stepOneForm.get('ccn3')?.disable();
+    this.stepOneForm.get('customer_country')?.disable();
     this.stepOneForm.get('customer_phone')?.disable();
     this.stepOneForm.get('customer_vat')?.disable();
     this.stepOneForm.get('customer_licensenumber')?.disable();
     this.stepOneForm.get('customer_fiscalcode')?.disable();
   }
 
-  private logicStepCcn3() {
-    this.stepOneForm.get('ccn3')?.valueChanges.subscribe(
+  private logicStepCountry() {
+    this.stepOneForm.get('customer_country')?.valueChanges.subscribe(
       (val) => {
         // se ita
-        if (val == '380') {
+        if (val == 12) {
           this.stepOneForm.get('customer_vat')?.enable();
           this.stepOneForm.get('customer_fiscalcode')?.enable();
           this.stepOneForm.get('customer_licensenumber')?.setValue(null);
@@ -336,10 +320,10 @@ export class StepOneComponent implements OnInit {
     const value = isChecked ? 1 : 0;
     this.stepOneForm.patchValue({ system_owner: value });
     const owner = this.stepOneForm.get('system_owner')?.value;
-    console.log("Owner", this.stepOneForm.get('system_owner')?.value);
-    if (owner) {
-      this.stepOneForm.get('')
-    }
+    // console.log("Owner", this.stepOneForm.get('system_owner')?.value);
+    // if (owner) {
+    //   this.stepOneForm.get('')
+    // }
   }
 
   getFormValid() {

@@ -6,9 +6,7 @@ export interface User {
   surname: string;
   fiscalcode?: string;
   company_name?: string;
-  country: string;
-  cca2: string;
-  ccn3: string;
+  idcountry: number;
   vat: string;
   phone: string;
   phone_whatsapp: string;

@@ -63,20 +63,20 @@ export class StepThreeComponent implements OnInit {
     installer_address: false,
     installer_email: false,
     installer_dateofpurchase: false,
-    ccn3: false
+    idcountry: false
   }
 
   stepThreeForm = this.formBuilder.group({
     installer_companyname: new FormControl<string>('', Validators.required),
     installer_address: new FormControl<string>('', Validators.required),
-    ccn3: new FormControl<string | null>(null, Validators.required),
+    idcountry: new FormControl<number | null>(null, Validators.required),
     vendor_contact: new FormControl<string>(''),
     installer_email: new FormControl<string>('', [Validators.email, Validators.required]),
     installer_dateofpurchase: new FormControl<string>('', Validators.required)
   });
 
   ngOnInit() {
-    this.connectServerService.getRequestCountryData().subscribe((obj) => {
+    this.connectServerService.getRequestCountry().subscribe((obj) => {
       this.countriesData = obj;
     })
     if (this.idsystem > 0) {
@@ -99,52 +99,14 @@ export class StepThreeComponent implements OnInit {
   }
 
   saveStep(action: string) {
-
     this.errorLogic();
     if (action == 'save' || (!this.isError && action == 'next')) {
       let stepThree = JSON.parse(JSON.stringify(this.stepThreeForm.getRawValue()));
-      let country$: Observable<Country>;
-      let country: Country;
-
-      if (stepThree.ccn3) {
-        country$ = this.connectServerService.getSpecificCountryData(this.stepThreeForm.get('ccn3')?.value!);
-        country$.subscribe((val: any) => {
-          if (val && val.length > 0) {
-            country = { name: { common: val[0].name.common }, cca2: val[0].cca2, ccn3: val[0].ccn3 };
-            console.log(country);
-            delete stepThree.ccn3;
-            stepThree.supplier_country = country;
-
-            console.log("STEP3: ", stepThree)
-
-            this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepThree',
-              {
-                idsystem: this.idsystem,
-                obj_step: stepThree
-              })
-              .subscribe((val: ApiResponse<null>) => {
-                this.popupDialogService.alertElement(val);
-                this.infoStep();
-                this.formEmit.emit(this.formBuilder.group({}));
-                if (action == 'next') {
-                  setTimeout(() => {
-                    console.log('Emitting nextStep');
-                    this.nextStep.emit();
-                  }, 0);
-                }
-              })
-          }
-        })
-      }
-      else {
-        country = { name: { common: '' }, cca2: '', ccn3: '' };
-        delete stepThree.ccn3;
-        stepThree.location_country = country;
-
+      if (stepThree.idcountry) {
         this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepThree',
           {
             idsystem: this.idsystem,
-            obj_step: stepThree,
+            obj_step: stepThree
           })
           .subscribe((val: ApiResponse<null>) => {
             this.popupDialogService.alertElement(val);
@@ -158,6 +120,7 @@ export class StepThreeComponent implements OnInit {
             }
           })
       }
+
     }
   }
 
@@ -241,11 +204,11 @@ export class StepThreeComponent implements OnInit {
 
   private errorLogic() {
     console.log("date: ", this.stepThreeForm.get('installer_dateofpurchase')?.value)
-    if (this.stepThreeForm.get('ccn3')?.value == null || this.stepThreeForm.get('ccn3')?.value!.replaceAll(' ', '') == '') {
-      this.errors.ccn3 = true;
+    if (this.stepThreeForm.get('idcountry')?.value == null) {
+      this.errors.idcountry = true;
     }
     else {
-      this.errors.ccn3 = false;
+      this.errors.idcountry = false;
     }
     if (this.stepThreeForm.get('installer_address')?.value == null || this.stepThreeForm.get('installer_address')?.value!.replaceAll(' ', '') == '') {
       this.errors.installer_address = true;
@@ -278,7 +241,7 @@ export class StepThreeComponent implements OnInit {
 
   private checkIsError() {
     if (!this.errors.installer_address &&
-      !this.errors.ccn3 &&
+      !this.errors.idcountry &&
       !this.errors.installer_companyname &&
       !this.errors.installer_dateofpurchase &&
       !this.errors.installer_email) {

@@ -1,26 +1,18 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { map, Observable } from 'rxjs';
 import { ConnectServerService } from '../../../services/connect-server.service';
 import { Store } from '@ngrx/store';
 import { UserState } from '../../../ngrx/user/user.reducer';
-import { User } from '../interfaces/user';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatIcon } from '@angular/material/icon';
 import { ApiResponse } from '../../../interfaces/api-response';
 import { Connect } from '../../../classes/connect';
 import { PopupDialogService } from '../../../services/popup-dialog.service';
-
-interface Country {
-  name: {
-    common: string;
-  },
-  cca2: string;
-  ccn3: string;
-}
+import { Country } from '../../../interfaces/country';
+import { selectAllCountries } from '../../../ngrx/country/country.selectors';
+import { CountryState } from '../../../ngrx/country/country.reducer';
 
 @Component({
   selector: 'app-settings',
@@ -53,7 +45,7 @@ export class SettingsComponent {
     email: new FormControl<string | null>({ value: null, disabled: true }, [Validators.required, Validators.email]),
     licensenumber: new FormControl<string | null>(null),
     fiscalcode: new FormControl<string | null>(null),
-    ccn3: new FormControl<string | null>(null),
+    country: new FormControl<number | null>(null),
   })
 
   companyForm = new FormGroup({
@@ -68,11 +60,11 @@ export class SettingsComponent {
     password_confirmation: new FormControl(null, Validators.required),
   })
 
-  constructor(private http: HttpClient, private connectServerService: ConnectServerService,
-    private store: Store<{ user: UserState }>, private popupDialogService: PopupDialogService) { }
+  constructor(private connectServerService: ConnectServerService,
+    private store: Store<{ user: UserState, country: CountryState}>, private popupDialogService: PopupDialogService) { }
 
   ngOnInit() {
-    this.connectServerService.getRequestCountryData().subscribe((obj) => {
+    this.store.select(selectAllCountries).subscribe((obj) => {
       this.countriesData = obj;
       this.store.select(state => state.user.userInfo).subscribe(
         (val) => {
@@ -80,19 +72,14 @@ export class SettingsComponent {
           this.companyForm.patchValue(val!);
         }
       );
-    })
+    });
 
 
-  }
-
-  fetchCountryData(): Observable<Country[]> {
-    return this.http.get<Country[]>('https://restcountries.com/v3.1/all?fields=name,flags,cca2,cca3')
-      .pipe(map((val: Country[]) => val.sort((a, b) => a.name.common.localeCompare(b.name.common))));
   }
 
   setLicence() {
-    const selectedCountry = this.generalForm.get('ccn3')?.value!;
-    if (selectedCountry === '380') {
+    const selectedCountry = this.generalForm.get('country')?.value!;
+    if (selectedCountry === 12) {
       this.isItalian = true;
       this.generalForm.patchValue({ licensenumber: '', fiscalcode: null });
     } else {
@@ -104,24 +91,7 @@ export class SettingsComponent {
   updateGeneral() {
     if (this.generalForm.valid) {
       let form_general = JSON.parse(JSON.stringify(this.generalForm.value));
-      let country: Country;
-      if (form_general.ccn3) {
-        this.connectServerService.getSpecificCountryData(this.generalForm.get('ccn3')?.value!)
-          .subscribe((val: any) => {
-            if (val && val.length > 0) {
-              country = { name: { common: val[0].name.common }, cca2: val[0].cca2, ccn3: val[0].ccn3 };
-              delete form_general.ccn3;
-              form_general.country = country;
-              this.actionUpdateGeneral(form_general);
-            }
-          })
-      }
-      else {
-        country = { name: { common: '' }, cca2: '', ccn3: '' };
-        delete form_general.ccn3;
-        form_general.country = country;
-        this.actionUpdateGeneral(form_general);
-      }
+      this.actionUpdateGeneral(form_general);
 
     }
   }

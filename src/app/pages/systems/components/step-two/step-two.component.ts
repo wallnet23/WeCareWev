@@ -59,21 +59,21 @@ export class StepTwoComponent {
 
   isError: boolean = false;
   errors = {
-    ccn3: false,
+    idcountry: false,
     location_address: false,
     location_city: false,
     location_postalcode: false
   }
 
   stepTwoForm = this.formBuilder.group({
-    ccn3: new FormControl<string | null>(null, Validators.required),
+    idcountry: new FormControl<number | null>(null, Validators.required),
     location_address: new FormControl<string>('', Validators.required),
     location_city: new FormControl<string>('', Validators.required),
     location_postalcode: new FormControl<string>('', Validators.required)
   });
 
   ngOnInit() {
-    this.connectServerService.getRequestCountryData().subscribe((obj) => {
+    this.connectServerService.getRequestCountry().subscribe((obj) => {
       this.countriesData = obj;
     })
     if (this.idsystem > 0) {
@@ -90,72 +90,34 @@ export class StepTwoComponent {
       subscribe((val: ApiResponse<{ stepTwo: StepTwo }>) => {
         if (val.data && val.data.stepTwo) {
           this.stepTwoForm.patchValue(val.data.stepTwo);
-          console.log(val.data.stepTwo.ccn3);
+          // console.log(val.data.stepTwo.ccn3);
         }
       })
   }
 
   saveStep(action: string) {
-
-    this.errorLogic()
-
+    this.errorLogic();
     if (action == 'save' || (action == 'next' && !this.isError)) {
       let stepTwo = JSON.parse(JSON.stringify(this.stepTwoForm.getRawValue()));
-      let country$: Observable<Country>;
-      let country: Country;
       //console.log("CCN3: ", this.stepTwoForm.get('ccn3')?.value!)
-      if (stepTwo.ccn3) {
-        country$ = this.connectServerService.getSpecificCountryData(this.stepTwoForm.get('ccn3')?.value!);
-        country$.subscribe((val: any) => {
-          if (val && val.length > 0) {
-            country = { name: { common: val[0].name.common }, cca2: val[0].cca2, ccn3: val[0].ccn3 };
-            //console.log(country);
-            delete stepTwo.ccn3;
-            stepTwo.location_country = country;
 
-            this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepTwo',
-              {
-                idsystem: this.idsystem,
-                obj_step: stepTwo,
-              })
-              .subscribe((val: ApiResponse<null>) => {
-                this.popupDialogService.alertElement(val);
-                this.infoStep();
-                this.formEmit.emit(this.formBuilder.group({}));
-                if (action == 'next') {
-                  setTimeout(() => {
-                    console.log('Emitting nextStep');
-                    this.nextStep.emit();
-                  }, 0);
-                }
-              })
+      this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepTwo',
+        {
+          idsystem: this.idsystem,
+          obj_step: stepTwo,
+        })
+        .subscribe((val: ApiResponse<null>) => {
+          this.popupDialogService.alertElement(val);
+          this.infoStep();
+          this.formEmit.emit(this.formBuilder.group({}));
+          if (action == 'next') {
+            setTimeout(() => {
+              console.log('Emitting nextStep');
+              this.nextStep.emit();
+            }, 0);
           }
         })
-      }
-      else {
-        country = { name: { common: '' }, cca2: '', ccn3: '' };
-        delete stepTwo.ccn3;
-        stepTwo.location_country = country;
-
-        this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepTwo',
-          {
-            idsystem: this.idsystem,
-            obj_step: stepTwo,
-          })
-          .subscribe((val: ApiResponse<null>) => {
-            this.popupDialogService.alertElement(val);
-            this.infoStep();
-            this.formEmit.emit(this.formBuilder.group({}));
-            if (action == 'next') {
-              setTimeout(() => {
-                console.log('Emitting nextStep');
-                this.nextStep.emit();
-              }, 0);
-            }
-          })
-      }
     }
-
   }
 
   /**
@@ -179,11 +141,11 @@ export class StepTwoComponent {
   }
 
   private errorLogic() {
-    if (this.stepTwoForm.get('ccn3')?.value == null || this.stepTwoForm.get('ccn3')?.value!.replaceAll(' ', '') == '') {
-      this.errors.ccn3 = true;
+    if (this.stepTwoForm.get('ccn3')?.value == null) {
+      this.errors.idcountry = true;
     }
     else {
-      this.errors.ccn3 = false;
+      this.errors.idcountry = false;
     }
     if (this.stepTwoForm.get('location_address')?.value == null || this.stepTwoForm.get('location_address')?.value!.replaceAll(' ', '') == '') {
       this.errors.location_address = true;
@@ -209,7 +171,7 @@ export class StepTwoComponent {
 
   private checkIsError() {
     if (!this.errors.location_address &&
-      !this.errors.ccn3 &&
+      !this.errors.idcountry &&
       !this.errors.location_city &&
       !this.errors.location_postalcode) {
       this.isError = false;

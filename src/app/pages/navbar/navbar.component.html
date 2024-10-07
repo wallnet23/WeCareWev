@@ -16,7 +16,7 @@
       <ul class="navbar-nav ms-auto">
         <li *ngFor="let menu of (menuNavbar$ | async)" class="nav-item d-flex align-items-center mb-1 mr-5"
           [ngClass]="{'ml-3': isToggle}">
-          <a class="nav-link" [href]="menu.path"
+          <a class="nav-link"  [routerLink]="[menu.path]"
             [ngStyle]="{'border-bottom': isCurrentPage(menu ? menu.path : '') ? '2px solid #FF0000' : 'none'}">
             <!-- {{'NAVBAR.SYSTEMS' | translate}} -->
             <span *ngIf="menu.voice == 'Systems'" #systemVoice>
@@ -38,7 +38,7 @@
             </button>
             <ul class="dropdown-menu" style="min-width: 78px;">
               <li>
-                <a class="dropdown-item" href="/profile/settings">{{'NAVBAR.SETTINGS' | translate}}</a>
+                <a class="dropdown-item" [routerLink]="['/profile/settings']"   >{{'NAVBAR.SETTINGS' | translate}}</a>
               </li>
               <li>
                 <a class="dropdown-item logout" (click)="logout()">{{'NAVBAR.LOGOUT' | translate}}</a>

@@ -2,6 +2,7 @@ import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, lastValueFrom, map } from 'rxjs';
 import { Country } from '../interfaces/country';
+import { Connect } from '../classes/connect';
 
 @Injectable({
   providedIn: 'root'
@@ -49,9 +50,15 @@ export class ConnectServerService {
     }
   }
 
-  getRequestCountryData(): Observable<Country[]> {
-    return this.getRequest<Country[]>('https://restcountries.com/v3.1/', 'all?fields=name,flags,cca2,ccn3', {})
-      .pipe(map((val: Country[]) => val.sort((a, b) => a.name.common.localeCompare(b.name.common))));
+
+  // getRequestCountryData(): Observable<Country[]> {
+  //   return this.getRequest<Country[]>('https://restcountries.com/v3.1/', 'all?fields=name,flags,cca2,ccn3', {})
+  //     .pipe(map((val: Country[]) => val.sort((a, b) => a.name.common.localeCompare(b.name.common))));
+  // }
+
+getRequestCountry(): Observable<Country[]> {
+    return this.getRequest<Country[]>(Connect.urlServerLaraApi, 'user/countriesList', {})
+      .pipe(map((val: Country[]) => val.sort((a, b) => a.common_name.localeCompare(b.common_name))));
   }
 
   getSpecificCountryData(ccn3: string): Observable<Country> {
