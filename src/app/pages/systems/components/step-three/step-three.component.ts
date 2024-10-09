@@ -93,7 +93,7 @@ export class StepThreeComponent implements OnInit {
       subscribe((val: ApiResponse<{ stepThree: StepThree }>) => {
         if (val.data.stepThree) {
           this.stepThreeForm.patchValue(val.data.stepThree);
-          console.log(val.data.stepThree)
+          // console.log(val.data.stepThree)
         }
       })
   }
@@ -114,7 +114,7 @@ export class StepThreeComponent implements OnInit {
             this.formEmit.emit(this.formBuilder.group({}));
             if (action == 'next') {
               setTimeout(() => {
-                console.log('Emitting nextStep');
+                // console.log('Emitting nextStep');
                 this.nextStep.emit();
               }, 0);
             }
@@ -203,7 +203,7 @@ export class StepThreeComponent implements OnInit {
   }
 
   private errorLogic() {
-    console.log("date: ", this.stepThreeForm.get('installer_dateofpurchase')?.value)
+    // console.log("date: ", this.stepThreeForm.get('installer_dateofpurchase')?.value)
     if (this.stepThreeForm.get('idcountry')?.value == null) {
       this.errors.idcountry = true;
     }

@@ -90,7 +90,6 @@ export class StepTwoComponent {
       subscribe((val: ApiResponse<{ stepTwo: StepTwo }>) => {
         if (val.data && val.data.stepTwo) {
           this.stepTwoForm.patchValue(val.data.stepTwo);
-          // console.log(val.data.stepTwo.ccn3);
         }
       })
   }
@@ -99,7 +98,6 @@ export class StepTwoComponent {
     this.errorLogic();
     if (action == 'save' || (action == 'next' && !this.isError)) {
       let stepTwo = JSON.parse(JSON.stringify(this.stepTwoForm.getRawValue()));
-      //console.log("CCN3: ", this.stepTwoForm.get('ccn3')?.value!)
 
       this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepTwo',
         {
@@ -112,7 +110,7 @@ export class StepTwoComponent {
           this.formEmit.emit(this.formBuilder.group({}));
           if (action == 'next') {
             setTimeout(() => {
-              console.log('Emitting nextStep');
+              // console.log('Emitting nextStep');
               this.nextStep.emit();
             }, 0);
           }
@@ -141,7 +139,7 @@ export class StepTwoComponent {
   }
 
   private errorLogic() {
-    if (this.stepTwoForm.get('ccn3')?.value == null) {
+    if (this.stepTwoForm.get('idcountry')?.value == null) {
       this.errors.idcountry = true;
     }
     else {

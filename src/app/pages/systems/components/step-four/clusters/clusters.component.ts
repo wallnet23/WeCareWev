@@ -236,13 +236,15 @@ export class ClustersComponent implements OnInit, OnChanges {
   }
 
   getDataFormCluster() {
+    console.log('1. copy_form', this.stepClusterForm.getRawValue());
     const copy_form = JSON.parse(JSON.stringify(this.stepClusterForm.getRawValue()));
     copy_form.clusters_list.forEach((cluster: any) => {
       const array_inverters: Inverter[] = this.view_inverterslist.filter(
-        (inverter: Inverter) => cluster.inverters.includes(inverter.id));
-        cluster.inverters = array_inverters;
+        (inverter: Inverter) => cluster.inverters.includes(inverter.id)
+      );
+      cluster.inverters = array_inverters;
     });
-    // console.log(copy_form);
+    console.log('2. copy_form',copy_form);
     return copy_form;
   }
 

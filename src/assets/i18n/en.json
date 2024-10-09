@@ -1,4 +1,15 @@
 {
+  "POPUP": {
+    "MSG_DELETE": "Are you sure you want to delete the system? Irreversible action.",
+    "BUTTON": {
+      "DELETE": "Delete",
+      "CLOSE": "Close",
+      "GO": "Go"
+    },
+    "TITLE": {
+      "WARNING": "Warning"
+    }
+  },
   "NAVBAR": {
     "SYSTEMS": "Systems",
     "TICKETS": "Tickets",
@@ -201,7 +212,7 @@
       "DATEOFPURCHASE": "Date Of Purchase",
       "DATEERROR": "Insert the date of purchase",
       "IMAGELIMIT": "Image limit reached",
-      "IMPORT": "Importa",
+      "IMPORT": "Import",
       "IMPORTINVOICE": "Import a picture of the invoice (max 2 files)",
       "COMPANYNAMEPLACEHOLDER": "Installer Company name",
       "ADDRESSPLACEHOLDER": "Installer Company address",
@@ -244,11 +255,12 @@
         "ONLINEERROR": "The inverter has to be online",
         "INVERTERNUMBER": "Number of Inverter",
         "SELECTVALUE": "Select a value",
-        "PARALLELCOMUNICATION": "The Inverters are in parallel on power side",
-        "PARALLELPOWER": "The Inverters are in parallel on power side",
+        "PARALLELCOMUNICATION": "Are the inverters communicating with each other in parallel",
+        "PARALLELPOWER": "Are the inverters in parallel on the power side",
         "INVERTER": "Inverter",
         "SERIALNUMBER": "Serial Number",
-        "MODEL": "Model"
+        "MODEL": "Model",
+        "QUANTITY": "Enter the quantity of inverters that make up the entire system."
       }
     },
     "STEPBUTTONS": {

@@ -8,7 +8,7 @@
           [ngClass]="{'is-invalid': errors.idcountry}">
             <option [ngValue]="null" disabled selected>{{"SYSTEM.STEPTWO.SELECTCOUNTRY" | translate}}</option>
             <option *ngFor="let country of countriesData" [ngValue]="country.id">
-              <img src="{{country.flag_png}}" width="20px" height="15px"> {{ country.common_name }}
+              {{ country.common_name }}
             </option>
           </select>
           <div class="text-danger mt-1" *ngIf="errors.idcountry" style="font-size: small;">{{"SYSTEM.STEPTWO.COUNTRYERROR" | translate}}</div>
@@ -41,7 +41,7 @@
     </div>
     <div class="row justify-content-center">
       <div class="col-12 text-center" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        <img src="assets/img/pictures.jpg" style="width: 60%; height: auto;">
+        <img src="assets/img/pictures.jpg" style="width: 60%; height: auto; cursor: pointer;">
       </div>
     </div>
 
@@ -76,7 +76,7 @@
         {{"SYSTEM.STEPBUTTONS.SAVE" | translate}}
       </button>
       <button class="btn btn-outline-dark ml-2" [disabled]="stepTwoForm.invalid || isError" (click)="saveStep('next')"
-        style="width: 80px;">
+        >
         {{"SYSTEM.STEPBUTTONS.NEXT" | translate}}
       </button>
     </div>

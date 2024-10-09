@@ -55,7 +55,7 @@
             [ngClass]="{'is-invalid': errors.customer_country}">
               <option [ngValue]="null" disabled>{{"SYSTEM.STEPONE.SELECTCOUNTRY" | translate}}</option>
               <option *ngFor="let country of countriesData" [ngValue]="country.id">
-                <img src="{{country.flag_png}}" width="20px" height="15px"> {{ country.common_name }}
+                 {{ country.common_name }}
               </option>
             </select>
             <div class="text-danger mt-1" *ngIf="errors.customer_country" style="font-size: small;">{{"SYSTEM.STEPONE.SELECTCOUNTRY" | translate}}</div>

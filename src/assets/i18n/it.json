@@ -1,4 +1,15 @@
 {
+  "POPUP": {
+    "MSG_DELETE": "Sei sicuro di voler cancellare l'impianto? Azione irreversibile.",
+    "BUTTON": {
+      "DELETE": "Cancella",
+      "CLOSE": "Chiudi",
+      "GO": "Vai"
+    },
+    "TITLE": {
+      "WARNING": "Attenzione"
+    }
+  },
   "NAVBAR": {
     "SYSTEMS": "Impianti",
     "TICKETS": "Tickets",
@@ -178,29 +189,35 @@
       "INSTALLATIONCOUNTRY": "Paese di Installazione",
       "SELECTCOUNTRY": "Seleziona un Paese",
       "CITY": "Città",
-      "CITYPLACEHOLDER": "Inserisci il nome della città",
-      "ZIPCODE": "Codice Postale",
-      "ZIPCODEPLACEHOLDER": "codice postale",
       "ADDRESS": "Indirizzo",
-      "ADDRESSPLACEHOLDER": "indirizzo",
-      "ERRORZIPCODE": "Inserisci il codice postale",
-      "ERRORCITY": "Inserisci il nome della città",
-      "ERRORADDRESS": "Inserisci l'indirizzo"
+      "COUNTRYERROR": "Inserisci un paese",
+      "ADDRESSERROR": "Inserisci indirizzo",
+      "CITYERROR": "Inserisci città",
+      "POSTALCODE": "Codice Postale",
+      "POSTALCODEERROR": "Inserisci il codice postale",
+      "INSTALLATIONPICTURES": "Immagini di installazione (allegare 5 immagini delle batterie nel luogo di installazione)",
+      "IMAGELIMIT": "Limite immagine raggiunto"
     },
     "STEPTHREE": {
-      "NAME": "Nome del Tecnico",
-      "NAMEPLACEHOLDER": "Nome",
-      "SURNAME": "Cognome del Tecnico",
-      "SURNAMEPLACEHOLDER": "Cognome",
-      "PHONE": "Numero di Telefono del Tecnico",
-      "PHONEPLACEHOLDER": "(+999) 9999999",
-      "VAT": "Partita IVA",
-      "FISCALCODE": "Codice Fiscale",
-      "LICENSENUMBER": "Numero di Licenza",
-      "ERRORNAME": "Inserisci il nome del tecnico",
-      "ERRORSURNAME": "Inserisci il cognome del tecnico",
-      "ERRORPHONE": "Inserisci il numero di telefono del tecnico",
-      "SHORTINFO": "Scrivi alcune informazioni brevi"
+      "COMPANYNAME": "Ragione sociale dell'installatore",
+      "NAMEERROR": "Inserire il nome dell'azienda dell'installatore",
+      "COMPANYADDRESS": "Indirizzo",
+      "ADDRESSERROR": "Inserisci indirizzo installatore",
+      "COMPANYCOUNTRY": "Paese",
+      "COUNTRYERROR": "Inserire il Paese dell'installatore",
+      "COUNTRYSELECT": "Seleziona un Paese",
+      "VENDORCONTACT": "Contatto del venditore",
+      "EMAIL": "Email",
+      "EMAILERROR": "Inserisci l'e-mail dell'installatore nel formato corretto",
+      "DATEOFPURCHASE": "Data di acquisto",
+      "DATEERROR": "Inserire la data di acquisto",
+      "IMAGELIMIT": "Limite immagine raggiunto",
+      "IMPORT": "Importa",
+      "IMPORTINVOICE": "Importa un'immagine o un pdf della fattura (max 2 file)",
+      "COMPANYNAMEPLACEHOLDER": "Nome dell'azienda installatrice",
+      "ADDRESSPLACEHOLDER": "Indirizzo dell'azienda installatrice",
+      "VENDORPLACEHOLDER": "Telefono o e-mail del venditore",
+      "DATEPLACEHOLDER": "dd/mm/yyyy"
     },
     "STEPFOUR": {
       "INSTALLATIONDATE": "Data di Installazione",
@@ -238,11 +255,12 @@
         "ONLINEERROR": "L'inverter deve essere online",
         "INVERTERNUMBER": "Numero di Inverter",
         "SELECTVALUE": "Seleziona un valore",
-        "PARALLELCOMUNICATION": "Gli Inverter sono in parallelo sul lato potenza",
-        "PARALLELPOWER": "Gli Inverter sono in parallelo sul lato potenza",
+        "PARALLELCOMUNICATION": "Gli Inverter sono in parallelo di comunicazione tra di loro",
+        "PARALLELPOWER": "Gli Inverter sono in parallelo lato potenza",
         "INVERTER": "Inverter",
         "SERIALNUMBER": "Numero di Serie",
-        "MODEL": "Modello"
+        "MODEL": "Modello",
+        "QUANTITY": "Inserisci la quantità di inverter che compongono l'intero sistema."
       }
     },
     "STEPBUTTONS": {
