@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StepFourComponent } from './step-four.component';
+import { StepFourOldComponent } from './step-four-old.component';
 
-describe('StepFourComponent', () => {
-  let component: StepFourComponent;
-  let fixture: ComponentFixture<StepFourComponent>;
+describe('ProductInfoComponent', () => {
+  let component: StepFourOldComponent;
+  let fixture: ComponentFixture<StepFourOldComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [StepFourComponent]
+      imports: [StepFourOldComponent]
     })
     .compileComponents();
-    
-    fixture = TestBed.createComponent(StepFourComponent);
+
+    fixture = TestBed.createComponent(StepFourOldComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -130,6 +130,8 @@
       "INSTALLATIONSITE": "INSTALLATION SITE",
       "TECHNICIANINFO": "TECHNICIAN / INSTALLER INFO",
       "DEVICESINFO": "DEVICES INFO",
+      "INVERTER": "INVERTER INFO",
+      "BATTERIES": "BATTERIES INFO",
       "CONFIRMATION": "CONFIRMATION",
       "REQUEST": "Request the approval of the system to get access to all the services and request extend the warranty of inverters.",
       "COMPLETE": "Concludi ogni step per richiedere l'approvazione dell'impianto al tecnico Weco.",
@@ -230,9 +232,12 @@
       "BRANDINV": "What brand of inverter are you working with?",
       "BRANDERROR": "Which is the other brand?",
       "DATEPLACEHOLDER": "dd/mm/yyyy",
-      "CLUSTER": {
-        "BATTERYINFO": "Battery Info",
-        "VOLTAGE": "High or Low Voltage",
+      "DESCNUMDEVICE": "A cluster is a collection of batteries.",
+      "HYBRIDINVERTER": "Hybrid Inverter",
+      "ONLINEINVERTER": "Are all Inverters Online?",
+      "ONLINEERROR": "The inverters must be online.",
+      "BATTERYINFO": "Battery Info",
+        "VOLTAGE": "Are the batteries high or low voltage?",
         "SELECTVALUE": "Select a value",
         "SYSTEMMODEL": "System Model",
         "SELECTMODEL": "Select a model",
@@ -242,27 +247,27 @@
         "SINGLEBATTERY": "Single Battery",
         "YES": "Yes",
         "No": "No",
+        "DEVICESFORCLUSTER": "How many devices for each Cluster"
+    },
+    "STEPFIVE": {
+      "ADDINVERTER": "Add inverter +",
+      "INVERTERINFO": "Inverter Info",
+      "INVERTERNUMBER": "Number of Inverter",
+      "SELECTVALUE": "Select a value",
+      "PARALLELCOMUNICATION": "Are the inverters communicating with each other in parallel?",
+      "PARALLELPOWER": "Are the inverters in parallel on the power side?",
+      "INVERTER": "Inverter",
+      "SERIALNUMBER": "Serial Number",
+      "MODEL": "Model",
+      "QUANTITY": "Enter the quantity of inverters that make up the entire system."
+    },
+    "STEPSIX": {
+
         "HOWMANYCLUSTERS": "How many Clusters",
-        "DEVICESFORCLUSTER": "How many devices for each Cluster",
         "CLUSTER": "Cluster",
         "SERIALNUMBER": "Serial Number",
         "CONNECTEDINVERTER": "Inverter to which it is connected"
       },
-      "INVERTER": {
-        "INVERTERINFO": "Inverter Info",
-        "HYBRIDINVERTER": "Hybrid Inverter",
-        "ONLINEINVERTER": "Is the Inverter Online",
-        "ONLINEERROR": "The inverter has to be online",
-        "INVERTERNUMBER": "Number of Inverter",
-        "SELECTVALUE": "Select a value",
-        "PARALLELCOMUNICATION": "Are the inverters communicating with each other in parallel",
-        "PARALLELPOWER": "Are the inverters in parallel on the power side",
-        "INVERTER": "Inverter",
-        "SERIALNUMBER": "Serial Number",
-        "MODEL": "Model",
-        "QUANTITY": "Enter the quantity of inverters that make up the entire system."
-      }
-    },
     "STEPBUTTONS": {
       "PREV": "Previous",
       "SAVE": "Save",

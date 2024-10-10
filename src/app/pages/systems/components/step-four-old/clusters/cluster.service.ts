@@ -249,7 +249,6 @@ export class ClusterService {
           this.systemType = val.data.systemType;
         }
       })
-
   }
 
 

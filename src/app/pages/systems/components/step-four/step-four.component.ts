@@ -1,29 +1,20 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { FormBuilder, Validators, FormsModule, ReactiveFormsModule, FormControl, FormArray, FormGroup } from '@angular/forms';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatStepperModule } from '@angular/material/stepper';
-import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { MatStepperModule } from '@angular/material/stepper';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatCardModule } from '@angular/material/card';
-import { InvertersComponent } from './inverters/inverters.component';
-import { ClustersComponent } from './clusters/clusters.component';
-import { ConnectServerService } from '../../../../services/connect-server.service';
-import { ApiResponse } from '../../../../interfaces/api-response';
-import { Connect } from '../../../../classes/connect';
-import { PopupDialogService } from '../../../../services/popup-dialog.service';
-import { StepFour } from '../interfaces/step-four';
-import { Inverter, InverterData } from '../../interfaces/inverterData';
-import { ClusterData } from '../../interfaces/clusterData';
 import { TranslateModule } from '@ngx-translate/core';
-
-interface BatteryInfo {
-  serialNumber: string;
-  askSupport: boolean;
-}
+import { ConnectServerService } from '../../../../services/connect-server.service';
+import { PopupDialogService } from '../../../../services/popup-dialog.service';
+import { ApiResponse } from '../../../../interfaces/api-response';
+import { StepFour } from '../interfaces/step-four';
+import { Connect } from '../../../../classes/connect';
+import { StepFourService } from './step-four.service';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 interface SystemComposition {
   id: number | null;
@@ -42,38 +33,24 @@ interface SystemComposition {
   imports: [
     CommonModule,
     MatStepperModule,
-    FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    HttpClientModule,
     MatIconModule,
-    MatCardModule,
-    InvertersComponent,
-    ClustersComponent,
-    TranslateModule
+    TranslateModule,
+    MatTooltipModule
   ],
   templateUrl: './step-four.component.html',
   styleUrl: './step-four.component.scss'
 })
-export class StepFourComponent implements OnInit {
-
+export class StepFourComponent {
   @Output() formEmit = new EventEmitter<FormGroup>();
   @Output() nextStep = new EventEmitter<void>();
-  inverterList: Inverter[] = [];
-
-  isError = false;
-  errors = {
-    product_installdate: false,
-    product_systemcomposition: false,
-    product_systemweco: false,
-    product_brand: false,
-  }
-
-  @ViewChild('invertersComponent') obj_invert!: InvertersComponent;
-  @ViewChild('clustersComponent') obj_cluster!: ClustersComponent;
   @Input() idsystem = 0;
+  readonly stepFourService = inject(StepFourService);
+  language_now = 'en';
+  wecoComposition: SystemComposition[] = [];
   systemComposition: SystemComposition[] = [
     {
       id: null,
@@ -87,20 +64,31 @@ export class StepFourComponent implements OnInit {
       id: 2,
       name: 'Battery and Inverter'
     }];
-  wecoComposition: SystemComposition[] = [];
-  stepInverter!: InverterData;
-  stepCluster!: ClusterData;
+  numCluster = Array(15).fill(0).map((_, i) => ({
+    num: i + 1,
+    // Proprietà aggiuntive...
+  }));
+  numDevicesCluster = Array(16).fill(0).map((_, i) => ({
+    num: i + 1,
+    // Proprietà aggiuntive...
+  }));
   view_stepinverter = false;
   stepFourForm = this.formBuilder.group({
     product_installdate: new FormControl<null | string>(null, Validators.required),
     product_systemcomposition: new FormControl<number | null>(null, Validators.required),
     product_systemweco: new FormControl<number | null>(null, Validators.required),
     product_brand: new FormControl(''),
+    inverter_hybrid: new FormControl<number | null | boolean>(null),
+    inverter_online: new FormControl<number | null | boolean>(null),
+    refidwecaresystemvolt: new FormControl<number | null>(null, Validators.required),
+    system_model: new FormControl<number | null>(null, Validators.required),
+    refidwecaresystemtype: new FormControl<number | null>(null, Validators.required),
+    cluster_singlebattery: new FormControl<number | null>(null, Validators.required),
+    cluster_numberdevices: new FormControl<number | null>({ value: null, disabled: false }, Validators.required),
   });
 
   constructor(private formBuilder: FormBuilder, private connectServerService: ConnectServerService,
-    private popupDialogService: PopupDialogService
-  ) { }
+    private popupDialogService: PopupDialogService) { }
 
   ngOnInit(): void {
     if (this.idsystem > 0) {
@@ -108,158 +96,39 @@ export class StepFourComponent implements OnInit {
       this.infoStep();
     }
   }
-
-
-  saveStep(action: string) {
-
-    this.errorLogic();
-    if (!this.isError) {
-      const stepFour = this.stepFourForm.value;
-      // console.log('data 1', this.stepFourForm.value);
-      let stepInverter = null;
-      let stepCluster = null;
-      if (this.obj_invert) {
-        stepInverter = this.obj_invert.getDataFormInverter();
-        console.log('inverter valid', this.obj_invert.getValidFormInvert());
-      }
-      if (this.obj_cluster) {
-        stepCluster = this.obj_cluster.getDataFormCluster();
-        // console.log('inverter valid', this.obj_invert.getValidFormInvert());
-      }
-
-      // console.log('data valid', this.stepFourForm.valid);
-      this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepFour',
-        {
-          idsystem: this.idsystem,
-          obj_step: stepFour,
-          obj_inverter: stepInverter,
-          obj_cluster: stepCluster,
-        })
-        .subscribe((val: ApiResponse<null>) => {
-          this.popupDialogService.alertElement(val);
-          this.infoStep();
-          this.formEmit.emit(this.formBuilder.group({}));
-          if (action == 'next') {
-            setTimeout(() => {
-              // console.log('Emitting nextStep');
-              this.nextStep.emit();
-            }, 0);
-          }
-        })
-    }
+  get systemVoltView() {
+    return this.stepFourService.getSystemVoltView();
+  }
+  get systemModelView() {
+    return this.stepFourService.getSystemModelView();
   }
 
+  get systemTypeView() {
+    return this.stepFourService.getSystemTypeView();
+  }
   private infoStep() {
     this.connectServerService.getRequest<ApiResponse<{
       stepFour: StepFour,
-      stepInverter: InverterData,
-      stepCluster: ClusterData
     }>>(Connect.urlServerLaraApi, 'system/infoStepFour',
       {
         id: this.idsystem
       })
       .subscribe((val: ApiResponse<{
-        stepFour: StepFour,
-        stepInverter: InverterData,
-        stepCluster: ClusterData
+        stepFour: StepFour
       }>) => {
         if (val.data && val.data.stepFour) {
           const data_step = val.data.stepFour;
-          this.stepFourForm.patchValue(data_step);
+          // this.stepFourForm.patchValue(data_step);
+          this.stepFourService.infoClusters(this.stepFourForm, data_step);
         }
-        if (val.data && val.data.stepInverter) {
-          this.stepInverter = val.data.stepInverter;
-        }
-        if (val.data && val.data.stepCluster) {
-          this.stepCluster = val.data.stepCluster;
-        }
-        // console.log('val 4 info:', val.data);
-
       })
   }
 
-  getStepValid(): boolean {
-    if(this.stepFourForm && this.obj_invert){
-      if(this.stepFourForm.get('product_systemcomposition')?.value == 2){
-        if(this.obj_cluster){
-          return this.stepFourForm.valid && this.obj_invert.getValidFormInvert()
-          && this.obj_cluster.getValidFormCluster();
-        }else{
-          return false;
-        }
-      }else{
-        return this.stepFourForm.valid && this.obj_invert.getValidFormInvert();
-      }
-    }else{
-      return false;
-    }
-  }
-
-  // private getViewStepInverterValid() {
-  //   console.log('val:', this.stepFourForm.get('product_systemcomposition')?.value);
-  //   let result = false;
-  //   if (this.obj_invert) {
-  //     console.log('valid:', this.obj_invert.getValidFormInvert());
-  //     if (this.stepFourForm.get('product_systemcomposition')?.value == 2 &&
-  //       this.obj_invert.getValidFormInvert()) {
-  //       result = true;
-  //     }
-  //   }
-  //   this.view_stepinverter = result;
-  // }
-
-  private errorLogic() {
-    if (this.stepFourForm.get('product_installdate')?.value == null || this.stepFourForm.get('product_installdate')?.value!.replaceAll(' ', '') == '') {
-      this.errors.product_installdate = true;
-    }
-    else {
-      this.errors.product_installdate = false;
-    }
-    if (this.stepFourForm.get('product_systemcomposition')?.value == null) {
-      this.errors.product_systemcomposition = true;
-    }
-    else {
-      this.errors.product_systemcomposition = false;
-    }
-    if (this.stepFourForm.get('product_systemweco')?.value == null) {
-      this.errors.product_systemweco = true;
-    }
-    else {
-      this.errors.product_systemweco = false;
-    }
-    if (this.stepFourForm.get('product_systemweco')?.value == 0) {
-      if (this.stepFourForm.get('product_brand')?.value == null || this.stepFourForm.get('product_brand')?.value!.replaceAll(' ', '') == '') {
-        this.errors.product_brand = true;
-      }
-      else {
-        this.errors.product_brand = false;
-      }
-    }
-    else {
-      this.errors.product_brand = false;
-    }
-
-    this.checkIsError();
-  }
-
-  private checkIsError() {
-    if (!this.errors.product_installdate &&
-      !this.errors.product_systemcomposition &&
-      !this.errors.product_systemweco &&
-      !this.errors.product_brand) {
-      this.isError = false;
-    }
-    else {
-      this.isError = true;
-    }
-  }
 
   private logicStep() {
-    console.log('product_systemcomposition 1');
-
     this.stepFourForm.get('product_systemcomposition')?.valueChanges.subscribe(
       (val) => {
-        console.log('product_systemcomposition 2');
+        // console.log('product_systemcomposition 2');
         if (val == null) {
           this.wecoComposition = [
             {
@@ -308,15 +177,46 @@ export class StepFourComponent implements OnInit {
           this.stepFourForm.get('product_systemweco')?.enable();
         }
       }
-    )
+    );
+    this.stepFourForm.get('refidwecaresystemvolt')?.valueChanges.subscribe(
+      (val) => {
+        this.stepFourService.updateSystemVolt(this.stepFourForm, val, () => { });
+      });
+    this.stepFourForm.get('system_model')?.valueChanges.subscribe(
+      (val) => {
+        this.stepFourService.updateSystemModel(this.stepFourForm, val, () => { });
+      }
+    );
   }
 
   getForm() {
     return this.stepFourForm;
   }
 
-  updateInvertersList(list: Inverter[]) {
-    this.inverterList = list;
+
+  saveStep(action: string) {
+    const stepFour = this.stepFourForm.value;
+    console.log('data 1', this.stepFourForm.value);
+
+    // console.log('data valid', this.stepFourForm.valid);
+    this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepFour',
+      {
+        idsystem: this.idsystem,
+        obj_step: stepFour,
+      })
+      .subscribe((val: ApiResponse<null>) => {
+        this.popupDialogService.alertElement(val);
+        this.infoStep();
+        this.formEmit.emit(this.formBuilder.group({}));
+        if (action == 'next') {
+          setTimeout(() => {
+            // console.log('Emitting nextStep');
+            this.nextStep.emit();
+          }, 0);
+        }
+      })
+
   }
+
 
 }

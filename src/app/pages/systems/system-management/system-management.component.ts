@@ -1,15 +1,14 @@
-import { AfterViewInit, Component, OnInit, SimpleChanges, ViewChild, viewChild } from '@angular/core';
-import { FormBuilder, Validators, FormsModule, ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
+import { Component, inject, ViewChild } from '@angular/core';
+import { Validators, FormsModule, ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatStepper, MatStepperModule } from '@angular/material/stepper';
+import { MatStepperModule } from '@angular/material/stepper';
 import { StepOneComponent } from '../components/step-one/step-one.component';
 import { StepTwoComponent } from '../components/step-two/step-two.component';
 import { MatIconModule } from '@angular/material/icon';
 import { StepThreeComponent } from '../components/step-three/step-three.component';
-import { StepFourComponent } from '../components/step-four/step-four.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConnectServerService } from '../../../services/connect-server.service';
 import { ApiResponse } from '../../../interfaces/api-response';
@@ -20,8 +19,11 @@ import { RMA } from '../interfaces/rma';
 import { Connect } from '../../../classes/connect';
 import { CommonModule, Location } from '@angular/common';
 import { PopupDialogService } from '../../../services/popup-dialog.service';
-import { ClusterService } from '../components/step-four/clusters/cluster.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { StepFourComponent } from '../components/step-four/step-four.component';
+import { StepFourService } from '../components/step-four/step-four.service';
+import { StepFiveComponent } from "../components/step-five/step-five.component";
+import { StepSixComponent } from "../components/step-six/step-six.component";
 
 @Component({
   selector: 'app-system-management',
@@ -42,10 +44,12 @@ import { TranslateModule } from '@ngx-translate/core';
     StepOneComponent,
     StepTwoComponent,
     StepThreeComponent,
-    StepFourComponent,
     MatIconModule,
     CommonModule,
-    TranslateModule
+    TranslateModule,
+    StepFourComponent,
+    StepFiveComponent,
+    StepSixComponent
   ],
   templateUrl: './system-management.component.html',
   styleUrl: './system-management.component.scss'
@@ -59,22 +63,25 @@ export class SystemManagementComponent {
   @ViewChild('stepTwo') obj_stepTwo!: StepTwoComponent;
   @ViewChild('stepThree') obj_stepThree!: StepThreeComponent;
   @ViewChild('stepFour') obj_stepFour!: StepFourComponent;
+  @ViewChild('stepFive') obj_stepFive!: StepFourComponent;
+  @ViewChild('stepSix') obj_stepSix!: StepFourComponent;
 
   stepOneForm!: FormGroup;
   stepTwoForm!: FormGroup;
   stepThreeForm!: FormGroup;
   stepFourForm!: FormGroup;
   stepFiveForm!: FormGroup;
+  stepSixForm!: FormGroup;
 
   systemStatus: { id: number, name: string } | null = null;
+  readonly stepFourService = inject(StepFourService);
 
   constructor(private route: ActivatedRoute, private connectServerService: ConnectServerService,
-    private location: Location, private router: Router, private popupDialogService: PopupDialogService,
-    private clusterService: ClusterService) {
+    private location: Location, private router: Router, private popupDialogService: PopupDialogService) {
     this.route.params.subscribe(params => {
       this.idsystem = params['id'];
       this.getSystemOverview();
-      this.clusterService.setSystemsValues();
+      this.stepFourService.setSystemsValues();
     });
   }
 
@@ -87,7 +94,9 @@ export class SystemManagementComponent {
       this.stepOneForm = this.obj_stepOne.getForm();
       this.stepTwoForm = this.obj_stepTwo.getForm();
       this.stepThreeForm = this.obj_stepThree.getForm();
-      //this.stepFourForm = this.obj_stepFour.getForm();
+      this.stepFourForm = this.obj_stepFour.getForm();
+      this.stepFiveForm = this.obj_stepFive.getForm();
+      this.stepSixForm = this.obj_stepSix.getForm();
     }
   }
 
@@ -104,9 +113,12 @@ export class SystemManagementComponent {
     this.stepFourForm = new FormGroup({
       invalid: new FormControl(null, Validators.required)
     });
-    // this.stepFiveForm = new FormGroup({
-    //   invalid: new FormControl(null, Validators.required)
-    // });
+    this.stepFiveForm = new FormGroup({
+      invalid: new FormControl(null, Validators.required)
+    });
+    this.stepSixForm = new FormGroup({
+      invalid: new FormControl(null, Validators.required)
+    });
   }
 
   onFormOneReceived(form: FormGroup) {
@@ -129,7 +141,12 @@ export class SystemManagementComponent {
   onFormFourReceived(form: FormGroup) {
     this.stepFourForm = form;
   }
-
+  onFormFiveReceived(form: FormGroup) {
+    this.stepFiveForm = form;
+  }
+  onFormSixReceived(form: FormGroup) {
+    this.stepSixForm = form;
+  }
   onIdReceived(id: number) {
     this.idsystem = id;
     //console.log('ID received from child:', id);
@@ -181,8 +198,8 @@ export class SystemManagementComponent {
     const valid = this.obj_stepOne?.stepOneForm?.valid &&
       this.obj_stepTwo?.stepTwoForm?.valid &&
       this.obj_stepThree?.stepThreeForm?.valid
-    //&&
-    //this.obj_stepFour?.stepFourForm?.valid;
+      &&
+      this.obj_stepFour?.stepFourForm?.valid;
     this.allFormValid = valid
     //== null ? false : true;
     return this.allFormValid;
