@@ -1,4 +1,4 @@
-import {  Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators, FormsModule, ReactiveFormsModule, FormControl, FormGroup } from '@angular/forms';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { MatButtonModule } from '@angular/material/button';
@@ -81,14 +81,13 @@ export class StepOneComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder, private connectServerService: ConnectServerService,
     private popupDialogService: PopupDialogService, private router: Router,
-    private store: Store<{ country: CountryState}>) { }
+    private store: Store<{ country: CountryState }>) { }
 
   ngOnInit() {
     this.store.select(selectAllCountries).subscribe((obj) => {
       this.countriesData = obj;
     });
     this.infoStep();
-
     if (this.idsystem == 0) {
       this.disableFields();
       this.logicStep();
@@ -137,13 +136,10 @@ export class StepOneComponent implements OnInit {
 
 
   saveStep(action: string) {
-
     this.errorLogic();
-
     if (!this.isError) {
       let stepOne = JSON.parse(JSON.stringify(this.stepOneForm.getRawValue()));
       this.saveData(stepOne, action);
-
     }
   }
 
@@ -207,7 +203,6 @@ export class StepOneComponent implements OnInit {
       this.errors.customer_fiscalcode = false;
       this.errors.customer_licensenumber = false;
     }
-
     this.checkIsError();
   }
 
@@ -235,8 +230,7 @@ export class StepOneComponent implements OnInit {
         if (this.idsystem == 0) {
           this.formEmit.emit(this.formBuilder.group({}));
           this.router.navigate(['systemManagement', val.data.idsystem]);
-        }
-        else {
+        } else {
           this.idsystem = val.data.idsystem;
           this.idEmitter.emit(val.data.idsystem);
           this.popupDialogService.alertElement(val);
@@ -271,13 +265,7 @@ export class StepOneComponent implements OnInit {
             this.stepOneForm.get('customer_licensenumber')?.enable();
           }
         } else if (val == (1 || true)) {
-          this.stepOneForm.get('customer_name')?.disable();
-          this.stepOneForm.get('customer_surname')?.disable();
-          this.stepOneForm.get('customer_country')?.disable();
-          this.stepOneForm.get('customer_phone')?.disable();
-          this.stepOneForm.get('customer_vat')?.disable();
-          this.stepOneForm.get('customer_licensenumber')?.disable();
-          this.stepOneForm.get('customer_fiscalcode')?.disable();
+          this.disableFields();
         }
 
       }
@@ -285,7 +273,9 @@ export class StepOneComponent implements OnInit {
     this.logicStepCountry();
   }
 
-  disableFields() {
+
+  private disableFields() {
+    console.log('dentroooo');
     this.stepOneForm.get('customer_name')?.disable();
     this.stepOneForm.get('customer_surname')?.disable();
     this.stepOneForm.get('customer_country')?.disable();

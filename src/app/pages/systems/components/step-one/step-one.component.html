@@ -102,7 +102,7 @@
           {{"SYSTEM.STEPBUTTONS.SAVE" | translate}}
         </button>
         <button class="btn btn-outline-dark ms-2" id="next" (click)="saveStep('next')"
-          [disabled]="stepOneForm.invalid || idsystem == 0 || isError">
+          [disabled]="stepOneForm.invalid || idsystem == 0 || isError" *ngIf="idsystem > 0">
           {{"SYSTEM.STEPBUTTONS.NEXT" | translate}}
         </button>
       </div>

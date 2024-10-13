@@ -237,17 +237,16 @@
       "ONLINEINVERTER": "Are all Inverters Online?",
       "ONLINEERROR": "The inverters must be online.",
       "BATTERYINFO": "Battery Info",
-        "VOLTAGE": "Are the batteries high or low voltage?",
-        "SELECTVALUE": "Select a value",
-        "SYSTEMMODEL": "System Model",
-        "SELECTMODEL": "Select a model",
-        "PARALLELCLUSTERS": "Parallel Clusters",
-        "BATTERYTYPE": "Battery Type",
-        "SELECTTYPE": "Select a type",
-        "SINGLEBATTERY": "Single Battery",
-        "YES": "Yes",
-        "No": "No",
-        "DEVICESFORCLUSTER": "How many devices for each Cluster"
+      "VOLTAGE": "Are the batteries high or low voltage?",
+      "SELECTVALUE": "Select a value",
+      "SYSTEMMODEL": "System Model",
+      "SELECTMODEL": "Select a model",
+      "BATTERYTYPE": "Battery Type",
+      "SELECTTYPE": "Select a type",
+      "SINGLEBATTERY": "Single Battery",
+      "YES": "Yes",
+      "No": "No",
+      "DEVICESFORCLUSTER": "How many devices for each Cluster"
     },
     "STEPFIVE": {
       "ADDINVERTER": "Add inverter +",
@@ -259,15 +258,20 @@
       "INVERTER": "Inverter",
       "SERIALNUMBER": "Serial Number",
       "MODEL": "Model",
-      "QUANTITY": "Enter the quantity of inverters that make up the entire system."
+      "QUANTITY": "Enter the quantity of inverters that make up the entire system.",
+      "INVERTERCOMPOSE": "Inserisci gli inverter:"
     },
     "STEPSIX": {
-
-        "HOWMANYCLUSTERS": "How many Clusters",
-        "CLUSTER": "Cluster",
-        "SERIALNUMBER": "Serial Number",
-        "CONNECTEDINVERTER": "Inverter to which it is connected"
-      },
+      "ADDICLUSTER": "Add cluster +",
+      "HOWMANYCLUSTERS": "How many Clusters",
+      "CLUSTER": "Cluster",
+      "SERIALNUMBER": "Serial Number",
+      "CONNECTEDINVERTER": "Inverter to which it is connected",
+      "YES": "Yes",
+      "No": "No",
+      "PARALLELCLUSTERS": "Are the Clusters in parallel?",
+      "CLUSTERCOMPOSE": "Compose your system:"
+    },
     "STEPBUTTONS": {
       "PREV": "Previous",
       "SAVE": "Save",
@@ -283,6 +287,7 @@
       "CUSTOMERNAME": "Customer Name",
       "INSTALLATIONSITE": "Installation Site",
       "DEVICEINFO": "Device Info",
+      "SYSTEMINFO": "Information about the plant",
       "ENABLEFUNC": "Insert the system's datas to enable the others functionalities",
       "MODIFYDATA": "Modify System Data",
       "VIEW": "View System Data",

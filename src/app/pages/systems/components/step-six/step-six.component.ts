@@ -53,6 +53,7 @@ export class StepSixComponent {
   num_devices: number | null = 0;
   view_inverterslist: Inverter[] = [];
   readonly stepFourService = inject(StepFourService);
+
   stepSixForm = this.formBuilder.group({
     clusters_list: this.formBuilder.array<Cluster[]>([]),
     cluster_parallel: new FormControl<number | null>({ value: null, disabled: true }, Validators.required),
@@ -69,7 +70,7 @@ export class StepSixComponent {
   private infoStep() {
     this.connectServerService.getRequest<ApiResponse<{
       stepSix: StepSix,
-    }>>(Connect.urlServerLaraApi, 'system/infoStepFive',
+    }>>(Connect.urlServerLaraApi, 'system/infoStepSix',
       {
         id: this.idsystem
       })
@@ -90,10 +91,9 @@ export class StepSixComponent {
           //   }
           // )
           this.getClusterFieldAsFormArray(this.stepSixForm).clear();
-          this.logicSingleBattery(this.stepSixForm, data_step.cluster_singlebattery);
           this.num_devices = data_step.cluster_numberdevices;
           const array_clusters = data_step.clusters_list;
-
+          this.view_inverterslist = data_step.inverters_list;
           this.getClusterFieldAsFormArray(this.stepSixForm).clear();
           array_clusters.forEach(
             (cluster: Cluster, index: number) => {
@@ -112,29 +112,36 @@ export class StepSixComponent {
               )
             }
           )
+          this.logicSingleCluster(this.stepSixForm, array_clusters.length);
         }
       })
   }
   saveStep(action: string) {
-    // const stepFive = this.stepFiveForm.value;
-    // // console.log('data 1', this.stepFiveForm.value);
-    // // console.log('data valid', this.stepFourForm.valid);
-    // this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepFive',
-    //   {
-    //     idsystem: this.idsystem,
-    //     obj_step: stepFive,
-    //   })
-    //   .subscribe((val: ApiResponse<null>) => {
-    //     this.popupDialogService.alertElement(val);
-    //     this.infoStep();
-    //     this.formEmit.emit(this.formBuilder.group({}));
-    //     if (action == 'next') {
-    //       setTimeout(() => {
-    //         // console.log('Emitting nextStep');
-    //         this.nextStep.emit();
-    //       }, 0);
-    //     }
-    //   })
+    // console.log('1. copy_form', this.stepSixForm.getRawValue());
+    const copy_form = JSON.parse(JSON.stringify(this.stepSixForm.getRawValue()));
+    copy_form.clusters_list.forEach((cluster: any) => {
+      const array_inverters: Inverter[] = this.view_inverterslist.filter(
+        (inverter: Inverter) => cluster.inverters.includes(inverter.id)
+      );
+      cluster.inverters = array_inverters;
+    });
+    // console.log('2. copy_form', copy_form);
+    this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepSix',
+      {
+        idsystem: this.idsystem,
+        obj_step: copy_form,
+      })
+      .subscribe((val: ApiResponse<null>) => {
+        this.popupDialogService.alertElement(val);
+        this.infoStep();
+        this.formEmit.emit(this.formBuilder.group({}));
+        if (action == 'next') {
+          setTimeout(() => {
+            // console.log('Emitting nextStep');
+            this.nextStep.emit();
+          }, 0);
+        }
+      })
   }
   /**
      * Usato per inserire i cluster (2)
@@ -154,8 +161,18 @@ export class StepSixComponent {
     * @param personalIndex
     * @param tipo
     */
+
+  // private addBattery(form: FormGroup, personalIndex: number, obj_battery: Battery) {
+  //   // const clusterFormGroup = this.clusterFieldAsFormArray.at(personalIndex) as FormGroup;
+  //   const clusterFormGroup = this.getClusterFieldAsFormArray(form).at(personalIndex) as FormGroup;
+  //   const batterieFormArray = clusterFormGroup.get('batteries') as FormArray;
+  //   batterieFormArray.push(new FormGroup({
+  //     id: new FormControl(obj_battery.id, Validators.required),
+  //     serialnumber: new FormControl(obj_battery.serialnumber, Validators.required),
+  //     masterorslave: new FormControl(obj_battery.masterorslave),
+  //   }));
+  // }
   private addBattery(form: FormGroup, personalIndex: number, obj_battery: Battery) {
-    // const clusterFormGroup = this.clusterFieldAsFormArray.at(personalIndex) as FormGroup;
     const clusterFormGroup = this.getClusterFieldAsFormArray(form).at(personalIndex) as FormGroup;
     const batterieFormArray = clusterFormGroup.get('batteries') as FormArray;
     batterieFormArray.push(new FormGroup({
@@ -164,6 +181,7 @@ export class StepSixComponent {
       masterorslave: new FormControl(obj_battery.masterorslave),
     }));
   }
+
   public getClusterFieldAsFormArray(form: FormGroup): any {
     return form.get('clusters_list') as FormArray;
   }
@@ -205,33 +223,33 @@ export class StepSixComponent {
   private populateClusters(num_battery: number | null | undefined,
     objcluster_default: ClusterSend, objbattery_default: Battery
   ) {
-
     this.addCluster(this.stepSixForm, objcluster_default);
+    // Ottieni l'indice dell'ultimo cluster aggiunto
+    const clusterIndex = this.getClusterFieldAsFormArray(this.stepSixForm).length - 1;
+
     if (num_battery) {
       for (let j = 0; j < num_battery; j++) {
-        // let tipo = 'Slave';
-        // if (j == 0) {
-        //   tipo = 'Master';
-        //   if (this.stepClusterForm.get('refidwecaresystemvolt')?.value == 2) {
-        //     tipo = 'HVBOX';
-        //   }
-        // }
         if (j == 0) {
           objbattery_default.masterorslave = 1;
         } else {
           objbattery_default.masterorslave = 0;
         }
-
-        this.addBattery(this.stepSixForm, 1, objbattery_default);
+        this.addBattery(this.stepSixForm, clusterIndex, objbattery_default);
       }
     }
+    this.logicSingleCluster(this.stepSixForm, this.getClusterFieldAsFormArray(this.stepSixForm).length);
+
   }
+
   // Funzione per rimuovere un cluster dalla lista
   removeCluster(index: number) {
     this.getClusterFieldAsFormArray(this.stepSixForm).removeAt(index); // Rimuove il cluster specificato dall'array
+    this.logicSingleCluster(this.stepSixForm, this.getClusterFieldAsFormArray(this.stepSixForm).length);
   }
-  private logicSingleBattery(form: FormGroup, val: number | null) {
-    if (val === 0) {
+
+  private logicSingleCluster(form: FormGroup, val: number) {
+    // console.log('valid', val);
+    if (val > 1) {
       form.get('cluster_parallel')?.enable();
     } else {
       form.get('cluster_parallel')?.disable();

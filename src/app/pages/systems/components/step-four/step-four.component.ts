@@ -45,6 +45,7 @@ interface SystemComposition {
   styleUrl: './step-four.component.scss'
 })
 export class StepFourComponent {
+  formSubmitted = false;
   @Output() formEmit = new EventEmitter<FormGroup>();
   @Output() nextStep = new EventEmitter<void>();
   @Input() idsystem = 0;
@@ -124,6 +125,23 @@ export class StepFourComponent {
       })
   }
 
+  private enableDisableFields(val: number) {
+    if (val == 1) {
+      this.stepFourForm.get('refidwecaresystemvolt')?.disable();
+      this.stepFourForm.get('system_model')?.disable();
+      this.stepFourForm.get('refidwecaresystemtype')?.disable();
+      this.stepFourForm.get('cluster_singlebattery')?.disable();
+      this.stepFourForm.get('cluster_numberdevices')?.disable();
+    } else if (val == 2) {
+      this.stepFourForm.get('refidwecaresystemvolt')?.enable();
+      this.stepFourForm.get('system_model')?.enable();
+      this.stepFourForm.get('refidwecaresystemtype')?.enable();
+      this.stepFourForm.get('cluster_singlebattery')?.enable();
+      this.stepFourForm.get('cluster_numberdevices')?.enable();
+    }
+
+  }
+
 
   private logicStep() {
     this.stepFourForm.get('product_systemcomposition')?.valueChanges.subscribe(
@@ -151,6 +169,7 @@ export class StepFourComponent {
             product_systemweco: 1
           });
           this.stepFourForm.get('product_systemweco')?.enable();
+          this.enableDisableFields(val);
           // Batterie e inverter
         } else if (val && val == 2) {
           this.wecoComposition = [
@@ -174,7 +193,7 @@ export class StepFourComponent {
           this.stepFourForm.patchValue({
             product_systemweco: null
           });
-          this.stepFourForm.get('product_systemweco')?.enable();
+          this.enableDisableFields(val);
         }
       }
     );
@@ -195,8 +214,9 @@ export class StepFourComponent {
 
 
   saveStep(action: string) {
-    const stepFour = this.stepFourForm.value;
-    console.log('data 1', this.stepFourForm.value);
+    this.formSubmitted = true;
+    const stepFour = this.stepFourForm.getRawValue();
+    // console.log('data 1', this.stepFourForm.value);
 
     // console.log('data valid', this.stepFourForm.valid);
     this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepFour',

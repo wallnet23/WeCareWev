@@ -18,8 +18,12 @@ export class StepFourService {
   private systemModel_view: SystemModel[] = [];
   private systemType: SystemType[] = [];
   private systemType_view: SystemType[] = [];
+  // 1 inverter, 2 battery e inverter
   public product_systemcomposition: null | number = null;
+  // lv o hv
   public refidwecaresystemvolt: null | number = null;
+// 0 no, 1 si
+  public cluster_singlebattery: null | number = null;
   constructor() { }
 
   getSystemVoltView() {
@@ -70,6 +74,7 @@ export class StepFourService {
   infoClusters(form: FormGroup, obj_stepfour: StepFour) {
     this.product_systemcomposition = obj_stepfour.product_systemcomposition;
     this.refidwecaresystemvolt = obj_stepfour.refidwecaresystemvolt;
+    this.cluster_singlebattery = obj_stepfour.cluster_singlebattery;
     form.get('product_systemcomposition')?.setValue(obj_stepfour.product_systemcomposition);
     form.get('product_systemweco')?.setValue(obj_stepfour.product_systemweco);
     form.get('product_installdate')?.setValue(obj_stepfour.product_installdate);

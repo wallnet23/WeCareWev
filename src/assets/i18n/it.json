@@ -241,7 +241,6 @@
       "SELECTVALUE": "Seleziona un valore",
       "SYSTEMMODEL": "Modello Impianto",
       "SELECTMODEL": "Seleziona un modello",
-      "PARALLELCLUSTERS": "Cluster Paralleli",
       "BATTERYTYPE": "Tipo di Batteria",
       "SELECTTYPE": "Seleziona un tipo",
       "SINGLEBATTERY": "Batteria Singola",
@@ -258,13 +257,19 @@
       "PARALLELPOWER": "Gli Inverter sono in parallelo lato potenza?",
       "INVERTER": "Inverter",
       "SERIALNUMBER": "Numero di Serie",
-      "MODEL": "Modello"
+      "MODEL": "Modello",
+      "INVERTERCOMPOSE": "Inserisci gli inverter:"
     },
     "STEPSIX": {
+      "ADDICLUSTER": "Aggiungi cluster +",
       "HOWMANYCLUSTERS": "Quanti Cluster",
       "CLUSTER": "Cluster",
       "SERIALNUMBER": "Numero di Serie",
-      "CONNECTEDINVERTER": "Inverter a cui è collegato"
+      "CONNECTEDINVERTER": "Inverter a cui è collegato",
+      "YES": "Sì",
+      "NO": "No",
+      "PARALLELCLUSTERS": "I Cluster sono in parallelo?",
+      "CLUSTERCOMPOSE": "Componi il tuo impianto:"
     },
     "STEPBUTTONS": {
       "PREV": "Precedente",
@@ -281,6 +286,7 @@
       "CUSTOMERNAME": "Nome del Cliente",
       "INSTALLATIONSITE": "Sito di Installazione",
       "DEVICEINFO": "Informazioni sul Dispositivo",
+      "SYSTEMINFO": "Informazioni sull'impianto",
       "ENABLEFUNC": "Inserisci i dati dell'impianto per abilitare le altre funzionalità",
       "MODIFYDATA": "Modifica i Dati dell'impianto",
       "VIEW": "Visualizza i Dati dell'impianto",

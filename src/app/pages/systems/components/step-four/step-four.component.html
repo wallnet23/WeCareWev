@@ -15,8 +15,9 @@
           <label for="product_systemcomposition" style="font-weight: bold;">{{"SYSTEM.STEPFOUR.SYSCOMPOSITION" |
             translate}}<sup>*</sup></label>
           <select class="form-select" aria-label="select example" id="product_systemcomposition"
-            formControlName="product_systemcomposition"
-            [ngClass]="{'is-invalid': stepFourForm.get('product_systemcomposition')?.invalid}">
+            formControlName="product_systemcomposition" [ngClass]="{'is-invalid': (formSubmitted && stepFourForm.get('product_systemcomposition')?.invalid) || (
+             stepFourForm.get('product_systemcomposition')?.touched && stepFourForm.get('product_systemcomposition')?.invalid)
+            }">
             <option *ngFor="let comp of systemComposition" [ngValue]="comp.id">{{comp.name}}</option>
           </select>
           <div class="text-danger mt-1" *ngIf="stepFourForm.get('product_systemcomposition')?.invalid"
@@ -111,8 +112,7 @@
             <label class="form-check-label" for="no">{{ "SYSTEM.STEPFOUR.NO" | translate }}</label>
           </div>
         </div>
-        <div class="col-12 col-md-6 mt-2"
-          *ngIf="
+        <div class="col-12 col-md-6 mt-2" *ngIf="
         stepFourForm.get('cluster_singlebattery')?.value === 0 &&
         stepFourForm.get('refidwecaresystemtype')?.value != null">
           <label for="cluster_numberdevices" style="font-weight: bold; font-size: medium;">
