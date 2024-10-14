@@ -1,11 +1,11 @@
 export const environment = {
-    production: true,
-    recaptcha: {
-        apiUrl: '',
-        siteKey: '',
-    },
-    urlserver: {
-        laravelApi: 'http://localhost.walldev/api/wecareweb/',
-        laravel: 'http://localhost.walldev/'
-    }
+  production: true,
+  recaptcha: {
+    apiUrl: '',
+    siteKey: '',
+  },
+  urlserver: {
+    laravel: 'https://wecodev.wallnet.it/',
+    laravelApi: 'https://wecodev.wallnet.it/api/wecareweb/'
+  }
 }

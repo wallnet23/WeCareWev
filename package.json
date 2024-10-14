@@ -6,7 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "build:production_wecare": "ng build --configuration=production_wecare --output-path=dist/wecare/public"
+
   },
   "private": true,
   "dependencies": {
