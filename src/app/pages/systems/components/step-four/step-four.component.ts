@@ -209,6 +209,7 @@ export class StepFourComponent implements OnInit {
   // }
 
   private errorLogic() {
+    
     if (this.stepFourForm.get('product_installdate')?.value == null || this.stepFourForm.get('product_installdate')?.value!.replaceAll(' ', '') == '') {
       this.errors.product_installdate = true;
     }

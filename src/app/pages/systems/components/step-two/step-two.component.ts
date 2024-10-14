@@ -179,6 +179,7 @@ export class StepTwoComponent {
   }
 
   private errorLogic() {
+    
     if (this.stepTwoForm.get('ccn3')?.value == null || this.stepTwoForm.get('ccn3')?.value!.replaceAll(' ', '') == '') {
       this.errors.ccn3 = true;
     }
