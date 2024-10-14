@@ -1,14 +1,16 @@
 import { HttpClient, HttpRequest } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable, lastValueFrom, map } from 'rxjs';
 import { Country } from '../interfaces/country';
 import { Connect } from '../classes/connect';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConnectServerService {
 
+  readonly sanitizer = inject(DomSanitizer);
   constructor(private http: HttpClient) { }
 
   postRequest<T>(urlServer: string, urlFunction: string, parametri: object): Observable<any> {
@@ -64,6 +66,17 @@ getRequestCountry(): Observable<Country[]> {
   getSpecificCountryData(ccn3: string): Observable<Country> {
     return this.getRequest<Country>('https://restcountries.com/v3.1/alpha/', ccn3, {})
       .pipe(map((val: Country) => val));
+  }
+
+  // Metodo per ottenere l'immagine con token Bearer
+  // Metodo per ottenere l'immagine con autenticazione (token gestito dall'interceptor)
+  getImageWithToken(imageUrl: string): Observable<SafeUrl> {
+    return this.http.get(imageUrl, { responseType: 'blob' }).pipe(
+      map(blob => {
+        const objectURL = URL.createObjectURL(blob);
+        return this.sanitizer.bypassSecurityTrustUrl(objectURL);
+      })
+    );
   }
 
 }

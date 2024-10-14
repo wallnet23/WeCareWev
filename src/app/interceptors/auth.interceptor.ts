@@ -18,7 +18,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
           'Accept-Language': currentLanguage || 'en', // Usa 'en' come fallback
         },
       });
-
       return next(newReq); // Continua la catena di richieste
     })
   );

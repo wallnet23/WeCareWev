@@ -275,7 +275,7 @@ export class StepOneComponent implements OnInit {
 
 
   private disableFields() {
-    console.log('dentroooo');
+    // console.log('dentroooo');
     this.stepOneForm.get('customer_name')?.disable();
     this.stepOneForm.get('customer_surname')?.disable();
     this.stepOneForm.get('customer_country')?.disable();

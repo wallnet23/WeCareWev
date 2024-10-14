@@ -100,7 +100,17 @@ export class SystemOverviewComponent {
   }
 
   warrantyInfo() {
-    this.router.navigate(['/warrantyInfo', this.idsystem]);
+    const obj_request: ApiResponse<any> = {
+      code: 244,
+      data: {},
+      title: 'Info',
+      message: 'Works in progress. Feature to be implemented!',
+      obj_dialog: {
+        disableClose: 0
+      }
+    }
+    this.popupDialogService.alertElement(obj_request);
+    // this.router.navigate(['/warrantyInfo', this.idsystem]);
   }
 
   goBack() {

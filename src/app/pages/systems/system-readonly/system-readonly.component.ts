@@ -169,7 +169,8 @@ export class SystemReadonlyComponent {
   }
 
   setImage(img: Image) {
-    this.modalImageUrl = img.src;
+    // this.modalImageUrl = img.src;
+    this.modalImageUrl = '';
   }
 
   private initSystem() {

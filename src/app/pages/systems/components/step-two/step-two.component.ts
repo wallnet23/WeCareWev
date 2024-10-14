@@ -9,7 +9,6 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { UploadImageService } from '../../../../services/upload-images.service';
 import { ConnectServerService } from '../../../../services/connect-server.service';
 import { ApiResponse } from '../../../../interfaces/api-response';
 import { Connect } from '../../../../classes/connect';
@@ -18,6 +17,7 @@ import { Country } from '../../../../interfaces/country';
 import { StepTwo } from '../interfaces/step-two';
 import { Image } from '../interfaces/image';
 import { TranslateModule } from '@ngx-translate/core';
+import { ImageLoaderService } from '../../../../services/image-loader.service';
 
 @Component({
   selector: 'app-step-two',
@@ -47,16 +47,15 @@ export class StepTwoComponent {
 
   @Output() formEmit = new EventEmitter<FormGroup>();
   @Output() nextStep = new EventEmitter<void>();
-
   @Input() idsystem = 0;
+
   selectedFilesStep2: File[] = [];
   maxImagesStep2: number = 6;
   isImagesStep2: boolean = false;
   imageSpaceLeftStep2: boolean = true;
   imagesStep2: Image[] = [];
   countriesData: Country[] = [];
-  urlServerLara = Connect.urlServerLara;
-
+  urlServerLaraFile = Connect.urlServerLaraFile;
   isError: boolean = false;
   errors = {
     idcountry: false,
@@ -82,8 +81,10 @@ export class StepTwoComponent {
     }
   }
 
-  constructor(private formBuilder: FormBuilder, private uploadImageService: UploadImageService,
-    private connectServerService: ConnectServerService, private popupDialogService: PopupDialogService) { }
+  constructor(private formBuilder: FormBuilder,
+    private connectServerService: ConnectServerService,
+    private popupDialogService: PopupDialogService,
+  private imageLoaderService: ImageLoaderService) { }
 
   infoStep() {
     this.connectServerService.getRequest<ApiResponse<{ stepTwo: StepTwo }>>(Connect.urlServerLaraApi, 'system/infoStepTwo', { id: this.idsystem }).
@@ -207,10 +208,20 @@ export class StepTwoComponent {
       })
       .subscribe((val: ApiResponse<{ listFiles: Image[] }>) => {
         if (val.data.listFiles) {
-          this.imagesStep2 = val.data.listFiles;
+          this.imagesStep2 = val.data.listFiles.map(image => {
+            // Chiama ImageLoaderService solo una volta per immagine
+            this.imageLoaderService.getImageWithToken(Connect.urlServerLaraFile + image.src).subscribe(
+              (safeUrl) => {
+                image.src = safeUrl; // Assegna l'URL sicuro all'immagine
+              }
+            );
+            return image;
+          });
         }
       })
   }
+
+
 
   setImages(formData: FormData) {
     this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/uploadFiles',
