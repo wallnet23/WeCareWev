@@ -1,5 +1,5 @@
 import { CommonModule, Location, LocationChangeEvent } from '@angular/common';
-import { Component, ElementRef, HostListener } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ConnectServerService } from '../../../services/connect-server.service';
 import { ApiResponse } from '../../../interfaces/api-response';
@@ -11,8 +11,19 @@ import { StepTwo } from '../components/interfaces/step-two';
 import { StepThree } from '../components/interfaces/step-three';
 import { InverterData } from '../interfaces/inverterData';
 import { ClusterData } from '../interfaces/clusterData';
-import { TranslateModule } from '@ngx-translate/core';
 import { StepFour } from '../components/interfaces/step-four';
+import { Validators, FormsModule, ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatStepperModule } from '@angular/material/stepper';
+import { TranslateModule } from '@ngx-translate/core';
+import { StepOneReadonlyComponent } from "./step-one-readonly/step-one-readonly.component";
+import { StepTwoReadonlyComponent } from "./step-two-readonly/step-two-readonly.component";
+import { StepThreeReadonlyComponent } from "./step-three-readonly/step-three-readonly.component";
+import { StepFourReadonlyComponent } from "./step-four-readonly/step-four-readonly.component";
+import { StepFiveReadonlyComponent } from "./step-five-readonly/step-five-readonly.component";
+import { StepSixReadonlyComponent } from "./step-six-readonly/step-six-readonly.component";
 
 declare var $: any;
 
@@ -21,15 +32,36 @@ declare var $: any;
   standalone: true,
   imports: [
     CommonModule,
-    TranslateModule
-  ],
+    TranslateModule,
+    MatStepperModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    StepOneReadonlyComponent,
+    StepTwoReadonlyComponent,
+    StepThreeReadonlyComponent,
+    StepFourReadonlyComponent,
+    StepFiveReadonlyComponent,
+    StepSixReadonlyComponent
+],
   templateUrl: './system-readonly.component.html',
   styleUrl: './system-readonly.component.scss'
 })
 export class SystemReadonlyComponent {
 
+  @ViewChild('stepOne') obj_stepOne!: StepOneReadonlyComponent;
+  @ViewChild('stepTwo') obj_stepTwo!: StepTwoReadonlyComponent;
+  @ViewChild('stepThree') obj_stepThree!: StepThreeReadonlyComponent;
+  @ViewChild('stepFour') obj_stepFour!: StepFourReadonlyComponent;
+  @ViewChild('stepFive') obj_stepFive!: StepFourReadonlyComponent;
+  @ViewChild('stepSix') obj_stepSix!: StepFourReadonlyComponent;
+
   modalImageUrl: string = '';
 
+  // TODO: MODIFICARE SYSTEM STATUS CON QUELLO REALE
+  systemStatus: {id: number, name: string} | null = null;
   idsystem: number = 0;
   systemInfo: SystemInfoFull = this.initSystem();
   imagesStep2: Image[] = [];
@@ -117,6 +149,46 @@ export class SystemReadonlyComponent {
         console.log('val 4 info:', this.systemInfo);
 
       })
+  }
+
+  onFormOneReceived(form: FormGroup) {
+    this.route.params.subscribe(params => {
+      this.idsystem = params['id'];
+      //this.stepOneForm = form;
+      //this.getSystemOverview();
+      this.getStatus();
+    });
+  }
+
+  onFormTwoReceived(form: FormGroup) {
+    //this.stepTwoForm = form;
+  }
+
+  onFormThreeReceived(form: FormGroup) {
+    //this.stepThreeForm = form;
+  }
+
+  onFormFourReceived(form: FormGroup) {
+    //this.stepFourForm = form;
+  }
+  onFormFiveReceived(form: FormGroup) {
+    //this.stepFiveForm = form;
+  }
+  onFormSixReceived(form: FormGroup) {
+    //this.stepSixForm = form;
+  }
+
+  getStatus() {
+    // console.log("Received 1")
+    if (this.idsystem > 0) {
+      this.connectServerService.getRequest<ApiResponse<{ status: { id: number, name: string } }>>
+        (Connect.urlServerLaraApi, 'system/systemState', { idsystem: this.idsystem })
+        .subscribe((val: ApiResponse<{ status: { id: number, name: string } }>) => {
+          if (val.data) {
+            this.systemStatus = val.data.status;
+          }
+        })
+    }
   }
 
   goBack() {
