@@ -18,6 +18,7 @@ import { PopupDialogService } from '../../../../services/popup-dialog.service';
 import { StepThree } from '../interfaces/step-three';
 import { Image } from '../interfaces/image';
 import { TranslateModule } from '@ngx-translate/core';
+import { ImageLoaderService } from '../../../../services/image-loader.service';
 
 @Component({
   selector: 'app-step-three',
@@ -55,7 +56,7 @@ export class StepThreeComponent implements OnInit {
   imageSpaceLeftStep3: boolean = true;
   imagesStep3: Image[] = [];
   countriesData: Country[] = [];
-  urlServerLara = Connect.urlServerLara;
+  urlServerLaraFile = Connect.urlServerLaraFile;
 
   isError = false;
   errors = {
@@ -85,8 +86,9 @@ export class StepThreeComponent implements OnInit {
     }
   }
 
-  constructor(private formBuilder: FormBuilder, private uploadImageService: UploadImageService,
-    private connectServerService: ConnectServerService, private popupDialogService: PopupDialogService) { }
+  constructor(private formBuilder: FormBuilder,
+    private connectServerService: ConnectServerService, private popupDialogService: PopupDialogService,
+    private imageLoaderService: ImageLoaderService) { }
 
   infoStep() {
     this.connectServerService.getRequest<ApiResponse<{ stepThree: StepThree }>>(Connect.urlServerLaraApi, 'system/infoStepThree', { id: this.idsystem }).
@@ -171,7 +173,15 @@ export class StepThreeComponent implements OnInit {
       })
       .subscribe((val: ApiResponse<{ listFiles: Image[] }>) => {
         if (val.data.listFiles) {
-          this.imagesStep3 = val.data.listFiles;
+          this.imagesStep3 = val.data.listFiles.map(image => {
+            // Chiama ImageLoaderService solo una volta per immagine
+            this.imageLoaderService.getImageWithToken(Connect.urlServerLaraFile + image.src).subscribe(
+              (safeUrl) => {
+                image.src = safeUrl; // Assegna l'URL sicuro all'immagine
+              }
+            );
+            return image;
+          });
         }
       })
   }
