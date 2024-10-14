@@ -12,3 +12,9 @@ export const selectUserPermissions = createSelector(
   selectUserState,
   (state: UserState) => state.permissions
 );
+
+// Selettore per il campo `lang_code`
+export const selectUserLangCode = createSelector(
+  selectUserInfo,
+  (userInfo) => userInfo?.lang_code || 'en'  // Usa 'en' come fallback se `lang_code` è null
+);

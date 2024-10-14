@@ -6,7 +6,7 @@ import { SystemInfo } from '../../interfaces/system-info';
 import { ConnectServerService } from '../../../../services/connect-server.service';
 import { ApiResponse } from '../../../../interfaces/api-response';
 import { Connect } from '../../../../classes/connect';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { PopupDialogService } from '../../../../services/popup-dialog.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
@@ -28,7 +28,7 @@ export class SystemCardComponent {
   systemsList: SystemInfo[] = [];
 
   constructor(private router: Router, private popupDialogService: PopupDialogService,
-    private connectServerService: ConnectServerService) {
+    private connectServerService: ConnectServerService, private translate: TranslateService) {
     this.getSystemList()
   }
 
@@ -50,29 +50,33 @@ export class SystemCardComponent {
   }
 
   deleteSystem(id: number) {
+    // Ottieni la traduzione del messaggio tramite TranslateService
+  this.translate.get(['POPUP.MSG_DELETE', 'POPUP.BUTTON.DELETE']).subscribe((translations) => {
     const obj_request: ApiResponse<any> = {
       code: 240,
       data: {},
       title: 'Warning',
-      message: 'Sei sicuro di voler cancellare l\'impianto? Azione irreversibile.',
+      message: translations['POPUP.MSG_DELETE'],
       obj_dialog: {
         disableClose: 1,
         obj_buttonAction:
         {
           action: 1,
           action_type: 2,
-          label: 'Delete',
+          label: translations['POPUP.BUTTON.DELETE'],
           run_function: (val?: number) => this.actionDeleteSystem(id)
         }
       }
     }
     this.popupDialogService.alertElement(obj_request);
+  });
   }
 
   private actionDeleteSystem(id: number): void {
     this.connectServerService.postRequest<ApiResponse<any>>(
       Connect.urlServerLaraApi, 'system/systemDelete', { idsystem: id })
       .subscribe((val: ApiResponse<any>) => {
+        this.popupDialogService.alertElement(val);
         this.getSystemList();
       })
   }

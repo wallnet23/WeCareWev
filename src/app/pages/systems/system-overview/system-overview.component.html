@@ -1,130 +1,131 @@
 <div class="arrowBtn d-none d-sm-inline">
-    <a (click)="goBack()" class="btn btn-outline-dark">
-        <i class="bi bi-arrow-left arrowIcon"></i>
-    </a>
+  <a (click)="goBack()" class="btn btn-outline-dark">
+    <i class="bi bi-arrow-left arrowIcon"></i>
+  </a>
 </div>
 
 <div *ngIf="idsystem > 0; else blockError;" class="container fullPage">
-    <div class="row justify-content-center align-items-center mt-2 p-2">
-        <div class="col-6 text-center">
-            <h2 class="systemName inline-bordered">{{systemInfo?.system_name}}</h2>
-        </div>
+  <div class="row justify-content-center align-items-center mt-2 p-2">
+    <div class="col-6 text-center">
+      <h2 class="systemName inline-bordered">{{systemInfo?.system_name}}</h2>
     </div>
+  </div>
 
-    <div class="row justify-content-center align-items-center p-2">
-        <div class="col-12 text-center">
-            <span *ngIf="systemInfo?.system_description != null && systemInfo?.system_description != ''; else addDescriptionBlock" style="font-size: medium; font-style: italic;">{{systemInfo?.system_description}}</span>
-            <ng-template #addDescriptionBlock>
-                <span style="font-size: medium; font-style: italic;">{{"SYSTEM.OVERVIEW.ADD" | translate}}</span>
-            </ng-template>
-            <button type="button" class="btn btn-sm btn-outline-dark ms-2" data-bs-toggle="modal"
-                data-bs-target="#descriptionModal">
-                <i class="bi bi-pencil"></i>
-            </button>
-        </div>
+  <div class="row justify-content-center align-items-center p-2">
+    <div class="col-12 text-center">
+      <span
+        *ngIf="systemInfo?.system_description != null && systemInfo?.system_description != ''; else addDescriptionBlock"
+        style="font-size: medium; font-style: italic;">{{systemInfo?.system_description}}</span>
+      <ng-template #addDescriptionBlock>
+        <span style="font-size: medium; font-style: italic;">{{"SYSTEM.OVERVIEW.ADD" | translate}}</span>
+      </ng-template>
+      <button type="button" class="btn btn-sm btn-outline-dark ms-2" data-bs-toggle="modal"
+        data-bs-target="#descriptionModal">
+        <i class="bi bi-pencil"></i>
+      </button>
     </div>
+  </div>
 
-    <div class="modal fade" id="descriptionModal" tabindex="0" aria-labelledby="descriptionModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="descriptionModalLabel">{{"SYSTEM.OVERVIEW.CHANGEDESCRIPTION" | translate}}</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <textarea type="text" [value]="systemInfo?.system_description" style="width: 100%;"
-                        #newDescription>
+  <div class="modal fade" id="descriptionModal" tabindex="0" aria-labelledby="descriptionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="descriptionModalLabel">{{"SYSTEM.OVERVIEW.CHANGEDESCRIPTION" | translate}}
+          </h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <textarea type="text" [value]="systemInfo?.system_description" style="width: 100%;" #newDescription>
                     </textarea>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{"SYSTEM.OVERVIEW.DISMISS" | translate}}</button>
-                    <button type="button" class="btn btn-primary" (click)="modifyDescription(newDescription.value)"
-                        data-bs-dismiss="modal">{{"SYSTEM.OVERVIEW.SAVE" | translate}}</button>
-                </div>
-            </div>
         </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{"SYSTEM.OVERVIEW.DISMISS" |
+            translate}}</button>
+          <button type="button" class="btn btn-primary" (click)="modifyDescription(newDescription.value)"
+            data-bs-dismiss="modal">{{"SYSTEM.OVERVIEW.SAVE" | translate}}</button>
+        </div>
+      </div>
     </div>
+  </div>
 
-
-    <div class="row justify-content-center p-1 p-lg-4">
-        <div class="col-12 col-md-6 mt-2">
-            <div class="card">
-                <h5 class="card-header blueBg">{{"SYSTEM.OVERVIEW.SYSTEMDATA" | translate}}</h5>
-                <div class="card-body">
-                    <div *ngIf="systemInfo && systemInfo?.customerInfo?.length! > 1; else systemBlock">
-                        <ul class="list-unstyled">
-                            <li class="listElement">
-                                <i class="bi bi-circle-fill" style="font-size: large;" [ngClass]="{
+  <div class="row justify-content-center p-1 p-lg-4">
+    <div class="col-12 col-md-6 mt-2">
+      <div class="card">
+        <h5 class="card-header blueBg">{{"SYSTEM.OVERVIEW.SYSTEMDATA" | translate}}</h5>
+        <div class="card-body">
+          <div *ngIf="systemInfo && systemInfo?.customerInfo?.length! > 1; else systemBlock">
+            <ul class="list-unstyled">
+              <li class="listElement">
+                <i class="bi bi-circle-fill" style="font-size: large;" [ngClass]="{
                                 'text-success': systemInfo.status?.id === 4,
                                 'text-danger': systemInfo.status?.id === 3,
                                 'text-warning': systemInfo.status?.id === 2,
                                 'text-info': systemInfo.status?.id === 1 }">
-                                </i>
-                                <span *ngIf="systemInfo?.status"
-                                    style="margin-left: 1rem;">{{systemInfo.status?.name}}</span>
-                                <span *ngIf="!systemInfo?.status" style="margin-left: 1rem;">Status not available</span>
-                            </li>
-                            <li class="listElement">
-                                <span class="listTitle">{{"SYSTEM.OVERVIEW.CUSTOMERNAME" | translate}}:</span><br>
-                                <span class="listDescription">{{systemInfo.customerInfo}}</span>
-                            </li>
-                            <li class="listElement">
-                                <span class="listTitle">{{"SYSTEM.OVERVIEW.INSTALLATIONSITE" | translate}}:</span><br>
-                                <span class="listDescription">{{systemInfo.installationSite}}</span>
-                            </li>
-                            <li class="listElement">
-                                <span class="listTitle">{{"SYSTEM.OVERVIEW.DEVICEINFO" | translate}}:</span><br>
-                                <ul>
-                                    <li *ngFor="let device of systemInfo?.devicesInfo">
-                                        <span class="listDescription">{{device}}</span>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                    <ng-template #systemBlock class="mt-4 p-2 text-center">
-                        <span class="mt-2">{{"SYSTEM.OVERVIEW.ENABLEFUNC" | translate}}</span>
-                    </ng-template>
-                </div>
-                <div class="card-footer blueBg text-center">
-                    <button *ngIf="systemInfo?.status!.id == 1 || systemInfo?.status!.id == 3; else readOnlyBlock" class="btn btn-outline-dark btn-light me-2" (click)="modifySystem()">
-                        {{"SYSTEM.OVERVIEW.MODIFYDATA" | translate}}
-                    </button>
-                    <ng-template #readOnlyBlock>
-                        <button class="btn btn-outline-dark btn-light ms-2" (click)="viewSystem()">
-                            {{"SYSTEM.OVERVIEW.VIEWDATA" | translate}}
-                        </button>
-                    </ng-template>
-                </div>
-            </div>
+                </i>
+                <span *ngIf="systemInfo?.status" style="margin-left: 1rem;">{{systemInfo.status?.name}}</span>
+                <span *ngIf="!systemInfo?.status" style="margin-left: 1rem;">Status not available</span>
+              </li>
+              <li class="listElement">
+                <span class="listTitle">{{"SYSTEM.OVERVIEW.CUSTOMERNAME" | translate}}:</span><br>
+                <span class="listDescription">{{systemInfo.customerInfo}}</span>
+              </li>
+              <li class="listElement">
+                <span class="listTitle">{{"SYSTEM.OVERVIEW.INSTALLATIONSITE" | translate}}:</span><br>
+                <span class="listDescription">{{systemInfo.installationSite}}</span>
+              </li>
+              <li class="listElement">
+                <span class="listTitle">{{"SYSTEM.OVERVIEW.SYSTEMINFO" | translate}}:</span><br>
+                <ul>
+                  <li *ngFor="let device of systemInfo?.devicesInfo">
+                    <span class="listDescription">{{device}}</span>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <ng-template #systemBlock class="mt-4 p-2 text-center">
+            <span class="mt-2">{{"SYSTEM.OVERVIEW.ENABLEFUNC" | translate}}</span>
+          </ng-template>
         </div>
+        <div class="card-footer blueBg text-center">
+          <button *ngIf="systemInfo?.status!.id == 1 || systemInfo?.status!.id == 3; else readOnlyBlock"
+            class="btn btn-outline-dark btn-light me-2" (click)="modifySystem()">
+            {{"SYSTEM.OVERVIEW.MODIFYDATA" | translate}}
+          </button>
+          <ng-template #readOnlyBlock>
+            <button class="btn btn-outline-dark btn-light ms-2" (click)="viewSystem()">
+              {{"SYSTEM.OVERVIEW.VIEWDATA" | translate}}
+            </button>
+          </ng-template>
+        </div>
+      </div>
+    </div>
 
-        <div class="col-12 col-md-6 mt-2">
-            <div class="card">
-                <h5 class="card-header greenBg">{{"SYSTEM.OVERVIEW.WARRANTY" | translate}}</h5>
-                <div class="card-body">
-                    <p style="margin-top: 1rem;">
-                        <span class="listTitle">{{"SYSTEM.OVERVIEW.WARRANTYSTATUS" | translate}}: </span><br>
-                        <!-- <span class="listDescription">{{warrantyExtensionStatus}}</span> -->
-                    </p>
-                    <p class="paragraph" *ngIf="systemInfo?.status?.id == 4; else warrantyBlock">
+    <div class="col-12 col-md-6 mt-2">
+      <div class="card">
+        <h5 class="card-header greenBg">{{"SYSTEM.OVERVIEW.WARRANTY" | translate}}</h5>
+        <div class="card-body">
+          <p style="margin-top: 1rem;">
+            <span class="listTitle">{{"SYSTEM.OVERVIEW.WARRANTYSTATUS" | translate}}: </span><br>
+            <!-- <span class="listDescription">{{warrantyExtensionStatus}}</span> -->
+          </p>
+          <p class="paragraph" *ngIf="systemInfo?.status?.id == 4; else warrantyBlock">
 
-                    </p>
-                    <ng-template #warrantyBlock>
-                        <p class="paragraph">
-                            {{"SYSTEM.OVERVIEW.WARRANTYERROR" | translate}}.<br>
-                            {{"SYSTEM.OVERVIEW.ACTUALSTATE" | translate}}:
-                            <i class="bi bi-circle-fill" style="font-size: large;" [ngClass]="{
+          </p>
+          <ng-template #warrantyBlock>
+            <p class="paragraph">
+              {{"SYSTEM.OVERVIEW.WARRANTYERROR" | translate}}.<br>
+              {{"SYSTEM.OVERVIEW.ACTUALSTATE" | translate}}:
+              <i class="bi bi-circle-fill" style="font-size: large;" [ngClass]="{
                                 'text-success': systemInfo?.status?.id === 4,
                                 'text-danger': systemInfo?.status?.id === 3,
                                 'text-warning': systemInfo?.status?.id === 2,
                                 'text-info': systemInfo?.status?.id === 1 }">
-                            </i>
-                            {{systemInfo?.status?.name}}
-                        </p>
-                    </ng-template>
-                    <!-- <p class="paragraph" *ngIf="!isWarrantyRequest; else warrantyBlock">
+              </i>
+              {{systemInfo?.status?.name}}
+            </p>
+          </ng-template>
+          <!-- <p class="paragraph" *ngIf="!isWarrantyRequest; else warrantyBlock">
                         Request a warranty extension, our technician will review your system and check
                         if there's a possibility for a warrant extension.
                     </p>
@@ -133,34 +134,21 @@
                             Click on this card to see the details of your warranty request status
                         </p>
                     </ng-template> -->
-                </div>
-                <div class="card-footer greenBg text-center">
-                    <div href="#" class="btn btn-outline-dark btn-light" (click)="warrantyInfo()">
-                        {{"SYSTEM.OVERVIEW.WARRANTYINFO" | translate}}
-                    </div>
-                </div>
-            </div>
         </div>
+        <div class="card-footer greenBg text-center">
+          <div href="#" class="btn btn-outline-dark btn-light" (click)="warrantyInfo()">
+            {{"SYSTEM.OVERVIEW.WARRANTYINFO" | translate}}
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <div *ngIf="false" class="row justify-content-center align-items-center mt-2 p-1 p-lg-4">
+  <!-- <div *ngIf="false" class="row justify-content-center align-items-center mt-2 p-1 p-lg-4">
         <div class="col-12">
             <div class="card">
                 <h5 class="card-header orangeBg">{{"SYSTEM.OVERVIEW.TICKETS" | translate}}</h5>
                 <div class="card-body">
-                    <!-- <div *ngIf="!isChat">
-                        <h5 class="card-title">No requests available</h5>
-                        <p class="card-text">Click here to add a new assistance request for one of your systems and chat
-                            with Weco technicians to solve
-                            your problems.</p>
-                    </div>
-                    <div *ngIf="isChat">
-                        <h5 class="card-title">Number of chats available</h5>
-                        <p class="card-text">Click on this card to visualize all of the assistance requests and chats
-                            for this system.</p>
-                        <p>
-                            </div>-->
-
                     <span style="font-weight: bold;">{{"SYSTEM.OVERVIEW.LATESTREQUESTS" | translate}}:</span>
                     <ul *ngFor="let ticket of systemTickets" class="list-unstyled">
                         <li>
@@ -220,31 +208,31 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
-    <div class="row justify-content-center align-items-center mt-2 p-1 p-lg-4" *ngIf="false">
-        <div class="col-12">
-            <div class="card">
-                <h5 class="card-header yellowBg">{{"SYSTEM.OVERVIEW.RMA" | translate}}</h5>
-                <div class="card-body">
-                    <div *ngIf="!isRma">
-                        <h5 class="card-title">{{"SYSTEM.OVERVIEW.NORMA" | translate}}</h5>
-                        <p class="card-text">{{"SYSTEM.OVERVIEW.PRESSFORRMA" | translate}}.</p>
-                    </div>
-                    <div *ngIf="isRma">
-                        <h5 class="card-title">{{"SYSTEM.OVERVIEW.RMAAVAILABLE" | translate}}</h5>
-                        <p class="card-text">{{"SYSTEM.OVERVIEW.OLDRMA" | translate}}.</p>
-                    </div>
-                </div>
-                <div class="card-footer yellowBg text-center">
-                    <div href="#" class="btn btn-outline-dark btn-light">{{"SYSTEM.OVERVIEW.NEWRMA" | translate}}</div>
-                </div>
-            </div>
+  <div class="row justify-content-center align-items-center mt-2 p-1 p-lg-4" *ngIf="false">
+    <div class="col-12">
+      <div class="card">
+        <h5 class="card-header yellowBg">{{"SYSTEM.OVERVIEW.RMA" | translate}}</h5>
+        <div class="card-body">
+          <div *ngIf="!isRma">
+            <h5 class="card-title">{{"SYSTEM.OVERVIEW.NORMA" | translate}}</h5>
+            <p class="card-text">{{"SYSTEM.OVERVIEW.PRESSFORRMA" | translate}}.</p>
+          </div>
+          <div *ngIf="isRma">
+            <h5 class="card-title">{{"SYSTEM.OVERVIEW.RMAAVAILABLE" | translate}}</h5>
+            <p class="card-text">{{"SYSTEM.OVERVIEW.OLDRMA" | translate}}.</p>
+          </div>
         </div>
+        <div class="card-footer yellowBg text-center">
+          <div href="#" class="btn btn-outline-dark btn-light">{{"SYSTEM.OVERVIEW.NEWRMA" | translate}}</div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
 
 <ng-template #blockError class="mt-4 p-2 text-center">
-    <h1>{{"SYSTEM.OVERVIEW.LOADINGERROR" | translate}}</h1><br>
-    <h3 class="mt-4">{{"SYSTEM.OVERVIEW.REFRESH" | translate}}</h3>
+  <h1>{{"SYSTEM.OVERVIEW.LOADINGERROR" | translate}}</h1><br>
+  <h3 class="mt-4">{{"SYSTEM.OVERVIEW.REFRESH" | translate}}</h3>
 </ng-template>

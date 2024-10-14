@@ -3,6 +3,7 @@ import { Component, Inject } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { ApiResponse, ObjButtonPopup } from '../../interfaces/api-response';
+import { TranslateService } from '@ngx-translate/core';
 
 interface DialogData {
   obj: ApiResponse<any>
@@ -27,8 +28,14 @@ export class PopupDialogComponent {
   obj_buttonClose!: ObjButtonPopup;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData,
-    public dialogRef: MatDialogRef<PopupDialogComponent>,) {
-    this.setValuePopup(data.obj);
+    public dialogRef: MatDialogRef<PopupDialogComponent>, private translate: TranslateService) {
+      this.translate.get(['POPUP.BUTTON.CLOSE', 'POPUP.BUTTON.GO']).subscribe(translations => {
+        this.label_buttonClose = translations['POPUP.BUTTON.CLOSE'];  // Usa la traduzione per 'Close'
+        this.label_buttonAction = translations['POPUP.BUTTON.GO'];    // Usa la traduzione per 'Go'
+        this.setValuePopup(data.obj);
+      });
+
+
   }
 
 

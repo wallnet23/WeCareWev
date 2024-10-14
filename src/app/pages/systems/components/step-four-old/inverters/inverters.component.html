@@ -17,10 +17,10 @@
           {{ "SYSTEM.STEPFOUR.INVERTER.ONLINEERROR" | translate}}!
         </div>
       </div>
-      <div class="col-12 mt-3 p-0">
+      <div class="col-12 col-lg-4 mt-3 p-0">
         <label for="inverter_number" style="font-weight: bold; font-size: medium;">
           {{ "SYSTEM.STEPFOUR.INVERTER.INVERTERNUMBER" | translate}}
-          <mat-icon matTooltip="Enter the quantity of inverters that make up the entire system"
+          <mat-icon matTooltip="{{'SYSTEM.STEPFOUR.INVERTER.QUANTITY' | translate}}"
             style="font-size: medium;">info</mat-icon>
         </label>
         <select class="form-select" formControlName="inverter_number" id="inverter_number">

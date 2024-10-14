@@ -1,0 +1,89 @@
+<form [formGroup]="stepFiveForm" class="container-xxl">
+  <div class="row justify-content-center">
+    <div class="col">
+      <div class="fs-5 fw-bold">
+        {{"SYSTEM.STEPFIVE.INVERTERCOMPOSE" | translate}}
+      </div>
+      <button class="btn btn btn-outline-primary mr-2" (click)="addInverter(
+         {
+        id: 0,
+        serialnumber: '',
+        model: ''
+      }
+      )">
+        {{"SYSTEM.STEPFIVE.ADDINVERTER" | translate}}
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="container">
+      <div class="row mt-4">
+        <div class="col-12 col-md-6 col-lg-4 col-xxl-4 px-0 px-md-2 mb-2"
+          *ngFor="let formGroup of inverterFieldAsFormArray.controls; let i = index" formArrayName="inverters_list">
+          <mat-card class="mb-4">
+            <div [formGroupName]="i">
+              <mat-card-header style="border-bottom: 2px solid lightgray;" class="bg-primary bg-opacity-10">
+                <mat-card-title style="font-weight: bold; font-size: medium;">
+                  {{ "SYSTEM.STEPFIVE.INVERTER" | translate}} {{i+1}}
+                </mat-card-title>
+                <!-- Aggiungi il pulsante "X" per rimuovere -->
+                <button type="button" class="close" (click)="removeInverter(i)">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </mat-card-header>
+              <mat-card-content class="pb-2 pl-0 pr-0">
+                <div class="container-fluid pb-3">
+                  <div class="row">
+                    <div class="col-12">
+                      <label class="mt-2" style="font-weight: bold; font-size: medium;">
+                        {{ "SYSTEM.STEPFIVE.SERIALNUMBER" | translate}}
+                      </label>
+                    </div>
+                    <div class="col-12">
+                      <input class="form-control" type="text" formControlName="serialnumber">
+                      <app-scanner-selector class="cameraIcon"
+                        (barcodeScanned)="onBarcodeScanned($event, i)"></app-scanner-selector>
+                    </div>
+                    <div class="col-12">
+                      <label class="mt-2" style="font-weight: bold; font-size: medium;">{{
+                        "SYSTEM.STEPFIVE.MODEL" | translate}}</label>
+                      <input class="form-control" type="text" formControlName="model">
+                    </div>
+                  </div>
+                </div>
+              </mat-card-content>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="inverterFieldAsFormArray.length >1">
+    <div class="col-12 mt-3 ms-3 form-check form-switch">
+      <input class="form-check-input" type="checkbox" role="switch" id="inverter_communication"
+        formControlName="inverter_communication">
+      <label class="form-check-label" for="inverter_communication">
+        {{ "SYSTEM.STEPFIVE.PARALLELCOMUNICATION" | translate}}
+      </label>
+    </div>
+    <div class="col-12 mt-3 ms-3 form-check form-switch">
+      <input class="form-check-input" type="checkbox" role="switch" id="inverter_power"
+        formControlName="inverter_power">
+      <label class="form-check-label" for="inverter_power">
+        {{ "SYSTEM.STEPFIVE.PARALLELPOWER" | translate}}
+      </label>
+    </div>
+  </div>
+  <div class="text-center">
+    <button class="btn btn-outline-dark mr-2" matStepperPrevious>
+      {{"SYSTEM.STEPBUTTONS.PREV" | translate}}
+    </button>
+    <button class="btn btn-outline-dark ms-2 me-2" id="next" (click)="saveStep('save')">
+      {{"SYSTEM.STEPBUTTONS.SAVE" | translate}}
+    </button>
+    <button class="btn btn-outline-dark ml-2" [disabled]="stepFiveForm.invalid || inverterFieldAsFormArray.length ==0"
+      (click)="saveStep('next')">
+      {{"SYSTEM.STEPBUTTONS.NEXT" | translate}}
+    </button>
+  </div>
+</form>

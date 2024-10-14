@@ -12,6 +12,7 @@ import { map, Observable } from 'rxjs';
 import { User } from '../profile/interfaces/user';
 import { Menu } from '../../interfaces/menu';
 import { LanguageComponent } from "../../components/language/language.component";
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -21,7 +22,8 @@ import { LanguageComponent } from "../../components/language/language.component"
     FormsModule,
     ReactiveFormsModule,
     TranslateModule,
-    LanguageComponent
+    LanguageComponent,
+    RouterModule
 ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'

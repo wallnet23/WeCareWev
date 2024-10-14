@@ -9,10 +9,10 @@ import { Image } from '../components/interfaces/image';
 import { StepOne } from '../components/interfaces/step-one';
 import { StepTwo } from '../components/interfaces/step-two';
 import { StepThree } from '../components/interfaces/step-three';
-import { StepFour } from '../components/interfaces/step-four';
 import { InverterData } from '../interfaces/inverterData';
 import { ClusterData } from '../interfaces/clusterData';
 import { TranslateModule } from '@ngx-translate/core';
+import { StepFour } from '../components/interfaces/step-four';
 
 declare var $: any;
 
@@ -169,7 +169,8 @@ export class SystemReadonlyComponent {
   }
 
   setImage(img: Image) {
-    this.modalImageUrl = img.src;
+    // this.modalImageUrl = img.src;
+    this.modalImageUrl = '';
   }
 
   private initSystem() {
@@ -206,6 +207,13 @@ export class SystemReadonlyComponent {
         product_systemweco: null,
         product_installdate: null,
         product_brand: null,
+        inverter_hybrid: null,
+        inverter_online: null,
+        refidwecaresystemvolt: null,
+        system_model: null,
+        refidwecaresystemtype: null,
+        cluster_singlebattery: null,
+        cluster_numberdevices: null
       },
       inverter: {
         inverter_number: null,

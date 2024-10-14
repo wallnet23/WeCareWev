@@ -9,7 +9,7 @@ import { StepOneComponent } from '../../components/step-one/step-one.component';
 import { StepTwoComponent } from '../../components/step-two/step-two.component';
 import { MatIconModule } from '@angular/material/icon';
 import { StepThreeComponent } from '../../components/step-three/step-three.component';
-import { StepFourComponent } from '../../components/step-four/step-four.component';
+import { StepFourComponent } from '../../components/step-four-old/step-four-old.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConnectServerService } from '../../../../services/connect-server.service';
 import { ApiResponse } from '../../../../interfaces/api-response';

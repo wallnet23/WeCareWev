@@ -1,6 +1,6 @@
 import { CommonModule, Location } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MatSelectModule } from '@angular/material/select';
@@ -11,6 +11,8 @@ import { ConnectServerService } from '../../../services/connect-server.service';
 import { Connect } from '../../../classes/connect';
 import { ApiResponse } from '../../../interfaces/api-response';
 import { PopupDialogService } from '../../../services/popup-dialog.service';
+import { Store } from '@ngrx/store';
+import { selectAllCountries } from '../../../ngrx/country/country.selectors';
 
 @Component({
   selector: 'app-signup',
@@ -40,12 +42,13 @@ export class SignupComponent implements OnInit {
   isItalian: boolean = false;
   validEmail: boolean = true;
   countriesData: Country[] = [];
+  readonly store = inject(Store);
 
   signupForm = new FormGroup({
     name: new FormControl<string | null>(null, Validators.required),
     surname: new FormControl<string | null>(null, Validators.required),
     company_name: new FormControl<string | null>(null),
-    country: new FormControl<Country | null>(null, Validators.required),
+    country: new FormControl<number | null>(null, Validators.required),
     licensenumber: new FormControl<string | null>(null, Validators.required),
     vat: new FormControl<string | null>(null),
     email: new FormControl<string | null>(null, Validators.email),
@@ -61,14 +64,14 @@ export class SignupComponent implements OnInit {
   constructor(private connectServerService: ConnectServerService,
     private recaptcha: ReCaptchaV3Service, private popupDialogService: PopupDialogService,
     private router: Router) {
-      // this.route.queryParamMap.subscribe(params => {
-      //   console.log(params.get('text'));
-      //   this.signupForm.get('request_description')?.setValue(params.get('text'));
-      // });
-    }
+    // this.route.queryParamMap.subscribe(params => {
+    //   console.log(params.get('text'));
+    //   this.signupForm.get('request_description')?.setValue(params.get('text'));
+    // });
+  }
 
   ngOnInit() {
-    this.connectServerService.getRequestCountryData().subscribe((obj) => {
+    this.store.select(selectAllCountries).subscribe((obj) => {
       this.countriesData = obj;
     });
     this.formLogic();
@@ -91,9 +94,9 @@ export class SignupComponent implements OnInit {
 
   private formLogic() {
     this.signupForm.get('country')?.valueChanges.subscribe(
-      (country: Country | null) => {
-        console.log("COUNTRY SELECTED", country?.name.common.toString())
-        if (country && country.name.common.toString() === 'Italy') {
+      (id: number | null) => {
+        // console.log("COUNTRY SELECTED", country?.name.common.toString())
+        if (id === 12) {
           this.isItalian = true;
           this.signupForm.patchValue({ licensenumber: 'none', vat: '', fiscalcode: '' });
           this.signupForm.get('licensenumber')?.disable();
@@ -118,8 +121,8 @@ export class SignupComponent implements OnInit {
   }
 
   seePassword(id: string) {
-    if(id === 'password') {
-      if(this.type1 === 'password') {
+    if (id === 'password') {
+      if (this.type1 === 'password') {
         this.type1 = 'text';
         this.toggled1 = false;
       }
@@ -129,7 +132,7 @@ export class SignupComponent implements OnInit {
       }
     }
     else if (id === 'password_confirmation') {
-      if(this.type2 === 'password') {
+      if (this.type2 === 'password') {
         this.type2 = 'text';
         this.toggled2 = false;
       }

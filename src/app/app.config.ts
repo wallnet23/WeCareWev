@@ -16,6 +16,8 @@ import { provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { UserEffects } from './ngrx/user/user.effects';
 import { userReducer } from './ngrx/user/user.reducer';
+import { countryReducer } from './ngrx/country/country.reducer';
+import { CountryEffects } from './ngrx/country/country.effects';
 
 // required for AoT
 export function HttpLoaderFactory(http: HttpClient) {
@@ -52,8 +54,8 @@ export const appConfig: ApplicationConfig = {
     //   }
     // }).providers!
     ,
-    provideStore({ user: userReducer }),
-    provideEffects([UserEffects]),
+    provideStore({ user: userReducer, countries: countryReducer }),
+    provideEffects([UserEffects, CountryEffects]),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })
   ]
 };

@@ -18,6 +18,7 @@ import { PopupDialogService } from '../../../../services/popup-dialog.service';
 import { StepThree } from '../interfaces/step-three';
 import { Image } from '../interfaces/image';
 import { TranslateModule } from '@ngx-translate/core';
+import { ImageLoaderService } from '../../../../services/image-loader.service';
 
 @Component({
   selector: 'app-step-three',
@@ -55,7 +56,7 @@ export class StepThreeComponent implements OnInit {
   imageSpaceLeftStep3: boolean = true;
   imagesStep3: Image[] = [];
   countriesData: Country[] = [];
-  urlServerLara = Connect.urlServerLara;
+  urlServerLaraFile = Connect.urlServerLaraFile;
 
   isError = false;
   errors = {
@@ -63,20 +64,20 @@ export class StepThreeComponent implements OnInit {
     installer_address: false,
     installer_email: false,
     installer_dateofpurchase: false,
-    ccn3: false
+    idcountry: false
   }
 
   stepThreeForm = this.formBuilder.group({
     installer_companyname: new FormControl<string>('', Validators.required),
     installer_address: new FormControl<string>('', Validators.required),
-    ccn3: new FormControl<string | null>(null, Validators.required),
+    idcountry: new FormControl<number | null>(null, Validators.required),
     vendor_contact: new FormControl<string>(''),
     installer_email: new FormControl<string>('', [Validators.email, Validators.required]),
     installer_dateofpurchase: new FormControl<string>('', Validators.required)
   });
 
   ngOnInit() {
-    this.connectServerService.getRequestCountryData().subscribe((obj) => {
+    this.connectServerService.getRequestCountry().subscribe((obj) => {
       this.countriesData = obj;
     })
     if (this.idsystem > 0) {
@@ -85,66 +86,29 @@ export class StepThreeComponent implements OnInit {
     }
   }
 
-  constructor(private formBuilder: FormBuilder, private uploadImageService: UploadImageService,
-    private connectServerService: ConnectServerService, private popupDialogService: PopupDialogService) { }
+  constructor(private formBuilder: FormBuilder,
+    private connectServerService: ConnectServerService, private popupDialogService: PopupDialogService,
+    private imageLoaderService: ImageLoaderService) { }
 
   infoStep() {
     this.connectServerService.getRequest<ApiResponse<{ stepThree: StepThree }>>(Connect.urlServerLaraApi, 'system/infoStepThree', { id: this.idsystem }).
       subscribe((val: ApiResponse<{ stepThree: StepThree }>) => {
         if (val.data.stepThree) {
           this.stepThreeForm.patchValue(val.data.stepThree);
-          console.log(val.data.stepThree)
+          // console.log(val.data.stepThree)
         }
       })
   }
 
   saveStep(action: string) {
-
     this.errorLogic();
     if (action == 'save' || (!this.isError && action == 'next')) {
       let stepThree = JSON.parse(JSON.stringify(this.stepThreeForm.getRawValue()));
-      let country$: Observable<Country>;
-      let country: Country;
-
-      if (stepThree.ccn3) {
-        country$ = this.connectServerService.getSpecificCountryData(this.stepThreeForm.get('ccn3')?.value!);
-        country$.subscribe((val: any) => {
-          if (val && val.length > 0) {
-            country = { name: { common: val[0].name.common }, cca2: val[0].cca2, ccn3: val[0].ccn3 };
-            console.log(country);
-            delete stepThree.ccn3;
-            stepThree.supplier_country = country;
-
-            console.log("STEP3: ", stepThree)
-
-            this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepThree',
-              {
-                idsystem: this.idsystem,
-                obj_step: stepThree
-              })
-              .subscribe((val: ApiResponse<null>) => {
-                this.popupDialogService.alertElement(val);
-                this.infoStep();
-                this.formEmit.emit(this.formBuilder.group({}));
-                if (action == 'next') {
-                  setTimeout(() => {
-                    console.log('Emitting nextStep');
-                    this.nextStep.emit();
-                  }, 0);
-                }
-              })
-          }
-        })
-      }
-      else {
-        country = { name: { common: '' }, cca2: '', ccn3: '' };
-        delete stepThree.ccn3;
-        stepThree.location_country = country;
-
+      if (stepThree.idcountry) {
         this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepThree',
           {
             idsystem: this.idsystem,
-            obj_step: stepThree,
+            obj_step: stepThree
           })
           .subscribe((val: ApiResponse<null>) => {
             this.popupDialogService.alertElement(val);
@@ -152,12 +116,13 @@ export class StepThreeComponent implements OnInit {
             this.formEmit.emit(this.formBuilder.group({}));
             if (action == 'next') {
               setTimeout(() => {
-                console.log('Emitting nextStep');
+                // console.log('Emitting nextStep');
                 this.nextStep.emit();
               }, 0);
             }
           })
       }
+
     }
   }
 
@@ -208,7 +173,15 @@ export class StepThreeComponent implements OnInit {
       })
       .subscribe((val: ApiResponse<{ listFiles: Image[] }>) => {
         if (val.data.listFiles) {
-          this.imagesStep3 = val.data.listFiles;
+          this.imagesStep3 = val.data.listFiles.map(image => {
+            // Chiama ImageLoaderService solo una volta per immagine
+            this.imageLoaderService.getImageWithToken(Connect.urlServerLaraFile + image.src).subscribe(
+              (safeUrl) => {
+                image.src = safeUrl; // Assegna l'URL sicuro all'immagine
+              }
+            );
+            return image;
+          });
         }
       })
   }
@@ -240,12 +213,12 @@ export class StepThreeComponent implements OnInit {
   }
 
   private errorLogic() {
-    console.log("date: ", this.stepThreeForm.get('installer_dateofpurchase')?.value)
-    if (this.stepThreeForm.get('ccn3')?.value == null || this.stepThreeForm.get('ccn3')?.value!.replaceAll(' ', '') == '') {
-      this.errors.ccn3 = true;
+    // console.log("date: ", this.stepThreeForm.get('installer_dateofpurchase')?.value)
+    if (this.stepThreeForm.get('idcountry')?.value == null) {
+      this.errors.idcountry = true;
     }
     else {
-      this.errors.ccn3 = false;
+      this.errors.idcountry = false;
     }
     if (this.stepThreeForm.get('installer_address')?.value == null || this.stepThreeForm.get('installer_address')?.value!.replaceAll(' ', '') == '') {
       this.errors.installer_address = true;
@@ -278,7 +251,7 @@ export class StepThreeComponent implements OnInit {
 
   private checkIsError() {
     if (!this.errors.installer_address &&
-      !this.errors.ccn3 &&
+      !this.errors.idcountry &&
       !this.errors.installer_companyname &&
       !this.errors.installer_dateofpurchase &&
       !this.errors.installer_email) {

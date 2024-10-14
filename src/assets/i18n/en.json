@@ -1,4 +1,15 @@
 {
+  "POPUP": {
+    "MSG_DELETE": "Are you sure you want to delete the system? Irreversible action.",
+    "BUTTON": {
+      "DELETE": "Delete",
+      "CLOSE": "Close",
+      "GO": "Go"
+    },
+    "TITLE": {
+      "WARNING": "Warning"
+    }
+  },
   "NAVBAR": {
     "SYSTEMS": "Systems",
     "TICKETS": "Tickets",
@@ -119,6 +130,8 @@
       "INSTALLATIONSITE": "INSTALLATION SITE",
       "TECHNICIANINFO": "TECHNICIAN / INSTALLER INFO",
       "DEVICESINFO": "DEVICES INFO",
+      "INVERTER": "INVERTER INFO",
+      "BATTERIES": "BATTERIES INFO",
       "CONFIRMATION": "CONFIRMATION",
       "REQUEST": "Request the approval of the system to get access to all the services and request extend the warranty of inverters.",
       "COMPLETE": "Concludi ogni step per richiedere l'approvazione dell'impianto al tecnico Weco.",
@@ -201,7 +214,7 @@
       "DATEOFPURCHASE": "Date Of Purchase",
       "DATEERROR": "Insert the date of purchase",
       "IMAGELIMIT": "Image limit reached",
-      "IMPORT": "Importa",
+      "IMPORT": "Import",
       "IMPORTINVOICE": "Import a picture of the invoice (max 2 files)",
       "COMPANYNAMEPLACEHOLDER": "Installer Company name",
       "ADDRESSPLACEHOLDER": "Installer Company address",
@@ -219,37 +232,45 @@
       "BRANDINV": "What brand of inverter are you working with?",
       "BRANDERROR": "Which is the other brand?",
       "DATEPLACEHOLDER": "dd/mm/yyyy",
-      "CLUSTER": {
-        "BATTERYINFO": "Battery Info",
-        "VOLTAGE": "High or Low Voltage",
-        "SELECTVALUE": "Select a value",
-        "SYSTEMMODEL": "System Model",
-        "SELECTMODEL": "Select a model",
-        "PARALLELCLUSTERS": "Parallel Clusters",
-        "BATTERYTYPE": "Battery Type",
-        "SELECTTYPE": "Select a type",
-        "SINGLEBATTERY": "Single Battery",
-        "YES": "Yes",
-        "No": "No",
-        "HOWMANYCLUSTERS": "How many Clusters",
-        "DEVICESFORCLUSTER": "How many devices for each Cluster",
-        "CLUSTER": "Cluster",
-        "SERIALNUMBER": "Serial Number",
-        "CONNECTEDINVERTER": "Inverter to which it is connected"
-      },
-      "INVERTER": {
-        "INVERTERINFO": "Inverter Info",
-        "HYBRIDINVERTER": "Hybrid Inverter",
-        "ONLINEINVERTER": "Is the Inverter Online",
-        "ONLINEERROR": "The inverter has to be online",
-        "INVERTERNUMBER": "Number of Inverter",
-        "SELECTVALUE": "Select a value",
-        "PARALLELCOMUNICATION": "The Inverters are in parallel on power side",
-        "PARALLELPOWER": "The Inverters are in parallel on power side",
-        "INVERTER": "Inverter",
-        "SERIALNUMBER": "Serial Number",
-        "MODEL": "Model"
-      }
+      "DESCNUMDEVICE": "A cluster is a collection of batteries.",
+      "HYBRIDINVERTER": "Hybrid Inverter",
+      "ONLINEINVERTER": "Are all Inverters Online?",
+      "ONLINEERROR": "The inverters must be online.",
+      "BATTERYINFO": "Battery Info",
+      "VOLTAGE": "Are the batteries high or low voltage?",
+      "SELECTVALUE": "Select a value",
+      "SYSTEMMODEL": "System Model",
+      "SELECTMODEL": "Select a model",
+      "BATTERYTYPE": "Battery Type",
+      "SELECTTYPE": "Select a type",
+      "SINGLEBATTERY": "Single Battery",
+      "YES": "Yes",
+      "No": "No",
+      "DEVICESFORCLUSTER": "How many devices for each Cluster"
+    },
+    "STEPFIVE": {
+      "ADDINVERTER": "Add inverter +",
+      "INVERTERINFO": "Inverter Info",
+      "INVERTERNUMBER": "Number of Inverter",
+      "SELECTVALUE": "Select a value",
+      "PARALLELCOMUNICATION": "Are the inverters communicating with each other in parallel?",
+      "PARALLELPOWER": "Are the inverters in parallel on the power side?",
+      "INVERTER": "Inverter",
+      "SERIALNUMBER": "Serial Number",
+      "MODEL": "Model",
+      "QUANTITY": "Enter the quantity of inverters that make up the entire system.",
+      "INVERTERCOMPOSE": "Inserisci gli inverter:"
+    },
+    "STEPSIX": {
+      "ADDICLUSTER": "Add cluster +",
+      "HOWMANYCLUSTERS": "How many Clusters",
+      "CLUSTER": "Cluster",
+      "SERIALNUMBER": "Serial Number",
+      "CONNECTEDINVERTER": "Inverter to which it is connected",
+      "YES": "Yes",
+      "No": "No",
+      "PARALLELCLUSTERS": "Are the Clusters in parallel?",
+      "CLUSTERCOMPOSE": "Compose your system:"
     },
     "STEPBUTTONS": {
       "PREV": "Previous",
@@ -266,6 +287,7 @@
       "CUSTOMERNAME": "Customer Name",
       "INSTALLATIONSITE": "Installation Site",
       "DEVICEINFO": "Device Info",
+      "SYSTEMINFO": "Information about the plant",
       "ENABLEFUNC": "Insert the system's datas to enable the others functionalities",
       "MODIFYDATA": "Modify System Data",
       "VIEW": "View System Data",
