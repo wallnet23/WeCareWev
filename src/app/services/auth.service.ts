@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { catchError, lastValueFrom, Observable, Subject, tap, throwError, timeout } from 'rxjs';
+import { catchError, firstValueFrom, lastValueFrom, Observable, Subject, tap, throwError, timeout } from 'rxjs';
 import { ConnectServerService } from './connect-server.service';
 import { Connect } from '../classes/connect'
 import { Router } from '@angular/router';
@@ -43,7 +43,7 @@ export class AuthService {
 
   async loginUser(email_value: string, password_value: string) {
    // try{
-    const esito: ApiResponse<{ authorization: { token: string; type: string; } }> = await lastValueFrom(
+    const esito: ApiResponse<{ authorization: { token: string; type: string; } }> = await firstValueFrom(
       this.connectServerService.postRequest<ApiResponse<{ authorization: { token: string; type: string; } }>>(Connect.urlServerLaraApi, 'user/login', {
         email: email_value,
         password: password_value,
