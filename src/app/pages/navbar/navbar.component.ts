@@ -44,8 +44,10 @@ export class NavbarComponent implements OnInit {
     });
     this.checkWindowSize();
     // si richiama al server
+    // console.log('CountryEffects NAVBAR')
     this.store.dispatch(UserActions.loadUserInfo());
     this.store.dispatch(UserActions.loadUserPermissions());
+
 
     // si ottiene i risultati
     this.nickname$ = store.select(state => state.user.userInfo).pipe(

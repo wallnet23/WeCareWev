@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { catchError, map, mergeMap } from 'rxjs/operators';
+import { catchError, map, mergeMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import * as UserActions from './user.actions';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
@@ -16,6 +16,7 @@ export class UserEffects {
         {}
       )
         .pipe(
+          // tap(() => console.log('loadUserInfo CountryEffects')),
           map((userInfo: any) => UserActions.loadUserInfoSuccess({ userInfo })),
           catchError(error => of(UserActions.loadUserInfoFailure({ error })))
         ))

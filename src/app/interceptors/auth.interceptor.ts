@@ -2,7 +2,7 @@ import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Store } from '@ngrx/store';
-import { switchMap } from 'rxjs';
+import { switchMap, take } from 'rxjs';
 import { selectUserLangCode } from '../ngrx/user/user.selectors';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
@@ -20,6 +20,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   }
   // Ottieni lang_code come Observable dallo store NgRx
   return store.select(selectUserLangCode).pipe(
+    take(1),
     switchMap((currentLanguage: string | null) => {
       const language = currentLanguage || 'en'; // Fallback se currentLanguage è null o undefined
       const newReq = req.clone({

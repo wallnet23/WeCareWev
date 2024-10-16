@@ -6,7 +6,6 @@ import { IpInfoConnectService } from '../../services/ip-info-connect.service';
 import { Store } from '@ngrx/store';
 import { UserState } from '../../ngrx/user/user.reducer';
 import { AuthService } from '../../services/auth.service';
-import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-language',
@@ -21,16 +20,11 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class LanguageComponent {
 
-  // languagesList: {code: string, name: string, flag: string}[] = [
-  //   {code: 'en', name: 'EN', flag: 'en.png'},
-  //   {code: 'it', name: 'IT', flag: 'it.png'}
-  // ]
   languagesList: { code: string, name: string, sign: string, flag: string }[] = this.ipInfoConnectService.languagesList;
-  //language = new FormControl<string>('en');
   selectedLanguage: { code: string, name: string, sign: string, flag: string } = this.languagesList[0];
 
   constructor(private ipInfoConnectService: IpInfoConnectService, private store: Store<{ user: UserState }>,
-    private authService: AuthService, private translateService: TranslateService) {
+    private authService: AuthService) {
     this.ipInfoConnectService.setUserLanguageApp((code: string) => this.selectLanguage(code));
     // console.log("Lingua", translateService.currentLang);
     this.getSelectedLanguage();

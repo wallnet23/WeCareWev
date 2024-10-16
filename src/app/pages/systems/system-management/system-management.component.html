@@ -83,7 +83,7 @@
               (nextStep)="stepper.next()" [idsystem]="idsystem"></app-step-five>
           </ng-template>
         </mat-step>
-        <mat-step *ngIf="stepFourService.product_systemcomposition === 2" [stepControl]="stepSixForm"
+        <mat-step *ngIf="stepFourService.product_systemcomposition === 3" [stepControl]="stepSixForm"
           errorMessage="Incomplete">
           <ng-template matStepLabel><span style="font-weight: bold;">{{"SYSTEM.SYSTEMMANAGEMENT.BATTERIES" |
               translate}}</span></ng-template>

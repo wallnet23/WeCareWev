@@ -28,6 +28,7 @@ export class AppComponent implements OnInit {
   constructor(public authService: AuthService) { }
 
   ngOnInit() {
+    console.log('CountryEffects APP')
     this.store.dispatch(loadCountries());  // Dispatch per caricare i dati solo se necessario
   }
 }

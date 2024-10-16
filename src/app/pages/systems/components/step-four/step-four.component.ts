@@ -63,7 +63,7 @@ export class StepFourComponent {
       name: 'Inverter'
     },
     {
-      id: 2,
+      id: 3,
       name: 'Battery and Inverter'
     }];
   numCluster = Array(15).fill(0).map((_, i) => ({
@@ -187,7 +187,7 @@ export class StepFourComponent {
           this.stepFourForm.get('product_systemweco')?.enable();
           this.enableDisableFields(val);
           // Batterie e inverter
-        } else if (val && val == 2) {
+        } else if (val && val == 3) {
           this.wecoComposition = [
             {
               id: null,
@@ -209,6 +209,7 @@ export class StepFourComponent {
           this.stepFourForm.patchValue({
             product_systemweco: null
           });
+          this.stepFourForm.get('product_systemweco')?.enable();
           this.enableDisableFields(val);
         }
       }

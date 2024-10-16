@@ -80,6 +80,7 @@ export class IpInfoConnectService {
   }
 
   setUserLanguageDb(code_lang: string) {
+    // console.log('chiamata setUserLanguageDb');
     if (code_lang.length > 0 && this.checkIfCodeExists(code_lang)) {
       if (this.authService.isLoggedIn()) {
         this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'user/updateLanguage',
@@ -87,6 +88,7 @@ export class IpInfoConnectService {
             code: code_lang
           }).subscribe(
             (val) => {
+              // console.log('CountryEffects setUserLanguageDb')
               this.store.dispatch(UserActions.loadUserInfo());
               this.setUserLanguageApp(() => { });
             }
