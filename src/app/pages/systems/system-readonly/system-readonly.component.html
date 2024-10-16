@@ -44,13 +44,15 @@
                     <ng-template matStepLabel>
                         <span style="font-weight: bold;">{{"SYSTEM.SYSTEMMANAGEMENT.SYSANDCUSTINFO" | translate}}</span>
                         <span class="ms-4">
-                            <i *ngIf="!validStepOne" class="bi bi-exclamation-circle-fill"
+                            <i *ngIf="stepStatusList?.stepOneStatus!.status[0].idstatus == 10" class="bi bi-exclamation-circle-fill"
                                 style="color: red; font-size: large;"></i>
-                            <i *ngIf="validStepOne" class="bi bi-check-circle-fill"
+                            <i *ngIf="stepStatusList?.stepOneStatus!.status[0].idstatus == 15" class="bi bi-check-circle-fill"
                                 style="color: green; font-size: large;"></i>
+                            <i *ngIf="stepStatusList?.stepOneStatus!.status[0].idstatus == 5" class="bi bi-question-circle-fill"
+                                style="color: yellow; font-size: large;"></i>
                         </span>
                     </ng-template>
-                    <app-step-one-readonly *ngIf="validStepOne; else stepOneModify" #stepOne
+                    <app-step-one-readonly *ngIf="stepStatusList?.stepOneStatus!.status[0].idstatus != 10; else stepOneModify" #stepOne
                         (formEmit)="onFormOneReceived($event)" (nextStep)="stepper.next()" [idsystem]="idsystem"
                         [countriesList]="countriesList" [stepOne]="systemInfo.stepOne">
                     </app-step-one-readonly>

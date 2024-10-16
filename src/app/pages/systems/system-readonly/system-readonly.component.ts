@@ -112,6 +112,15 @@ export class SystemReadonlyComponent {
     errorStepSix: {message: '', date: ''},
   }
 
+  stepStatusList: {
+    stepOneStatus: StepStatus;
+    stepTwoStatus: StepStatus;
+    stepThreeStatus: StepStatus;
+    stepFourStatus: StepStatus;
+    stepFiveStatus: StepStatus;
+    stepSixStatus: StepStatus;
+   } | null = null;
+
   constructor(private route: ActivatedRoute, private connectServerService: ConnectServerService,
     private elementRef: ElementRef, private location: Location) {
     this.route.params.subscribe(params => {
@@ -230,7 +239,18 @@ export class SystemReadonlyComponent {
   }
 
   getStepStatus() {
-    //this.connectServerService.getRequest<ApiResponse<StepStatus[]>(){}
+    this.connectServerService.getRequest<ApiResponse<{stepStatusList: StepStatus[]}>>(
+      Connect.urlServerLaraApi, 'system/readonlyStep', {idsystem: this.idsystem}
+    ).subscribe((val: ApiResponse<{stepStatusList: StepStatus[]}>) => {
+      if(val.data) {
+        this.stepStatusList!.stepOneStatus = val.data.stepStatusList.find((stepItem: StepStatus) => stepItem.step == 1)!;
+        this.stepStatusList!.stepTwoStatus = val.data.stepStatusList.find((stepItem: StepStatus) => stepItem.step == 2)!;
+        this.stepStatusList!.stepThreeStatus = val.data.stepStatusList.find((stepItem: StepStatus) => stepItem.step == 3)!;
+        this.stepStatusList!.stepFourStatus = val.data.stepStatusList.find((stepItem: StepStatus) => stepItem.step == 4)!;
+        this.stepStatusList!.stepFiveStatus = val.data.stepStatusList.find((stepItem: StepStatus) => stepItem.step == 5)!;
+        this.stepStatusList!.stepSixStatus = val.data.stepStatusList.find((stepItem: StepStatus) => stepItem.step == 6)!;
+      }
+    })
   }
 
   onFormOneReceived(form: FormGroup) {
