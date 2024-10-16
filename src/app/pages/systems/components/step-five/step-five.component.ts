@@ -42,8 +42,13 @@ import { StepFive } from '../interfaces/step-five';
   styleUrl: './step-five.component.scss'
 })
 export class StepFiveComponent {
+
+  submitted = false;
+
   @Output() formEmit = new EventEmitter<FormGroup>();
   @Output() nextStep = new EventEmitter<void>();
+
+  @Input() isReadonly = false;
   @Input() idsystem = 0;
   stepFiveForm = this.formBuilder.group({
     inverter_communication: new FormControl<number | null | boolean>({ value: null, disabled: false }),
@@ -91,25 +96,32 @@ export class StepFiveComponent {
 
 
   saveStep(action: string) {
+    this.submitted = true;
     const stepFive = this.stepFiveForm.value;
     // console.log('data 1', this.stepFiveForm.value);
     // console.log('data valid', this.stepFourForm.valid);
-    this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepFive',
-      {
-        idsystem: this.idsystem,
-        obj_step: stepFive,
-      })
-      .subscribe((val: ApiResponse<null>) => {
-        this.popupDialogService.alertElement(val);
-        this.infoStep();
-        this.formEmit.emit(this.formBuilder.group({}));
-        if (action == 'next') {
-          setTimeout(() => {
-            // console.log('Emitting nextStep');
-            this.nextStep.emit();
-          }, 0);
-        }
-      })
+    if (this.stepFiveForm.valid) {
+      this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepFive',
+        {
+          idsystem: this.idsystem,
+          obj_step: stepFive,
+        })
+        .subscribe((val: ApiResponse<null>) => {
+          this.popupDialogService.alertElement(val);
+          this.infoStep();
+          this.formEmit.emit(this.formBuilder.group({}));
+          if (action == 'next') {
+            setTimeout(() => {
+              // console.log('Emitting nextStep');
+              this.nextStep.emit();
+            }, 0);
+          }
+        })
+    }
+  }
+
+  updateStep() {
+    // APRI POPUP E POI FAI LA CHIAMATA
   }
 
   get inverterFieldAsFormArray(): any {

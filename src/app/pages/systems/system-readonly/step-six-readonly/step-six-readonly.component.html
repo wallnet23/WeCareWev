@@ -2,7 +2,7 @@
     <div class="container-fluid mt-4">
         <div class="row">
             <div *ngFor="let cluster of stepSix?.clusters_list;let i = index;" class="mb-4 col-12 col-sm-6 col-lg-4">
-                <mat-card>
+                <mat-card style="min-height: 100%;">
                     <mat-card-header class="bg-success bg-opacity-10">
                         <mat-card-title style="font-weight: bold; font-size: medium;">
                             <span>{{ "SYSTEM.READONLY.CLUSTER" | translate }} {{i + 1}}</span>

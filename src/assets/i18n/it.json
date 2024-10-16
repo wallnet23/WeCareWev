@@ -161,10 +161,6 @@
       "EMPTY": ""
     },
     "STEPONE": {
-      "VOLTAGEERROR": "Seleziona un voltaggio",
-      "MODELERROR": "Seleziona un modello di impianto",
-      "BATTERYTYPEERROR": "Seleziona un modello di batteria",
-      "DEVICESFORCLUSTERERROR": "Inserisci un valore",
       "FISCALCODEERROR": "Inserisci il codice fiscale",
       "LICENSEERROR": "Inserisci il numero di licenza",
       "PHONEERROR": "Inserisci il numero di telefono",
@@ -226,6 +222,10 @@
       "DATEPLACEHOLDER": "dd/mm/yyyy"
     },
     "STEPFOUR": {
+      "VOLTAGEERROR": "Seleziona un voltaggio",
+      "MODELERROR": "Seleziona un modello di impianto",
+      "BATTERYTYPEERROR": "Seleziona un modello di batteria",
+      "DEVICESFORCLUSTERERROR": "Inserisci un valore",
       "INSTALLATIONDATE": "Data di Installazione",
       "DATEERROR": "Inserisci la data di installazione",
       "SYSCOMPOSITION": "Componenti impianto",
@@ -253,6 +253,7 @@
       "DEVICESFORCLUSTER": "Quanti dispositivi per ogni Cluster"
     },
     "STEPFIVE": {
+      "MODELERROR": "Inserisci un modello",
       "ADDINVERTER": "Aggiungi inverter +",
       "INVERTERINFO": "Informazioni Inverter",
       "INVERTERNUMBER": "Numero di Inverter",
@@ -265,6 +266,8 @@
       "INVERTERCOMPOSE": "Inserisci gli inverter:"
     },
     "STEPSIX": {
+      "SERIALNUMBERERROR": "Inserisci un serial number",
+      "INVERTERSERROR": "Inserisci un inverter",
       "ADDICLUSTER": "Aggiungi cluster +",
       "HOWMANYCLUSTERS": "Quanti Cluster",
       "CLUSTER": "Cluster",
@@ -279,7 +282,8 @@
       "PREV": "Precedente",
       "SAVE": "Salva",
       "NEXT": "Successivo",
-      "SEND": "Invia"
+      "SEND": "Invia",
+      "UPDATE": "Aggiorna"
     },
     "OVERVIEW": {
       "ADD": "Aggiungi una descrizione",

@@ -49,6 +49,8 @@ export class StepFourComponent {
   submitted = false;
   @Output() formEmit = new EventEmitter<FormGroup>();
   @Output() nextStep = new EventEmitter<void>();
+
+  @Input() isReadonly = false;
   @Input() idsystem = 0;
   readonly stepFourService = inject(StepFourService);
   language_now = 'en';
@@ -256,5 +258,8 @@ export class StepFourComponent {
     }
   }
 
+  updateStep() {
+    // APRI POPUP E POI FAI LA CHIAMATA
+  }
 
 }

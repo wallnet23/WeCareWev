@@ -71,7 +71,8 @@
               translate}}</span></ng-template>
           <ng-template matStepContent>
             <app-step-four *ngIf="stepThreeForm.valid" #stepFour (formEmit)="onFormFourReceived($event)"
-              (nextStep)="stepper.next()" [idsystem]="idsystem"></app-step-four>
+              (nextStep)="stepper.next()" [idsystem]="idsystem">
+            </app-step-four>
           </ng-template>
         </mat-step>
 
@@ -80,7 +81,8 @@
               translate}}</span></ng-template>
           <ng-template matStepContent>
             <app-step-five *ngIf="stepFourForm.valid" #stepFive (formEmit)="onFormFiveReceived($event)"
-              (nextStep)="stepper.next()" [idsystem]="idsystem"></app-step-five>
+              (nextStep)="stepper.next()" [idsystem]="idsystem">
+            </app-step-five>
           </ng-template>
         </mat-step>
         <mat-step *ngIf="stepFourService.product_systemcomposition === 3" [stepControl]="stepSixForm"
@@ -89,7 +91,8 @@
               translate}}</span></ng-template>
           <ng-template matStepContent>
             <app-step-six *ngIf="stepFiveForm.valid" #stepSix (formEmit)="onFormSixReceived($event)"
-              (nextStep)="stepper.next()" [idsystem]="idsystem"></app-step-six>
+              (nextStep)="stepper.next()" [idsystem]="idsystem">
+            </app-step-six>
           </ng-template>
         </mat-step>
 

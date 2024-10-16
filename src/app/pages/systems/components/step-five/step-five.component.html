@@ -19,7 +19,7 @@
     <div class="container">
       <div class="row mt-4">
         <div class="col-12 col-md-6 col-lg-4 col-xxl-4 px-0 px-md-2 mb-2"
-          *ngFor="let formGroup of inverterFieldAsFormArray.controls; let i = index" formArrayName="inverters_list">
+          *ngFor="let inverterItem of inverterFieldAsFormArray.controls; let i = index" formArrayName="inverters_list">
           <mat-card class="mb-4">
             <div [formGroupName]="i">
               <mat-card-header style="border-bottom: 2px solid lightgray;" class="bg-primary bg-opacity-10">
@@ -36,18 +36,26 @@
                   <div class="row">
                     <div class="col-12">
                       <label class="mt-2" style="font-weight: bold; font-size: medium;">
-                        {{ "SYSTEM.STEPFIVE.SERIALNUMBER" | translate}}
+                        {{ "SYSTEM.STEPFIVE.SERIALNUMBER" | translate}}<sup>*</sup>
                       </label>
                     </div>
                     <div class="col-12">
-                      <input class="form-control" type="text" formControlName="serialnumber">
+                      <input class="form-control" type="text" formControlName="serialnumber"
+                        [class.is-invalid]="inverterItem.get('serialnumber')?.invalid && (inverterItem.get('serialnumber')?.dirty || submitted)">
                       <app-scanner-selector class="cameraIcon"
-                        (barcodeScanned)="onBarcodeScanned($event, i)"></app-scanner-selector>
+                        (barcodeScanned)="onBarcodeScanned($event, i)">
+                      </app-scanner-selector>
                     </div>
                     <div class="col-12">
-                      <label class="mt-2" style="font-weight: bold; font-size: medium;">{{
-                        "SYSTEM.STEPFIVE.MODEL" | translate}}</label>
-                      <input class="form-control" type="text" formControlName="model">
+                      <label class="mt-2" style="font-weight: bold; font-size: medium;">
+                        {{"SYSTEM.STEPFIVE.MODEL" | translate}}<sup>*</sup>
+                      </label>
+                      <input class="form-control" type="text" formControlName="model"
+                      [class.is-invalid]="inverterItem.get('model')?.invalid && (inverterItem.get('model')?.dirty || submitted)">
+                      <div class="text-danger mt-1"
+                        *ngIf="inverterItem.get('model')?.invalid && (inverterItem.get('model')?.dirty || submitted)"
+                        style="font-size: small;">{{"SYSTEM.STEPFIVE.MODELERROR" | translate}}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -74,7 +82,7 @@
       </label>
     </div>
   </div>
-  <div class="text-center">
+  <div *ngIf="!isReadonly; else updateBlock" class="col-12 text-center">
     <button class="btn btn-outline-dark mr-2" matStepperPrevious>
       {{"SYSTEM.STEPBUTTONS.PREV" | translate}}
     </button>
@@ -86,4 +94,12 @@
       {{"SYSTEM.STEPBUTTONS.NEXT" | translate}}
     </button>
   </div>
+  <ng-template #updateBlock>
+    <div class="col-12 text-center">
+      <button class="btn btn-outline-dark" (click)="updateStep()">
+        {{"SYSTEM.STEPBUTTONS.UPDATE" | translate}}
+      </button>
+    </div>
+  </ng-template>
+  
 </form>

@@ -47,8 +47,13 @@ import { StepFourService } from '../step-four/step-four.service';
   styleUrl: './step-six.component.scss'
 })
 export class StepSixComponent {
+
+  submitted = false;
+
   @Output() formEmit = new EventEmitter<FormGroup>();
   @Output() nextStep = new EventEmitter<void>();
+
+  @Input() isReadonly = false;
   @Input() idsystem = 0;
   num_devices: number | null = 0;
   view_inverterslist: Inverter[] = [];
@@ -116,33 +121,42 @@ export class StepSixComponent {
         }
       })
   }
+
   saveStep(action: string) {
+    this.submitted = true;
     // console.log('1. copy_form', this.stepSixForm.getRawValue());
-    const copy_form = JSON.parse(JSON.stringify(this.stepSixForm.getRawValue()));
-    copy_form.clusters_list.forEach((cluster: any) => {
-      const array_inverters: Inverter[] = this.view_inverterslist.filter(
-        (inverter: Inverter) => cluster.inverters.includes(inverter.id)
-      );
-      cluster.inverters = array_inverters;
-    });
-    // console.log('2. copy_form', copy_form);
-    this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepSix',
-      {
-        idsystem: this.idsystem,
-        obj_step: copy_form,
-      })
-      .subscribe((val: ApiResponse<null>) => {
-        this.popupDialogService.alertElement(val);
-        this.infoStep();
-        this.formEmit.emit(this.formBuilder.group({}));
-        if (action == 'next') {
-          setTimeout(() => {
-            // console.log('Emitting nextStep');
-            this.nextStep.emit();
-          }, 0);
-        }
-      })
+    if (this.stepSixForm.valid) {
+      const copy_form = JSON.parse(JSON.stringify(this.stepSixForm.getRawValue()));
+      copy_form.clusters_list.forEach((cluster: any) => {
+        const array_inverters: Inverter[] = this.view_inverterslist.filter(
+          (inverter: Inverter) => cluster.inverters.includes(inverter.id)
+        );
+        cluster.inverters = array_inverters;
+      });
+      // console.log('2. copy_form', copy_form);
+      this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepSix',
+        {
+          idsystem: this.idsystem,
+          obj_step: copy_form,
+        })
+        .subscribe((val: ApiResponse<null>) => {
+          this.popupDialogService.alertElement(val);
+          this.infoStep();
+          this.formEmit.emit(this.formBuilder.group({}));
+          if (action == 'next') {
+            setTimeout(() => {
+              // console.log('Emitting nextStep');
+              this.nextStep.emit();
+            }, 0);
+          }
+        })
+    }
   }
+
+  updateStep() {
+    // APRI POPUP E POI FAI LA CHIAMATA
+  }
+
   /**
      * Usato per inserire i cluster (2)
      */
