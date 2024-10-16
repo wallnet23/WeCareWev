@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
-import { lastValueFrom, Observable, Subject, tap } from 'rxjs';
+import { catchError, lastValueFrom, Observable, Subject, tap, throwError, timeout } from 'rxjs';
 import { ConnectServerService } from './connect-server.service';
 import { Connect } from '../classes/connect'
 import { Router } from '@angular/router';
 import { User } from '../pages/profile/interfaces/user';
 import { ApiResponse } from '../interfaces/api-response';
+import { Store } from '@ngrx/store';
+import { UserState } from '../ngrx/user/user.reducer';
+import * as UserActions from '../ngrx/user/user.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +21,9 @@ export class AuthService {
 
   authorization: string = 'none';
 
-  constructor(private connectServerService: ConnectServerService, private router: Router) {
+  constructor(private connectServerService: ConnectServerService, private router: Router,
+    private store: Store<{ user: UserState }>
+  ) {
   }
 
   isLoggedIn(): boolean {
@@ -37,18 +42,36 @@ export class AuthService {
   }
 
   async loginUser(email_value: string, password_value: string) {
+    try{
     const esito: ApiResponse<{ authorization: { token: string; type: string; } }> = await lastValueFrom(
       this.connectServerService.postRequest<ApiResponse<{ authorization: { token: string; type: string; } }>>(Connect.urlServerLaraApi, 'user/login', {
         email: email_value,
         password: password_value,
-      })
+      }).pipe(
+        timeout(5000),
+        catchError((error) => {
+          console.error('Errore nella richiesta:', error);
+          return throwError(error); // Propaga l'errore
+        }),
+
+        tap({
+          complete: () => console.log('Observable completato'),
+          error: (error) => console.error('Errore nella chiamata HTTP', error)
+        })
+      )
     );
 
-    //console.log('esito', esito);
+    console.log('esito', esito);
+
     if (esito && esito.data && esito.data.authorization) {
       this.setToken(esito.data.authorization.token);
       this.setLoginIn('ok');
+      // Carica le informazioni dell'utente nello store
+      this.store.dispatch(UserActions.loadUserInfo());
     }
+  } catch (error) {
+    console.error('Errore durante loginUser:', error);
+  }
   }
 
   logoutUser() {

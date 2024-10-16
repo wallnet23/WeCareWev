@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
   }
 
   async login() {
-    // try {
+    //try {
     await this.authService.loginUser(
       this.loginForm.get('email')?.value!,
       this.loginForm.get('password')?.value!);

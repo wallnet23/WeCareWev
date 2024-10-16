@@ -100,7 +100,7 @@
       "MAILPLACEHOLDER": "Indirizzo email",
       "PWD": "Password",
       "PWD_CONFIRM": "Password Confermata",
-      "PWDMISMATCH": "Password non corrispondenti",
+      "PSWMISMATCH": "Password non corrispondenti",
       "PHONE": "Numero di telefono",
       "PHONEPLACEHOLDER": "(+999) 9999999",
       "OPTIONALPLACEHOLDER": "Opzionale",

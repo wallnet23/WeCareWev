@@ -1,6 +1,6 @@
 import { HttpClient, HttpRequest } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable, lastValueFrom, map } from 'rxjs';
+import { Observable, catchError, lastValueFrom, map, throwError } from 'rxjs';
 import { Country } from '../interfaces/country';
 import { Connect } from '../classes/connect';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
@@ -23,21 +23,21 @@ export class ConnectServerService {
       // observe: 'events'
     });
   }
-  async getRequestAsync<T>(urlServer: string, urlFunction: string, parametri: any): Promise<any> {
-    const chiamata$ = this.http.get(urlServer + urlFunction,
-      {
-        params: parametri,
-        // observe: 'response'
-        // observe: 'events'
-      }).pipe(
-      // timeout(4000),
-      // catchError(this.handleError)
-    );
-    // const awaitRequest = await chiamata$.toPromise();
-    // return await awaitRequest;
-    return await lastValueFrom(chiamata$);
+  // async getRequestAsync<T>(urlServer: string, urlFunction: string, parametri: any): Promise<any> {
+  //   const chiamata$ = this.http.get(urlServer + urlFunction,
+  //     {
+  //       params: parametri,
+  //       // observe: 'response'
+  //       // observe: 'events'
+  //     }).pipe(
+  //     // timeout(4000),
+  //     // catchError(this.handleError)
+  //   );
+  //   // const awaitRequest = await chiamata$.toPromise();
+  //   // return await awaitRequest;
+  //   return await lastValueFrom(chiamata$);
 
-  }
+  // }
   public getTimeoutForRequest(request: HttpRequest<any>): number {
     // Puoi implementare la logica per ottenere il timeout in base al tipo di richiesta.
     // Ad esempio, puoi controllare il metodo della richiesta (GET, POST, ecc.) o l'URL e restituire il timeout appropriato.
