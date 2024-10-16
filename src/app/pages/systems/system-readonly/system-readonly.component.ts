@@ -24,6 +24,9 @@ import { StepThreeReadonlyComponent } from "./step-three-readonly/step-three-rea
 import { StepFourReadonlyComponent } from "./step-four-readonly/step-four-readonly.component";
 import { StepFiveReadonlyComponent } from "./step-five-readonly/step-five-readonly.component";
 import { StepSixReadonlyComponent } from "./step-six-readonly/step-six-readonly.component";
+import { Country } from '../../../interfaces/country';
+import { StepFive } from '../components/interfaces/step-five';
+import { StepSix } from '../components/interfaces/step-six';
 
 declare var $: any;
 
@@ -69,6 +72,9 @@ export class SystemReadonlyComponent {
   urlServerLara = Connect.urlServerLara;
   customerCountry: string = '';
   installerCountry: string = '';
+  countriesList: Country[] = [];
+
+  validStepOne: boolean = true;
 
   constructor(private route: ActivatedRoute, private connectServerService: ConnectServerService,
     private elementRef: ElementRef, private location: Location) {
@@ -85,10 +91,13 @@ export class SystemReadonlyComponent {
   }
 
   getSystem() {
+    this.getCountries();
     this.getStepOne();
     this.getStepTwo();
     this.getStepThree();
     this.getStepFour();
+    this.getStepFive();
+    this.getStepSix();
   }
 
   getStepOne() {
@@ -97,7 +106,6 @@ export class SystemReadonlyComponent {
       subscribe((val: ApiResponse<{ stepOne: StepOne }>) => {
         if (val.data && val.data.stepOne) {
           this.systemInfo!.stepOne = val.data.stepOne;
-          this.getCountry(val.data.stepOne.ccn3, 'customerCountry');
         }
       })
   }
@@ -140,14 +148,47 @@ export class SystemReadonlyComponent {
           const data_step = val.data.stepFour;
           this.systemInfo.stepFour = val.data.stepFour;
         }
-        if (val.data && val.data.stepInverter) {
-          this.systemInfo.inverter = val.data.stepInverter;
-        }
-        if (val.data && val.data.stepCluster) {
-          this.systemInfo.cluster = val.data.stepCluster;
-        }
-        console.log('val 4 info:', this.systemInfo);
+        // if (val.data && val.data.stepInverter) {
+        //   this.systemInfo.inverter = val.data.stepInverter;
+        // }
+        // if (val.data && val.data.stepCluster) {
+        //   this.systemInfo.cluster = val.data.stepCluster;
+        // }
+        // console.log('val 4 info:', this.systemInfo);
+      })
+  }
 
+  getStepFive() {
+    this.connectServerService.getRequest<ApiResponse<{
+      stepFive: StepFive,
+    }>>(Connect.urlServerLaraApi, 'system/infoStepFive',
+      {
+        id: this.idsystem
+      })
+      .subscribe((val: ApiResponse<{
+        stepFive: StepFive
+      }>) => {
+        if (val.data && val.data.stepFive) {
+          const data_step = val.data.stepFive;
+          this.systemInfo.stepFive = val.data.stepFive;
+        }
+      })
+  }
+
+  getStepSix() {
+    this.connectServerService.getRequest<ApiResponse<{
+      stepSix: StepSix,
+    }>>(Connect.urlServerLaraApi, 'system/infoStepSix',
+      {
+        id: this.idsystem
+      })
+      .subscribe((val: ApiResponse<{
+        stepSix: StepSix
+      }>) => {
+        if (val.data && val.data.stepSix) {
+          const data_step = val.data.stepSix;
+          this.systemInfo.stepSix = val.data.stepSix;
+        }
       })
   }
 
@@ -195,18 +236,12 @@ export class SystemReadonlyComponent {
     this.location.back();
   }
 
-  getCountry(ccn3: string, target: 'customerCountry' | 'installerCountry') {
-    if (ccn3) {
-      this.connectServerService.getSpecificCountryData(ccn3).subscribe((val: any) => {
-        if (val && val.length > 0) {
-          this[target] = val[0].name.common;
-        } else {
-          this[target] = '';
-        }
-      });
-    } else {
-      this[target] = '';
-    }
+  getCountries() {
+    this.connectServerService.getRequestCountry().subscribe((val: any) => {
+      if(val) {
+        this.countriesList = val;
+      }
+    });
   }
 
   getImages(step: number) {
@@ -254,20 +289,20 @@ export class SystemReadonlyComponent {
         system_owner: 0,
         customer_name: '',
         customer_surname: '',
-        ccn3: '',
+        customer_country: 0,
         customer_phone: '',
         customer_vat: '',
         customer_licensenumber: '',
         customer_fiscalcode: '',
       },
       stepTwo: {
-        ccn3: '',
+        idcountry: 0,
         location_address: '',
         location_city: '',
         location_postalcode: '',
       },
       stepThree: {
-        ccn3: '',
+        idcountry: 0,
         installer_companyname: '',
         installer_address: '',
         vendor_contact: '',
@@ -287,24 +322,36 @@ export class SystemReadonlyComponent {
         cluster_singlebattery: null,
         cluster_numberdevices: null
       },
-      inverter: {
-        inverter_number: null,
-        inverter_hybrid: null,
-        inverter_communication: null,
-        inverter_power: null,
-        inverter_online: null,
-        inverters_list: [],
+      stepFive: {
+        inverter_communication: 0,
+        inverter_power: 0,
+        inverters_list: []
       },
-      cluster: {
-        cluster_singlebattery: null,
-        cluster_parallel: null,
-        cluster_number: null,
-        cluster_numberdevices: null,
-        refidwecaresystemvolt: null,
-        system_model: null,
-        refidwecaresystemtype: null,
+      stepSix: {
+        cluster_parallel: 0,
         clusters_list: [],
+        inverters_list: [],
+        cluster_numberdevices: 0,
+        cluster_singlebattery: 0
       }
+      // inverter: {
+      //   inverter_number: null,
+      //   inverter_hybrid: null,
+      //   inverter_communication: null,
+      //   inverter_power: null,
+      //   inverter_online: null,
+      //   inverters_list: [],
+      // },
+      // cluster: {
+      //   cluster_singlebattery: null,
+      //   cluster_parallel: null,
+      //   cluster_number: null,
+      //   cluster_numberdevices: null,
+      //   refidwecaresystemvolt: null,
+      //   system_model: null,
+      //   refidwecaresystemtype: null,
+      //   clusters_list: [],
+      // }
     };
   }
 

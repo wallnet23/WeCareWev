@@ -1,11 +1,16 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { StepFour } from '../../components/interfaces/step-four';
+import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-step-four-readonly',
   standalone: true,
-  imports: [],
+  imports: [
+    CommonModule,
+    TranslateModule
+  ],
   templateUrl: './step-four-readonly.component.html',
   styleUrl: './step-four-readonly.component.scss'
 })

@@ -161,6 +161,10 @@
       "EMPTY": ""
     },
     "STEPONE": {
+      "VOLTAGEERROR": "Seleziona un voltaggio",
+      "MODELERROR": "Seleziona un modello di impianto",
+      "BATTERYTYPEERROR": "Seleziona un modello di batteria",
+      "DEVICESFORCLUSTERERROR": "Inserisci un valore",
       "FISCALCODEERROR": "Inserisci il codice fiscale",
       "LICENSEERROR": "Inserisci il numero di licenza",
       "PHONEERROR": "Inserisci il numero di telefono",
@@ -353,6 +357,7 @@
       "SINGLECLUSTER": "Cluster Singolo",
       "PARALLELCLUSTERS": "Cluster Paralleli",
       "CLUSTERNUMBER": "Numero di Cluster",
+      "CLUSTER": "Cluster",
       "DEVICESFORCLUSTER": "Dispositivi per Cluster",
       "MASTER": "Master",
       "SLAVE": "Slave",

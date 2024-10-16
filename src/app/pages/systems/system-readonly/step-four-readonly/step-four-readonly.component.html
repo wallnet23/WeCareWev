@@ -1,1 +1,48 @@
-<p>step-four-readonly works!</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6 col-md-4 col-lg-3">
+            <span class="subtitles">{{"SYSTEM.READONLY.INSTALLATIONDATE" | translate}}: </span>
+            <p class="content">{{stepFour?.product_installdate}}</p>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+            <span class="subtitles">{{"SYSTEM.READONLY.SYSCOMPOSITION" | translate}}: </span>
+            <p class="content">{{stepFour?.product_systemcomposition}}</p>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+            <span class="subtitles">{{"SYSTEM.READONLY.WECOCOMPONENTS" | translate}}: </span>
+            <p class="content">{{stepFour?.product_systemweco}}</p>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+            <span class="subtitles">{{"SYSTEM.READONLY.OTHERBRAND" | translate}}: </span>
+            <p class="content">{{stepFour?.product_brand}}</p>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+            <span class="subtitles">{{"SYSTEM.READONLY.HYBRID" | translate}}: </span>
+            <p class="content">{{stepFour?.inverter_hybrid ? 'Si' : 'No'}}</p>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+            <span class="subtitles">{{"SYSTEM.READONLY.ONLINE" | translate}}: </span>
+            <p class="content">{{stepFour?.inverter_online ? 'Si' : 'No'}}</p>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+            <span class="subtitles">{{"SYSTEM.READONLY.VOLTAGE" | translate}}: </span>
+            <p class="content">{{stepFour?.refidwecaresystemvolt}}</p>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+            <span class="subtitles">{{"SYSTEM.READONLY.MODEL" | translate}}: </span>
+            <p class="content">{{stepFour?.system_model}}</p>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+            <span class="subtitles">{{"SYSTEM.READONLY.TYPE" | translate}}: </span>
+            <p class="content">{{stepFour?.refidwecaresystemtype}}</p>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+            <span class="subtitles">{{"SYSTEM.READONLY.SINGLECLUSTER" | translate}}: </span>
+            <p class="content">{{stepFour?.cluster_singlebattery ? 'Si' : 'No'}}</p>
+        </div>
+        <div class="col-6 col-md-4 col-lg-3">
+            <span class="subtitles">{{"SYSTEM.READONLY.CLUSTERNUMBER" | translate}}: </span>
+            <p class="content">{{stepFour?.cluster_numberdevices}}</p>
+        </div>
+    </div>
+</div>

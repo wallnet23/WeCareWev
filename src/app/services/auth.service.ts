@@ -42,36 +42,35 @@ export class AuthService {
   }
 
   async loginUser(email_value: string, password_value: string) {
-    try{
+   // try{
     const esito: ApiResponse<{ authorization: { token: string; type: string; } }> = await lastValueFrom(
       this.connectServerService.postRequest<ApiResponse<{ authorization: { token: string; type: string; } }>>(Connect.urlServerLaraApi, 'user/login', {
         email: email_value,
         password: password_value,
-      }).pipe(
-        timeout(5000),
-        catchError((error) => {
-          console.error('Errore nella richiesta:', error);
-          return throwError(error); // Propaga l'errore
-        }),
+      })
+      // .pipe(
+      //   // timeout(5000),
+      //   catchError((error) => {
+      //     console.error('Errore nella richiesta:', error);
+      //     return throwError(error); // Propaga l'errore
+      //   }),
 
-        tap({
-          complete: () => console.log('Observable completato'),
-          error: (error) => console.error('Errore nella chiamata HTTP', error)
-        })
-      )
+      //   tap({
+      //     complete: () => console.log('Observable completato'),
+      //     error: (error) => console.error('Errore nella chiamata HTTP', error)
+      //   })
+      // )
     );
-
-    console.log('esito', esito);
 
     if (esito && esito.data && esito.data.authorization) {
       this.setToken(esito.data.authorization.token);
       this.setLoginIn('ok');
       // Carica le informazioni dell'utente nello store
-      this.store.dispatch(UserActions.loadUserInfo());
+      // this.store.dispatch(UserActions.loadUserInfo());
     }
-  } catch (error) {
-    console.error('Errore durante loginUser:', error);
-  }
+  // } catch (error) {
+  //   console.error('Errore durante loginUser:', error);
+  // }
   }
 
   logoutUser() {
@@ -102,6 +101,8 @@ export class AuthService {
 
   getToken(): string | null {
     if (localStorage) {
+      // let prova = localStorage.getItem('XSFR-TOKEN') ? localStorage.getItem('XSFR-TOKEN') : null
+      // console.log(prova)
       return localStorage.getItem('token') ? localStorage.getItem('token') : null;
     } else {
       return null;

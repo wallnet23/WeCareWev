@@ -2,16 +2,17 @@
   <form [formGroup]="stepOneForm">
     <div class="form-group">
       <div class="row">
-        <div class="col-12 mb-3 mt-2">
+        <div class="col-12 col-md-6 mb-3 mt-2">
           <label class="form-check-label" for="system_name" style="font-weight: bold;">
-            {{"SYSTEM.STEPONE.INFO" | translate}}<sup class="small-asterisk">*</sup>
+            {{"SYSTEM.STEPONE.SYSTEMNAME" | translate}}<sup class="small-asterisk">*</sup>
             <mat-icon class="ms-2"
               matTooltip="{{'SYSTEM.STEPONE.NAMETOOLTIP' | translate}}"
               style="font-size: medium;" fontIcon="info"></mat-icon>
           </label>
           <input type="text" name="system_name" id="system_name" class="form-control" formControlName="system_name"
-            placeholder="{{'SYSTEM.STEPONE.SYSTEMPLACEHOLDER' | translate}}" [ngClass]="{'is-invalid': errors.system_name}">
-          <div class="text-danger mt-1" *ngIf="errors.system_name" style="font-size: small;">{{"SYSTEM.STEPONE.INSERTNAME" | translate}}</div>
+            placeholder="{{'SYSTEM.STEPONE.SYSTEMPLACEHOLDER' | translate}}"
+            [class.is-invalid]="stepOneForm.get('system_name')?.invalid && (stepOneForm.get('system_name')?.dirty || submitted)">
+          <div class="text-danger mt-1" *ngIf="stepOneForm.get('system_name')?.invalid && (stepOneForm.get('system_name')?.dirty || submitted)" style="font-size: small;">{{"SYSTEM.STEPONE.INSERTNAME" | translate}}</div>
         </div>
 
         <div class="col-12 mb-3 mt-2">
@@ -37,36 +38,36 @@
               <sup class="small-asterisk">*</sup></label>
             <input type="text" name="customer_name" id="customer_name" formControlName="customer_name"
               class="form-control" placeholder='{{"SYSTEM.STEPONE.NAMEPLACEHOLDER" | translate}}'
-              [ngClass]="{'is-invalid': errors.customer_name}">
-              <div class="text-danger mt-1" *ngIf="errors.customer_name" style="font-size: small;">{{"SYSTEM.STEPONE.NAMEERROR" | translate}}</div>
+              [class.is-invalid]="stepOneForm.get('customer_name')?.invalid && (stepOneForm.get('customer_name')?.dirty || submitted)">
+              <div class="text-danger mt-1" *ngIf="stepOneForm.get('system_name')?.invalid && (stepOneForm.get('customer_name')?.dirty || submitted)" style="font-size: small;">{{"SYSTEM.STEPONE.NAMEERROR" | translate}}</div>
           </div>
           <div class="col-12 col-lg-6 mb-3 mt-2">
             <label for="customer_surname" style="font-weight: bold;">{{"SYSTEM.STEPONE.SURNAME" | translate}}<sup
                 class="small-asterisk">*</sup></label>
             <input type="text" name="customer_surname" id="customer_surname" formControlName="customer_surname"
               class="form-control" placeholder='{{"SYSTEM.STEPONE.SURNAMEPLACEHOLDER" | translate}}'
-              [ngClass]="{'is-invalid': errors.customer_surname}">
-              <div class="text-danger mt-1" *ngIf="errors.customer_surname" style="font-size: small;">{{"SYSTEM.STEPONE.SURNAMEERROR" | translate}}</div>
+              [class.is-invalid]="stepOneForm.get('customer_surname')?.invalid && (stepOneForm.get('customer_surname')?.dirty || submitted)">
+              <div class="text-danger mt-1" *ngIf="stepOneForm.get('system_name')?.invalid && (stepOneForm.get('customer_surname')?.dirty || submitted)" style="font-size: small;">{{"SYSTEM.STEPONE.SURNAMEERROR" | translate}}</div>
           </div>
           <div class="col-12 col-lg-6 mb-3">
             <label for="customer_country" style="font-weight: bold;">{{"SYSTEM.STEPONE.COUNTRY" | translate}}
               <sup class="small-asterisk">*</sup></label>
             <select class="form-select" aria-label="select example" formControlName="customer_country"
-            [ngClass]="{'is-invalid': errors.customer_country}">
+            [class.is-invalid]="stepOneForm.get('customer_country')?.invalid && (stepOneForm.get('customer_country')?.dirty || submitted)">
               <option [ngValue]="null" disabled>{{"SYSTEM.STEPONE.SELECTCOUNTRY" | translate}}</option>
               <option *ngFor="let country of countriesData" [ngValue]="country.id">
                  {{ country.common_name }}
               </option>
             </select>
-            <div class="text-danger mt-1" *ngIf="errors.customer_country" style="font-size: small;">{{"SYSTEM.STEPONE.SELECTCOUNTRY" | translate}}</div>
+            <div class="text-danger mt-1" *ngIf="stepOneForm.get('system_name')?.invalid && (stepOneForm.get('customer_country')?.dirty || submitted)" style="font-size: small;">{{"SYSTEM.STEPONE.SELECTCOUNTRY" | translate}}</div>
           </div>
           <div class="col-12 col-lg-6 mb-3">
             <label for="customer_phone" style="font-weight: bold;">{{"SYSTEM.STEPONE.PHONE" | translate}}<sup
                 class="small-asterisk">*</sup></label>
             <input type="customer_phone" name="customer_phone" id="customer_phone" formControlName="customer_phone"
               class="form-control" placeholder='{{"SYSTEM.STEPONE.PHONEPLACEHOLDER" | translate}}'
-              [ngClass]="{'is-invalid': errors.customer_phone}">
-            <div class="text-danger mt-1" *ngIf="errors.customer_phone" style="font-size: small;">{{"SYSTEM.STEPONE.PHONEERROR" | translate}}</div>
+              [class.is-invalid]="stepOneForm.get('customer_phone')?.invalid && (stepOneForm.get('customer_phone')?.dirty || submitted)">
+            <div class="text-danger mt-1" *ngIf="stepOneForm.get('system_name')?.invalid && (stepOneForm.get('customer_phone')?.dirty || submitted)" style="font-size: small;">{{"SYSTEM.STEPONE.PHONEERROR" | translate}}</div>
           </div>
           <div class="col-12 col-lg-6 mb-3" *ngIf="stepOneForm.get('customer_country')?.value == 12">
             <label for="customer_vat" style="font-weight: bold;">{{"SYSTEM.STEPONE.VAT" | translate}}</label>
@@ -78,15 +79,15 @@
               translate}}<sup class="small-asterisk">*</sup></label>
             <input type="text" name="customer_licensenumber" id="customer_licensenumber"
               formControlName="customer_licensenumber" class="form-control"
-              [ngClass]="{'is-invalid': errors.customer_licensenumber}">
-              <div class="text-danger mt-1" *ngIf="errors.customer_licensenumber" style="font-size: small;">{{"SYSTEM.STEPONE.LICENSEERROR" | translate}}</div>
+              [class.is-invalid]="stepOneForm.get('customer_licensenumber')?.invalid && (stepOneForm.get('customer_licensenumber')?.dirty || submitted)">
+              <div class="text-danger mt-1" *ngIf="stepOneForm.get('system_name')?.invalid && (stepOneForm.get('customer_licensenumber')?.dirty || submitted)" style="font-size: small;">{{"SYSTEM.STEPONE.LICENSEERROR" | translate}}</div>
           </div>
           <div class="col-12 col-lg-6 mb-3" *ngIf="stepOneForm.get('customer_country')?.value == 12">
             <label for="customer_fiscalcode" style="font-weight: bold;">{{"SYSTEM.STEPONE.FISCALCODE" | translate}}<sup
                 class="small-asterisk">*</sup></label>
             <input type="text" name="customer_fiscalcode" id="customer_fiscalcode" formControlName="customer_fiscalcode"
-              class="form-control" [ngClass]="{'is-invalid': errors.customer_fiscalcode}">
-              <div class="text-danger mt-1" *ngIf="errors.customer_fiscalcode" style="font-size: small;">{{"SYSTEM.STEPONE.FISCALCODEERROR" | translate}}</div>
+              class="form-control" [class.is-invalid]="stepOneForm.get('customer_fiscalcode')?.invalid && (stepOneForm.get('customer_fiscalcode')?.dirty || submitted)">
+              <div class="text-danger mt-1" *ngIf="stepOneForm.get('system_name')?.invalid && (stepOneForm.get('customer_fiscalcode')?.dirty || submitted)" style="font-size: small;">{{"SYSTEM.STEPONE.FISCALCODEERROR" | translate}}</div>
           </div>
         </ng-template>
       </div>
@@ -101,8 +102,7 @@
         <button class="btn btn-outline-dark me-2" id="next" (click)="saveStep('save')">
           {{"SYSTEM.STEPBUTTONS.SAVE" | translate}}
         </button>
-        <button class="btn btn-outline-dark ms-2" id="next" (click)="saveStep('next')"
-          [disabled]="stepOneForm.invalid || idsystem == 0 || isError" *ngIf="idsystem > 0">
+        <button class="btn btn-outline-dark ms-2" id="next" (click)="saveStep('next')" *ngIf="idsystem > 0">
           {{"SYSTEM.STEPBUTTONS.NEXT" | translate}}
         </button>
       </div>

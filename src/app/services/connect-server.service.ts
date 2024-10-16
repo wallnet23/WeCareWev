@@ -63,8 +63,8 @@ getRequestCountry(): Observable<Country[]> {
       .pipe(map((val: Country[]) => val.sort((a, b) => a.common_name.localeCompare(b.common_name))));
   }
 
-  getSpecificCountryData(ccn3: string): Observable<Country> {
-    return this.getRequest<Country>('https://restcountries.com/v3.1/alpha/', ccn3, {})
+  getSpecificCountryData(ccn3: number): Observable<Country> {
+    return this.getRequest<Country>('https://restcountries.com/v3.1/alpha/', ccn3.toString(), {})
       .pipe(map((val: Country) => val));
   }
 

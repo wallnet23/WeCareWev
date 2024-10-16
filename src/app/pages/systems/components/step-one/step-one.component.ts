@@ -55,6 +55,7 @@ export class StepOneComponent implements OnInit {
   @Input() idsystem = 0;
   countriesData: Country[] = [];
   isError = false;
+  submitted = false;
   errors = {
     system_name: false,
     system_owner: false,
@@ -73,7 +74,7 @@ export class StepOneComponent implements OnInit {
     customer_name: new FormControl('', Validators.required),
     customer_surname: new FormControl('', Validators.required),
     customer_country: new FormControl<number | null>(null, Validators.required),
-    customer_phone: new FormControl<string>(''),
+    customer_phone: new FormControl<string>('', Validators.required),
     customer_vat: new FormControl<string>(''),
     customer_licensenumber: new FormControl<string>('', Validators.required),
     customer_fiscalcode: new FormControl<string>('', Validators.required),
@@ -136,8 +137,9 @@ export class StepOneComponent implements OnInit {
 
 
   saveStep(action: string) {
-    this.errorLogic();
-    if (!this.isError) {
+    //this.errorLogic();
+    this.submitted = true;
+    if (this.stepOneForm.valid) {
       let stepOne = JSON.parse(JSON.stringify(this.stepOneForm.getRawValue()));
       this.saveData(stepOne, action);
     }
