@@ -8,8 +8,8 @@
           <input type="text" name="installer_companyname" id="installer_companyname"
             formControlName="installer_companyname" class="form-control"
             placeholder="{{'SYSTEM.STEPTHREE.COMPANYNAMEPLACEHOLDER' | translate}}"
-            [ngClass]="{'is-invalid': errors.installer_companyname}">
-          <div class="text-danger mt-1" *ngIf="errors.installer_companyname" style="font-size: small;">
+            [class.is-invalid]="stepThreeForm.get('installer_companyname')?.invalid && (stepThreeForm.get('installer_companyname')?.dirty || submitted)">
+          <div class="text-danger mt-1" *ngIf="stepThreeForm.get('installer_companyname')?.invalid && (stepThreeForm.get('installer_companyname')?.dirty || submitted)" style="font-size: small;">
             {{"SYSTEM.STEPTHREE.NAMEERROR" | translate}}</div>
         </div>
 
@@ -18,8 +18,8 @@
             translate}}<sup class="small-asterisk">*</sup></label>
           <input type="text" name="address" id="installer_address" formControlName="installer_address"
             class="form-control" placeholder="{{'SYSTEM.STEPTHREE.ADDRESSPLACEHOLDER' | translate}}"
-            [ngClass]="{'is-invalid': errors.installer_address}">
-          <div class="text-danger mt-1" *ngIf="errors.installer_address" style="font-size: small;">
+            [class.is-invalid]="stepThreeForm.get('installer_address')?.invalid && (stepThreeForm.get('installer_address')?.dirty || submitted)">
+          <div class="text-danger mt-1" *ngIf="stepThreeForm.get('installer_address')?.invalid && (stepThreeForm.get('installer_address')?.dirty || submitted)" style="font-size: small;">
             {{"SYSTEM.STEPTHREE.ADDRESSERROR" | translate}}</div>
         </div>
 
@@ -27,13 +27,13 @@
           <label for="idcountry" style="font-weight: bold;">{{"SYSTEM.STEPTHREE.COMPANYCOUNTRY" | translate}}<sup
               class="small-asterisk">*</sup></label>
           <select class="form-select" aria-label="select example" formControlName="idcountry"
-            [ngClass]="{'is-invalid': errors.idcountry}">
+          [class.is-invalid]="stepThreeForm.get('idcountry')?.invalid && (stepThreeForm.get('idcountry')?.dirty || submitted)">
             <option [ngValue]="null" disabled>{{"SYSTEM.STEPTHREE.COUNTRYSELECT" | translate}}</option>
             <option *ngFor="let country of countriesData" [ngValue]="country.id">
               <img src="{{country.flag_png}}" width="20px" height="15px"> {{ country.common_name }}
             </option>
           </select>
-          <div class="text-danger mt-1" *ngIf="errors.idcountry" style="font-size: small;">
+          <div class="text-danger mt-1" *ngIf="stepThreeForm.get('idcountry')?.invalid && (stepThreeForm.get('idcountry')?.dirty || submitted)" style="font-size: small;">
             {{"SYSTEM.STEPTHREE.COUNTRYERROR" | translate}}</div>
         </div>
 
@@ -49,8 +49,8 @@
               class="small-asterisk">*</sup></label>
           <input type="installer_email" name="installer_email" id="installer_email" formControlName="installer_email"
             class="form-control" placeholder="{{'SYSTEM.STEPTHREE.EMAIL' | translate}}"
-            [ngClass]="{'is-invalid': errors.installer_email}">
-          <div class="text-danger mt-1" *ngIf="errors.installer_email" style="font-size: small;">
+            [class.is-invalid]="stepThreeForm.get('installer_email')?.invalid && (stepThreeForm.get('installer_email')?.dirty || submitted)">
+          <div class="text-danger mt-1" *ngIf="stepThreeForm.get('installer_email')?.invalid && (stepThreeForm.get('installer_email')?.dirty || submitted)" style="font-size: small;">
             {{"SYSTEM.STEPTHREE.EMAILERROR" | translate}}</div>
         </div>
 
@@ -60,8 +60,8 @@
           <input type="date" name="installer_dateofpurchase" id="installer_dateofpurchase"
             formControlName="installer_dateofpurchase" class="form-control"
             placeholder="{{'SYSTEM.STEPTHREE.DATEPLACEHOLDER' | translate}}"
-            [ngClass]="{'is-invalid': errors.installer_dateofpurchase}">
-          <div class="text-danger mt-1" *ngIf="errors.installer_dateofpurchase" style="font-size: small;">
+            [class.is-invalid]="stepThreeForm.get('installer_dateofpurchase')?.invalid && (stepThreeForm.get('installer_dateofpurchase')?.dirty || submitted)">
+          <div class="text-danger mt-1" *ngIf="stepThreeForm.get('installer_dateofpurchase')?.invalid && (stepThreeForm.get('installer_dateofpurchase')?.dirty || submitted)" style="font-size: small;">
             {{"SYSTEM.STEPTHREE.DATEERROR" | translate}}</div>
         </div>
       </div>

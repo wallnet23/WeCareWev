@@ -1,5 +1,7 @@
+import { StepFive } from "../components/interfaces/step-five";
 import { StepFour } from "../components/interfaces/step-four";
 import { StepOne } from "../components/interfaces/step-one";
+import { StepSix } from "../components/interfaces/step-six";
 import { StepThree } from "../components/interfaces/step-three";
 import { StepTwo } from "../components/interfaces/step-two";
 import { ClusterData } from "./clusterData";
@@ -11,6 +13,6 @@ export interface SystemInfoFull {
     stepTwo: StepTwo;
     stepThree: StepThree;
     stepFour: StepFour;
-    cluster: ClusterData;
-    inverter: InverterData;
+    stepFive: StepFive;
+    stepSix: StepSix;
 }

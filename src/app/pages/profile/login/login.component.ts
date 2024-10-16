@@ -39,15 +39,18 @@ export class LoginComponent implements OnInit {
 
   async login() {
     // try {
-    await this.authService.loginUser(
+    this.authService.loginUser(
       this.loginForm.get('email')?.value!,
-      this.loginForm.get('password')?.value!);
-    if (this.authService.getToken() != null) {
-      this.router.navigate(['/systemsList']);
-    }
+      this.loginForm.get('password')?.value!).subscribe(() => {
+        if (this.authService.getToken() != null) {
+          console.log("QUI")
+          this.router.navigate(['/systemsList']);
+        }
+      });
+    
     // } catch (error) {
     //   console.error('Login failed', error);
-    // }
+    // }  
   }
 
   seePassword() {

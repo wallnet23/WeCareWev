@@ -58,6 +58,7 @@ export class StepThreeComponent implements OnInit {
   countriesData: Country[] = [];
   urlServerLaraFile = Connect.urlServerLaraFile;
 
+  submitted = false;
   isError = false;
   errors = {
     installer_companyname: false,
@@ -101,8 +102,10 @@ export class StepThreeComponent implements OnInit {
   }
 
   saveStep(action: string) {
-    this.errorLogic();
-    if (action == 'save' || (!this.isError && action == 'next')) {
+    //this.errorLogic();
+    this.submitted = true;
+    //if (action == 'save' || (!this.isError && action == 'next')) {
+    if(this.stepThreeForm.valid) {
       let stepThree = JSON.parse(JSON.stringify(this.stepThreeForm.getRawValue()));
       if (stepThree.idcountry) {
         this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepThree',

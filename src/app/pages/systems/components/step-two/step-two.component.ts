@@ -49,6 +49,7 @@ export class StepTwoComponent {
   @Output() nextStep = new EventEmitter<void>();
   @Input() idsystem = 0;
 
+  submitted = false;
   selectedFilesStep2: File[] = [];
   maxImagesStep2: number = 6;
   isImagesStep2: boolean = false;
@@ -96,8 +97,10 @@ export class StepTwoComponent {
   }
 
   saveStep(action: string) {
-    this.errorLogic();
-    if (action == 'save' || (action == 'next' && !this.isError)) {
+    //this.errorLogic();
+    this.submitted = true;
+    //if (action == 'save' || (action == 'next' && !this.isError)) {
+    if(this.stepTwoForm.valid) {
       let stepTwo = JSON.parse(JSON.stringify(this.stepTwoForm.getRawValue()));
 
       this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepTwo',

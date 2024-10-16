@@ -14,9 +14,9 @@
         </div>
         <div class="col-12 col-md-6 col-lg-4">
             <span class="subtitles me-5">{{"SYSTEM.READONLY.COUNTRY" | translate}}: </span>
-            <p class="content">{{stepOne?.ccn3}}</p>
+            <p class="content">{{country_name}}</p>
         </div>
-        <div *ngIf="stepOne?.ccn3 !== '380'; else italianBlock" class="col-12 col-md-6 col-lg-3">
+        <div *ngIf="stepOne?.customer_country !== 380; else italianBlock" class="col-12 col-md-6 col-lg-3">
             <span class="subtitles me-5">{{"SYSTEM.READONLY.LICENSENUMBER" | translate}}: </span>
             <p class="content">{{stepOne?.customer_licensenumber}}</p>
         </div>

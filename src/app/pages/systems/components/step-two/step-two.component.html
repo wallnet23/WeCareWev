@@ -5,32 +5,35 @@
         <div class="col-12 col-lg-6 mb-3">
           <label for="idcountry" style="font-weight: bold;">{{"SYSTEM.STEPTWO.INSTALLATIONCOUNTRY" | translate}}<sup class="small-asterisk">*</sup></label>
           <select class="form-select" aria-label="select example" formControlName="idcountry"
-          [ngClass]="{'is-invalid': errors.idcountry}">
+          [class.is-invalid]="stepTwoForm.get('idcountry')?.invalid && (stepTwoForm.get('idcountry')?.dirty || submitted)">
             <option [ngValue]="null" disabled selected>{{"SYSTEM.STEPTWO.SELECTCOUNTRY" | translate}}</option>
             <option *ngFor="let country of countriesData" [ngValue]="country.id">
               {{ country.common_name }}
             </option>
           </select>
-          <div class="text-danger mt-1" *ngIf="errors.idcountry" style="font-size: small;">{{"SYSTEM.STEPTWO.COUNTRYERROR" | translate}}</div>
+          <div class="text-danger mt-1" *ngIf="stepTwoForm.get('idcountry')?.invalid && (stepTwoForm.get('idcountry')?.dirty || submitted)" style="font-size: small;">{{"SYSTEM.STEPTWO.COUNTRYERROR" | translate}}</div>
         </div>
         <div class="col-12 col-lg-6 mb-3">
           <label for="location_address" style="font-weight: bold;">{{"SYSTEM.STEPTWO.ADDRESS" | translate}}<sup class="small-asterisk">*</sup></label>
           <input type="text" name="location_address" id="location_address" formControlName="location_address"
-            class="form-control" placeholder="{{'SYSTEM.STEPTWO.ADDRESS' | translate}}" [ngClass]="{'is-invalid': errors.location_address}">
-            <div class="text-danger mt-1" *ngIf="errors.location_address" style="font-size: small;">{{"SYSTEM.STEPTWO.ADDRESSERROR" | translate}}</div>
+            class="form-control" placeholder="{{'SYSTEM.STEPTWO.ADDRESS' | translate}}" 
+            [class.is-invalid]="stepTwoForm.get('location_address')?.invalid && (stepTwoForm.get('location_address')?.dirty || submitted)">
+            <div class="text-danger mt-1" *ngIf="stepTwoForm.get('location_address')?.invalid && (stepTwoForm.get('location_address')?.dirty || submitted)" style="font-size: small;">{{"SYSTEM.STEPTWO.ADDRESSERROR" | translate}}</div>
         </div>
         <div class="col-12 col-lg-6 mb-3">
           <label for="location_city" style="font-weight: bold;">{{"SYSTEM.STEPTWO.CITY" | translate}}<sup class="small-asterisk">*</sup></label>
           <input type="text" name="location_city" id="location_city" formControlName="location_city"
-            class="form-control" placeholder="{{'SYSTEM.STEPTWO.CITY' | translate}}" [ngClass]="{'is-invalid': errors.location_city}">
-            <div class="text-danger mt-1" *ngIf="errors.location_city" style="font-size: small;">{{"SYSTEM.STEPTWO.CITYERROR" | translate}}</div>
+            class="form-control" placeholder="{{'SYSTEM.STEPTWO.CITY' | translate}}"
+            [class.is-invalid]="stepTwoForm.get('location_city')?.invalid && (stepTwoForm.get('location_city')?.dirty || submitted)">
+            <div class="text-danger mt-1" *ngIf="stepTwoForm.get('location_city')?.invalid && (stepTwoForm.get('location_city')?.dirty || submitted)" style="font-size: small;">{{"SYSTEM.STEPTWO.CITYERROR" | translate}}</div>
         </div>
         <div class="col-12 col-lg-6 mb-3">
           <label for="location_postalcode" style="font-weight: bold;">{{"SYSTEM.STEPTWO.POSTALCODE" | translate}}<sup
               class="small-asterisk">*</sup></label>
           <input type="text" name="location_postalcode" id="location_postalcode" formControlName="location_postalcode"
-            class="form-control" placeholder="" [ngClass]="{'is-invalid': errors.location_postalcode}">
-            <div class="text-danger mt-1" *ngIf="errors.location_postalcode" style="font-size: small;">{{"SYSTEM.STEPTWO.POSTALCODEERROR" | translate}}</div>
+            class="form-control" placeholder=""
+            [class.is-invalid]="stepTwoForm.get('location_postalcode')?.invalid && (stepTwoForm.get('location_postalcode')?.dirty || submitted)">
+            <div class="text-danger mt-1" *ngIf="stepTwoForm.get('location_postalcode')?.invalid && (stepTwoForm.get('location_postalcode')?.dirty || submitted)" style="font-size: small;">{{"SYSTEM.STEPTWO.POSTALCODEERROR" | translate}}</div>
         </div>
       </div>
     </div>

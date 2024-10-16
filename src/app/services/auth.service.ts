@@ -36,20 +36,43 @@ export class AuthService {
     });
   }
 
-  async loginUser(email_value: string, password_value: string) {
-    const esito: ApiResponse<{ authorization: { token: string; type: string; } }> = await lastValueFrom(
-      this.connectServerService.postRequest<ApiResponse<{ authorization: { token: string; type: string; } }>>(Connect.urlServerLaraApi, 'user/login', {
-        email: email_value,
-        password: password_value,
-      })
-    );
-
-    //console.log('esito', esito);
-    if (esito && esito.data && esito.data.authorization) {
-      this.setToken(esito.data.authorization.token);
-      this.setLoginIn('ok');
-    }
+  loginUser(email_value: string, password_value: string) {
+    // Assicurati che questo ritorni un Observable
+    return this.connectServerService
+      .postRequest<ApiResponse<{ authorization: { token: string; type: string; } }>>(
+        Connect.urlServerLaraApi,
+        'user/login', 
+        {
+          email: email_value,
+          password: password_value,
+        }
+      )
+      .pipe(
+        tap((esito) => {
+          console.log('esito', esito);
+          this.setToken(esito.data.authorization.token);
+          this.setLoginIn('ok');
+        })
+      );
   }
+
+  // async loginUser(email_value: string, password_value: string) {
+
+  //   this.connectServerService.postRequest<ApiResponse<{ authorization: { token: string; type: string; } }>>(Connect.urlServerLaraApi, 'user/login', {
+  //     email: email_value,
+  //     password: password_value,
+  //   }).subscribe((esito) => {
+  //     console.log('esito', esito);
+  //     this.setToken(esito.data.authorization.token);
+  //     this.setLoginIn('ok');
+  //   })
+
+  //   // console.log('esito', esito);
+  //   // if (esito && esito.data && esito.data.authorization) {
+  //   //   this.setToken(esito.data.authorization.token);
+  //   //   this.setLoginIn('ok');
+  //   // }
+  // }
 
   logoutUser() {
     return this.connectServerService.postRequest(Connect.urlServerLaraApi, `user/logout`, {}).subscribe(
@@ -79,6 +102,8 @@ export class AuthService {
 
   getToken(): string | null {
     if (localStorage) {
+      // let prova = localStorage.getItem('XSFR-TOKEN') ? localStorage.getItem('XSFR-TOKEN') : null
+      // console.log(prova)
       return localStorage.getItem('token') ? localStorage.getItem('token') : null;
     } else {
       return null;

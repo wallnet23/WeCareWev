@@ -45,7 +45,8 @@ interface SystemComposition {
   styleUrl: './step-four.component.scss'
 })
 export class StepFourComponent {
-  formSubmitted = false;
+
+  submitted = false;
   @Output() formEmit = new EventEmitter<FormGroup>();
   @Output() nextStep = new EventEmitter<void>();
   @Input() idsystem = 0;
@@ -139,7 +140,6 @@ export class StepFourComponent {
       this.stepFourForm.get('cluster_singlebattery')?.enable();
       this.stepFourForm.get('cluster_numberdevices')?.enable();
     }
-
   }
 
 
@@ -156,7 +156,7 @@ export class StepFourComponent {
   //   this.view_stepinverter = result;
   // }
 
- 
+
 
 
   private logicStep() {
@@ -230,28 +230,29 @@ export class StepFourComponent {
 
 
   saveStep(action: string) {
-    this.formSubmitted = true;
+    this.submitted = true;
     const stepFour = this.stepFourForm.getRawValue();
     // console.log('data 1', this.stepFourForm.value);
 
     // console.log('data valid', this.stepFourForm.valid);
-    this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepFour',
-      {
-        idsystem: this.idsystem,
-        obj_step: stepFour,
-      })
-      .subscribe((val: ApiResponse<null>) => {
-        this.popupDialogService.alertElement(val);
-        this.infoStep();
-        this.formEmit.emit(this.formBuilder.group({}));
-        if (action == 'next') {
-          setTimeout(() => {
-            // console.log('Emitting nextStep');
-            this.nextStep.emit();
-          }, 0);
-        }
-      })
-
+    if (this.stepFourForm.valid) {
+      this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepFour',
+        {
+          idsystem: this.idsystem,
+          obj_step: stepFour,
+        })
+        .subscribe((val: ApiResponse<null>) => {
+          this.popupDialogService.alertElement(val);
+          this.infoStep();
+          this.formEmit.emit(this.formBuilder.group({}));
+          if (action == 'next') {
+            setTimeout(() => {
+              // console.log('Emitting nextStep');
+              this.nextStep.emit();
+            }, 0);
+          }
+        })
+    }
   }
 
 

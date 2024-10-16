@@ -1,5 +1,5 @@
 export interface StepTwo {
-    ccn3: string;
+    idcountry: number;
     location_address: string;
     location_city: string;
     location_postalcode: string;
