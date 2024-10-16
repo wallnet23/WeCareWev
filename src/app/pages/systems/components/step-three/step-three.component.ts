@@ -49,6 +49,7 @@ export class StepThreeComponent implements OnInit {
   @Output() formEmit = new EventEmitter<FormGroup>();
   @Output() nextStep = new EventEmitter<void>();
 
+  @Input() isReadonly = false;
   @Input() idsystem = 0;
   selectedFilesStep3: File[] = [];
   maxImagesStep3: number = 2;
@@ -125,8 +126,11 @@ export class StepThreeComponent implements OnInit {
             }
           })
       }
-
     }
+  }
+
+  updateStep() {
+    // APRI POPUP E POI FAI LA CHIAMATA
   }
 
   /**

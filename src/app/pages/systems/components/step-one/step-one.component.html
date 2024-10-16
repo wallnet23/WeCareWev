@@ -98,7 +98,7 @@
             <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
         </mat-form-field> -->
     <div class="row justify-content-center">
-      <div class="col-12 text-center">
+      <div *ngIf="!isReadonly; else updateBlock" class="col-12 text-center">
         <button class="btn btn-outline-dark me-2" id="next" (click)="saveStep('save')">
           {{"SYSTEM.STEPBUTTONS.SAVE" | translate}}
         </button>
@@ -106,6 +106,13 @@
           {{"SYSTEM.STEPBUTTONS.NEXT" | translate}}
         </button>
       </div>
+      <ng-template #updateBlock>
+        <div class="col-12 text-center">
+          <button class="btn btn-outline-dark" (click)="updateStep()">
+            {{"SYSTEM.STEPBUTTONS.UPDATE" | translate}}
+          </button>
+        </div>
+      </ng-template>
     </div>
   </form>
 </div>

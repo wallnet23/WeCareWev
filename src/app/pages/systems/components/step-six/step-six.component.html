@@ -38,9 +38,13 @@
                       </div>
                       <div class="col-12">
                         <label style="font-weight: bold; font-size: medium;" for="sn-{{i}}-{{j}}">
-                          {{ "SYSTEM.STEPSIX.SERIALNUMBER" | translate }}
+                          {{ "SYSTEM.STEPSIX.SERIALNUMBER" | translate }}<sup>*</sup>
                         </label>
-                        <input id="sn-{{i}}-{{j}}" class="form-control" type="text" formControlName="serialnumber">
+                        <input id="sn-{{i}}-{{j}}" class="form-control" type="text" formControlName="serialnumber"
+                        [class.is-invalid]="bat.get('serialnumber')?.invalid && (bat.get('serialnumber')?.dirty || submitted)">
+                        <div class="text-danger mt-1" *ngIf="bat.get('serialnumber')?.invalid && (bat.get('serialnumber')?.dirty || submitted)" style="font-size: small;">
+                          {{"SYSTEM.STEPSIX.SERIALNUMBERERROR" | translate}}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -84,7 +88,7 @@
       </div>
     </div>
   </div>
-  <div class="text-center">
+  <div *ngIf="!isReadonly; else updateBlock" class="col-12 text-center">
     <button class="btn btn-outline-dark mr-2" matStepperPrevious>
       {{"SYSTEM.STEPBUTTONS.PREV" | translate}}
     </button>
@@ -95,4 +99,11 @@
       {{"SYSTEM.STEPBUTTONS.NEXT" | translate}}
     </button>
   </div>
+  <ng-template #updateBlock>
+    <div class="col-12 text-center">
+      <button class="btn btn-outline-dark" (click)="updateStep()">
+        {{"SYSTEM.STEPBUTTONS.UPDATE" | translate}}
+      </button>
+    </div>
+  </ng-template>
 </form>

@@ -31,7 +31,8 @@
             <option *ngFor="let weco of wecoComposition" [ngValue]="weco.id">{{weco.name}}</option>
           </select>
           <div class="text-danger mt-1" *ngIf="stepFourForm.get('product_systemweco')?.invalid && (stepFourForm.get('product_systemweco')?.dirty || submitted)"
-            style="font-size: small;">{{"SYSTEM.STEPFOUR.PRODUCTERROR" | translate}}</div>
+            style="font-size: small;">{{"SYSTEM.STEPFOUR.PRODUCTERROR" | translate}}
+          </div>
         </div>
 
         <div class="col-12 col-md-6 mb-3" *ngIf="stepFourForm.get('product_systemcomposition')?.value == 2 &&
@@ -148,7 +149,7 @@
 
     </div>
 
-    <div class="text-center">
+    <div *ngIf="!isReadonly; else updateBlock" class="col-12 text-center">
       <button class="btn btn-outline-dark mr-2" matStepperPrevious>
         {{"SYSTEM.STEPBUTTONS.PREV" | translate}}
       </button>
@@ -159,5 +160,12 @@
         {{"SYSTEM.STEPBUTTONS.NEXT" | translate}}
       </button>
     </div>
+    <ng-template #updateBlock>
+      <div class="col-12 text-center">
+        <button class="btn btn-outline-dark" (click)="updateStep()">
+          {{"SYSTEM.STEPBUTTONS.UPDATE" | translate}}
+        </button>
+      </div>
+    </ng-template>
   </form>
 </div>

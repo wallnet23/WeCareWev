@@ -222,6 +222,10 @@
       "DATEPLACEHOLDER": "dd/mm/yyyy"
     },
     "STEPFOUR": {
+      "VOLTAGEERROR": "Select voltage",
+      "MODELERROR": "Select system's model",
+      "BATTERYTYPEERROR": "Select battery's model",
+      "DEVICESFORCLUSTERERROR": "Insert a value",
       "INSTALLATIONDATE": "Installation Date",
       "DATEERROR": "Insert the installation date",
       "SYSCOMPOSITION": "System Composition",
@@ -249,6 +253,7 @@
       "DEVICESFORCLUSTER": "How many devices for each Cluster"
     },
     "STEPFIVE": {
+      "MODELERROR": "Insert a model",
       "ADDINVERTER": "Add inverter +",
       "INVERTERINFO": "Inverter Info",
       "INVERTERNUMBER": "Number of Inverter",
@@ -262,6 +267,8 @@
       "INVERTERCOMPOSE": "Inserisci gli inverter:"
     },
     "STEPSIX": {
+      "SERIALNUMBERERROR": "Insert a serial number",
+      "INVERTERSERROR": "Insert an inverter",
       "ADDICLUSTER": "Add cluster +",
       "HOWMANYCLUSTERS": "How many Clusters",
       "CLUSTER": "Cluster",
@@ -276,7 +283,8 @@
       "PREV": "Previous",
       "SAVE": "Save",
       "NEXT": "Next",
-      "SEND": "Send"
+      "SEND": "Send",
+      "UPDATE": "Update"
     },
     "OVERVIEW": {
       "ADD": "Add a description",

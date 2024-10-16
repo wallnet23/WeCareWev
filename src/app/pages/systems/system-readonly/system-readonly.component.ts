@@ -27,6 +27,14 @@ import { StepSixReadonlyComponent } from "./step-six-readonly/step-six-readonly.
 import { Country } from '../../../interfaces/country';
 import { StepFive } from '../components/interfaces/step-five';
 import { StepSix } from '../components/interfaces/step-six';
+import { StepOneComponent } from "../components/step-one/step-one.component";
+import { StepTwoComponent } from "../components/step-two/step-two.component";
+import { StepThreeComponent } from "../components/step-three/step-three.component";
+import { StepFourComponent } from "../components/step-four/step-four.component";
+import { StepFiveComponent } from "../components/step-five/step-five.component";
+import { StepSixComponent } from "../components/step-six/step-six.component";
+import { ErrorMessageComponent } from "../error-message/error-message.component";
+import { StepStatus } from '../interfaces/step-status';
 
 declare var $: any;
 
@@ -47,7 +55,14 @@ declare var $: any;
     StepThreeReadonlyComponent,
     StepFourReadonlyComponent,
     StepFiveReadonlyComponent,
-    StepSixReadonlyComponent
+    StepSixReadonlyComponent,
+    StepOneComponent,
+    StepTwoComponent,
+    StepThreeComponent,
+    StepFourComponent,
+    StepFiveComponent,
+    StepSixComponent,
+    ErrorMessageComponent
 ],
   templateUrl: './system-readonly.component.html',
   styleUrl: './system-readonly.component.scss'
@@ -74,7 +89,28 @@ export class SystemReadonlyComponent {
   installerCountry: string = '';
   countriesList: Country[] = [];
 
-  validStepOne: boolean = true;
+  validStepOne: boolean = false;
+  validStepTwo: boolean = false;
+  validStepThree: boolean = false;
+  validStepFour: boolean = false;
+  validStepFive: boolean = false;
+  validStepSix: boolean = false;
+
+  systemErrors: {
+    errorStepOne: {message: string, date: string},
+    errorStepTwo: {message: string, date: string},
+    errorStepThree: {message: string, date: string},
+    errorStepFour: {message: string, date: string},
+    errorStepFive: {message: string, date: string},
+    errorStepSix: {message: string, date: string},
+  } = {
+    errorStepOne: {message: '', date: ''},
+    errorStepTwo: {message: '', date: ''},
+    errorStepThree: {message: '', date: ''},
+    errorStepFour: {message: '', date: ''},
+    errorStepFive: {message: '', date: ''},
+    errorStepSix: {message: '', date: ''},
+  }
 
   constructor(private route: ActivatedRoute, private connectServerService: ConnectServerService,
     private elementRef: ElementRef, private location: Location) {
@@ -98,6 +134,7 @@ export class SystemReadonlyComponent {
     this.getStepFour();
     this.getStepFive();
     this.getStepSix();
+    this.getStatus();
   }
 
   getStepOne() {
@@ -192,6 +229,10 @@ export class SystemReadonlyComponent {
       })
   }
 
+  getStepStatus() {
+    //this.connectServerService.getRequest<ApiResponse<StepStatus[]>(){}
+  }
+
   onFormOneReceived(form: FormGroup) {
     this.route.params.subscribe(params => {
       this.idsystem = params['id'];
@@ -227,6 +268,17 @@ export class SystemReadonlyComponent {
         .subscribe((val: ApiResponse<{ status: { id: number, name: string } }>) => {
           if (val.data) {
             this.systemStatus = val.data.status;
+            // if(this.systemStatus.id == 2) {
+            //   this.validStepOne = true;
+            //   this.validStepTwo = true;
+            //   this.validStepThree = true;
+            //   this.validStepFour = true;
+            //   this.validStepFive = true;
+            //   this.validStepSix = true;
+            // }
+            if(this.systemStatus.id == 3) {
+              // CHIAMATA AL SERVER PER SAPERE QUALI SONO GLI STEP INVALIDI E RECUPERARE LE TEXTAREA
+            }
           }
         })
     }

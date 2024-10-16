@@ -26,10 +26,10 @@
             </span>
             <span class="ms-1">
                 <i class="bi bi-circle-fill" style="font-size: large;" [ngClass]="{
-            'text-success': systemStatus?.id === 4,
-            'text-danger': systemStatus?.id === 3,
-            'text-warning': systemStatus?.id === 2,
-            'text-info': systemStatus?.id === 1 }">
+                    'text-success': systemStatus?.id === 4,
+                    'text-danger': systemStatus?.id === 3,
+                    'text-warning': systemStatus?.id === 2,
+                    'text-info': systemStatus?.id === 1 }">
                 </i>
             </span>
             <span class="ms-1">
@@ -44,91 +44,160 @@
                     <ng-template matStepLabel>
                         <span style="font-weight: bold;">{{"SYSTEM.SYSTEMMANAGEMENT.SYSANDCUSTINFO" | translate}}</span>
                         <span class="ms-4">
-                            <i *ngIf="!validStepOne" class="bi bi-exclamation-circle-fill" style="color: red; font-size: large;"></i>
-                            <i *ngIf="validStepOne" class="bi bi-check-circle-fill" style="color: green; font-size: large;"></i>
+                            <i *ngIf="!validStepOne" class="bi bi-exclamation-circle-fill"
+                                style="color: red; font-size: large;"></i>
+                            <i *ngIf="validStepOne" class="bi bi-check-circle-fill"
+                                style="color: green; font-size: large;"></i>
                         </span>
                     </ng-template>
-                    <app-step-one-readonly #stepOne (formEmit)="onFormOneReceived($event)" (nextStep)="stepper.next()"
-                        [idsystem]="idsystem" [countriesList]="countriesList" [stepOne]="systemInfo.stepOne">
+                    <app-step-one-readonly *ngIf="validStepOne; else stepOneModify" #stepOne
+                        (formEmit)="onFormOneReceived($event)" (nextStep)="stepper.next()" [idsystem]="idsystem"
+                        [countriesList]="countriesList" [stepOne]="systemInfo.stepOne">
                     </app-step-one-readonly>
+                    <ng-template #stepOneModify>
+                        <app-error-message [error]="systemErrors.errorStepOne">
+                        </app-error-message>
+                        <app-step-one #stepOne (formEmit)="onFormOneReceived($event)"
+                            (nextStep)="stepper.next()" [isReadonly]="true" [idsystem]="idsystem">
+                        </app-step-one>
+                    </ng-template>
                 </mat-step>
 
                 <mat-step errorMessage="Incomplete">
-                    <ng-template matStepLabel><span
-                            style="font-weight: bold;">{{"SYSTEM.SYSTEMMANAGEMENT.INSTALLATIONSITE" |
-                            translate}}</span></ng-template>
+                    <ng-template matStepLabel>
+                        <span style="font-weight: bold;">
+                            {{"SYSTEM.SYSTEMMANAGEMENT.INSTALLATIONSITE" | translate}}
+                        </span>
+                        <span class="ms-4">
+                            <i *ngIf="!validStepTwo" class="bi bi-exclamation-circle-fill"
+                                style="color: red; font-size: large;"></i>
+                            <i *ngIf="validStepTwo" class="bi bi-check-circle-fill"
+                                style="color: green; font-size: large;"></i>
+                        </span>
+                    </ng-template>
                     <ng-template matStepContent>
-                        <app-step-two-readonly #stepTwo (formEmit)="onFormTwoReceived($event)"
-                            (nextStep)="stepper.next()" [countriesList]="countriesList" [idsystem]="idsystem" [stepTwo]="systemInfo.stepTwo">
+                        <app-step-two-readonly *ngIf="validStepTwo; else stepTwoModify" #stepTwo
+                            (formEmit)="onFormTwoReceived($event)" (nextStep)="stepper.next()"
+                            [countriesList]="countriesList" [idsystem]="idsystem" [stepTwo]="systemInfo.stepTwo">
                         </app-step-two-readonly>
+                        <ng-template #stepTwoModify>
+                            <app-error-message [error]="systemErrors.errorStepOne">
+                            </app-error-message>
+                            <app-step-two #stepTwo (formEmit)="onFormTwoReceived($event)" (nextStep)="stepper.next()"
+                                [idsystem]="idsystem" [isReadonly]="true">
+                            </app-step-two>
+                        </ng-template>
                     </ng-template>
 
                 </mat-step>
 
                 <mat-step errorMessage="Incomplete">
-                    <ng-template matStepLabel><span
-                            style="font-weight: bold;">{{"SYSTEM.SYSTEMMANAGEMENT.TECHNICIANINFO" |
-                            translate}}</span></ng-template>
+                    <ng-template matStepLabel>
+                        <span style="font-weight: bold;">
+                            {{"SYSTEM.SYSTEMMANAGEMENT.TECHNICIANINFO" | translate}}
+                        </span>
+                        <span class="ms-4">
+                            <i *ngIf="!validStepThree" class="bi bi-exclamation-circle-fill"
+                                style="color: red; font-size: large;"></i>
+                            <i *ngIf="validStepThree" class="bi bi-check-circle-fill"
+                                style="color: green; font-size: large;"></i>
+                        </span>
+                    </ng-template>
                     <ng-template matStepContent>
-                        <app-step-three-readonly #stepThree (formEmit)="onFormThreeReceived($event)"
-                            (nextStep)="stepper.next()" [stepThree]="systemInfo.stepThree" [countriesList]="countriesList" [idsystem]="idsystem">
+                        <app-step-three-readonly *ngIf="validStepThree; else stepThreeModify" #stepThree
+                            (formEmit)="onFormThreeReceived($event)" (nextStep)="stepper.next()"
+                            [stepThree]="systemInfo.stepThree" [countriesList]="countriesList" [idsystem]="idsystem">
                         </app-step-three-readonly>
+                        <ng-template #stepThreeModify>
+                            <app-error-message [error]="systemErrors.errorStepOne">
+                            </app-error-message>
+                            <app-step-three #stepThree (formEmit)="onFormThreeReceived($event)"
+                                (nextStep)="stepper.next()" [idsystem]="idsystem" [isReadonly]="true">
+                            </app-step-three>
+                        </ng-template>
                     </ng-template>
                 </mat-step>
 
                 <mat-step errorMessage="Incomplete">
-                    <ng-template matStepLabel><span style="font-weight: bold;">{{"SYSTEM.SYSTEMMANAGEMENT.DEVICESINFO" |
-                            translate}}</span></ng-template>
+                    <ng-template matStepLabel>
+                        <span style="font-weight: bold;">
+                            {{"SYSTEM.SYSTEMMANAGEMENT.DEVICESINFO" | translate}}
+                        </span>
+                        <span class="ms-4">
+                            <i *ngIf="!validStepFour" class="bi bi-exclamation-circle-fill"
+                                style="color: red; font-size: large;"></i>
+                            <i *ngIf="validStepFour" class="bi bi-check-circle-fill"
+                                style="color: green; font-size: large;"></i>
+                        </span>
+                    </ng-template>
                     <ng-template matStepContent>
-                        <app-step-four-readonly #stepFour (formEmit)="onFormFourReceived($event)"
-                            (nextStep)="stepper.next()" [stepFour]="systemInfo.stepFour" [idsystem]="idsystem">
+                        <app-step-four-readonly *ngIf="validStepFour; else stepFourModify" #stepFour
+                            (formEmit)="onFormFourReceived($event)" (nextStep)="stepper.next()"
+                            [stepFour]="systemInfo.stepFour" [idsystem]="idsystem">
                         </app-step-four-readonly>
+                        <ng-template #stepFourModify>
+                            <app-error-message [error]="systemErrors.errorStepOne">
+                            </app-error-message>
+                            <app-step-four #stepFour (formEmit)="onFormFourReceived($event)" (nextStep)="stepper.next()"
+                                [idsystem]="idsystem" [isReadonly]="true">
+                            </app-step-four>
+                        </ng-template>
                     </ng-template>
                 </mat-step>
 
                 <mat-step errorMessage="Incomplete">
-                    <ng-template matStepLabel><span style="font-weight: bold;">{{"SYSTEM.SYSTEMMANAGEMENT.INVERTER" |
-                            translate}}</span></ng-template>
+                    <ng-template matStepLabel>
+                        <span style="font-weight: bold;">
+                            {{"SYSTEM.SYSTEMMANAGEMENT.INVERTER" | translate}}
+                        </span>
+                        <span class="ms-4">
+                            <i *ngIf="!validStepFive" class="bi bi-exclamation-circle-fill"
+                                style="color: red; font-size: large;"></i>
+                            <i *ngIf="validStepFive" class="bi bi-check-circle-fill"
+                                style="color: green; font-size: large;"></i>
+                        </span>
+                    </ng-template>
                     <ng-template matStepContent>
-                        <app-step-five-readonly #stepFive (formEmit)="onFormFiveReceived($event)"
-                            (nextStep)="stepper.next()" [stepFive]="systemInfo.stepFive" [idsystem]="idsystem">
+                        <app-step-five-readonly *ngIf="validStepFive; else stepFiveModify" #stepFive
+                            (formEmit)="onFormFiveReceived($event)" (nextStep)="stepper.next()"
+                            [stepFive]="systemInfo.stepFive" [idsystem]="idsystem">
                         </app-step-five-readonly>
+                        <ng-template #stepFiveModify>
+                            <app-error-message [error]="systemErrors.errorStepOne">
+                            </app-error-message>
+                            <app-step-five #stepFive (formEmit)="onFormFiveReceived($event)" (nextStep)="stepper.next()"
+                                [idsystem]="idsystem" [isReadonly]="true">
+                            </app-step-five>
+                        </ng-template>
                     </ng-template>
                 </mat-step>
+
                 <mat-step errorMessage="Incomplete">
-                    <ng-template matStepLabel><span style="font-weight: bold;">{{"SYSTEM.SYSTEMMANAGEMENT.BATTERIES" |
-                            translate}}</span></ng-template>
+                    <ng-template matStepLabel>
+                        <span style="font-weight: bold;">
+                            {{"SYSTEM.SYSTEMMANAGEMENT.BATTERIES" | translate}}
+                        </span>
+                        <span class="ms-4">
+                            <i *ngIf="!validStepSix" class="bi bi-exclamation-circle-fill"
+                                style="color: red; font-size: large;"></i>
+                            <i *ngIf="validStepSix" class="bi bi-check-circle-fill"
+                                style="color: green; font-size: large;"></i>
+                        </span>
+                    </ng-template>
                     <ng-template matStepContent>
-                        <app-step-six-readonly #stepSix (formEmit)="onFormSixReceived($event)"
-                            (nextStep)="stepper.next()" [stepSix]="systemInfo.stepSix" [idsystem]="idsystem">
+                        <app-step-six-readonly *ngIf="validStepSix; else stepSixModify" #stepSix
+                            (formEmit)="onFormSixReceived($event)" (nextStep)="stepper.next()"
+                            [stepSix]="systemInfo.stepSix" [idsystem]="idsystem">
                         </app-step-six-readonly>
+                        <ng-template #stepSixModify>
+                            <app-error-message [error]="systemErrors.errorStepOne">
+                            </app-error-message>
+                            <app-step-six #stepSix (formEmit)="onFormSixReceived($event)" (nextStep)="stepper.next()"
+                                [idsystem]="idsystem" [isReadonly]="true">
+                            </app-step-six>
+                        </ng-template>
                     </ng-template>
                 </mat-step>
-
-                <!-- <mat-step [stepControl]="stepFiveForm" errorMessage="Address is required.">
-              <ng-template matStepLabel>ADDITIONAL INFO</ng-template>
-              <app-step-five #stepFive [idsystem]="idsystem"></app-step-five>
-            </mat-step> -->
-
-                <!-- <mat-step>
-                    <ng-template matStepLabel><span style="font-weight: bold;">{{"SYSTEM.SYSTEMMANAGEMENT.CONFIRMATION"
-                            |
-                            translate}}</span></ng-template>
-                    <div class="text-center">
-                        <p>{{"SYSTEM.SYSTEMMANAGEMENT.REQUEST" | translate}}</p>
-                        <button class="btn btn-outline-dark me-2" matStepperPrevious>{{"SYSTEM.STEPBUTTONS.PREV" |
-                            translate}}</button>
-                        
-                        <button class="btn btn-outline-dark ms-2" (click)="approvalRequested()"
-                            [disabled]="!getAllFormValid()">
-                            {{"SYSTEM.STEPBUTTONS.SEND" | translate}}
-                        </button>
-                        <div class="mt-2 text-danger" style="font-size: small; font-weight: bold;"
-                            *ngIf="!getAllFormValid()">
-                            {{"SYSTEM.SYSTEMMANAGEMENT.COMPLETE" | translate}}
-                        </div>
-                    </div>
-                </mat-step> -->
             </mat-stepper>
         </div>
     </div>

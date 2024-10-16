@@ -52,6 +52,7 @@ export class StepOneComponent implements OnInit {
   @Output() idEmitter = new EventEmitter<number>();
   @Output() nextStep = new EventEmitter<void>();
 
+  @Input() isReadonly = false;
   @Input() idsystem = 0;
   countriesData: Country[] = [];
   isError = false;
@@ -143,6 +144,10 @@ export class StepOneComponent implements OnInit {
       let stepOne = JSON.parse(JSON.stringify(this.stepOneForm.getRawValue()));
       this.saveData(stepOne, action);
     }
+  }
+
+  updateStep() {
+    // APRI POPUP E POI FAI LA CHIAMATA
   }
 
   private errorLogic() {

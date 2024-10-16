@@ -47,6 +47,8 @@ export class StepTwoComponent {
 
   @Output() formEmit = new EventEmitter<FormGroup>();
   @Output() nextStep = new EventEmitter<void>();
+
+  @Input() isReadonly = false;
   @Input() idsystem = 0;
 
   submitted = false;
@@ -120,6 +122,10 @@ export class StepTwoComponent {
           }
         })
     }
+  }
+
+  updateStep() {
+    // APRI POPUP E POI FAI LA CHIAMATA
   }
 
   /**

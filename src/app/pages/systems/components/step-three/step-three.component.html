@@ -92,7 +92,7 @@
       </div>
     </div>
 
-    <div class="text-center">
+    <div *ngIf="!isReadonly; else updateBlock" class="col-12 text-center">
       <button class="btn btn-outline-dark mr-2" matStepperPrevious>
         {{"SYSTEM.STEPBUTTONS.PREV" | translate}}
       </button>
@@ -104,5 +104,12 @@
         {{"SYSTEM.STEPBUTTONS.NEXT" | translate}}
       </button>
     </div>
+    <ng-template #updateBlock>
+      <div class="col-12 text-center">
+        <button class="btn btn-outline-dark" (click)="updateStep()">
+          {{"SYSTEM.STEPBUTTONS.UPDATE" | translate}}
+        </button>
+      </div>
+    </ng-template>
   </form>
 </div>

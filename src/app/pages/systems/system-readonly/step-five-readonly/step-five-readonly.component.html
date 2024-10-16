@@ -2,7 +2,7 @@
     <div class="row mt-4">
         <div class="col-12 col-md-6 col-lg-4 col-xxl-4 px-0 px-md-2 mb-2"
             *ngFor="let inverter of stepFive?.inverters_list; let i = index">
-            <mat-card class="mb-4">
+            <mat-card style="min-height: 100%;">
                 <mat-card-header style="border-bottom: 2px solid lightgray;" class="bg-primary bg-opacity-10">
                     <mat-card-title style="font-weight: bold; font-size: medium;">
                         {{ "SYSTEM.READONLY.INVERTER" | translate}} {{i+1}}
