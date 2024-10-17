@@ -87,7 +87,7 @@
             <span class="mt-2">{{"SYSTEM.OVERVIEW.ENABLEFUNC" | translate}}</span>
           </ng-template>
         </div>
-        <div class="card-footer blueBg text-center">
+        <div class="card-footer blueBg text-center" *ngIf="systemInfo?.status">
           <button *ngIf="systemInfo?.status!.id == 1 || systemInfo?.status!.id == 3; else readOnlyBlock"
             class="btn btn-outline-dark btn-light me-2" (click)="modifySystem()">
             {{"SYSTEM.OVERVIEW.MODIFYDATA" | translate}}

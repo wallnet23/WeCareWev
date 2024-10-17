@@ -1,13 +1,16 @@
 {
   "POPUP": {
     "MSG_DELETE": "Are you sure you want to delete the system? Irreversible action.",
+    "MSG_APPROVEDSYSTEM": "If you approve the system, a request will be sent to the technician to check the system. Continue?",
     "BUTTON": {
       "DELETE": "Delete",
       "CLOSE": "Close",
-      "GO": "Go"
+      "GO": "Go",
+      "SEND": "Send"
     },
     "TITLE": {
-      "WARNING": "Warning"
+      "WARNING": "Warning",
+      "INFO": "Information"
     }
   },
   "NAVBAR": {

@@ -135,7 +135,7 @@ export class StepFourComponent {
       this.stepFourForm.get('refidwecaresystemtype')?.disable();
       this.stepFourForm.get('cluster_singlebattery')?.disable();
       this.stepFourForm.get('cluster_numberdevices')?.disable();
-    } else if (val == 2) {
+    } else if (val == 3) {
       this.stepFourForm.get('refidwecaresystemvolt')?.enable();
       this.stepFourForm.get('system_model')?.enable();
       this.stepFourForm.get('refidwecaresystemtype')?.enable();

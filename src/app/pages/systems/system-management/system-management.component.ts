@@ -19,7 +19,7 @@ import { RMA } from '../interfaces/rma';
 import { Connect } from '../../../classes/connect';
 import { CommonModule, Location } from '@angular/common';
 import { PopupDialogService } from '../../../services/popup-dialog.service';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { StepFourComponent } from '../components/step-four/step-four.component';
 import { StepFourService } from '../components/step-four/step-four.service';
 import { StepFiveComponent } from "../components/step-five/step-five.component";
@@ -77,7 +77,8 @@ export class SystemManagementComponent {
   readonly stepFourService = inject(StepFourService);
 
   constructor(private route: ActivatedRoute, private connectServerService: ConnectServerService,
-    private location: Location, private router: Router, private popupDialogService: PopupDialogService) {
+    private location: Location, private router: Router, private popupDialogService: PopupDialogService,
+    private translate: TranslateService) {
     this.route.params.subscribe(params => {
       this.idsystem = params['id'];
       this.getSystemOverview();
@@ -173,6 +174,29 @@ export class SystemManagementComponent {
   // }
 
   approvalRequested() {
+    this.translate.get(['POPUP.TITLE.INFO', 'POPUP.MSG_APPROVEDSYSTEM', 'POPUP.BUTTON.SEND']).subscribe((translations) => {
+      const obj_request: ApiResponse<any> = {
+        code: 244,
+        data: {},
+        title: translations['POPUP.TITLE.INFO'],
+        message: translations['POPUP.MSG_APPROVEDSYSTEM'],
+        obj_dialog: {
+          disableClose: 1,
+          obj_buttonAction:
+          {
+            action: 1,
+            action_type: 2,
+            label: translations['POPUP.BUTTON.SEND'],
+            run_function: () => this.sendApprovalRequest()
+          }
+        }
+      }
+      this.popupDialogService.alertElement(obj_request);
+    });
+
+  }
+
+  private sendApprovalRequest() {
     this.connectServerService.postRequest<ApiResponse<null>>
       (Connect.urlServerLaraApi, 'system/systemApproval', { idsystem: this.idsystem })
       .subscribe((val: ApiResponse<null>) => {

@@ -1,13 +1,16 @@
 {
   "POPUP": {
     "MSG_DELETE": "Sei sicuro di voler cancellare l'impianto? Azione irreversibile.",
+    "MSG_APPROVEDSYSTEM": "Se approvi l'impianto, verrà inviata una richiesta al tecnico per controllare l'impianto. Proseguire?",
     "BUTTON": {
       "DELETE": "Cancella",
       "CLOSE": "Chiudi",
-      "GO": "Vai"
+      "GO": "Vai",
+      "SEND": "Invia"
     },
     "TITLE": {
-      "WARNING": "Attenzione"
+      "WARNING": "Attenzione",
+      "INFO": "Informazione"
     }
   },
   "NAVBAR": {

@@ -51,11 +51,11 @@ export class SystemCardComponent {
 
   deleteSystem(id: number) {
     // Ottieni la traduzione del messaggio tramite TranslateService
-  this.translate.get(['POPUP.MSG_DELETE', 'POPUP.BUTTON.DELETE']).subscribe((translations) => {
+  this.translate.get(['POPUP.MSG_DELETE', 'POPUP.BUTTON.DELETE', 'POPUP.TITLE.WARNING']).subscribe((translations) => {
     const obj_request: ApiResponse<any> = {
       code: 240,
       data: {},
-      title: 'Warning',
+      title: translations['POPUP.TITLE.WARNING'],
       message: translations['POPUP.MSG_DELETE'],
       obj_dialog: {
         disableClose: 1,

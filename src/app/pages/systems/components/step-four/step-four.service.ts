@@ -18,7 +18,7 @@ export class StepFourService {
   private systemModel_view: SystemModel[] = [];
   private systemType: SystemType[] = [];
   private systemType_view: SystemType[] = [];
-  // 1 inverter, 2 battery e inverter
+  // 1 inverter, 3 battery e inverter
   public product_systemcomposition: null | number = null;
   // lv o hv
   public refidwecaresystemvolt: null | number = null;
@@ -76,6 +76,7 @@ export class StepFourService {
     this.refidwecaresystemvolt = obj_stepfour.refidwecaresystemvolt;
     this.cluster_singlebattery = obj_stepfour.cluster_singlebattery;
     form.get('product_systemcomposition')?.setValue(obj_stepfour.product_systemcomposition);
+    console.log('obj_stepfour.product_systemcomposition', obj_stepfour.product_systemcomposition);
     form.get('product_systemweco')?.setValue(obj_stepfour.product_systemweco);
     form.get('product_installdate')?.setValue(obj_stepfour.product_installdate);
     form.get('product_brand')?.setValue(obj_stepfour.product_brand);

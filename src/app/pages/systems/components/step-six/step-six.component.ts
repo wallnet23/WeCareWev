@@ -95,6 +95,9 @@ export class StepSixComponent {
           //     this.addInverter(inverter);
           //   }
           // )
+          this.stepSixForm.patchValue({
+            cluster_parallel: data_step.cluster_parallel
+          });
           this.getClusterFieldAsFormArray(this.stepSixForm).clear();
           this.num_devices = data_step.cluster_numberdevices;
           const array_clusters = data_step.clusters_list;
