@@ -24,12 +24,7 @@ import { CountryState } from '../../../../ngrx/country/country.reducer';
 @Component({
   selector: 'app-step-one',
   standalone: true,
-  providers: [
-    {
-      provide: STEPPER_GLOBAL_OPTIONS,
-      useValue: { showError: true },
-    },
-  ],
+  providers: [],
   imports: [
     MatStepperModule,
     FormsModule,
@@ -51,7 +46,7 @@ export class StepOneComponent implements OnInit {
   @Output() formEmit = new EventEmitter<FormGroup>();
   @Output() readonlyEmit = new EventEmitter<void>();
   @Output() idEmitter = new EventEmitter<number>();
-  @Output() nextStep = new EventEmitter<void>();
+  @Output() changeStep = new EventEmitter<{step: number, action: number}>();
 
   @Input() isReadonly = false;
   @Input() idsystem = 0;
@@ -247,7 +242,7 @@ export class StepOneComponent implements OnInit {
           if (action == 'next') {
             setTimeout(() => {
               // console.log('Emitting nextStep');
-              this.nextStep.emit();
+              this.changeStep.emit({step: 1, action: 1});
             }, 0);
           }
         }

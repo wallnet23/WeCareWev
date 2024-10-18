@@ -18,10 +18,9 @@
   border-bottom: 1px solid #ca2314;
 }
 
-mat-step-header {
-  pointer-events: none; /* Disabilita il click */
+::ng-deep .mat-vertical-stepper-header {
+  cursor: default !important;
+  pointer-events: none !important;
 }
 
-// mat-step-header:hover {
-//   cursor: default;
-// }
+

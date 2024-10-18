@@ -1,10 +1,10 @@
 import { Component, inject, ViewChild } from '@angular/core';
 import { Validators, FormsModule, ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
-import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import { STEPPER_GLOBAL_OPTIONS, StepperSelectionEvent } from '@angular/cdk/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatStepperModule } from '@angular/material/stepper';
+import { MatStepper, MatStepperModule } from '@angular/material/stepper';
 import { StepOneComponent } from '../components/step-one/step-one.component';
 import { StepTwoComponent } from '../components/step-two/step-two.component';
 import { MatIconModule } from '@angular/material/icon';
@@ -28,12 +28,7 @@ import { StepSixComponent } from "../components/step-six/step-six.component";
 @Component({
   selector: 'app-system-management',
   standalone: true,
-  providers: [
-    {
-      provide: STEPPER_GLOBAL_OPTIONS,
-      useValue: { showError: true },
-    },
-  ],
+  providers: [],
   imports: [
     MatStepperModule,
     FormsModule,
@@ -58,6 +53,8 @@ export class SystemManagementComponent {
   allFormValid: boolean = true;
   idsystem: number = 0;
   systemName: string = '';
+
+  isEditable = [true, false, false, false, false, false];
 
   @ViewChild('stepOne') obj_stepOne!: StepOneComponent;
   @ViewChild('stepTwo') obj_stepTwo!: StepTwoComponent;
@@ -235,6 +232,27 @@ export class SystemManagementComponent {
 
   goToSystem() {
     this.router.navigate(['systemOverview', this.idsystem]);
+  }
+
+  // Funzione che gestiosce lo scrolling degli step
+  manageStepScrolling($event: { step: number, action: number }, stepper: MatStepper) {
+    console.log("EDITABLE1", $event)
+    if ($event.action == 0) {
+      this.isEditable[$event.step - 1] = false;
+      this.isEditable[$event.step - 2] = true;
+      console.log("EDITABLE2", this.isEditable)
+      setTimeout(() => {
+        stepper.previous();
+      }, 0);
+    }
+    else if ($event.action == 1) {
+      this.isEditable[$event.step - 1] = false;
+      this.isEditable[$event.step] = true;
+      console.log("EDITABLE2", this.isEditable)
+      setTimeout(() => {
+        stepper.next();
+      }, 0);
+    }
   }
 
 }

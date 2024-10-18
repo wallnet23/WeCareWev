@@ -22,12 +22,7 @@ import { ImageLoaderService } from '../../../../services/image-loader.service';
 @Component({
   selector: 'app-step-two',
   standalone: true,
-  providers: [
-    {
-      provide: STEPPER_GLOBAL_OPTIONS,
-      useValue: { showError: true },
-    },
-  ],
+  providers: [],
   imports: [
     MatStepperModule,
     FormsModule,
@@ -47,7 +42,7 @@ export class StepTwoComponent {
 
   @Output() formEmit = new EventEmitter<FormGroup>();
   @Output() readonlyEmit = new EventEmitter<void>();
-  @Output() nextStep = new EventEmitter<void>();
+  @Output() changeStep = new EventEmitter<{step: number, action: number}>();
 
   @Input() isReadonly = false;
   @Input() idsystem = 0;
@@ -118,11 +113,15 @@ export class StepTwoComponent {
           if (action == 'next') {
             setTimeout(() => {
               // console.log('Emitting nextStep');
-              this.nextStep.emit();
+              this.changeStep.emit({step: 2, action: 1});
             }, 0);
           }
         })
     }
+  }
+
+  previous() {
+    this.changeStep.emit({step: 2, action: 0});
   }
 
   updateStep() {
