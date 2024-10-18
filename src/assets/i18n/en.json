@@ -2,6 +2,7 @@
   "POPUP": {
     "MSG_DELETE": "Are you sure you want to delete the system? Irreversible action.",
     "MSG_APPROVEDSYSTEM": "If you approve the system, a request will be sent to the technician to check the system. Continue?",
+    "MSG_APPROVEDSTEP": "Request not modifiable. Complete all the steps and click the approve system button!",
     "BUTTON": {
       "DELETE": "Delete",
       "CLOSE": "Close",
@@ -362,9 +363,10 @@
       "CLUSTERINFO": "Cluster Info",
       "VOLTAGE": "System Voltage",
       "TYPE": "Battery Type",
-      "SINGLECLUSTER": "Single Cluster",
+      "SINGLEBATTERY": "Single Battery",
       "PARALLELCLUSTERS": "Parallel Clusters",
       "CLUSTERNUMBER": "Batteries for Cluster",
+      "CLUSTER": "Cluster",
       "DEVICESFORCLUSTER": "Devices for Cluster",
       "MASTER": "Master",
       "SLAVE": "Slave",
@@ -372,7 +374,8 @@
       "LOADINGERROR": "LOADING ERROR",
       "REFRESH": "Refresh the page to try again",
       "YES": "Yes",
-      "NO": "No"
+      "NO": "No",
+      "BATTERY": "Battery"
     }
   },
   "TICKET": {

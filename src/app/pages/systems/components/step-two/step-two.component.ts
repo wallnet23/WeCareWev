@@ -258,12 +258,12 @@ export class StepTwoComponent {
   }
 
   approvalRequested() {
-    this.translate.get(['POPUP.TITLE.INFO', 'POPUP.MSG_APPROVEDSYSTEM', 'POPUP.BUTTON.SEND']).subscribe((translations) => {
+    this.translate.get(['POPUP.TITLE.INFO', 'POPUP.MSG_APPROVEDSTEP', 'POPUP.BUTTON.SEND']).subscribe((translations) => {
       const obj_request: ApiResponse<any> = {
         code: 244,
         data: {},
         title: translations['POPUP.TITLE.INFO'],
-        message: translations['POPUP.MSG_APPROVEDSYSTEM'],
+        message: translations['POPUP.MSG_APPROVEDSTEP'],
         obj_dialog: {
           disableClose: 1,
           obj_buttonAction:

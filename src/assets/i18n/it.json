@@ -2,6 +2,7 @@
   "POPUP": {
     "MSG_DELETE": "Sei sicuro di voler cancellare l'impianto? Azione irreversibile.",
     "MSG_APPROVEDSYSTEM": "Se approvi l'impianto, verrà inviata una richiesta al tecnico per controllare l'impianto. Proseguire?",
+    "MSG_APPROVEDSTEP": "Richiesta non modificabile. Completa tutti gli step e clicca il tasto approva impianto!",
     "BUTTON": {
       "DELETE": "Cancella",
       "CLOSE": "Chiudi",
@@ -361,7 +362,7 @@
       "CLUSTERINFO": "Informazioni Cluster",
       "VOLTAGE": "Tensione impianto",
       "TYPE": "Tipo Batterie",
-      "SINGLECLUSTER": "Cluster Singolo",
+      "SINGLEBATTERY": "Batteria Singola",
       "PARALLELCLUSTERS": "Cluster Paralleli",
       "CLUSTERNUMBER": "Numero di Batterie per Cluster",
       "CLUSTER": "Cluster",
@@ -372,7 +373,8 @@
       "LOADINGERROR": "ERRORE DI CARICAMENTO",
       "REFRESH": "Ricarica la pagina per riprovare",
       "YES": "Sì",
-      "NO": "No"
+      "NO": "No",
+      "BATTERY": "Batteria"
     }
   }
 }

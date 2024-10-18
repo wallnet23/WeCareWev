@@ -50,9 +50,9 @@ export class StepFourComponent {
   @Output() formEmit = new EventEmitter<FormGroup>();
   @Output() readonlyEmit = new EventEmitter<void>();
   @Output() nextStep = new EventEmitter<void>();
-
   @Input() isReadonly = false;
   @Input() idsystem = 0;
+
   readonly stepFourService = inject(StepFourService);
   language_now = 'en';
   wecoComposition: SystemComposition[] = [];
@@ -226,6 +226,16 @@ export class StepFourComponent {
         this.stepFourService.updateSystemModel(this.stepFourForm, val, () => { });
       }
     );
+    this.stepFourForm.get('cluster_singlebattery')?.valueChanges.subscribe(
+      (val) => {
+        // non è single battery
+        if (val === 0) {
+          this.stepFourForm.get('cluster_numberdevices')?.enable();
+        }else if(val == 1){
+          this.stepFourForm.get('cluster_numberdevices')?.disable();
+        }
+      }
+    );
   }
 
   getForm() {
@@ -260,12 +270,12 @@ export class StepFourComponent {
   }
 
   approvalRequested() {
-    this.translate.get(['POPUP.TITLE.INFO', 'POPUP.MSG_APPROVEDSYSTEM', 'POPUP.BUTTON.SEND']).subscribe((translations) => {
+    this.translate.get(['POPUP.TITLE.INFO', 'POPUP.MSG_APPROVEDSTEP', 'POPUP.BUTTON.SEND']).subscribe((translations) => {
       const obj_request: ApiResponse<any> = {
         code: 244,
         data: {},
         title: translations['POPUP.TITLE.INFO'],
-        message: translations['POPUP.MSG_APPROVEDSYSTEM'],
+        message: translations['POPUP.MSG_APPROVEDSTEP'],
         obj_dialog: {
           disableClose: 1,
           obj_buttonAction:
@@ -282,7 +292,7 @@ export class StepFourComponent {
 
   }
 
-  updateStepReadonly() {
+  private updateStepReadonly() {
     this.submitted = true;
     const stepFour = this.stepFourForm.getRawValue();
 

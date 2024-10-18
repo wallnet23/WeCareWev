@@ -1,6 +1,8 @@
 <form [formGroup]="stepSixForm" class="container-xxl">
   <div class="row justify-content-center">
-    <div class="col">
+    <div class="col" *ngIf="
+      (cluster_singlebattery === 1 ? getClusterFieldAsFormArray(stepSixForm).length == 0
+       : true) ">
       <div class="fs-5 fw-bold">{{"SYSTEM.STEPSIX.CLUSTERCOMPOSE" | translate}}</div>
       <button class="btn btn btn-outline-success mr-2" (click)="generateClusterDefault()">
         {{"SYSTEM.STEPSIX.ADDICLUSTER" | translate}}
@@ -17,7 +19,8 @@
               <mat-card>
                 <mat-card-header class="bg-success bg-opacity-10">
                   <mat-card-title style="font-weight: bold; font-size: medium;">
-                    <span *ngIf="stepFourService.cluster_singlebattery === 0; else elseEmpty">{{ "SYSTEM.STEPSIX.CLUSTER"
+                    <span *ngIf="cluster_singlebattery === 0; else elseEmpty">{{
+                      "SYSTEM.STEPSIX.CLUSTER"
                       | translate }} {{i + 1}}</span>
                     <ng-template #elseEmpty>{{ "SYSTEM.STEPSIX.CLUSTER" | translate }} {{i + 1}}</ng-template>
                   </mat-card-title>
@@ -41,8 +44,10 @@
                           {{ "SYSTEM.STEPSIX.SERIALNUMBER" | translate }}<sup>*</sup>
                         </label>
                         <input id="sn-{{i}}-{{j}}" class="form-control" type="text" formControlName="serialnumber"
-                        [class.is-invalid]="bat.get('serialnumber')?.invalid && (bat.get('serialnumber')?.dirty || submitted)">
-                        <div class="text-danger mt-1" *ngIf="bat.get('serialnumber')?.invalid && (bat.get('serialnumber')?.dirty || submitted)" style="font-size: small;">
+                          [class.is-invalid]="bat.get('serialnumber')?.invalid && (bat.get('serialnumber')?.dirty || submitted)">
+                        <div class="text-danger mt-1"
+                          *ngIf="bat.get('serialnumber')?.invalid && (bat.get('serialnumber')?.dirty || submitted)"
+                          style="font-size: small;">
                           {{"SYSTEM.STEPSIX.SERIALNUMBERERROR" | translate}}
                         </div>
                       </div>

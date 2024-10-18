@@ -219,7 +219,7 @@ export class SystemReadonlyComponent {
       .subscribe((val: ApiResponse<{ stepStatusList: StepStatus[] }>) => {
         if (val.data) {
           this.stepStatusList = val.data.stepStatusList;
-          console.log("QUI", this.stepStatusList);
+          // console.log("QUI", this.stepStatusList);
         }
       })
   }
@@ -259,7 +259,7 @@ export class SystemReadonlyComponent {
         .subscribe((val: ApiResponse<{ status: { id: number, name: string, color: string } }>) => {
           if (val.data) {
             this.systemStatus = val.data.status;
-            console.log(this.systemStatus)
+           //  console.log(this.systemStatus)
             // if(this.systemStatus.id == 2) {
             //   this.validStepOne = true;
             //   this.validStepTwo = true;

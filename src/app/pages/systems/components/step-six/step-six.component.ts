@@ -59,6 +59,7 @@ export class StepSixComponent {
   num_devices: number | null = 0;
   view_inverterslist: Inverter[] = [];
   readonly stepFourService = inject(StepFourService);
+  cluster_singlebattery: number | null = null;
 
   stepSixForm = this.formBuilder.group({
     clusters_list: this.formBuilder.array<Cluster[]>([]),
@@ -96,6 +97,7 @@ export class StepSixComponent {
           //     this.addInverter(inverter);
           //   }
           // )
+          this.cluster_singlebattery = data_step.cluster_singlebattery;
           this.stepSixForm.patchValue({
             cluster_parallel: data_step.cluster_parallel
           });
@@ -155,10 +157,6 @@ export class StepSixComponent {
           }
         })
     }
-  }
-
-  updateStep() {
-    // APRI POPUP E POI FAI LA CHIAMATA
   }
 
   /**
@@ -275,12 +273,12 @@ export class StepSixComponent {
   }
 
   approvalRequested() {
-    this.translate.get(['POPUP.TITLE.INFO', 'POPUP.MSG_APPROVEDSYSTEM', 'POPUP.BUTTON.SEND']).subscribe((translations) => {
+    this.translate.get(['POPUP.TITLE.INFO', 'POPUP.MSG_APPROVEDSTEP', 'POPUP.BUTTON.SEND']).subscribe((translations) => {
       const obj_request: ApiResponse<any> = {
         code: 244,
         data: {},
         title: translations['POPUP.TITLE.INFO'],
-        message: translations['POPUP.MSG_APPROVEDSYSTEM'],
+        message: translations['POPUP.MSG_APPROVEDSTEP'],
         obj_dialog: {
           disableClose: 1,
           obj_buttonAction:
@@ -299,13 +297,18 @@ export class StepSixComponent {
 
   private updateStepReadonly() {
     this.submitted = true;
-    const stepSix = this.stepSixForm.getRawValue();
-
     if (this.stepSixForm.valid) {
+      const copy_form = JSON.parse(JSON.stringify(this.stepSixForm.getRawValue()));
+      copy_form.clusters_list.forEach((cluster: any) => {
+        const array_inverters: Inverter[] = this.view_inverterslist.filter(
+          (inverter: Inverter) => cluster.inverters.includes(inverter.id)
+        );
+        cluster.inverters = array_inverters;
+      });
       this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepSix',
         {
           idsystem: this.idsystem,
-          obj_step: stepSix,
+          obj_step: copy_form,
           readonly: 1,
         })
         .subscribe((val: ApiResponse<null>) => {

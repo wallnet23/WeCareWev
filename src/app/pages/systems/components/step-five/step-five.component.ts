@@ -121,10 +121,6 @@ export class StepFiveComponent {
     }
   }
 
-  updateStep() {
-    // APRI POPUP E POI FAI LA CHIAMATA
-  }
-
   get inverterFieldAsFormArray(): any {
     return this.stepFiveForm.get('inverters_list') as FormArray;
   }
@@ -148,12 +144,12 @@ export class StepFiveComponent {
   }
 
   approvalRequested() {
-    this.translate.get(['POPUP.TITLE.INFO', 'POPUP.MSG_APPROVEDSYSTEM', 'POPUP.BUTTON.SEND']).subscribe((translations) => {
+    this.translate.get(['POPUP.TITLE.INFO', 'POPUP.MSG_APPROVEDSTEP', 'POPUP.BUTTON.SEND']).subscribe((translations) => {
       const obj_request: ApiResponse<any> = {
         code: 244,
         data: {},
         title: translations['POPUP.TITLE.INFO'],
-        message: translations['POPUP.MSG_APPROVEDSYSTEM'],
+        message: translations['POPUP.MSG_APPROVEDSTEP'],
         obj_dialog: {
           disableClose: 1,
           obj_buttonAction:
@@ -173,7 +169,6 @@ export class StepFiveComponent {
   private updateStepReadonly() {
     this.submitted = true;
     const stepFive = this.stepFiveForm.getRawValue();
-
     if (this.stepFiveForm.valid) {
       this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepFive',
         {
