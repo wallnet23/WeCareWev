@@ -35,7 +35,8 @@
 
         <mat-step [stepControl]="stepOneForm" errorMessage="Incomplete">
           <ng-template matStepLabel><span style="font-weight: bold;">{{"SYSTEM.SYSTEMMANAGEMENT.SYSANDCUSTINFO" |
-              translate}}</span></ng-template>
+              translate}}</span>
+          </ng-template>
           <app-step-one #stepOne (idEmitter)="onIdReceived($event)" (formEmit)="onFormOneReceived($event)"
             (nextStep)="stepper.next()" [idsystem]="idsystem">
           </app-step-one>
@@ -43,7 +44,8 @@
 
         <mat-step [stepControl]="stepTwoForm" errorMessage="Incomplete">
           <ng-template matStepLabel><span style="font-weight: bold;">{{"SYSTEM.SYSTEMMANAGEMENT.INSTALLATIONSITE" |
-              translate}}</span></ng-template>
+              translate}}</span>
+          </ng-template>
           <ng-template matStepContent>
             <app-step-two #stepTwo (formEmit)="onFormTwoReceived($event)" (nextStep)="stepper.next()"
               [idsystem]="idsystem">
