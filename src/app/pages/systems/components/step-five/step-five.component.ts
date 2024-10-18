@@ -20,12 +20,7 @@ import { StepFive } from '../interfaces/step-five';
 @Component({
   selector: 'app-step-five',
   standalone: true,
-  providers: [
-    {
-      provide: STEPPER_GLOBAL_OPTIONS,
-      useValue: { showError: true },
-    },
-  ],
+  providers: [],
   imports: [
     CommonModule,
     MatStepperModule,
@@ -47,7 +42,7 @@ export class StepFiveComponent {
 
   @Output() formEmit = new EventEmitter<FormGroup>();
   @Output() readonlyEmit = new EventEmitter<void>();
-  @Output() nextStep = new EventEmitter<void>();
+  @Output() changeStep = new EventEmitter<{step: number, action: number}>();
 
   @Input() isReadonly = false;
   @Input() idsystem = 0;
@@ -114,11 +109,15 @@ export class StepFiveComponent {
           if (action == 'next') {
             setTimeout(() => {
               // console.log('Emitting nextStep');
-              this.nextStep.emit();
+              this.changeStep.emit({step: 5, action: 1});
             }, 0);
           }
         })
     }
+  }
+
+  previous() {
+    this.changeStep.emit({step: 5, action: 0});
   }
 
   get inverterFieldAsFormArray(): any {

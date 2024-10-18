@@ -33,63 +33,64 @@
     <div class="col-12 p-0">
       <mat-stepper orientation="vertical" [linear]="true" #stepper>
 
-        <mat-step [stepControl]="stepOneForm" errorMessage="Incomplete">
-          <ng-template matStepLabel><span style="font-weight: bold;">{{"SYSTEM.SYSTEMMANAGEMENT.SYSANDCUSTINFO" |
-              translate}}</span>
+        <mat-step [stepControl]="stepOneForm" errorMessage="Incomplete" [editable]="isEditable[0]">
+          <ng-template matStepLabel>
+            <span style="font-weight: bold;">{{"SYSTEM.SYSTEMMANAGEMENT.SYSANDCUSTINFO" | translate}}</span>
           </ng-template>
           <app-step-one #stepOne (idEmitter)="onIdReceived($event)" (formEmit)="onFormOneReceived($event)"
-            (nextStep)="stepper.next()" [idsystem]="idsystem">
+            (changeStep)="manageStepScrolling($event, stepper)" [idsystem]="idsystem">
           </app-step-one>
         </mat-step>
 
-        <mat-step [stepControl]="stepTwoForm" errorMessage="Incomplete">
+        <mat-step [stepControl]="stepTwoForm" errorMessage="Incomplete" [editable]="isEditable[1]">
           <ng-template matStepLabel><span style="font-weight: bold;">{{"SYSTEM.SYSTEMMANAGEMENT.INSTALLATIONSITE" |
               translate}}</span>
           </ng-template>
           <ng-template matStepContent>
-            <app-step-two #stepTwo (formEmit)="onFormTwoReceived($event)" (nextStep)="stepper.next()"
+            <app-step-two #stepTwo (formEmit)="onFormTwoReceived($event)" (changeStep)="manageStepScrolling($event, stepper)"
               [idsystem]="idsystem">
             </app-step-two>
           </ng-template>
 
         </mat-step>
 
-        <mat-step [stepControl]="stepThreeForm" errorMessage="Incomplete">
+        <mat-step [stepControl]="stepThreeForm" errorMessage="Incomplete" [editable]="isEditable[2]">
           <ng-template matStepLabel><span style="font-weight: bold;">{{"SYSTEM.SYSTEMMANAGEMENT.TECHNICIANINFO" |
               translate}}</span></ng-template>
           <ng-template matStepContent>
-            <app-step-three #stepThree (formEmit)="onFormThreeReceived($event)" (nextStep)="stepper.next()"
+            <app-step-three #stepThree (formEmit)="onFormThreeReceived($event)" (changeStep)="manageStepScrolling($event, stepper)"
               [idsystem]="idsystem">
             </app-step-three>
           </ng-template>
         </mat-step>
 
-        <mat-step [stepControl]="stepFourForm" errorMessage="Incomplete">
+        <mat-step [stepControl]="stepFourForm" errorMessage="Incomplete" [editable]="isEditable[3]">
           <ng-template matStepLabel><span style="font-weight: bold;">{{"SYSTEM.SYSTEMMANAGEMENT.DEVICESINFO" |
               translate}}</span></ng-template>
           <ng-template matStepContent>
             <app-step-four *ngIf="stepThreeForm.valid" #stepFour (formEmit)="onFormFourReceived($event)"
-              (nextStep)="stepper.next()" [idsystem]="idsystem">
+            (changeStep)="manageStepScrolling($event, stepper)" [idsystem]="idsystem">
             </app-step-four>
           </ng-template>
         </mat-step>
 
-        <mat-step [stepControl]="stepFiveForm" errorMessage="Incomplete">
+        <mat-step [stepControl]="stepFiveForm" errorMessage="Incomplete" [editable]="isEditable[4]">
           <ng-template matStepLabel><span style="font-weight: bold;">{{"SYSTEM.SYSTEMMANAGEMENT.INVERTER" |
               translate}}</span></ng-template>
           <ng-template matStepContent>
             <app-step-five *ngIf="stepFourForm.valid" #stepFive (formEmit)="onFormFiveReceived($event)"
-              (nextStep)="stepper.next()" [idsystem]="idsystem">
+            (changeStep)="manageStepScrolling($event, stepper)" [idsystem]="idsystem">
             </app-step-five>
           </ng-template>
         </mat-step>
+
         <mat-step *ngIf="stepFourService.product_systemcomposition === 3" [stepControl]="stepSixForm"
-          errorMessage="Incomplete">
+          errorMessage="Incomplete" [editable]="isEditable[5]">
           <ng-template matStepLabel><span style="font-weight: bold;">{{"SYSTEM.SYSTEMMANAGEMENT.BATTERIES" |
               translate}}</span></ng-template>
           <ng-template matStepContent>
             <app-step-six *ngIf="stepFiveForm.valid" #stepSix (formEmit)="onFormSixReceived($event)"
-              (nextStep)="stepper.next()" [idsystem]="idsystem">
+            (changeStep)="manageStepScrolling($event, stepper)" [idsystem]="idsystem">
             </app-step-six>
           </ng-template>
         </mat-step>

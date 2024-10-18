@@ -1,5 +1,5 @@
 .content {
-    padding: 1rem;
+    margin: 0.5rem;
 }
 
 // .card {
@@ -31,14 +31,26 @@
     cursor: pointer;
 }
 
+.card {
+    border-color: gray;
+}
+
+.card-header {
+    border-color: gray;
+}
+
 .card-body {
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 0;
 }
 
 .element {
-    border-bottom: 1px solid #e0e0e0;
-    padding-bottom: 10px;
+    border-bottom: 1px solid gray;
+    padding-bottom: 0;
+    padding-left: 0.2rem;
+    padding-right: 0.2rem;
+    padding-top: 0.2rem;
 }
 
 .element:last-child {
@@ -51,5 +63,13 @@
     .element:nth-last-child(2) {
         border-bottom: none;
         /* Rimuove il bordo inferiore dagli ultimi due elementi */
+    }
+}
+
+.col-md-6:nth-child(even) {
+    border-right: 1px solid gray;
+
+    @media screen and (max-width:768px) {
+        border-right: none;
     }
 }

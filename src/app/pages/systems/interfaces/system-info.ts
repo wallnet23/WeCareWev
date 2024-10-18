@@ -5,6 +5,7 @@ export interface SystemInfo {
     status: null | {
       id: number;
       name: string;
+      color: string;
     };
     customerInfo: string | null;
     installationSite: string | null;
