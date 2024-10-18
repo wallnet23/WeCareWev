@@ -30,7 +30,8 @@
           [class.is-invalid]="stepThreeForm.get('idcountry')?.invalid && (stepThreeForm.get('idcountry')?.dirty || submitted)">
             <option [ngValue]="null" disabled>{{"SYSTEM.STEPTHREE.COUNTRYSELECT" | translate}}</option>
             <option *ngFor="let country of countriesData" [ngValue]="country.id">
-              <img src="{{country.flag_png}}" width="20px" height="15px"> {{ country.common_name }}
+              <!-- <img src="{{country.flag_png}}" width="20px" height="15px">  -->
+              {{ country.common_name }}
             </option>
           </select>
           <div class="text-danger mt-1" *ngIf="stepThreeForm.get('idcountry')?.invalid && (stepThreeForm.get('idcountry')?.dirty || submitted)" style="font-size: small;">

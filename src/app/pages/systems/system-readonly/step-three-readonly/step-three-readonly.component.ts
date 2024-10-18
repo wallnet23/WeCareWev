@@ -9,6 +9,8 @@ import { Image } from '../../components/interfaces/image';
 import { ApiResponse } from '../../../../interfaces/api-response';
 import { Connect } from '../../../../classes/connect';
 import { ImageLoaderService } from '../../../../services/image-loader.service';
+import { Store } from '@ngrx/store';
+import { UserState } from '../../../../ngrx/user/user.reducer';
 
 @Component({
   selector: 'app-step-three-readonly',
@@ -21,7 +23,7 @@ import { ImageLoaderService } from '../../../../services/image-loader.service';
   styleUrl: './step-three-readonly.component.scss'
 })
 export class StepThreeReadonlyComponent {
-
+  currentLanguage: string = 'en';
   @Output() formEmit = new EventEmitter<FormGroup>();
 
   @Input() stepThree: StepThree | null = null;
@@ -42,7 +44,7 @@ export class StepThreeReadonlyComponent {
   modalImageUrl: string = '';
 
   constructor(private fb: FormBuilder, private connectServerService: ConnectServerService,
-    private imageLoaderService: ImageLoaderService) { }
+    private imageLoaderService: ImageLoaderService, private store: Store<{ user: UserState }>) { }
 
   ngOnInit(): void {
     // TODO: SE NECESSARIO CONVERTIRE LO STEP RICEVUTO IN INGERSSO IN UN FORM
@@ -61,7 +63,13 @@ export class StepThreeReadonlyComponent {
     if (result) {
       this.country_name = result.common_name;
     }
+    this.store.select(state => state.user.userInfo).subscribe(
+      (val) => {
+        this.currentLanguage = val?.lang_code ? val?.lang_code : 'en';
+      }
+    )
   }
+
 
   getImages() {
     this.connectServerService.getRequest<ApiResponse<{ listFiles: Image[] }>>(Connect.urlServerLaraApi, 'system/filesList',
