@@ -14,7 +14,7 @@ import { StepOne } from '../interfaces/step-one';
 import { Connect } from '../../../../classes/connect';
 import { PopupDialogService } from '../../../../services/popup-dialog.service';
 import { Country } from '../../../../interfaces/country';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
 import { selectAllCountries } from '../../../../ngrx/country/country.selectors';
@@ -49,6 +49,7 @@ import { CountryState } from '../../../../ngrx/country/country.reducer';
 export class StepOneComponent implements OnInit {
 
   @Output() formEmit = new EventEmitter<FormGroup>();
+  @Output() readonlyEmit = new EventEmitter<void>();
   @Output() idEmitter = new EventEmitter<number>();
   @Output() nextStep = new EventEmitter<void>();
 
@@ -83,7 +84,7 @@ export class StepOneComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder, private connectServerService: ConnectServerService,
     private popupDialogService: PopupDialogService, private router: Router,
-    private store: Store<{ country: CountryState }>) { }
+    private store: Store<{ country: CountryState }>, private translate: TranslateService) { }
 
   ngOnInit() {
     this.store.select(selectAllCountries).subscribe((obj) => {
@@ -329,6 +330,47 @@ export class StepOneComponent implements OnInit {
 
   getForm() {
     return this.stepOneForm;
+  }
+
+  approvalRequested() {
+    this.translate.get(['POPUP.TITLE.INFO', 'POPUP.MSG_APPROVEDSYSTEM', 'POPUP.BUTTON.SEND']).subscribe((translations) => {
+      const obj_request: ApiResponse<any> = {
+        code: 244,
+        data: {},
+        title: translations['POPUP.TITLE.INFO'],
+        message: translations['POPUP.MSG_APPROVEDSYSTEM'],
+        obj_dialog: {
+          disableClose: 1,
+          obj_buttonAction:
+          {
+            action: 1,
+            action_type: 2,
+            label: translations['POPUP.BUTTON.SEND'],
+            run_function: () => this.updateStepReadonly()
+          }
+        }
+      }
+      this.popupDialogService.alertElement(obj_request);
+    });
+
+  }
+
+  private updateStepReadonly() {
+    this.submitted = true;
+    const stepOne = this.stepOneForm.getRawValue();
+
+    if (this.stepOneForm.valid) {
+      this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepOne',
+        {
+          idsystem: this.idsystem,
+          obj_step: stepOne,
+          readonly: 1,
+        })
+        .subscribe((val: ApiResponse<null>) => {
+          this.popupDialogService.alertElement(val);
+          this.readonlyEmit.emit();
+        })
+    }
   }
 
 }

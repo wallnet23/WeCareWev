@@ -1,5 +1,5 @@
 import { CommonModule, Location, LocationChangeEvent } from '@angular/common';
-import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, Inject, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ConnectServerService } from '../../../services/connect-server.service';
 import { ApiResponse } from '../../../interfaces/api-response';
@@ -35,6 +35,7 @@ import { StepFiveComponent } from "../components/step-five/step-five.component";
 import { StepSixComponent } from "../components/step-six/step-six.component";
 import { ErrorMessageComponent } from "../error-message/error-message.component";
 import { StepStatus } from '../interfaces/step-status';
+import { StepFourService } from '../components/step-four/step-four.service';
 
 declare var $: any;
 
@@ -63,7 +64,7 @@ declare var $: any;
     StepFiveComponent,
     StepSixComponent,
     ErrorMessageComponent
-],
+  ],
   templateUrl: './system-readonly.component.html',
   styleUrl: './system-readonly.component.scss'
 })
@@ -79,7 +80,7 @@ export class SystemReadonlyComponent {
   modalImageUrl: string = '';
 
   // TODO: MODIFICARE SYSTEM STATUS CON QUELLO REALE
-  systemStatus: {id: number, name: string} | null = null;
+  systemStatus: { id: number, name: string, color: string } | null = null;
   idsystem: number = 0;
   systemInfo: SystemInfoFull = this.initSystem();
   imagesStep2: Image[] = [];
@@ -88,54 +89,28 @@ export class SystemReadonlyComponent {
   customerCountry: string = '';
   installerCountry: string = '';
   countriesList: Country[] = [];
+  readonly stepFourService = inject(StepFourService);
 
-  validStepOne: boolean = false;
-  validStepTwo: boolean = false;
-  validStepThree: boolean = false;
-  validStepFour: boolean = false;
-  validStepFive: boolean = false;
-  validStepSix: boolean = false;
-
-  systemErrors: {
-    errorStepOne: {message: string, date: string},
-    errorStepTwo: {message: string, date: string},
-    errorStepThree: {message: string, date: string},
-    errorStepFour: {message: string, date: string},
-    errorStepFive: {message: string, date: string},
-    errorStepSix: {message: string, date: string},
-  } = {
-    errorStepOne: {message: '', date: ''},
-    errorStepTwo: {message: '', date: ''},
-    errorStepThree: {message: '', date: ''},
-    errorStepFour: {message: '', date: ''},
-    errorStepFive: {message: '', date: ''},
-    errorStepSix: {message: '', date: ''},
-  }
-
-  stepStatusList: {
-    stepOneStatus: StepStatus;
-    stepTwoStatus: StepStatus;
-    stepThreeStatus: StepStatus;
-    stepFourStatus: StepStatus;
-    stepFiveStatus: StepStatus;
-    stepSixStatus: StepStatus;
-   } | null = null;
+  stepStatusList: StepStatus[] = [];
 
   constructor(private route: ActivatedRoute, private connectServerService: ConnectServerService,
     private elementRef: ElementRef, private location: Location) {
     this.route.params.subscribe(params => {
       this.idsystem = params['id'];
     });
+    //this.initializeStepStatusList();
   }
 
   ngOnInit(): void {
     if (this.idsystem > 0) {
       this.systemInfo!.id = this.idsystem;
       this.getSystem();
+      this.stepFourService.setSystemsValues();
     }
   }
 
   getSystem() {
+    this.getStepStatus();
     this.getCountries();
     this.getStepOne();
     this.getStepTwo();
@@ -239,18 +214,14 @@ export class SystemReadonlyComponent {
   }
 
   getStepStatus() {
-    this.connectServerService.getRequest<ApiResponse<{stepStatusList: StepStatus[]}>>(
-      Connect.urlServerLaraApi, 'system/readonlyStep', {idsystem: this.idsystem}
-    ).subscribe((val: ApiResponse<{stepStatusList: StepStatus[]}>) => {
-      if(val.data) {
-        this.stepStatusList!.stepOneStatus = val.data.stepStatusList.find((stepItem: StepStatus) => stepItem.step == 1)!;
-        this.stepStatusList!.stepTwoStatus = val.data.stepStatusList.find((stepItem: StepStatus) => stepItem.step == 2)!;
-        this.stepStatusList!.stepThreeStatus = val.data.stepStatusList.find((stepItem: StepStatus) => stepItem.step == 3)!;
-        this.stepStatusList!.stepFourStatus = val.data.stepStatusList.find((stepItem: StepStatus) => stepItem.step == 4)!;
-        this.stepStatusList!.stepFiveStatus = val.data.stepStatusList.find((stepItem: StepStatus) => stepItem.step == 5)!;
-        this.stepStatusList!.stepSixStatus = val.data.stepStatusList.find((stepItem: StepStatus) => stepItem.step == 6)!;
-      }
-    })
+    this.connectServerService.getRequest<ApiResponse<{ stepStatusList: StepStatus[] }>>(
+      Connect.urlServerLaraApi, 'system/listStepSystemStatus', { idsystem: this.idsystem })
+      .subscribe((val: ApiResponse<{ stepStatusList: StepStatus[] }>) => {
+        if (val.data) {
+          this.stepStatusList = val.data.stepStatusList;
+          console.log("QUI", this.stepStatusList);
+        }
+      })
   }
 
   onFormOneReceived(form: FormGroup) {
@@ -283,11 +254,12 @@ export class SystemReadonlyComponent {
   getStatus() {
     // console.log("Received 1")
     if (this.idsystem > 0) {
-      this.connectServerService.getRequest<ApiResponse<{ status: { id: number, name: string } }>>
+      this.connectServerService.getRequest<ApiResponse<{ status: { id: number, name: string, color: string } }>>
         (Connect.urlServerLaraApi, 'system/systemState', { idsystem: this.idsystem })
-        .subscribe((val: ApiResponse<{ status: { id: number, name: string } }>) => {
+        .subscribe((val: ApiResponse<{ status: { id: number, name: string, color: string } }>) => {
           if (val.data) {
             this.systemStatus = val.data.status;
+            console.log(this.systemStatus)
             // if(this.systemStatus.id == 2) {
             //   this.validStepOne = true;
             //   this.validStepTwo = true;
@@ -296,7 +268,7 @@ export class SystemReadonlyComponent {
             //   this.validStepFive = true;
             //   this.validStepSix = true;
             // }
-            if(this.systemStatus.id == 3) {
+            if (this.systemStatus.id == 3) {
               // CHIAMATA AL SERVER PER SAPERE QUALI SONO GLI STEP INVALIDI E RECUPERARE LE TEXTAREA
             }
           }
@@ -310,7 +282,7 @@ export class SystemReadonlyComponent {
 
   getCountries() {
     this.connectServerService.getRequestCountry().subscribe((val: any) => {
-      if(val) {
+      if (val) {
         this.countriesList = val;
       }
     });
@@ -334,6 +306,23 @@ export class SystemReadonlyComponent {
       })
   }
 
+  // initializeStepStatusList() {
+  //   let i = 0;
+  //   for (i; i < 6; i++) {
+  //     const item = {
+  //       step: 0,
+  //       listStepStatus: {
+  //         idstatus: 0,
+  //         name_status: '',
+  //         color: '',
+  //         message: null,
+  //         message_date: null,
+  //       }
+  //     }
+  //     this.stepStatusList.push(item);
+  //   }
+  // }
+
   @HostListener('click')
   onClick() {
     const modalId = this.elementRef.nativeElement.getAttribute('data-bs-target');
@@ -350,6 +339,10 @@ export class SystemReadonlyComponent {
   setImage(img: Image) {
     // this.modalImageUrl = img.src;
     this.modalImageUrl = '';
+  }
+
+  onDataReceived() {
+    this.getSystem();
   }
 
   private initSystem() {

@@ -17,7 +17,7 @@ import { Connect } from '../../../../classes/connect';
 import { PopupDialogService } from '../../../../services/popup-dialog.service';
 import { StepThree } from '../interfaces/step-three';
 import { Image } from '../interfaces/image';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ImageLoaderService } from '../../../../services/image-loader.service';
 
 @Component({
@@ -47,6 +47,7 @@ import { ImageLoaderService } from '../../../../services/image-loader.service';
 export class StepThreeComponent implements OnInit {
 
   @Output() formEmit = new EventEmitter<FormGroup>();
+  @Output() readonlyEmit = new EventEmitter<void>();
   @Output() nextStep = new EventEmitter<void>();
 
   @Input() isReadonly = false;
@@ -90,7 +91,7 @@ export class StepThreeComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
     private connectServerService: ConnectServerService, private popupDialogService: PopupDialogService,
-    private imageLoaderService: ImageLoaderService) { }
+    private imageLoaderService: ImageLoaderService, private translate: TranslateService) { }
 
   infoStep() {
     this.connectServerService.getRequest<ApiResponse<{ stepThree: StepThree }>>(Connect.urlServerLaraApi, 'system/infoStepThree', { id: this.idsystem }).
@@ -266,6 +267,47 @@ export class StepThreeComponent implements OnInit {
     }
     else {
       this.isError = true;
+    }
+  }
+
+  approvalRequested() {
+    this.translate.get(['POPUP.TITLE.INFO', 'POPUP.MSG_APPROVEDSYSTEM', 'POPUP.BUTTON.SEND']).subscribe((translations) => {
+      const obj_request: ApiResponse<any> = {
+        code: 244,
+        data: {},
+        title: translations['POPUP.TITLE.INFO'],
+        message: translations['POPUP.MSG_APPROVEDSYSTEM'],
+        obj_dialog: {
+          disableClose: 1,
+          obj_buttonAction:
+          {
+            action: 1,
+            action_type: 2,
+            label: translations['POPUP.BUTTON.SEND'],
+            run_function: () => this.updateStepReadonly()
+          }
+        }
+      }
+      this.popupDialogService.alertElement(obj_request);
+    });
+
+  }
+
+  private updateStepReadonly() {
+    this.submitted = true;
+    const stepThree = this.stepThreeForm.getRawValue();
+
+    if (this.stepThreeForm.valid) {
+      this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepThree',
+        {
+          idsystem: this.idsystem,
+          obj_step: stepThree,
+          readonly: 1,
+        })
+        .subscribe((val: ApiResponse<null>) => {
+          this.popupDialogService.alertElement(val);
+          this.readonlyEmit.emit();
+        })
     }
   }
 

@@ -16,7 +16,7 @@ import { PopupDialogService } from '../../../../services/popup-dialog.service';
 import { Country } from '../../../../interfaces/country';
 import { StepTwo } from '../interfaces/step-two';
 import { Image } from '../interfaces/image';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ImageLoaderService } from '../../../../services/image-loader.service';
 
 @Component({
@@ -46,6 +46,7 @@ import { ImageLoaderService } from '../../../../services/image-loader.service';
 export class StepTwoComponent {
 
   @Output() formEmit = new EventEmitter<FormGroup>();
+  @Output() readonlyEmit = new EventEmitter<void>();
   @Output() nextStep = new EventEmitter<void>();
 
   @Input() isReadonly = false;
@@ -87,7 +88,7 @@ export class StepTwoComponent {
   constructor(private formBuilder: FormBuilder,
     private connectServerService: ConnectServerService,
     private popupDialogService: PopupDialogService,
-  private imageLoaderService: ImageLoaderService) { }
+    private imageLoaderService: ImageLoaderService, private translate: TranslateService) { }
 
   infoStep() {
     this.connectServerService.getRequest<ApiResponse<{ stepTwo: StepTwo }>>(Connect.urlServerLaraApi, 'system/infoStepTwo', { id: this.idsystem }).
@@ -102,7 +103,7 @@ export class StepTwoComponent {
     //this.errorLogic();
     this.submitted = true;
     //if (action == 'save' || (action == 'next' && !this.isError)) {
-    if(this.stepTwoForm.valid) {
+    if (this.stepTwoForm.valid) {
       let stepTwo = JSON.parse(JSON.stringify(this.stepTwoForm.getRawValue()));
 
       this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepTwo',
@@ -148,47 +149,47 @@ export class StepTwoComponent {
     this.selectedFilesStep2 = [];
   }
 
-  private errorLogic() {
+  // private errorLogic() {
 
-    if (this.stepTwoForm.get('idcountry')?.value == null) {
-      this.errors.idcountry = true;
-    }
-    else {
-      this.errors.idcountry = false;
-    }
-    if (this.stepTwoForm.get('location_address')?.value == null || this.stepTwoForm.get('location_address')?.value!.replaceAll(' ', '') == '') {
-      this.errors.location_address = true;
-    }
-    else {
-      this.errors.location_address = false;
-    }
-    if (this.stepTwoForm.get('location_city')?.value == null || this.stepTwoForm.get('location_city')?.value!.replaceAll(' ', '') == '') {
-      this.errors.location_city = true;
-    }
-    else {
-      this.errors.location_city = false;
-    }
-    if (this.stepTwoForm.get('location_postalcode')?.value == null || this.stepTwoForm.get('location_postalcode')?.value!.replaceAll(' ', '') == '') {
-      this.errors.location_postalcode = true;
-    }
-    else {
-      this.errors.location_postalcode = false;
-    }
+  //   if (this.stepTwoForm.get('idcountry')?.value == null) {
+  //     this.errors.idcountry = true;
+  //   }
+  //   else {
+  //     this.errors.idcountry = false;
+  //   }
+  //   if (this.stepTwoForm.get('location_address')?.value == null || this.stepTwoForm.get('location_address')?.value!.replaceAll(' ', '') == '') {
+  //     this.errors.location_address = true;
+  //   }
+  //   else {
+  //     this.errors.location_address = false;
+  //   }
+  //   if (this.stepTwoForm.get('location_city')?.value == null || this.stepTwoForm.get('location_city')?.value!.replaceAll(' ', '') == '') {
+  //     this.errors.location_city = true;
+  //   }
+  //   else {
+  //     this.errors.location_city = false;
+  //   }
+  //   if (this.stepTwoForm.get('location_postalcode')?.value == null || this.stepTwoForm.get('location_postalcode')?.value!.replaceAll(' ', '') == '') {
+  //     this.errors.location_postalcode = true;
+  //   }
+  //   else {
+  //     this.errors.location_postalcode = false;
+  //   }
 
-    this.checkIsError();
-  }
+  //   this.checkIsError();
+  // }
 
-  private checkIsError() {
-    if (!this.errors.location_address &&
-      !this.errors.idcountry &&
-      !this.errors.location_city &&
-      !this.errors.location_postalcode) {
-      this.isError = false;
-    }
-    else {
-      this.isError = true;
-    }
-  }
+  // private checkIsError() {
+  //   if (!this.errors.location_address &&
+  //     !this.errors.idcountry &&
+  //     !this.errors.location_city &&
+  //     !this.errors.location_postalcode) {
+  //     this.isError = false;
+  //   }
+  //   else {
+  //     this.isError = true;
+  //   }
+  // }
 
   private uploadFilesServer() {
     // this.imagesStep2 = this.uploadImageService.getImagesStep2();
@@ -254,6 +255,47 @@ export class StepTwoComponent {
 
   getForm() {
     return this.stepTwoForm;
+  }
+
+  approvalRequested() {
+    this.translate.get(['POPUP.TITLE.INFO', 'POPUP.MSG_APPROVEDSYSTEM', 'POPUP.BUTTON.SEND']).subscribe((translations) => {
+      const obj_request: ApiResponse<any> = {
+        code: 244,
+        data: {},
+        title: translations['POPUP.TITLE.INFO'],
+        message: translations['POPUP.MSG_APPROVEDSYSTEM'],
+        obj_dialog: {
+          disableClose: 1,
+          obj_buttonAction:
+          {
+            action: 1,
+            action_type: 2,
+            label: translations['POPUP.BUTTON.SEND'],
+            run_function: () => this.updateStepReadonly()
+          }
+        }
+      }
+      this.popupDialogService.alertElement(obj_request);
+    });
+
+  }
+
+  private updateStepReadonly() {
+    this.submitted = true;
+    const stepTwo = this.stepTwoForm.getRawValue();
+
+    if (this.stepTwoForm.valid) {
+      this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepFive',
+        {
+          idsystem: this.idsystem,
+          obj_step: stepTwo,
+          readonly: 1,
+        })
+        .subscribe((val: ApiResponse<null>) => {
+          this.popupDialogService.alertElement(val);
+          this.readonlyEmit.emit();
+        })
+    }
   }
 
 }

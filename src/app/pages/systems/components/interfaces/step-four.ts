@@ -11,4 +11,7 @@ export interface StepFour {
   refidwecaresystemtype: number | null;
   cluster_singlebattery: number | null;
   cluster_numberdevices: number | null;
+  str_refidwecaresystemvolt?: string;
+  str_refidwecaresystemtype?: string;
+  str_system_model?: string;
 }

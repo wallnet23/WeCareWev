@@ -18,4 +18,10 @@
   border-bottom: 1px solid #ca2314;
 }
 
+mat-step-header {
+  pointer-events: none; /* Disabilita il click */
+}
 
+// mat-step-header:hover {
+//   cursor: default;
+// }

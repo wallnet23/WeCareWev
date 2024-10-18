@@ -7,7 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatCardModule } from '@angular/material/card';
 import { ScannerSelectorComponent } from '../../barcode-scanner/scanner-selector/scanner-selector.component';
 import { ConnectServerService } from '../../../../services/connect-server.service';
@@ -51,6 +51,7 @@ export class StepSixComponent {
   submitted = false;
 
   @Output() formEmit = new EventEmitter<FormGroup>();
+  @Output() readonlyEmit = new EventEmitter<void>();
   @Output() nextStep = new EventEmitter<void>();
 
   @Input() isReadonly = false;
@@ -65,7 +66,7 @@ export class StepSixComponent {
   });
 
   constructor(private formBuilder: FormBuilder, private connectServerService: ConnectServerService,
-    private popupDialogService: PopupDialogService) { }
+    private popupDialogService: PopupDialogService, private translate: TranslateService) { }
 
   ngOnInit(): void {
     if (this.idsystem > 0) {
@@ -270,6 +271,47 @@ export class StepSixComponent {
       form.get('cluster_parallel')?.enable();
     } else {
       form.get('cluster_parallel')?.disable();
+    }
+  }
+
+  approvalRequested() {
+    this.translate.get(['POPUP.TITLE.INFO', 'POPUP.MSG_APPROVEDSYSTEM', 'POPUP.BUTTON.SEND']).subscribe((translations) => {
+      const obj_request: ApiResponse<any> = {
+        code: 244,
+        data: {},
+        title: translations['POPUP.TITLE.INFO'],
+        message: translations['POPUP.MSG_APPROVEDSYSTEM'],
+        obj_dialog: {
+          disableClose: 1,
+          obj_buttonAction:
+          {
+            action: 1,
+            action_type: 2,
+            label: translations['POPUP.BUTTON.SEND'],
+            run_function: () => this.updateStepReadonly()
+          }
+        }
+      }
+      this.popupDialogService.alertElement(obj_request);
+    });
+
+  }
+
+  private updateStepReadonly() {
+    this.submitted = true;
+    const stepSix = this.stepSixForm.getRawValue();
+
+    if (this.stepSixForm.valid) {
+      this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepSix',
+        {
+          idsystem: this.idsystem,
+          obj_step: stepSix,
+          readonly: 1,
+        })
+        .subscribe((val: ApiResponse<null>) => {
+          this.popupDialogService.alertElement(val);
+          this.readonlyEmit.emit();
+        })
     }
   }
 }

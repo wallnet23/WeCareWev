@@ -73,7 +73,7 @@ export class SystemManagementComponent {
   stepFiveForm!: FormGroup;
   stepSixForm!: FormGroup;
 
-  systemStatus: { id: number, name: string } | null = null;
+  systemStatus: { id: number, name: string, color: string } | null = null;
   readonly stepFourService = inject(StepFourService);
 
   constructor(private route: ActivatedRoute, private connectServerService: ConnectServerService,
@@ -208,9 +208,9 @@ export class SystemManagementComponent {
   getStatus() {
     // console.log("Received 1")
     if (this.idsystem > 0) {
-      this.connectServerService.getRequest<ApiResponse<{ status: { id: number, name: string } }>>
+      this.connectServerService.getRequest<ApiResponse<{ status: { id: number, name: string, color: string } }>>
         (Connect.urlServerLaraApi, 'system/systemState', { idsystem: this.idsystem })
-        .subscribe((val: ApiResponse<{ status: { id: number, name: string } }>) => {
+        .subscribe((val: ApiResponse<{ status: { id: number, name: string, color: string } }>) => {
           if (val.data) {
             this.systemStatus = val.data.status;
           }

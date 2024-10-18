@@ -1,12 +1,12 @@
 export interface StepStatus {
     step: number;
-    status: Status[];
+    listStepStatus: Status[];
 }
 
 export interface Status {
-    idstatus: number;
+    idstepstatus: number;
     name_status: string;
     color: string;
     message: string | null;
-    date: string | null;
+    message_date: string | null;
 }

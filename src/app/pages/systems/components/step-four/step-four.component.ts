@@ -7,7 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ConnectServerService } from '../../../../services/connect-server.service';
 import { PopupDialogService } from '../../../../services/popup-dialog.service';
 import { ApiResponse } from '../../../../interfaces/api-response';
@@ -48,6 +48,7 @@ export class StepFourComponent {
 
   submitted = false;
   @Output() formEmit = new EventEmitter<FormGroup>();
+  @Output() readonlyEmit = new EventEmitter<void>();
   @Output() nextStep = new EventEmitter<void>();
 
   @Input() isReadonly = false;
@@ -92,7 +93,7 @@ export class StepFourComponent {
   });
 
   constructor(private formBuilder: FormBuilder, private connectServerService: ConnectServerService,
-    private popupDialogService: PopupDialogService) { }
+    private popupDialogService: PopupDialogService, private translate: TranslateService) { }
 
   ngOnInit(): void {
     if (this.idsystem > 0) {
@@ -258,8 +259,45 @@ export class StepFourComponent {
     }
   }
 
-  updateStep() {
-    // APRI POPUP E POI FAI LA CHIAMATA
+  approvalRequested() {
+    this.translate.get(['POPUP.TITLE.INFO', 'POPUP.MSG_APPROVEDSYSTEM', 'POPUP.BUTTON.SEND']).subscribe((translations) => {
+      const obj_request: ApiResponse<any> = {
+        code: 244,
+        data: {},
+        title: translations['POPUP.TITLE.INFO'],
+        message: translations['POPUP.MSG_APPROVEDSYSTEM'],
+        obj_dialog: {
+          disableClose: 1,
+          obj_buttonAction:
+          {
+            action: 1,
+            action_type: 2,
+            label: translations['POPUP.BUTTON.SEND'],
+            run_function: () => this.updateStepReadonly()
+          }
+        }
+      }
+      this.popupDialogService.alertElement(obj_request);
+    });
+
+  }
+
+  updateStepReadonly() {
+    this.submitted = true;
+    const stepFour = this.stepFourForm.getRawValue();
+
+    if (this.stepFourForm.valid) {
+      this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepFour',
+        {
+          idsystem: this.idsystem,
+          obj_step: stepFour,
+          readonly: 1,
+        })
+        .subscribe((val: ApiResponse<null>) => {
+          this.popupDialogService.alertElement(val);
+          this.readonlyEmit.emit();
+        })
+    }
   }
 
 }

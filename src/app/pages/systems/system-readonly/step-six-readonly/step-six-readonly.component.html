@@ -25,10 +25,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row" *ngFor="let inverter of cluster.inverters">
-                            <div class="col-12">
+                        <div class="row">
+                            <div class="col-6">
                                 <span class="subtitles">{{"SYSTEM.READONLY.INVERTER" | translate}}: </span>
-                                <p class="content">{{inverter.serialnumber}}</p>
+                                <p class="content">
+                                  <span *ngFor="let inverter of cluster.inverters; let i = index">
+                                    <span *ngIf="i > 0">,</span><span> {{inverter.serialnumber}}</span>
+                                  </span>
+                                </p>
                             </div>
                         </div>
                     </mat-card-content>

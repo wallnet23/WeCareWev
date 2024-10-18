@@ -8,6 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { Image } from '../../components/interfaces/image';
 import { Connect } from '../../../../classes/connect';
 import { ApiResponse } from '../../../../interfaces/api-response';
+import { ImageLoaderService } from '../../../../services/image-loader.service';
 
 @Component({
   selector: 'app-step-two-readonly',
@@ -40,7 +41,8 @@ export class StepTwoReadonlyComponent {
   urlServerLaraApi = Connect.urlServerLaraApi;
   modalImageUrl: string = '';
 
-  constructor(private fb: FormBuilder, private connectServerService: ConnectServerService) { }
+  constructor(private fb: FormBuilder, private connectServerService: ConnectServerService,
+    private imageLoaderService: ImageLoaderService) { }
 
   ngOnInit(): void {
     // TODO: SE NECESSARIO CONVERTIRE LO STEP RICEVUTO IN INGERSSO IN UN FORM
@@ -62,14 +64,22 @@ export class StepTwoReadonlyComponent {
   }
 
   getImages() {
-    this.connectServerService.getRequest<ApiResponse<{ listFiles: Image[] }>>(this.urlServerLaraApi, 'system/filesList',
+    this.connectServerService.getRequest<ApiResponse<{ listFiles: Image[] }>>(Connect.urlServerLaraApi, 'system/filesList',
       {
         idsystem: this.idsystem,
         step_position: 2
       })
       .subscribe((val: ApiResponse<{ listFiles: Image[] }>) => {
         if (val.data.listFiles) {
-          this.imagesStep = val.data.listFiles;
+          this.imagesStep = val.data.listFiles.map(image => {
+            // Chiama ImageLoaderService solo una volta per immagine
+            this.imageLoaderService.getImageWithToken(Connect.urlServerLaraFile + image.src).subscribe(
+              (safeUrl) => {
+                image.src = safeUrl; // Assegna l'URL sicuro all'immagine
+              }
+            );
+            return image;
+          });
         }
       })
   }

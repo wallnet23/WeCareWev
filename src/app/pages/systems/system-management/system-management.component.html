@@ -22,11 +22,7 @@
         {{"SYSTEM.SYSTEMMANAGEMENT.STATUS" | translate}}:
       </span>
       <span class="ms-1">
-        <i class="bi bi-circle-fill" style="font-size: large;" [ngClass]="{
-          'text-success': systemStatus?.id === 4,
-          'text-danger': systemStatus?.id === 3,
-          'text-warning': systemStatus?.id === 2,
-          'text-info': systemStatus?.id === 1 }">
+        <i class="bi bi-circle-fill" style="font-size: large;" [ngStyle]="{'color':  '#'+systemStatus?.color}">
         </i>
       </span>
       <span class="ms-1">

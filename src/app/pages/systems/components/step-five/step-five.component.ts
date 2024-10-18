@@ -7,7 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { PopupDialogService } from '../../../../services/popup-dialog.service';
 import { ConnectServerService } from '../../../../services/connect-server.service';
 import { MatCardModule } from '@angular/material/card';
@@ -46,6 +46,7 @@ export class StepFiveComponent {
   submitted = false;
 
   @Output() formEmit = new EventEmitter<FormGroup>();
+  @Output() readonlyEmit = new EventEmitter<void>();
   @Output() nextStep = new EventEmitter<void>();
 
   @Input() isReadonly = false;
@@ -57,7 +58,7 @@ export class StepFiveComponent {
   });
 
   constructor(private formBuilder: FormBuilder, private connectServerService: ConnectServerService,
-    private popupDialogService: PopupDialogService) { }
+    private popupDialogService: PopupDialogService, private translate: TranslateService) { }
 
   ngOnInit(): void {
     if (this.idsystem > 0) {
@@ -144,5 +145,46 @@ export class StepFiveComponent {
   onBarcodeScanned(barcode: string, i: number) {
     this.inverterFieldAsFormArray.at(i).get('serialnumber').setValue(barcode);
     // console.log("FORM FIELD", this.inverterFieldAsFormArray.value[i].serialnumber)
+  }
+
+  approvalRequested() {
+    this.translate.get(['POPUP.TITLE.INFO', 'POPUP.MSG_APPROVEDSYSTEM', 'POPUP.BUTTON.SEND']).subscribe((translations) => {
+      const obj_request: ApiResponse<any> = {
+        code: 244,
+        data: {},
+        title: translations['POPUP.TITLE.INFO'],
+        message: translations['POPUP.MSG_APPROVEDSYSTEM'],
+        obj_dialog: {
+          disableClose: 1,
+          obj_buttonAction:
+          {
+            action: 1,
+            action_type: 2,
+            label: translations['POPUP.BUTTON.SEND'],
+            run_function: () => this.updateStepReadonly()
+          }
+        }
+      }
+      this.popupDialogService.alertElement(obj_request);
+    });
+
+  }
+
+  private updateStepReadonly() {
+    this.submitted = true;
+    const stepFive = this.stepFiveForm.getRawValue();
+
+    if (this.stepFiveForm.valid) {
+      this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepFive',
+        {
+          idsystem: this.idsystem,
+          obj_step: stepFive,
+          readonly: 1,
+        })
+        .subscribe((val: ApiResponse<null>) => {
+          this.popupDialogService.alertElement(val);
+          this.readonlyEmit.emit();
+        })
+    }
   }
 }
