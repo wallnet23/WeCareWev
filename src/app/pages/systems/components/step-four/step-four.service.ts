@@ -7,6 +7,7 @@ import { SystemType } from './interfaces/system-type';
 import { ConnectServerService } from '../../../../services/connect-server.service';
 import { FormGroup } from '@angular/forms';
 import { StepFour } from '../interfaces/step-four';
+import { SystemComposition } from './interfaces/system-composition';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,7 @@ export class StepFourService {
   public refidwecaresystemvolt: null | number = null;
 // 0 no, 1 si
   public cluster_singlebattery: null | number = null;
+
   constructor() { }
 
   getSystemVoltView() {

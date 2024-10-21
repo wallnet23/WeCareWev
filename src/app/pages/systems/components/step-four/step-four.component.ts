@@ -15,11 +15,7 @@ import { StepFour } from '../interfaces/step-four';
 import { Connect } from '../../../../classes/connect';
 import { StepFourService } from './step-four.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
-
-interface SystemComposition {
-  id: number | null;
-  name: string;
-}
+import { SystemComposition } from './interfaces/system-composition';
 
 @Component({
   selector: 'app-step-four',

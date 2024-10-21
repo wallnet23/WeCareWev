@@ -12,6 +12,12 @@ export const requestErrorInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
   const router = inject(Router);
   const popupDialogService = inject(PopupDialogService);
+
+  // Variabili per tracciare l'ultimo errore e l'ultimo tempo del popup
+  let lastErrorMessage: string | null = null;
+  let lastErrorTimestamp: number | null = null;
+  const popupDelay = 5000; // Intervallo di tempo minimo tra i popup (in millisecondi)
+
   return next(req).pipe(
     timeout({ each: connectServerService.getTimeoutForRequest(req), with: () => throwError(() => new Error('Timeout della richiesta')) }),
     catchError((error: HttpErrorResponse | any) => {
@@ -22,6 +28,7 @@ export const requestErrorInterceptor: HttpInterceptorFn = (req, next) => {
       let alert_type = null;
       let obj_dialog = null;
       let obj_toast = null;
+
       // Handle client-side errors
       if (error.error instanceof ErrorEvent) {
         errorMessage = `Client-side error: ${error.error.message}`;
@@ -62,7 +69,7 @@ export const requestErrorInterceptor: HttpInterceptorFn = (req, next) => {
             break;
           default:
             // Other errors
-            errorMessage = `Errore generico! Se persiste contatta il fornitore.`;
+            errorMessage = `Generic error! If it persists, contact the supplier.`;
             code = error.status;
             if ((error.error && error.error.type_alert) || error.type_alert) {
               alert_type = error.error.type_alert || error.type_alert;
@@ -84,6 +91,7 @@ export const requestErrorInterceptor: HttpInterceptorFn = (req, next) => {
 
       // Log the error to the console
       // console.error(errorMessage);
+      const currentTime = Date.now();
       const obj_request: ApiResponse<any> = {
         code: code,
         data: {},
@@ -93,8 +101,14 @@ export const requestErrorInterceptor: HttpInterceptorFn = (req, next) => {
         obj_dialog: obj_dialog,
         obj_toast: obj_toast
       }
-      if (not_popup == 0) {
+      // if (not_popup == 0) {
+      //   popupDialogService.alertElement(obj_request);
+      // }
+      // Controlla se l'errore è uguale all'ultimo errore mostrato e se è passato poco tempo
+      if (not_popup == 0 && (!lastErrorMessage || lastErrorMessage !== errorMessage || (lastErrorTimestamp && currentTime - lastErrorTimestamp > popupDelay))) {
         popupDialogService.alertElement(obj_request);
+        lastErrorMessage = errorMessage;
+        lastErrorTimestamp = currentTime;
       }
 
       // Return an observable with a user-facing error message

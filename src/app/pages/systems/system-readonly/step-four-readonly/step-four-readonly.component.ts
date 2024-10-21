@@ -23,6 +23,7 @@ export class StepFourReadonlyComponent implements OnInit{
   @Input() stepFour: StepFour | null = null;
   @Input() idsystem = 0;
 
+
   constructor(private store: Store<{ user: UserState }>) {
     // TODO: SE NECESSARIO CONVERTIRE LO STEP RICEVUTO IN INGERSSO IN UN FORM
   }

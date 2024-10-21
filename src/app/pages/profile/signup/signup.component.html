@@ -54,8 +54,8 @@
                         <option [ngValue]="null" disabled selected>{{"PROFILE.SIGNUP.SELECTCOUNTRY" |
                           translate}}</option>
                         <option *ngFor="let country of countriesData" [ngValue]="country.id">
-                          <img src="{{country.flag_png}}" width="20px" height="15px"> {{
-                          country.common_name }}
+                          <!-- <img src="{{country.flag_png}}" width="20px" height="15px">  -->
+                          {{country.common_name }}
                         </option>
                       </select>
                       <!-- <mat-select formControlName="country">
