@@ -3,11 +3,13 @@
     "MSG_DELETE": "Are you sure you want to delete the system? Irreversible action.",
     "MSG_APPROVEDSYSTEM": "If you approve the system, a request will be sent to the technician to check the system. Continue?",
     "MSG_APPROVEDSTEP": "Request not modifiable. Complete all the steps and click the approve system button!",
+    "MSG_CHANGEPWD": "Are you sure you want to change your login password?",
     "BUTTON": {
       "DELETE": "Delete",
       "CLOSE": "Close",
       "GO": "Go",
-      "SEND": "Send"
+      "SEND": "Send",
+      "UPDATE": "Update"
     },
     "TITLE": {
       "WARNING": "Warning",
@@ -146,7 +148,7 @@
       "TITLE": "SYSTEMS LIST",
       "BUTTONSEARCH": "Search",
       "SEARCHPLACEHOLDER": "Name of the system",
-      "EMPTY": "No system available, add a system to view the warranty, request an RMA or open a support ticket.",
+      "EMPTY": "No system available, add a system to view the warranty or request an RMA.",
       "DESCRIPTION": "Press the button below to add a new system to extend the warranty",
       "ADDSYSTEM": "Add New System",
       "SYSTEMCARD": {

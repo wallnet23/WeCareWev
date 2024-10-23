@@ -3,11 +3,13 @@
     "MSG_DELETE": "Sei sicuro di voler cancellare l'impianto? Azione irreversibile.",
     "MSG_APPROVEDSYSTEM": "Se approvi l'impianto, verrà inviata una richiesta al tecnico per controllare l'impianto. Proseguire?",
     "MSG_APPROVEDSTEP": "Richiesta non modificabile. Completa tutti gli step e clicca il tasto approva impianto!",
+    "MSG_CHANGEPWD": "Sei sicuro di voler cambiare la password di accesso?",
     "BUTTON": {
       "DELETE": "Cancella",
       "CLOSE": "Chiudi",
       "GO": "Vai",
-      "SEND": "Invia"
+      "SEND": "Invia",
+      "UPDATE": "Aggiorna"
     },
     "TITLE": {
       "WARNING": "Attenzione",
@@ -143,10 +145,10 @@
       "OVERVIEW": "Panoramica dell'impianto"
     },
     "SYSTEMLIST": {
-      "TITLE": "LISTA SISTEMI",
+      "TITLE": "LISTA IMPIANTI",
       "BUTTONSEARCH": "Cerca",
       "SEARCHPLACEHOLDER": "Nome dell'Impianto",
-      "EMPTY": "Nessun impianto disponibile, aggiungine uno per visualizzare la garanzia, richiedere un RMA o aprire un ticket di supporto.",
+      "EMPTY": "Nessun impianto disponibile, aggiungine uno per visualizzare la garanzia o richiedere un RMA.",
       "DESCRIPTION": "Premi il pulsante qui sotto per aggiungere un nuovo impianto per l'estensione della garanzia",
       "ADDSYSTEM": "Aggiungi Nuovo Impianto",
       "SYSTEMCARD": {

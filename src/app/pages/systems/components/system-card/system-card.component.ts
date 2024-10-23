@@ -51,25 +51,25 @@ export class SystemCardComponent {
 
   deleteSystem(id: number) {
     // Ottieni la traduzione del messaggio tramite TranslateService
-  this.translate.get(['POPUP.MSG_DELETE', 'POPUP.BUTTON.DELETE', 'POPUP.TITLE.WARNING']).subscribe((translations) => {
-    const obj_request: ApiResponse<any> = {
-      code: 240,
-      data: {},
-      title: translations['POPUP.TITLE.WARNING'],
-      message: translations['POPUP.MSG_DELETE'],
-      obj_dialog: {
-        disableClose: 1,
-        obj_buttonAction:
-        {
-          action: 1,
-          action_type: 2,
-          label: translations['POPUP.BUTTON.DELETE'],
-          run_function: (val?: number) => this.actionDeleteSystem(id)
+    this.translate.get(['POPUP.MSG_DELETE', 'POPUP.BUTTON.DELETE', 'POPUP.TITLE.WARNING']).subscribe((translations) => {
+      const obj_request: ApiResponse<any> = {
+        code: 240,
+        data: {},
+        title: translations['POPUP.TITLE.WARNING'],
+        message: translations['POPUP.MSG_DELETE'],
+        obj_dialog: {
+          disableClose: 1,
+          obj_buttonAction:
+          {
+            action: 1,
+            action_type: 2,
+            label: translations['POPUP.BUTTON.DELETE'],
+            run_function: (val?: number) => this.actionDeleteSystem(id)
+          }
         }
       }
-    }
-    this.popupDialogService.alertElement(obj_request);
-  });
+      this.popupDialogService.alertElement(obj_request);
+    });
   }
 
   private actionDeleteSystem(id: number): void {

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ConnectServerService } from '../../../services/connect-server.service';
 import { Store } from '@ngrx/store';
 import { UserState } from '../../../ngrx/user/user.reducer';
@@ -61,7 +61,8 @@ export class SettingsComponent {
   })
 
   constructor(private connectServerService: ConnectServerService,
-    private store: Store<{ user: UserState, country: CountryState}>, private popupDialogService: PopupDialogService) { }
+    private store: Store<{ user: UserState, country: CountryState}>, private popupDialogService: PopupDialogService,
+    private translate: TranslateService) { }
 
   ngOnInit() {
     this.store.select(selectAllCountries).subscribe((obj) => {
@@ -146,23 +147,26 @@ export class SettingsComponent {
 
   saveNewPassword() {
     if (this.modifyPasswordForm.valid) {
+      // Ottieni la traduzione del messaggio tramite TranslateService
+    this.translate.get(['POPUP.MSG_CHANGEPWD', 'POPUP.BUTTON.DELETE', 'POPUP.TITLE.INFO']).subscribe((translations) => {
       const obj_request: ApiResponse<any> = {
         code: 244,
         data: {},
-        title: 'Info',
-        message: 'Sei sicuro di voler cambiare la password di accesso?',
+        title: translations['POPUP.TITLE.INFO'],
+        message: translations['POPUP.MSG_CHANGEPWD'],
         obj_dialog: {
           disableClose: 1,
           obj_buttonAction:
           {
             action: 1,
             action_type: 2,
-            label: 'Update',
+            label: translations['POPUP.BUTTON.UPDATE'],
             run_function: () => this.actionUpdatePassword()
           }
         }
       }
       this.popupDialogService.alertElement(obj_request);
+    });
     }
   }
 
