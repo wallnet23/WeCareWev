@@ -34,11 +34,11 @@
 
         <div class="container-fluid">
             <div class="row justify-content-center mt-2">
-                <ng-container *ngFor="let image2 of imagesStep">
-                    <div *ngIf="image2.src" class="col-xs-12 col-sm-6 col-md-2 mb-4 text-center"
+                <ng-container *ngFor="let image of imagesStep">
+                    <div *ngIf="image.src" class="col-xs-12 col-sm-6 col-md-2 mb-4 text-center"
                         style="width: 100px; height: 100px;">
                         <!-- L'URL sicuro è già gestito nel componente -->
-                        <img [src]="image2.src" [alt]="image2.title" class="img-fluid thumbnailImg">
+                        <img [src]="image.src" [alt]="image.title" class="img-fluid thumbnailImg">
                     </div>
                 </ng-container>
             </div>

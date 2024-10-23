@@ -75,7 +75,7 @@ export class StepThreeReadonlyComponent {
     this.connectServerService.getRequest<ApiResponse<{ listFiles: Image[] }>>(Connect.urlServerLaraApi, 'system/filesList',
       {
         idsystem: this.idsystem,
-        step_position: 2
+        step_position: 3
       })
       .subscribe((val: ApiResponse<{ listFiles: Image[] }>) => {
         if (val.data.listFiles) {

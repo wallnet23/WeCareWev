@@ -284,7 +284,7 @@ export class StepTwoComponent {
     const stepTwo = this.stepTwoForm.getRawValue();
 
     if (this.stepTwoForm.valid) {
-      this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepFive',
+      this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepTwo',
         {
           idsystem: this.idsystem,
           obj_step: stepTwo,
