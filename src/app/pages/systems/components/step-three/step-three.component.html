@@ -84,7 +84,7 @@
         <label *ngIf="imagesStep3.length < maxImagesStep3" for="fileUpload3" class="btn btn-outline-dark">
           <i class="bi bi-upload" style="margin-right: 4px;"></i>
           {{"SYSTEM.STEPTHREE.IMPORT" | translate}}
-          <input type="file" id="fileUpload3" style="display: none;" (change)="onFileSelected($event)" accept="image/*"
+          <input type="file" id="fileUpload3" style="display: none;" (change)="onFileSelected($event)"
             multiple>
         </label>
       </div>

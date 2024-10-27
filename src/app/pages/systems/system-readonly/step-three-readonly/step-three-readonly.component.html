@@ -38,7 +38,8 @@
                     <div *ngIf="image.src" class="col-xs-12 col-sm-6 col-md-2 mb-4 text-center"
                         style="width: 100px; height: 100px;">
                         <!-- L'URL sicuro è già gestito nel componente -->
-                        <img [src]="image.src" [alt]="image.title" class="img-fluid thumbnailImg">
+                        <a [href]="urlServerLaraMedia+image.src" target="_blank">{{ image.title || 'Apri File' }}</a>
+                        <!-- <img [src]="image.src" [alt]="image.title" class="img-fluid thumbnailImg"> -->
                     </div>
                 </ng-container>
             </div>

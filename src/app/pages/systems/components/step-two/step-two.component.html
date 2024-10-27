@@ -16,7 +16,7 @@
         <div class="col-12 col-lg-6 mb-3">
           <label for="location_address" style="font-weight: bold;">{{"SYSTEM.STEPTWO.ADDRESS" | translate}}<sup class="small-asterisk">*</sup></label>
           <input type="text" name="location_address" id="location_address" formControlName="location_address"
-            class="form-control" placeholder="{{'SYSTEM.STEPTWO.ADDRESS' | translate}}" 
+            class="form-control" placeholder="{{'SYSTEM.STEPTWO.ADDRESS' | translate}}"
             [class.is-invalid]="stepTwoForm.get('location_address')?.invalid && (stepTwoForm.get('location_address')?.dirty || submitted)">
             <div class="text-danger mt-1" *ngIf="stepTwoForm.get('location_address')?.invalid && (stepTwoForm.get('location_address')?.dirty || submitted)" style="font-size: small;">{{"SYSTEM.STEPTWO.ADDRESSERROR" | translate}}</div>
         </div>
@@ -52,7 +52,7 @@
       <ng-container *ngFor="let image2 of imagesStep2">
         <div *ngIf="image2.src" class="col-xs-12 col-sm-6 col-md-2 mb-4 text-center" style="width: 100px; height: 100px;">
           <!-- L'URL sicuro è già gestito nel componente -->
-          <img [src]="image2.src" [alt]="image2.title" class="img-fluid thumbnailImg">
+          <img [src]="urlServerLaraMedia+image2.src" [alt]="image2.title" class="img-fluid thumbnailImg">
           <i class="bi bi-trash trash" (click)="deleteImg(image2.id)"></i>
         </div>
       </ng-container>

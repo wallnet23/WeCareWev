@@ -121,21 +121,6 @@ export class StepFourComponent {
       })
   }
 
-  private enableDisableFields(val: number) {
-    if (val == 1) {
-      this.stepFourForm.get('refidwecaresystemvolt')?.disable();
-      this.stepFourForm.get('system_model')?.disable();
-      this.stepFourForm.get('refidwecaresystemtype')?.disable();
-      this.stepFourForm.get('cluster_singlebattery')?.disable();
-      this.stepFourForm.get('cluster_numberdevices')?.disable();
-    } else if (val == 3) {
-      this.stepFourForm.get('refidwecaresystemvolt')?.enable();
-      this.stepFourForm.get('system_model')?.enable();
-      this.stepFourForm.get('refidwecaresystemtype')?.enable();
-      this.stepFourForm.get('cluster_singlebattery')?.enable();
-      this.stepFourForm.get('cluster_numberdevices')?.enable();
-    }
-  }
 
 
   // private getViewStepInverterValid() {
@@ -180,7 +165,7 @@ export class StepFourComponent {
             product_systemweco: 1
           });
           this.stepFourForm.get('product_systemweco')?.enable();
-          this.enableDisableFields(val);
+          this.stepFourService.enableDisableFields(this.stepFourForm, val);
           // Batterie e inverter
         } else if (val && val == 3) {
           this.wecoComposition = [
@@ -205,10 +190,11 @@ export class StepFourComponent {
             product_systemweco: null
           });
           this.stepFourForm.get('product_systemweco')?.enable();
-          this.enableDisableFields(val);
+          this.stepFourService.enableDisableFields(this.stepFourForm, val);
         }
       }
     );
+
     this.stepFourForm.get('refidwecaresystemvolt')?.valueChanges.subscribe(
       (val) => {
         this.stepFourService.updateSystemVolt(this.stepFourForm, val, () => { });
@@ -221,6 +207,7 @@ export class StepFourComponent {
     this.stepFourForm.get('cluster_singlebattery')?.valueChanges.subscribe(
       (val) => {
         // non è single battery
+        // console.log('non è single battery', val);
         if (val === 0) {
           this.stepFourForm.get('cluster_numberdevices')?.enable();
         }else if(val == 1){

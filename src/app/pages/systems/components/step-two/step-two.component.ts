@@ -42,7 +42,7 @@ export class StepTwoComponent {
 
   @Output() formEmit = new EventEmitter<FormGroup>();
   @Output() readonlyEmit = new EventEmitter<void>();
-  @Output() changeStep = new EventEmitter<{step: number, action: number}>();
+  @Output() changeStep = new EventEmitter<{ step: number, action: number }>();
 
   @Input() isReadonly = false;
   @Input() idsystem = 0;
@@ -69,7 +69,7 @@ export class StepTwoComponent {
     location_city: new FormControl<string>('', Validators.required),
     location_postalcode: new FormControl<string>('', Validators.required)
   });
-
+  urlServerLaraMedia = Connect.urlServerLaraMedia;
   ngOnInit() {
     this.connectServerService.getRequestCountry().subscribe((obj) => {
       this.countriesData = obj;
@@ -113,7 +113,7 @@ export class StepTwoComponent {
           if (action == 'next') {
             setTimeout(() => {
               // console.log('Emitting nextStep');
-              this.changeStep.emit({step: 2, action: 1});
+              this.changeStep.emit({ step: 2, action: 1 });
             }, 0);
           }
         })
@@ -121,7 +121,7 @@ export class StepTwoComponent {
   }
 
   previous() {
-    this.changeStep.emit({step: 2, action: 0});
+    this.changeStep.emit({ step: 2, action: 0 });
   }
 
   updateStep() {
@@ -220,11 +220,11 @@ export class StepTwoComponent {
         if (val.data.listFiles) {
           this.imagesStep2 = val.data.listFiles.map(image => {
             // Chiama ImageLoaderService solo una volta per immagine
-            this.imageLoaderService.getImageWithToken(Connect.urlServerLaraFile + image.src).subscribe(
-              (safeUrl) => {
-                image.src = safeUrl; // Assegna l'URL sicuro all'immagine
-              }
-            );
+            // this.imageLoaderService.getImageWithToken(Connect.urlServerLaraFile + image.src).subscribe(
+            //   (safeUrl) => {
+            //     image.src = safeUrl; // Assegna l'URL sicuro all'immagine
+            //   }
+            // );
             return image;
           });
         }

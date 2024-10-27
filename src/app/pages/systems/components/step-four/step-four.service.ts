@@ -23,7 +23,7 @@ export class StepFourService {
   public product_systemcomposition: null | number = null;
   // lv o hv
   public refidwecaresystemvolt: null | number = null;
-// 0 no, 1 si
+  // 0 no, 1 si
   public cluster_singlebattery: null | number = null;
 
   constructor() { }
@@ -78,13 +78,14 @@ export class StepFourService {
     this.refidwecaresystemvolt = obj_stepfour.refidwecaresystemvolt;
     this.cluster_singlebattery = obj_stepfour.cluster_singlebattery;
     form.get('product_systemcomposition')?.setValue(obj_stepfour.product_systemcomposition);
-    console.log('obj_stepfour.product_systemcomposition', obj_stepfour.product_systemcomposition);
+    // console.log('obj_stepfour.product_systemcomposition', obj_stepfour.product_systemcomposition);
     form.get('product_systemweco')?.setValue(obj_stepfour.product_systemweco);
     form.get('product_installdate')?.setValue(obj_stepfour.product_installdate);
     form.get('product_brand')?.setValue(obj_stepfour.product_brand);
     form.get('inverter_online')?.setValue(obj_stepfour.inverter_online);
     form.get('inverter_hybrid')?.setValue(obj_stepfour.inverter_hybrid);
     form.get('refidwecaresystemvolt')?.setValue(obj_stepfour.refidwecaresystemvolt);
+    this.enableDisableFields(form, obj_stepfour.product_systemcomposition);
     // Gestisci manualmente i campi dipendenti
     this.updateSystemVolt(form, obj_stepfour.refidwecaresystemvolt, () => {
       form.get('system_model')?.setValue(obj_stepfour.system_model);
@@ -96,6 +97,28 @@ export class StepFourService {
         }
       });
     });
+  }
+
+  /**
+   *
+   * @param form
+   * @param product_systemcomposition_val
+   */
+  public enableDisableFields(form: FormGroup, product_systemcomposition_val: number | null) {
+    // console.log(product_systemcomposition_val);
+    if (product_systemcomposition_val == 1) {
+      form.get('refidwecaresystemvolt')?.disable();
+      form.get('system_model')?.disable();
+      form.get('refidwecaresystemtype')?.disable();
+      form.get('cluster_singlebattery')?.disable();
+      form.get('cluster_numberdevices')?.disable();
+    } else if (product_systemcomposition_val == 3) {
+      form.get('refidwecaresystemvolt')?.enable();
+      form.get('system_model')?.enable();
+      form.get('refidwecaresystemtype')?.enable();
+      form.get('cluster_singlebattery')?.enable();
+      form.get('cluster_numberdevices')?.enable();
+    }
   }
 
   /**

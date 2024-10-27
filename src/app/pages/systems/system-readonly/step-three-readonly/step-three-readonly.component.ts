@@ -42,11 +42,13 @@ export class StepThreeReadonlyComponent {
   imagesStep: Image[] = [];
   urlServerLaraApi = Connect.urlServerLaraApi;
   modalImageUrl: string = '';
+  urlServerLaraMedia = Connect.urlServerLaraMedia;
 
   constructor(private fb: FormBuilder, private connectServerService: ConnectServerService,
     private imageLoaderService: ImageLoaderService, private store: Store<{ user: UserState }>) { }
 
   ngOnInit(): void {
+
     // TODO: SE NECESSARIO CONVERTIRE LO STEP RICEVUTO IN INGERSSO IN UN FORM
     // this.connectServerService.getRequestCountry().subscribe((val: Country[]) => {
     //   this.countriesList = val;
@@ -81,11 +83,11 @@ export class StepThreeReadonlyComponent {
         if (val.data.listFiles) {
           this.imagesStep = val.data.listFiles.map(image => {
             // Chiama ImageLoaderService solo una volta per immagine
-            this.imageLoaderService.getImageWithToken(Connect.urlServerLaraFile + image.src).subscribe(
-              (safeUrl) => {
-                image.src = safeUrl; // Assegna l'URL sicuro all'immagine
-              }
-            );
+            // this.imageLoaderService.getImageWithToken(Connect.urlServerLaraFile + image.src).subscribe(
+            //   (safeUrl) => {
+            //     image.src = safeUrl; // Assegna l'URL sicuro all'immagine
+            //   }
+            // );
             return image;
           });
         }

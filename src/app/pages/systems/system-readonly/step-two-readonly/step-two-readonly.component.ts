@@ -9,6 +9,7 @@ import { Image } from '../../components/interfaces/image';
 import { Connect } from '../../../../classes/connect';
 import { ApiResponse } from '../../../../interfaces/api-response';
 import { ImageLoaderService } from '../../../../services/image-loader.service';
+import { SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-step-two-readonly',
@@ -40,7 +41,7 @@ export class StepTwoReadonlyComponent {
   imagesStep: Image[] = [];
   urlServerLaraApi = Connect.urlServerLaraApi;
   modalImageUrl: string = '';
-
+  urlServerLaraMedia = Connect.urlServerLaraMedia;
   constructor(private fb: FormBuilder, private connectServerService: ConnectServerService,
     private imageLoaderService: ImageLoaderService) { }
 
@@ -73,11 +74,11 @@ export class StepTwoReadonlyComponent {
         if (val.data.listFiles) {
           this.imagesStep = val.data.listFiles.map(image => {
             // Chiama ImageLoaderService solo una volta per immagine
-            this.imageLoaderService.getImageWithToken(Connect.urlServerLaraFile + image.src).subscribe(
-              (safeUrl) => {
-                image.src = safeUrl; // Assegna l'URL sicuro all'immagine
-              }
-            );
+            // this.imageLoaderService.getImageWithToken(Connect.urlServerLaraFile + image.src).subscribe(
+            //   (safeUrl) => {
+            //     image.src = safeUrl; // Assegna l'URL sicuro all'immagine
+            //   }
+            // );
             return image;
           });
         }
@@ -88,5 +89,8 @@ export class StepTwoReadonlyComponent {
     // this.modalImageUrl = img.src;
     this.modalImageUrl = '';
   }
-
+  selectedImage: string | null | SafeUrl = null;
+  openModal(imageSrc: string | SafeUrl) {
+    this.selectedImage = this.urlServerLaraMedia+imageSrc;
+  }
 }

@@ -236,11 +236,11 @@ export class SystemManagementComponent {
 
   // Funzione che gestiosce lo scrolling degli step
   manageStepScrolling($event: { step: number, action: number }, stepper: MatStepper) {
-    console.log("EDITABLE1", $event)
+    // console.log("EDITABLE1", $event)
     if ($event.action == 0) {
       this.isEditable[$event.step - 1] = false;
       this.isEditable[$event.step - 2] = true;
-      console.log("EDITABLE2", this.isEditable)
+      // console.log("EDITABLE2", this.isEditable)
       setTimeout(() => {
         stepper.previous();
       }, 0);
@@ -248,7 +248,7 @@ export class SystemManagementComponent {
     else if ($event.action == 1) {
       this.isEditable[$event.step - 1] = false;
       this.isEditable[$event.step] = true;
-      console.log("EDITABLE2", this.isEditable)
+      // console.log("EDITABLE2", this.isEditable)
       setTimeout(() => {
         stepper.next();
       }, 0);

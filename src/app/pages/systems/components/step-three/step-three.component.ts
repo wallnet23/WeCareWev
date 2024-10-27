@@ -74,6 +74,7 @@ export class StepThreeComponent implements OnInit {
     installer_dateofpurchase: new FormControl<string>('', Validators.required)
   });
 
+  urlServerLaraMedia = Connect.urlServerLaraMedia;
   ngOnInit() {
     this.connectServerService.getRequestCountry().subscribe((obj) => {
       this.countriesData = obj;
@@ -82,6 +83,7 @@ export class StepThreeComponent implements OnInit {
       this.infoStep();
       this.getImages();
     }
+
   }
 
   constructor(private formBuilder: FormBuilder,
@@ -182,11 +184,11 @@ export class StepThreeComponent implements OnInit {
         if (val.data.listFiles) {
           this.imagesStep3 = val.data.listFiles.map(image => {
             // Chiama ImageLoaderService solo una volta per immagine
-            this.imageLoaderService.getImageWithToken(Connect.urlServerLaraFile + image.src).subscribe(
-              (safeUrl) => {
-                image.src = safeUrl; // Assegna l'URL sicuro all'immagine
-              }
-            );
+            // this.imageLoaderService.getImageWithToken(Connect.urlServerLaraFile + image.src).subscribe(
+            //   (safeUrl) => {
+            //     image.src = safeUrl; // Assegna l'URL sicuro all'immagine
+            //   }
+            // );
             return image;
           });
         }
