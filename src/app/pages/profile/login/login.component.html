@@ -1,4 +1,4 @@
-<div class="d-flex py-3 py-md-1 verticalDimensionPage" style="min-height: 86%">
+<div class="d-flex py-3 py-md-1 verticalDimensionPage">
   <div class="container" id="fullPage">
     <div class="card login-card">
       <div class="row justify-content-center">
@@ -10,10 +10,14 @@
             <div class="languageBox">
               <app-language></app-language>
             </div>
-            <div class="brand-wrapper">
+            <div class="brand-wrapper d-none d-md-block">
               <img src="assets/img/logo.png" alt="logo" class="logo">
             </div>
-            <p class="login-card-description">{{"PROFILE.LOGIN.SIGNIN" | translate}}</p>
+            <div class="brand-wrapper d-md-none text-center mt-2">
+              <img src="assets/img/logo.png" alt="logo" class="logo">
+            </div>
+            <p class="login-card-description d-none d-md-block">{{"PROFILE.LOGIN.SIGNIN" | translate}}</p>
+            <p class="login-card-description d-md-none text-center">{{"PROFILE.LOGIN.SIGNIN" | translate}}</p>
             <form [formGroup]="loginForm">
               <div class="form-group">
                 <label for="email" class="sr-only">{{"PROFILE.LOGIN.EMAIL" | translate}}</label>

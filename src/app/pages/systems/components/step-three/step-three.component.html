@@ -55,6 +55,7 @@
             {{"SYSTEM.STEPTHREE.EMAILERROR" | translate}}</div>
         </div>
 
+        <!-- DATA DI ACQUISTO -->
         <div class="col-12 col-lg-6 mb-3">
           <label for="installer_dateofpurchase" style="font-weight: bold;">{{"SYSTEM.STEPTHREE.DATEOFPURCHASE" |
             translate}}<sup class="small-asterisk">*</sup></label>
@@ -94,14 +95,14 @@
       </div>
     </div>
 
-    <div *ngIf="!isReadonly; else updateBlock" class="col-12 text-center">
-      <button class="btn btn-outline-dark mr-2" (click)="previous()">
+    <div *ngIf="!isReadonly; else updateBlock" class="col-12 text-center px-0">
+      <button class="btn btn-outline-dark me-0 me-md-2" (click)="previous()">
         {{"SYSTEM.STEPBUTTONS.PREV" | translate}}
       </button>
-      <button class="btn btn-outline-dark ms-2 me-2" id="next" (click)="saveStep('save')">
+      <button class="btn btn-outline-dark ms-1 me-1 ms-md-2 me-md-2" id="next" (click)="saveStep('save')">
         {{"SYSTEM.STEPBUTTONS.SAVE" | translate}}
       </button>
-      <button class="btn btn-outline-dark ml-2" [disabled]="stepThreeForm.invalid || isError"
+      <button class="btn btn-outline-dark me-0 ms-md-2" [disabled]="stepThreeForm.invalid || isError"
         (click)="saveStep('next')">
         {{"SYSTEM.STEPBUTTONS.NEXT" | translate}}
       </button>

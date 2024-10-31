@@ -10,9 +10,9 @@
 }
 
 html, body {
-  overscroll-behavior: none; /* Disabilita lo scroll "beyond bounds" */
-
   @media screen and (min-width: 350px) {
     overflow-x: hidden;
   }
+
+  height: 100%;
 }

@@ -266,7 +266,9 @@
       "SINGLEBATTERY": "Batteria Singola",
       "YES": "Sì",
       "NO": "No",
-      "DEVICESFORCLUSTER": "Quanti dispositivi per ogni Cluster"
+      "DEVICESFORCLUSTER": "Quanti dispositivi per ogni Cluster",
+      "BATTERYINVERTER": "Batterie e Inverter",
+      "BATTERIES": "Batterie"
     },
     "STEPFIVE": {
       "MODELERROR": "Inserisci un modello",

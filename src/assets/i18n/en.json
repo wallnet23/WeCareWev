@@ -266,7 +266,9 @@
       "SINGLEBATTERY": "Single Battery",
       "YES": "Yes",
       "NO": "No",
-      "DEVICESFORCLUSTER": "How many devices for each Cluster"
+      "DEVICESFORCLUSTER": "How many devices for each Cluster",
+      "BATTERYINVERTER": "Battery and Inverter",
+      "BATTERIES": "Batteries"
     },
     "STEPFIVE": {
       "MODELERROR": "Insert a model",

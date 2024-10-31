@@ -2,8 +2,13 @@
     position: absolute;
     height: 40px;
     width: 60px;
-    top: 10px;
-    right: 60px;
+    top: 5px;
+    right: 30px;
+
+    @media screen and (min-width: 769px) {
+        top: 10px;
+        right: 60px;
+    }
 }
 
 .register {
@@ -131,12 +136,7 @@ form {
 }
 
 .verticalDimensionPage {
-    align-items: normal;
-    
-    @media screen and (min-width: 450px) {
         align-items: center;
-    }
-    
 }
 
 .error {

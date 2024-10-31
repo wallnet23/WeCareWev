@@ -60,7 +60,7 @@ export class StepFourComponent {
     },
     {
       id: 3,
-      name: 'Battery and Inverter'
+      name: this.translate.instant('SYSTEM.STEPFOUR.BATTERYINVERTER')
     }];
   numCluster = Array(15).fill(0).map((_, i) => ({
     num: i + 1,
@@ -180,11 +180,11 @@ export class StepFourComponent {
             },
             {
               id: 2,
-              name: 'Battery'
+              name: this.translate.instant('SYSTEM.STEPFOUR.BATTERIES')
             },
             {
               id: 3,
-              name: 'Battery and Inverter'
+              name: this.translate.instant('SYSTEM.STEPFOUR.BATTERYINVERTER')
             }
           ];
           this.stepFourForm.patchValue({
