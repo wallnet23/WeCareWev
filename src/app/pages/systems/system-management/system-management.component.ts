@@ -227,7 +227,7 @@ export class SystemManagementComponent {
   }
 
   goBack() {
-    this.location.back();
+    this.router.navigate(['home']);
   }
 
   goToSystem() {

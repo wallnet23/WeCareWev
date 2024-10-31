@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, Validators, FormsModule, ReactiveFormsModule, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators, FormsModule, ReactiveFormsModule, FormControl, FormGroup, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -41,9 +41,11 @@ import { ImageLoaderService } from '../../../../services/image-loader.service';
 })
 export class StepThreeComponent implements OnInit {
 
+  today = new Date().toISOString().split('T')[0];
+
   @Output() formEmit = new EventEmitter<FormGroup>();
   @Output() readonlyEmit = new EventEmitter<void>();
-  @Output() changeStep = new EventEmitter<{step: number, action: number}>();
+  @Output() changeStep = new EventEmitter<{ step: number, action: number }>();
 
   @Input() isReadonly = false;
   @Input() idsystem = 0;
@@ -71,7 +73,7 @@ export class StepThreeComponent implements OnInit {
     idcountry: new FormControl<number | null>(null, Validators.required),
     vendor_contact: new FormControl<string>(''),
     installer_email: new FormControl<string>('', [Validators.email, Validators.required]),
-    installer_dateofpurchase: new FormControl<string>('', Validators.required)
+    installer_dateofpurchase: new FormControl<string>('', [Validators.required, this.dateRangeValidator('2022-01-01', this.today)])
   });
 
   urlServerLaraMedia = Connect.urlServerLaraMedia;
@@ -104,7 +106,7 @@ export class StepThreeComponent implements OnInit {
     //this.errorLogic();
     this.submitted = true;
     //if (action == 'save' || (!this.isError && action == 'next')) {
-    if(this.stepThreeForm.valid) {
+    if (this.stepThreeForm.valid) {
       let stepThree = JSON.parse(JSON.stringify(this.stepThreeForm.getRawValue()));
       if (stepThree.idcountry) {
         this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepThree',
@@ -119,7 +121,7 @@ export class StepThreeComponent implements OnInit {
             if (action == 'next') {
               setTimeout(() => {
                 console.log('Emitting nextStep');
-                this.changeStep.emit({step: 3, action: 1});
+                this.changeStep.emit({ step: 3, action: 1 });
               }, 0);
             }
           })
@@ -128,7 +130,7 @@ export class StepThreeComponent implements OnInit {
   }
 
   previous() {
-    this.changeStep.emit({step: 3, action: 0});
+    this.changeStep.emit({ step: 3, action: 0 });
   }
 
   updateStep() {
@@ -310,6 +312,28 @@ export class StepThreeComponent implements OnInit {
           this.readonlyEmit.emit();
         })
     }
+  }
+
+  dateRangeValidator(minDate: string, maxDate: string): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const selectedDate = new Date(control.value);
+      const min = new Date(minDate);
+      const max = new Date(maxDate);
+  
+      if (isNaN(selectedDate.getTime())) {
+        return { invalidDate: true };
+      }
+  
+      if (selectedDate < min) {
+        return { dateTooEarly: true };
+      }
+  
+      if (selectedDate > max) {
+        return { dateTooLate: true };
+      }
+  
+      return null;
+    };
   }
 
 }

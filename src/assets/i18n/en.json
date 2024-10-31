@@ -4,6 +4,7 @@
     "MSG_APPROVEDSYSTEM": "If you approve the system, a request will be sent to the technician to check the system. Continue?",
     "MSG_APPROVEDSTEP": "Request not modifiable. Complete all the steps and click the approve system button!",
     "MSG_CHANGEPWD": "Are you sure you want to change your login password?",
+    "MSG_WORKINPROGRESS": "Work in progress. Feature to be implemented!",
     "BUTTON": {
       "DELETE": "Delete",
       "CLOSE": "Close",
@@ -164,7 +165,16 @@
       "TITLE": "LIST OF SYSTEM TICKETS",
       "BUTTONSEARCH": "Search",
       "SEARCHPLACEHOLDER": "Name of the system",
-      "EMPTY": ""
+      "EMPTY": "",
+      "PROBLEM": "Problem Description",
+      "INVERTERSUPPORT": "Inverter Support",
+      "MODEL": "Model",
+      "NOTREQUESTEDINVERTER": "Support not requested for the inverter",
+      "BATTERY": "Battery",
+      "CLUSTERSUPPORT": "Cluster Support",
+      "NOTREQUESTEDCLUSTER": "Support not requested for the cluster",
+      "RELATEDINVERTER": "Related Inverter",
+      "SEETICKET": "See Ticket"
     },
     "STEPONE": {
       "FISCALCODEERROR": "Insert the fiscal code",
@@ -218,7 +228,7 @@
       "EMAIL": "Email",
       "EMAILERROR": "Insert the installer email with correct format",
       "DATEOFPURCHASE": "Date Of Purchase",
-      "DATEERROR": "Insert the date of purchase",
+      "DATEERROR": "Date range from 01/01/2022 to today",
       "IMAGELIMIT": "Image limit reached",
       "IMPORT": "Import",
       "IMPORTINVOICE": "Import a picture of the invoice (max 2 files)",
@@ -233,7 +243,7 @@
       "BATTERYTYPEERROR": "Select battery's model",
       "DEVICESFORCLUSTERERROR": "Insert a value",
       "INSTALLATIONDATE": "Installation Date",
-      "DATEERROR": "Insert the installation date",
+      "DATEERROR": "Date range from 01/01/2022 to today",
       "SYSCOMPOSITION": "System Composition",
       "SYSERROR": "Insert the system composition",
       "WECOPRODUCTS": "Weco Products in the System",
@@ -378,7 +388,8 @@
       "REFRESH": "Refresh the page to try again",
       "YES": "Yes",
       "NO": "No",
-      "BATTERY": "Battery"
+      "BATTERY": "Battery",
+      "BATTERIES": "Batterie"
     }
   },
   "TICKET": {

@@ -13,7 +13,7 @@
                 <h5 class="card-header orangeBg">{{ticket.title}}</h5>
                 <div class="card-body">
                     <div class="row">
-                        <span class="listTitle">Problem Description: </span><br>
+                        <span class="listTitle">{{ 'SYSTEM.SYSTEMTICKETLIST.PROBLEM' | translate}}: </span><br>
                         <div class="col-12">
                             <div class="listDescription">{{ticket.description}}</div>
                         </div>
@@ -21,7 +21,7 @@
 
                     <div *ngIf="setInverterProblem(ticket)" class="row">
                         <div class="col-12 mb-2">
-                            <span class="listTitle">Inverter Support: </span><br>
+                            <span class="listTitle">{{ 'SYSTEM.SYSTEMTICKETLIST.INVERTERSUPPORT' | translate}}: </span><br>
                         </div>
                         <div *ngFor="let inverter of setInverterProblem(ticket); let i = index" class="col-12 col-md-6 mt-1">
                             <div class="card">
@@ -31,7 +31,7 @@
                                 <div class="card-body">
                                     <span style="font-size: small; font-weight: bold;">Serial Number: </span><br>
                                     <span style="font-size: small;">{{inverter.serialNumber}}</span><br>
-                                    <span style="font-size: small; font-weight: bold;">Model: </span><br>
+                                    <span style="font-size: small; font-weight: bold;">{{ 'SYSTEM.SYSTEMTICKETLIST.MODEL' | translate}}: </span><br>
                                     <span style="font-size: small;">{{inverter.model}}</span><br>
                                 </div>
                             </div>
@@ -39,22 +39,22 @@
                     </div>
                     <div class="row">
                         <div *ngIf="setInverterProblem(ticket)">
-                            <span class="listTitle">Inverter Support: </span><br>
-                            <div style="padding: 1rem;">Support not requested for the inverter</div>
+                            <span class="listTitle">{{ 'SYSTEM.SYSTEMTICKETLIST.INVERTERSUPPORT' | translate}}: </span><br>
+                            <div style="padding: 1rem;">{{ 'SYSTEM.SYSTEMTICKETLIST.NOTREQUESTEDINVERTER' | translate}}</div>
                         </div>
                     </div>
 
                     <div *ngIf="setClusterProblem(ticket)" class="row mt-3">
                         <div class="col-12 mb-2">
-                            <span class="listTitle">Cluster Support: </span><br>
+                            <span class="listTitle">{{ 'SYSTEM.SYSTEMTICKETLIST.CLUSTERSUPPORT' | translate}}: </span><br>
                         </div>
                         <div *ngFor="let battery of setClusterProblem(ticket); let i = index" class="col-12 col-md-6 mt-1">
                             <div class="card cardStyle">
                                 <div class="card-header text-center">
-                                    <span style="font-size: small; font-weight: bold;">Battery #{{i+1}}</span>
+                                    <span style="font-size: small; font-weight: bold;">{{ 'SYSTEM.SYSTEMTICKETLIST.BATTERY' | translate}} #{{i+1}}</span>
                                 </div>
                                 <div class="card-body">
-                                    <span style="font-size: small; font-weight: bold;">Related Inverter: </span><br>
+                                    <span style="font-size: small; font-weight: bold;">{{ 'SYSTEM.SYSTEMTICKETLIST.RELATEDINVERTER' | translate}}: </span><br>
                                     <span style="font-size: small;">{{battery.relatedInverter}}</span><br>
                                     <span style="font-size: small; font-weight: bold;">Serial Number: </span><br>
                                     <span style="font-size: small;">{{battery.serialNumber}}</span><br>
@@ -64,13 +64,13 @@
                     </div>
                     <div class="row mt-2">
                         <div *ngIf="!setClusterProblem(ticket)">
-                            <span class="listTitle">Cluster Support: </span><br>
-                            <div style="padding: 1rem;">Support not requested for the cluster</div>
+                            <span class="listTitle">{{ 'SYSTEM.SYSTEMTICKETLIST.CLUSTERSUPPORT' | translate}}: </span><br>
+                            <div style="padding: 1rem;">{{ 'SYSTEM.SYSTEMTICKETLIST.NOTREQUESTEDCLUSTER' | translate}}</div>
                         </div>
                     </div>
                 </div>
                 <div class="card-footer text-center orangeBg">
-                    <div href="#" class="btn btn-outline-dark btn-light" (click)="goTo(ticket.id)">See Ticket</div>
+                    <div href="#" class="btn btn-outline-dark btn-light" (click)="goTo(ticket.id)">{{ 'SYSTEM.SYSTEMTICKETLIST.SEETICKET' | translate}}</div>
                 </div>
             </div>
         </div>

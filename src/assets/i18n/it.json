@@ -4,6 +4,7 @@
     "MSG_APPROVEDSYSTEM": "Se approvi l'impianto, verrà inviata una richiesta al tecnico per controllare l'impianto. Proseguire?",
     "MSG_APPROVEDSTEP": "Richiesta non modificabile. Completa tutti gli step e clicca il tasto approva impianto!",
     "MSG_CHANGEPWD": "Sei sicuro di voler cambiare la password di accesso?",
+    "MSG_WORKINPROGRESS": "Lavori in corso. Funzionalità da implementare!",
     "BUTTON": {
       "DELETE": "Cancella",
       "CLOSE": "Chiudi",
@@ -164,7 +165,16 @@
       "TITLE": "LISTA DEI TICKET DEL IMPIANTO",
       "BUTTONSEARCH": "Cerca",
       "SEARCHPLACEHOLDER": "Nome dell'impianto",
-      "EMPTY": ""
+      "EMPTY": "",
+      "PROBLEM": "Descrizione Problema",
+      "INVERTERSUPPORT": "Supporto Inverter",
+      "MODEL": "Modello",
+      "NOTREQUESTEDINVERTER": "Supporto non richiesto per l'inverter",
+      "BATTERY": "Batteria",
+      "CLUSTERSUPPORT": "Supporto Cluster",
+      "NOTREQUESTEDCLUSTER": "Supporto non richiesto per il cluster",
+      "RELATEDINVERTER": "Inverter collegato",
+      "SEETICKET": "Vedi Ticket"
     },
     "STEPONE": {
       "FISCALCODEERROR": "Inserisci il codice fiscale",
@@ -218,7 +228,7 @@
       "EMAIL": "Email",
       "EMAILERROR": "Inserisci l'e-mail dell'installatore nel formato corretto",
       "DATEOFPURCHASE": "Data di acquisto",
-      "DATEERROR": "Inserire la data di acquisto",
+      "DATEERROR": "Range data scelta tra 01/01/2022 ed oggi",
       "IMAGELIMIT": "Limite immagine raggiunto",
       "IMPORT": "Importa",
       "IMPORTINVOICE": "Importa un'immagine o un pdf della fattura (max 2 file)",
@@ -233,7 +243,7 @@
       "BATTERYTYPEERROR": "Seleziona un modello di batteria",
       "DEVICESFORCLUSTERERROR": "Inserisci un valore",
       "INSTALLATIONDATE": "Data di Installazione",
-      "DATEERROR": "Inserisci la data di installazione",
+      "DATEERROR": "Range data scelta tra 01/01/2022 ed oggi",
       "SYSCOMPOSITION": "Componenti impianto",
       "SYSERROR": "Inserisci la composizione dell'impianto",
       "WECOPRODUCTS": "Prodotti Weco nell'impianto",
@@ -377,7 +387,8 @@
       "REFRESH": "Ricarica la pagina per riprovare",
       "YES": "Sì",
       "NO": "No",
-      "BATTERY": "Batteria"
+      "BATTERY": "Batteria",
+      "BATTERIES": "Batterie"
     }
   }
 }

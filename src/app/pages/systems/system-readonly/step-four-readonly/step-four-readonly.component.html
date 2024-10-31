@@ -9,15 +9,14 @@
     <div class="col-12 col-md-6 col-lg-4 col-xxl-3">
       <span class="subtitles">{{"SYSTEM.READONLY.SYSCOMPOSITION" | translate}}: </span>
       <p *ngIf="stepFour?.product_systemcomposition == 1" class="content">Inverter</p>
-      <p *ngIf="stepFour?.product_systemcomposition == 3" class="content">Inverter / Batteries</p>
+      <p *ngIf="stepFour?.product_systemcomposition == 3" class="content">Inverter / {{"SYSTEM.READONLY.BATTERIES" | translate}}</p>
       <p *ngIf="stepFour?.product_systemcomposition == null" class="content">--</p>
     </div>
     <div class="col-12 col-md-6 col-lg-4 col-xxl-3">
       <span class="subtitles">{{"SYSTEM.READONLY.WECOCOMPONENTS" | translate}}: </span>
       <p *ngIf="stepFour?.product_systemweco == 1" class="content">Inverter</p>
-      <p *ngIf="stepFour?.product_systemweco == 2" class="content">Batteries</p>
-      <p *ngIf="stepFour?.product_systemweco == 3" class="content">Inverter / Batteries</p>
-
+      <p *ngIf="stepFour?.product_systemweco == 2" class="content">{{"SYSTEM.READONLY.BATTERY" | translate}}</p>
+      <p *ngIf="stepFour?.product_systemweco == 3" class="content">Inverter / {{"SYSTEM.READONLY.BATTERIES" | translate}}</p>
     </div>
     <div class="col-12 col-md-6 col-lg-4 col-xxl-3" *ngIf="stepFour?.product_systemcomposition == 3 &&
           stepFour?.product_systemweco != null && stepFour?.product_systemweco != 3">

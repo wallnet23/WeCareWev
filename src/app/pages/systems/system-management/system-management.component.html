@@ -105,8 +105,12 @@
               translate}}</span></ng-template>
           <div class="text-center">
             <p>{{"SYSTEM.SYSTEMMANAGEMENT.REQUEST" | translate}}</p>
-            <button class="btn btn-outline-dark me-2" matStepperPrevious>{{"SYSTEM.STEPBUTTONS.PREV" |
-              translate}}</button>
+            <button *ngIf="stepFourService.product_systemcomposition === 3;" class="btn btn-outline-dark me-2" (click)="manageStepScrolling({step: 7, action: 0}, stepper)">{{"SYSTEM.STEPBUTTONS.PREV" |
+              translate}}
+            </button>
+            <button *ngIf="stepFourService.product_systemcomposition != 3" class="btn btn-outline-dark me-2" (click)="manageStepScrolling({step: 6, action: 0}, stepper)">{{"SYSTEM.STEPBUTTONS.PREV" |
+                translate}}
+            </button>
             <!-- <button mat-button (click)="stepper.reset()">Reset</button> -->
             <button class="btn btn-outline-dark ms-2" (click)="approvalRequested()" [disabled]="!getAllFormValid()">
               {{"SYSTEM.STEPBUTTONS.SEND" | translate}}

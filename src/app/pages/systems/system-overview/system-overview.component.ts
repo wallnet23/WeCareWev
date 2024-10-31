@@ -9,10 +9,9 @@ import { ConnectServerService } from '../../../services/connect-server.service';
 import { ApiResponse } from '../../../interfaces/api-response';
 import { Connect } from '../../../classes/connect';
 import { SystemInfo } from '../interfaces/system-info';
-import { Ticket } from '../../tickets/interfaces/ticket';
 import { RMA } from '../interfaces/rma';
 import { PopupDialogService } from '../../../services/popup-dialog.service';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-system-overview',
@@ -41,7 +40,7 @@ export class SystemOverviewComponent {
   systemRMA!: RMA;
 
   constructor(private popupDialogService: PopupDialogService, private route: ActivatedRoute,
-    public dialog: MatDialog, private router: Router,
+    public dialog: MatDialog, private router: Router, private translate: TranslateService,
     private connectServerService: ConnectServerService, private location: Location) {
 
     this.route.params.subscribe(params => {
@@ -52,32 +51,32 @@ export class SystemOverviewComponent {
   }
 
   getSystemOverview() {
-    this.connectServerService.getRequest<ApiResponse<{systemInfo: SystemInfo, systemWarranty: Warranty, systemRMA: RMA}>>
-    (Connect.urlServerLaraApi, 'system/systemOverview', {id: this.idsystem})
-    .subscribe((val: ApiResponse<{systemInfo: SystemInfo,  systemWarranty: Warranty, systemRMA: RMA}>) => {
-      if(val.data) {
-        this.systemInfo = val.data.systemInfo;
-        // this.systemTickets = val.data.systemTickets;
-        this.systemWarranty = val.data.systemWarranty;
-        this.systemRMA = val.data.systemRMA;
-        // if(this.systemTickets.length > 0) {
-        //   this.isTicket = true;
-        // }
-        // console.log("System info:", this.systemInfo)
-      }
-    })
+    this.connectServerService.getRequest<ApiResponse<{ systemInfo: SystemInfo, systemWarranty: Warranty, systemRMA: RMA }>>
+      (Connect.urlServerLaraApi, 'system/systemOverview', { id: this.idsystem })
+      .subscribe((val: ApiResponse<{ systemInfo: SystemInfo, systemWarranty: Warranty, systemRMA: RMA }>) => {
+        if (val.data) {
+          this.systemInfo = val.data.systemInfo;
+          // this.systemTickets = val.data.systemTickets;
+          this.systemWarranty = val.data.systemWarranty;
+          this.systemRMA = val.data.systemRMA;
+          // if(this.systemTickets.length > 0) {
+          //   this.isTicket = true;
+          // }
+          // console.log("System info:", this.systemInfo)
+        }
+      })
   }
 
   modifyDescription(description: string) {
     // console.log(description);
-    this.connectServerService.postRequest<ApiResponse<{system_description: string}>>
-    (Connect.urlServerLaraApi, 'system/systemModifyDescription', {idsystem: this.idsystem, system_description: description})
-    .subscribe((val: ApiResponse<{system_description: string}>) => {
-      this.popupDialogService.alertElement(val);
-      if(val.data) {
-        this.systemInfo!.system_description = val.data.system_description;
-      }
-    })
+    this.connectServerService.postRequest<ApiResponse<{ system_description: string }>>
+      (Connect.urlServerLaraApi, 'system/systemModifyDescription', { idsystem: this.idsystem, system_description: description })
+      .subscribe((val: ApiResponse<{ system_description: string }>) => {
+        this.popupDialogService.alertElement(val);
+        if (val.data) {
+          this.systemInfo!.system_description = val.data.system_description;
+        }
+      })
   }
 
   // ticketsListSystem() {
@@ -100,17 +99,19 @@ export class SystemOverviewComponent {
   }
 
   warrantyInfo() {
-    const obj_request: ApiResponse<any> = {
-      code: 244,
-      data: {},
-      title: 'Info',
-      message: 'Works in progress. Feature to be implemented!',
-      obj_dialog: {
-        disableClose: 0
+    this.translate.get(['POPUP.TITLE.INFO', 'POPUP.MSG_WORKINPROGRESS']).subscribe((translations) => {
+      const obj_request: ApiResponse<any> = {
+        code: 244,
+        data: {},
+        title: translations['POPUP.TITLE.INFO'],
+        message: translations['POPUP.MSG_WORKINPROGRESS'],
+        obj_dialog: {
+          disableClose: 0
+        }
       }
-    }
-    this.popupDialogService.alertElement(obj_request);
-    // this.router.navigate(['/warrantyInfo', this.idsystem]);
+      this.popupDialogService.alertElement(obj_request);
+      // this.router.navigate(['/warrantyInfo', this.idsystem]);
+    });
   }
 
   goBack() {

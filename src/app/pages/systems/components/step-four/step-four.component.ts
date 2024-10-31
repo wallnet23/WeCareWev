@@ -1,8 +1,7 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { CommonModule } from '@angular/common';
 import { MatStepperModule } from '@angular/material/stepper';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -36,6 +35,8 @@ import { SystemComposition } from './interfaces/system-composition';
   styleUrl: './step-four.component.scss'
 })
 export class StepFourComponent {
+
+  today = new Date().toISOString().split('T')[0];
 
   submitted = false;
   @Output() formEmit = new EventEmitter<FormGroup>();
@@ -71,7 +72,7 @@ export class StepFourComponent {
   }));
   view_stepinverter = false;
   stepFourForm = this.formBuilder.group({
-    product_installdate: new FormControl<null | string>(null, Validators.required),
+    product_installdate: new FormControl<null | string>(null, [Validators.required, this.dateRangeValidator('2022-01-01', this.today)]),
     product_systemcomposition: new FormControl<number | null>(null, Validators.required),
     product_systemweco: new FormControl<number | null>(null, Validators.required),
     product_brand: new FormControl(''),
@@ -291,6 +292,28 @@ export class StepFourComponent {
           this.readonlyEmit.emit();
         })
     }
+  }
+
+  dateRangeValidator(minDate: string, maxDate: string): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const selectedDate = new Date(control.value);
+      const min = new Date(minDate);
+      const max = new Date(maxDate);
+  
+      if (isNaN(selectedDate.getTime())) {
+        return { invalidDate: true };
+      }
+  
+      if (selectedDate < min) {
+        return { dateTooEarly: true };
+      }
+  
+      if (selectedDate > max) {
+        return { dateTooLate: true };
+      }
+  
+      return null;
+    };
   }
 
 }

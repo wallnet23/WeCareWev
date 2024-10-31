@@ -8,3 +8,11 @@
   padding-left: 0px !important;
   padding-right: 0px !important;
 }
+
+html, body {
+  overscroll-behavior: none; /* Disabilita lo scroll "beyond bounds" */
+
+  @media screen and (min-width: 350px) {
+    overflow-x: hidden;
+  }
+}

@@ -63,7 +63,8 @@
             placeholder="{{'SYSTEM.STEPTHREE.DATEPLACEHOLDER' | translate}}"
             [class.is-invalid]="stepThreeForm.get('installer_dateofpurchase')?.invalid && (stepThreeForm.get('installer_dateofpurchase')?.dirty || submitted)">
           <div class="text-danger mt-1" *ngIf="stepThreeForm.get('installer_dateofpurchase')?.invalid && (stepThreeForm.get('installer_dateofpurchase')?.dirty || submitted)" style="font-size: small;">
-            {{"SYSTEM.STEPTHREE.DATEERROR" | translate}}</div>
+            {{"SYSTEM.STEPTHREE.DATEERROR" | translate}}
+          </div>
         </div>
       </div>
     </div>
