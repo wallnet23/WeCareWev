@@ -206,7 +206,7 @@ export class SystemManagementComponent {
     // console.log("Received 1")
     if (this.idsystem > 0) {
       this.connectServerService.getRequest<ApiResponse<{ status: { id: number, name: string, color: string } }>>
-        (Connect.urlServerLaraApi, 'system/systemState', { idsystem: this.idsystem })
+        (Connect.urlServerLaraApi, 'system/systemStatus', { idsystem: this.idsystem })
         .subscribe((val: ApiResponse<{ status: { id: number, name: string, color: string } }>) => {
           if (val.data) {
             this.systemStatus = val.data.status;
