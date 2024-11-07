@@ -259,7 +259,7 @@ export class SystemReadonlyComponent {
         .subscribe((val: ApiResponse<{ status: { id: number, name: string, color: string } }>) => {
           if (val.data) {
             this.systemStatus = val.data.status;
-           //  console.log(this.systemStatus)
+            //  console.log(this.systemStatus)
             // if(this.systemStatus.id == 2) {
             //   this.validStepOne = true;
             //   this.validStepTwo = true;
@@ -268,9 +268,7 @@ export class SystemReadonlyComponent {
             //   this.validStepFive = true;
             //   this.validStepSix = true;
             // }
-            if (this.systemStatus.id == 3) {
-              // CHIAMATA AL SERVER PER SAPERE QUALI SONO GLI STEP INVALIDI E RECUPERARE LE TEXTAREA
-            }
+
           }
         })
     }
@@ -306,22 +304,25 @@ export class SystemReadonlyComponent {
       })
   }
 
-  // initializeStepStatusList() {
-  //   let i = 0;
-  //   for (i; i < 6; i++) {
-  //     const item = {
-  //       step: 0,
-  //       listStepStatus: {
-  //         idstatus: 0,
-  //         name_status: '',
-  //         color: '',
-  //         message: null,
-  //         message_date: null,
-  //       }
-  //     }
-  //     this.stepStatusList.push(item);
-  //   }
-  // }
+  getOkToApproval(): boolean {
+    if (this.systemStatus?.id == 7 && this.checkFirstStepStatus()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+// Funzione per verificare se ogni step non ha lo stato 15 non conforme.
+private checkFirstStepStatus(): boolean {
+  return this.stepStatusList.every(step =>
+    step.listStepStatus.length > 0 &&
+    (step.listStepStatus[0].idstepstatus === 5 || step.listStepStatus[0].idstepstatus === 10)
+  );
+}
+
+approvalRequested(){
+
+}
 
   @HostListener('click')
   onClick() {

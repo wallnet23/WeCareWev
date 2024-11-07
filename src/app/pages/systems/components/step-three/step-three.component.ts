@@ -319,19 +319,19 @@ export class StepThreeComponent implements OnInit {
       const selectedDate = new Date(control.value);
       const min = new Date(minDate);
       const max = new Date(maxDate);
-  
+
       if (isNaN(selectedDate.getTime())) {
         return { invalidDate: true };
       }
-  
+
       if (selectedDate < min) {
         return { dateTooEarly: true };
       }
-  
+
       if (selectedDate > max) {
         return { dateTooLate: true };
       }
-  
+
       return null;
     };
   }

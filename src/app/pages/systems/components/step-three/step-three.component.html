@@ -74,7 +74,7 @@
       <ng-container *ngFor="let image3 of imagesStep3">
         <div class="col-xs-12 col-sm-6 col-md-2 mb-4 text-center" style="width: 100px; height: 100px;">
           <!-- L'URL sicuro è già gestito nel componente -->
-          <img [src]="image3.src" [alt]="image3.title" class="img-fluid thumbnailImg">
+          <img [src]="urlServerLaraMedia+image3.src" [alt]="image3.title" class="img-fluid thumbnailImg">
           <i class="bi bi-trash trash" (click)="deleteImg(image3.id)"></i>
         </div>
       </ng-container>

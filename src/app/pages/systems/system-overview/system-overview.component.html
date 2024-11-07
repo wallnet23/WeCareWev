@@ -105,7 +105,8 @@
             <span class="listTitle">{{"SYSTEM.OVERVIEW.WARRANTYSTATUS" | translate}}: </span><br>
             <!-- <span class="listDescription">{{warrantyExtensionStatus}}</span> -->
           </p>
-          <p class="paragraph" *ngIf="systemInfo?.status?.id == 4; else warrantyBlock">
+          <!-- Se completato -->
+          <p class="paragraph" *ngIf="systemInfo?.status?.id == 15; else warrantyBlock">
 
           </p>
           <ng-template #warrantyBlock>
