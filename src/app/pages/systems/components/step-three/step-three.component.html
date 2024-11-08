@@ -1,8 +1,8 @@
 <div class="container">
   <form [formGroup]="stepThreeForm">
-    <div class="form-group">
+    <div class="form-group" style="margin-bottom: 0 !important;">
       <div class="row mt-2">
-        <div class="col-12 col-lg-6 mb-3">
+        <div class="col-12 col-lg-6 mb-1">
           <label for="installer_companyname" style="font-weight: bold;">{{"SYSTEM.STEPTHREE.COMPANYNAME" |
             translate}}<sup class="small-asterisk">*</sup></label>
           <input type="text" name="installer_companyname" id="installer_companyname"
@@ -79,19 +79,20 @@
         </div>
       </ng-container>
     </div>
-    <div class="row justify-content-center mt-3 mb-3">
-      <div class="col-md-4 text-center">
-        <label *ngIf="!imageSpaceLeftStep3" class="text-danger">{{"SYSTEM.STEPTHREE.IMAGELIMIT" |
-          translate}}</label><br>
+    <div class="row justify-content-center mb-5">
+      <div class="col-md-4 text-center d-flex flex-column" style="max-width: 250px;">
+        <div class="col-12 text-center" style="font-size: small;">
+          {{"SYSTEM.STEPTHREE.IMPORTINVOICE" | translate}}
+        </div>
+        <label *ngIf="!imageSpaceLeftStep3" class="text-danger">
+          {{"SYSTEM.STEPTHREE.IMAGELIMIT" | translate}}
+        </label><br>
         <label *ngIf="imagesStep3.length < maxImagesStep3" for="fileUpload3" class="btn btn-outline-dark">
           <i class="bi bi-upload" style="margin-right: 4px;"></i>
           {{"SYSTEM.STEPTHREE.IMPORT" | translate}}
           <input type="file" id="fileUpload3" style="display: none;" (change)="onFileSelected($event)"
             multiple>
         </label>
-      </div>
-      <div class="col-12 text-center" style="font-size: small;">
-        {{"SYSTEM.STEPTHREE.IMPORTINVOICE" | translate}}
       </div>
     </div>
 

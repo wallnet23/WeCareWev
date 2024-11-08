@@ -14,11 +14,13 @@
         </div>
         <div class="col-6 col-md-4 col-lg-3">
             <span class="subtitles">{{"SYSTEM.READONLY.DATEOFPURCHASE" | translate}}: </span>
-            <p class="content">{{stepThree?.installer_dateofpurchase | date: (currentLanguage === 'it' ? 'dd/MM/yyyy' : 'yyyy-MM-dd')}}</p>
+            <p class="content">{{stepThree?.installer_dateofpurchase | date: (currentLanguage === 'it' ? 'dd/MM/yyyy' :
+                'yyyy-MM-dd')}}</p>
         </div>
         <div class="col-6 col-md-4 col-lg-3">
             <span class="subtitles">{{"SYSTEM.READONLY.VENDORCONTACT" | translate}}: </span>
-            <p *ngIf="stepThree?.vendor_contact; else emptyFieldVendor" class="content">{{stepThree?.vendor_contact}}</p>
+            <p *ngIf="stepThree?.vendor_contact; else emptyFieldVendor" class="content">{{stepThree?.vendor_contact}}
+            </p>
             <ng-template #emptyFieldVendor>
                 <p class="content">-</p>
             </ng-template>
@@ -35,14 +37,30 @@
         <div class="container-fluid">
             <div class="row justify-content-center mt-2">
                 <ng-container *ngFor="let image of imagesStep">
-                    <div *ngIf="image.src" class="col-xs-12 col-sm-6 col-md-2 mb-4 text-center"
-                        style="width: 100px; height: 100px;">
+                    <div *ngIf="image.src && readonlyPopup; else noModal" class="col-xs-12 col-sm-6 col-md-2 mb-4 text-center"
+                        style="width: 100px; height: 100px;" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                        (click)="openModal(image.src)">
                         <!-- L'URL sicuro è già gestito nel componente -->
-                        <a [href]="urlServerLaraMedia+image.src" target="_blank">{{ image.title || 'Apri File' }}</a>
+                        <img [src]="urlServerLaraMedia+image.src" class="img-fluid thumbnailImg">
                         <!-- <img [src]="image.src" [alt]="image.title" class="img-fluid thumbnailImg"> -->
                     </div>
+                    <ng-template #noModal>
+                        <div class="col-xs-12 col-sm-6 col-md-2 mb-4 text-center" style="width: 100px; height: 100px;">
+                          <!-- L'URL sicuro è già gestito nel componente -->
+                          <img [src]="urlServerLaraMedia+image.src" [alt]="image.title" class="img-fluid thumbnailImg">
+                        </div>
+                      </ng-template>
                 </ng-container>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- Visualizzazione immagine -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <img *ngIf="selectedImage" [src]="selectedImage" style="width: 150%; height: auto;">
         </div>
     </div>
 </div>

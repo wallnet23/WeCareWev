@@ -1,0 +1,114 @@
+<div style="min-width: 350px;">
+    <h1 mat-dialog-title class="bg-primary bg-gradient text-light text-center">
+        {{"SYSTEM.SYSTEMMANAGEMENT.OVERVIEW" | translate}}
+    </h1>
+
+    <mat-dialog-content class="pt-2 pb-2" style="min-width: 350px !important; max-height: 75vh !important;">
+        <!-- STEP ONE -->
+        <div class="container-fluid">
+            <div class="row align-items-center justify-content-center mt-2">
+                <div class="col-12 title-line">
+                    <span class="sectionTitle">
+                        {{"SYSTEM.SYSTEMMANAGEMENT.SYSANDCUSTINFO" | translate}}
+                    </span>
+                    <div class="line"></div>
+                </div>
+            </div>
+            <div class="row justify-content-center align-items-center">
+                <app-step-one-readonly [idsystem]="idsystem" [countriesList]="countriesList"
+                    [stepOne]="systemInfo.stepOne">
+                </app-step-one-readonly>
+            </div>
+        </div>
+
+        <!-- STEP TWO -->
+        <div class="container-fluid">
+            <div class="row align-items-center justify-content-center mt-2">
+                <div class="col-12 title-line">
+                    <span class="sectionTitle">
+                        {{"SYSTEM.SYSTEMMANAGEMENT.INSTALLATIONSITE" | translate}}
+                    </span>
+                    <div class="line"></div>
+                </div>
+            </div>
+            <div class="row justify-content-center align-items-center">
+                <app-step-two-readonly [readonlyPopup]="false" [countriesList]="countriesList" [idsystem]="idsystem"
+                    [stepTwo]="systemInfo.stepTwo">
+                </app-step-two-readonly>
+            </div>
+        </div>
+
+        <!-- STEP THREE -->
+        <div class="container-fluid">
+            <div class="row align-items-center justify-content-center mt-2">
+                <div class="col-12 title-line">
+                    <span class="sectionTitle">
+                        {{"SYSTEM.SYSTEMMANAGEMENT.TECHNICIANINFO" | translate}}
+                    </span>
+                    <div class="line"></div>
+                </div>
+            </div>
+            <div class="row justify-content-center align-items-center">
+                <app-step-three-readonly [readonlyPopup]="false" [stepThree]="systemInfo.stepThree" [countriesList]="countriesList"
+                    [idsystem]="idsystem">
+                </app-step-three-readonly>
+            </div>
+        </div>
+
+        <!-- STEP FOUR -->
+        <div class="container-fluid">
+            <div class="row align-items-center justify-content-center mt-2">
+                <div class="col-12 title-line">
+                    <span class="sectionTitle">
+                        {{"SYSTEM.SYSTEMMANAGEMENT.DEVICESINFO" | translate}}
+                    </span>
+                    <div class="line"></div>
+                </div>
+            </div>
+            <div class="row justify-content-center align-items-center">
+                <app-step-four-readonly [stepFour]="systemInfo.stepFour" [idsystem]="idsystem">
+                </app-step-four-readonly>
+            </div>
+        </div>
+
+        <!-- STEP FIVE -->
+        <div class="container-fluid">
+            <div class="row align-items-center justify-content-center mt-2">
+                <div class="col-12 title-line">
+                    <span class="sectionTitle">
+                        {{"SYSTEM.SYSTEMMANAGEMENT.INVERTER" | translate}}
+                    </span>
+                    <div class="line"></div>
+                </div>
+            </div>
+            <div class="row justify-content-center align-items-center">
+                <app-step-five-readonly 
+                    [stepFive]="systemInfo.stepFive" [idsystem]="idsystem">
+                </app-step-five-readonly>
+            </div>
+        </div>
+
+        <!-- STEP SIX -->
+        <div class="container-fluid" *ngIf="systemInfo.stepFour.product_systemcomposition == 3">
+            <div class="row align-items-center justify-content-center mt-2">
+                <div class="col-12 title-line">
+                    <span class="sectionTitle">
+                        {{"SYSTEM.SYSTEMMANAGEMENT.BATTERIES" | translate}}
+                    </span>
+                    <div class="line"></div>
+                </div>
+            </div>
+            <div class="row justify-content-center align-items-center">
+                <app-step-six-readonly [stepSix]="systemInfo.stepSix"
+                    [idsystem]="idsystem">
+            </app-step-six-readonly>
+            </div>
+        </div>
+    </mat-dialog-content>
+
+    <mat-dialog-actions class="justify-content-center bg-primary bg-gradient text-light">
+        <button class="btn btn-outline-light me-2" (click)="close()">
+            {{"SYSTEM.READDATAPOPUP.CLOSE" | translate}}
+        </button>
+    </mat-dialog-actions>
+</div>

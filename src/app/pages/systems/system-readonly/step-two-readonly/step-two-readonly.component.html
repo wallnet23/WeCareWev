@@ -24,14 +24,19 @@
     <div class="container-fluid">
       <div class="row justify-content-center mt-2">
         <ng-container *ngFor="let image2 of imagesStep">
-          <div *ngIf="image2.src" class="col-xs-12 col-sm-6 col-md-2 mb-4 text-center"
+          <div *ngIf="image2.src && readonlyPopup; else noModal" class="col-xs-12 col-sm-6 col-md-2 mb-4 text-center"
             style="width: 100px; height: 100px;" data-bs-toggle="modal" data-bs-target="#exampleModal"
             (click)="openModal(image2.src)">
             <!-- L'URL sicuro è già gestito nel componente -->
             <img [src]="urlServerLaraMedia+image2.src" [alt]="image2.title" class="img-fluid thumbnailImg">
           </div>
+          <ng-template #noModal>
+            <div class="col-xs-12 col-sm-6 col-md-2 mb-4 text-center" style="width: 100px; height: 100px;">
+              <!-- L'URL sicuro è già gestito nel componente -->
+              <img [src]="urlServerLaraMedia+image2.src" [alt]="image2.title" class="img-fluid thumbnailImg">
+            </div>
+          </ng-template>
         </ng-container>
-
       </div>
     </div>
   </div>

@@ -11,6 +11,7 @@ import { Connect } from '../../../../classes/connect';
 import { ImageLoaderService } from '../../../../services/image-loader.service';
 import { Store } from '@ngrx/store';
 import { UserState } from '../../../../ngrx/user/user.reducer';
+import { SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-step-three-readonly',
@@ -29,6 +30,7 @@ export class StepThreeReadonlyComponent {
   @Input() stepThree: StepThree | null = null;
   @Input() idsystem = 0;
   @Input() countriesList: Country[] = [];
+  @Input() readonlyPopup: boolean = true;
 
   stepTwoForm = this.fb.group({
     idcountry: [0, Validators.required],
@@ -97,6 +99,10 @@ export class StepThreeReadonlyComponent {
   setImage(img: Image) {
     // this.modalImageUrl = img.src;
     this.modalImageUrl = '';
+  }
+  selectedImage: string | null | SafeUrl = null;
+  openModal(imageSrc: string | SafeUrl) {
+    this.selectedImage = this.urlServerLaraMedia+imageSrc;
   }
 
 }

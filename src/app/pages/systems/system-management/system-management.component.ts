@@ -1,4 +1,4 @@
-import { Component, inject, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, NgZone, ViewChild } from '@angular/core';
 import { Validators, FormsModule, ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 import { STEPPER_GLOBAL_OPTIONS, StepperSelectionEvent } from '@angular/cdk/stepper';
 import { MatButtonModule } from '@angular/material/button';
@@ -24,6 +24,8 @@ import { StepFourComponent } from '../components/step-four/step-four.component';
 import { StepFourService } from '../components/step-four/step-four.service';
 import { StepFiveComponent } from "../components/step-five/step-five.component";
 import { StepSixComponent } from "../components/step-six/step-six.component";
+import { ReadDataPopupComponent } from '../components/read-data-popup/read-data-popup.component';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-system-management',
@@ -50,6 +52,9 @@ import { StepSixComponent } from "../components/step-six/step-six.component";
   styleUrl: './system-management.component.scss'
 })
 export class SystemManagementComponent {
+
+  readonly dialog = inject(MatDialog);
+
   allFormValid: boolean = true;
   idsystem: number = 0;
   systemName: string = '';
@@ -253,6 +258,33 @@ export class SystemManagementComponent {
         stepper.next();
       }, 0);
     }
+  }
+
+  topScroll() {
+    // Scorre sia il document.documentElement che il body
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+
+    // Alternativa con scrollTo per sicurezza
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  readOnly() {
+    setTimeout(() => {
+      this.topScroll()
+    }, 0);
+
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.width = '90%';  // Larghezza al 90% della finestra
+    dialogConfig.maxWidth = '100vw'; // Impedisce lo sbordo laterale
+    dialogConfig.maxHeight = '100vh'; // Impedisce lo sbordo verticale
+    dialogConfig.position = { top: '75px' }; // Posiziona il modale a partire da 5vh dall'alto
+
+    // Passa i dati al modale
+    dialogConfig.data = { idsystem: this.idsystem };
+
+    const dialogRef = this.dialog.open(ReadDataPopupComponent, dialogConfig);
   }
 
 }

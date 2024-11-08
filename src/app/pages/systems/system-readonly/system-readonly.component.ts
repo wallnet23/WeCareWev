@@ -36,6 +36,10 @@ import { StepSixComponent } from "../components/step-six/step-six.component";
 import { ErrorMessageComponent } from "../error-message/error-message.component";
 import { StepStatus } from '../interfaces/step-status';
 import { StepFourService } from '../components/step-four/step-four.service';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { ReadDataPopupComponent } from '../components/read-data-popup/read-data-popup.component';
+import { MatTableModule } from '@angular/material/table';
 
 declare var $: any;
 
@@ -51,6 +55,8 @@ declare var $: any;
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    MatTooltipModule,
+    MatTableModule,
     StepOneReadonlyComponent,
     StepTwoReadonlyComponent,
     StepThreeReadonlyComponent,
@@ -70,6 +76,12 @@ declare var $: any;
 })
 export class SystemReadonlyComponent {
 
+  displayedColumns: string[] = ['date', 'status', 'message'];
+
+  readonly dialog = inject(MatDialog);
+  systemStatusList: { id: number, name: string, color: string, message: string | null,
+    message_date: string | null }[] = [];
+
   @ViewChild('stepOne') obj_stepOne!: StepOneReadonlyComponent;
   @ViewChild('stepTwo') obj_stepTwo!: StepTwoReadonlyComponent;
   @ViewChild('stepThree') obj_stepThree!: StepThreeReadonlyComponent;
@@ -80,7 +92,7 @@ export class SystemReadonlyComponent {
   modalImageUrl: string = '';
 
   // TODO: MODIFICARE SYSTEM STATUS CON QUELLO REALE
-  systemStatus: { id: number, name: string, color: string } | null = null;
+  systemStatus: { id: number, name: string, color: string }[] = [];
   idsystem: number = 0;
   systemInfo: SystemInfoFull = this.initSystem();
   imagesStep2: Image[] = [];
@@ -110,6 +122,7 @@ export class SystemReadonlyComponent {
   }
 
   getSystem() {
+    this.getStatus();
     this.getStepStatus();
     this.getCountries();
     this.getStepOne();
@@ -258,17 +271,8 @@ export class SystemReadonlyComponent {
         (Connect.urlServerLaraApi, 'system/systemStatus', { idsystem: this.idsystem })
         .subscribe((val: ApiResponse<{ status: { id: number, name: string, color: string } }>) => {
           if (val.data) {
-            this.systemStatus = val.data.status;
-            //  console.log(this.systemStatus)
-            // if(this.systemStatus.id == 2) {
-            //   this.validStepOne = true;
-            //   this.validStepTwo = true;
-            //   this.validStepThree = true;
-            //   this.validStepFour = true;
-            //   this.validStepFive = true;
-            //   this.validStepSix = true;
-            // }
-
+            this.systemStatus = [];
+            this.systemStatus.push(val.data.status);
           }
         })
     }
@@ -305,7 +309,7 @@ export class SystemReadonlyComponent {
   }
 
   getOkToApproval(): boolean {
-    if (this.systemStatus?.id == 7 && this.checkFirstStepStatus()) {
+    if (this.systemStatus[0]?.id == 7 && this.checkFirstStepStatus()) {
       return true;
     } else {
       return false;
@@ -314,14 +318,14 @@ export class SystemReadonlyComponent {
 
 // Funzione per verificare se ogni step non ha lo stato 15 non conforme.
 private checkFirstStepStatus(): boolean {
-  return this.stepStatusList.every(step =>
+  return this.stepStatusList.some(step =>
     step.listStepStatus.length > 0 &&
-    (step.listStepStatus[0].idstepstatus === 5 || step.listStepStatus[0].idstepstatus === 10)
+    (step.listStepStatus[0].idstepstatus == 15)
   );
 }
 
 approvalRequested(){
-
+  //CAMBIA LO STATO ED INVIA NUOVAMENTE IL FORM PER IL CONTROLLO
 }
 
   @HostListener('click')
@@ -345,6 +349,34 @@ approvalRequested(){
   onDataReceived() {
     this.getSystem();
   }
+
+  topScroll() {
+    // Scorre sia il document.documentElement che il body
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+
+    // Alternativa con scrollTo per sicurezza
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  readOnly() {
+    setTimeout(() => {
+      this.topScroll()
+    }, 0);
+
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.width = '90%';  // Larghezza al 90% della finestra
+    dialogConfig.maxWidth = '100vw'; // Impedisce lo sbordo laterale
+    dialogConfig.maxHeight = '100vh'; // Impedisce lo sbordo verticale
+
+    // Passa i dati al modale
+    dialogConfig.data = { idsystem: this.idsystem };
+
+    const dialogRef = this.dialog.open(ReadDataPopupComponent, dialogConfig);
+  }
+
+  
 
   private initSystem() {
     return {

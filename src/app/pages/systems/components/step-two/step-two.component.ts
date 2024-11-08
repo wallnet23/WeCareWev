@@ -55,7 +55,7 @@ export class StepTwoComponent {
   imagesStep2: Image[] = [];
   countriesData: Country[] = [];
   urlServerLaraFile = Connect.urlServerLaraFile;
-  isError: boolean = false;
+  //isError: boolean = false;
   errors = {
     idcountry: false,
     location_address: false,
@@ -98,7 +98,7 @@ export class StepTwoComponent {
     //this.errorLogic();
     this.submitted = true;
     //if (action == 'save' || (action == 'next' && !this.isError)) {
-    if (this.stepTwoForm.valid) {
+    if (this.stepTwoForm.valid && this.imagesStep2.length >= 5) {
       let stepTwo = JSON.parse(JSON.stringify(this.stepTwoForm.getRawValue()));
 
       this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepTwo',

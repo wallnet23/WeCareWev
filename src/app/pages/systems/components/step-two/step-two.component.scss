@@ -17,3 +17,25 @@
 .small-asterisk {
     font-size: 1rem !important;
 }
+
+.imagePictures {
+    width: 60%; 
+    height: auto; 
+    cursor: pointer;
+
+    @media screen and (min-width: 500px) {
+        width: 50%;
+    }
+    @media screen and (min-width: 600px) {
+        width: 45%;
+    }
+    @media screen and (min-width: 700px) {
+        width: 40%;
+    }
+    @media screen and (min-width: 800px) {
+        width: 35%;
+    }
+    @media screen and (min-width: 900px) {
+        width: 30%;
+    }
+}

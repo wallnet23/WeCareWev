@@ -7,19 +7,20 @@
       <div class="card mt-4" *ngFor="let system of systemsList">
         <div class="card-header noPointer p-0">
           <div class="row justify-content-center align-items-center">
-            <div class="col-2 text-start d-none d-md-inline">
-              <i class="bi bi-circle-fill status" matTooltip="Status: {{system.status?.name}}"
+            <div class="col-12 text-center" (click)="systemOverview(system.id)">
+              <span style="font-weight: 400; font-size: x-large;">{{system.system_name}}</span>
+          </div>
+          <div class="row justify-content-center align-items-center">
+            <div class="col-6 text-start d-none d-md-inline pe-0">
+              <i class="bi bi-circle-fill status me-1" matTooltip="Status: {{system.status?.name}}"
                 [ngStyle]="{'color':  '#'+system.status?.color}">
               </i>
+              <span class="d-none d-xl-inline" style="font-size: small;">{{system.status?.name}}</span>
             </div>
-            <div class="col-10 col-md-8 text-md-center text-start">
-              <button type="button" class="btn" (click)="systemOverview(system.id)">
-                <h5 style="font-weight: bold; font-size: x-large;">{{system.system_name}}</h5>
-              </button>
-            </div>
-            <div class="col-2 text-end">
+            <div class="col-6 text-end">
               <i class="bi bi-trash iconCursor me-2" style="color: #ca2314;" (click)="deleteSystem(system.id)"></i>
             </div>
+          </div>
           </div>
         </div>
         <div class="card-body" (click)="systemOverview(system.id)">

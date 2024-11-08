@@ -1,11 +1,13 @@
 .mat-mdc-form-field {
     margin-top: 16px;
 }
+
 .arrowBtn {
-  position: absolute !important;
-  margin-top: 16px;
+  margin-top: 20px;
   margin-left: 50px;
   z-index: 100;
+  position: absolute;
+  background-color: white;
 }
 
 .arrowBtn:hover {

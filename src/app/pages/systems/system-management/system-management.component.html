@@ -1,4 +1,4 @@
-<div class="arrowBtn d-none d-sm-inline">
+<div class="arrowBtn d-none d-md-inline">
   <a (click)="goBack()" class="btn btn-outline-dark">
     <i class="bi bi-arrow-left arrowIcon"></i>
   </a>
@@ -101,8 +101,14 @@
           </mat-step> -->
 
         <mat-step>
-          <ng-template matStepLabel><span style="font-weight: bold;">{{"SYSTEM.SYSTEMMANAGEMENT.CONFIRMATION" |
-              translate}}</span></ng-template>
+          <ng-template matStepLabel>
+            <span style="font-weight: bold;">{{"SYSTEM.SYSTEMMANAGEMENT.CONFIRMATION" | translate}}</span>
+          </ng-template>
+          <div class="col-12 text-center px-0 py-2">
+            <button class="btn btn-outline-dark mb-2" (click)="readOnly()">
+              {{"SYSTEM.SYSTEMMANAGEMENT.OVERVIEW" | translate}}
+            </button>
+          </div>
           <div class="text-center">
             <p>{{"SYSTEM.SYSTEMMANAGEMENT.REQUEST" | translate}}</p>
             <button *ngIf="stepFourService.product_systemcomposition === 3;" class="btn btn-outline-dark me-2" (click)="manageStepScrolling({step: 7, action: 0}, stepper)">{{"SYSTEM.STEPBUTTONS.PREV" |

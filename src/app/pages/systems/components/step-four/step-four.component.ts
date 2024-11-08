@@ -73,8 +73,8 @@ export class StepFourComponent {
   view_stepinverter = false;
   stepFourForm = this.formBuilder.group({
     product_installdate: new FormControl<null | string>(null, [Validators.required, this.dateRangeValidator('2022-01-01', this.today)]),
-    product_systemcomposition: new FormControl<number | null>(null, Validators.required),
-    product_systemweco: new FormControl<number | null>(null, Validators.required),
+    product_systemcomposition: new FormControl<number | null>(3, Validators.required),
+    product_systemweco: new FormControl<number | null>(3, Validators.required),
     product_brand: new FormControl(''),
     inverter_hybrid: new FormControl<number | null | boolean>(null),
     inverter_online: new FormControl<number | null | boolean>(null),
@@ -118,6 +118,10 @@ export class StepFourComponent {
           const data_step = val.data.stepFour;
           // this.stepFourForm.patchValue(data_step);
           this.stepFourService.infoClusters(this.stepFourForm, data_step);
+        }
+        if (!this.stepFourForm.get('product_systemcomposition')?.value) {
+          this.stepFourForm.get('product_systemcomposition')?.setValue(3);
+          this.stepFourForm.get('product_systemweco')?.setValue(3);
         }
       })
   }

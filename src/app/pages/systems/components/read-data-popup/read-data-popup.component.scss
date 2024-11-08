@@ -1,0 +1,22 @@
+.title-line {
+    display: flex;
+    align-items: center;
+}
+
+.title-line span {
+    margin: 0;
+    padding-right: 8px;
+    /* Spazio tra il titolo e la linea */
+}
+
+.title-line .line {
+    flex-grow: 1;
+    height: 1px;
+    background-color: lightgray;
+}
+
+.sectionTitle {
+    font-size: large;
+    font-weight: bold;
+    color: black;
+}

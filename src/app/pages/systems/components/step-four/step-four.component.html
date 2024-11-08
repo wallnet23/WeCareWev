@@ -22,7 +22,7 @@
           <div class="text-danger mt-1" *ngIf="stepFourForm.get('product_systemcomposition')?.invalid && (stepFourForm.get('product_systemcomposition')?.dirty || submitted)"
             style="font-size: small;">{{"SYSTEM.STEPFOUR.SYSERROR" | translate}}</div>
         </div>
-        <div class="col-12 col-md-6 mb-3">
+        <div class="col-12 col-md-6">
           <label for="product_systemweco" style="font-weight: bold;">{{"SYSTEM.STEPFOUR.WECOPRODUCTS" |
             translate}}<sup>*</sup></label>
           <select class="form-select" aria-label="select example" id="product_systemweco"
@@ -33,6 +33,11 @@
           <div class="text-danger mt-1" *ngIf="stepFourForm.get('product_systemweco')?.invalid && (stepFourForm.get('product_systemweco')?.dirty || submitted)"
             style="font-size: small;">{{"SYSTEM.STEPFOUR.PRODUCTERROR" | translate}}
           </div>
+        </div>
+        <div *ngIf="stepFourForm.get('product_systemweco')?.value != 3" class="col-12 mt-1">
+          <span style="font-size: medium; color: red;"> 
+            {{"SYSTEM.STEPFOUR.EXTENDWARRANTY" | translate}}
+          </span>
         </div>
 
         <div class="col-12 col-md-6 mb-3" *ngIf="stepFourForm.get('product_systemcomposition')?.value == 3 &&

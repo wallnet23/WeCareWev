@@ -126,6 +126,9 @@
     "ABOUTUS": "CHI SIAMO"
   },
   "SYSTEM": {
+    "READDATAPOPUP": {
+      "CLOSE": "Chiudi"
+    },
     "SCANNER": {
       "SCAN": "Scansiona Codice a Barre",
       "CLOSE": "Chiudi"
@@ -140,10 +143,11 @@
       "INVERTER": "INFO INVERTER",
       "BATTERIES": "INFO BATTERIES",
       "CONFIRMATION": "CONFERMA",
-      "REQUEST": "Richiedi l'approvazione del impianto per accedere a tutti i servizi e richiedere l'estensione di garanzia degli inverter.",
+      "REQUEST": "Richiedi l'approvazione dell'impianto per accedere a tutti i servizi e richiedere l'estensione di garanzia degli inverter.",
       "COMPLETE": "Concludi ogni passaggio per richiedere l'approvazione dell'impianto al tecnico Weco.",
       "CANNOTMODIFY": "Non puoi modificare un impianto in fase di approvazione",
-      "OVERVIEW": "Panoramica dell'impianto"
+      "OVERVIEW": "Panoramica dell'impianto",
+      "FINALSTATUS": "Stato del Sistema"
     },
     "SYSTEMLIST": {
       "TITLE": "LISTA IMPIANTI",
@@ -214,7 +218,9 @@
       "POSTALCODE": "Codice Postale",
       "POSTALCODEERROR": "Inserisci il codice postale",
       "INSTALLATIONPICTURES": "Immagini di installazione (allegare 5 immagini delle batterie nel luogo di installazione)",
-      "IMAGELIMIT": "Limite immagine raggiunto"
+      "IMAGELIMIT": "Limite immagine raggiunto",
+      "IMPORT": "Importa",
+      "FEWIMAGES": "Aggiungi almeno 5 immagini"
     },
     "STEPTHREE": {
       "COMPANYNAME": "Ragione sociale dell'installatore",
@@ -268,7 +274,8 @@
       "NO": "No",
       "DEVICESFORCLUSTER": "Quanti dispositivi per ogni Cluster",
       "BATTERYINVERTER": "Batterie e Inverter",
-      "BATTERIES": "Batterie"
+      "BATTERIES": "Batterie",
+      "EXTENDWARRANTY": "Attenzione: per estendere la garanzia l'impianto deve avere inverter e batterie Weco"
     },
     "STEPFIVE": {
       "MODELERROR": "Inserisci un modello",
@@ -294,7 +301,8 @@
       "YES": "Sì",
       "NO": "No",
       "PARALLELCLUSTERS": "I Cluster sono in parallelo?",
-      "CLUSTERCOMPOSE": "Componi il tuo impianto:"
+      "CLUSTERCOMPOSE": "Componi il tuo impianto:",
+      "READONLY": "Controlla i dati inseriti"
     },
     "STEPBUTTONS": {
       "PREV": "Precedente",
@@ -390,7 +398,12 @@
       "YES": "Sì",
       "NO": "No",
       "BATTERY": "Batteria",
-      "BATTERIES": "Batterie"
+      "BATTERIES": "Batterie",
+      "TABLE": {
+        "DATE": "Data",
+        "STATUS": "Stato",
+        "MESSAGE": "Messaggio"
+      }
     }
   }
 }

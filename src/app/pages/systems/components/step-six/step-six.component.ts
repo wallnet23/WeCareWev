@@ -20,6 +20,8 @@ import { ClusterSend } from '../step-four-old/clusters/cluster.service';
 import { MatSelectModule } from '@angular/material/select';
 import { Inverter } from '../../interfaces/inverterData';
 import { StepFourService } from '../step-four/step-four.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ReadDataPopupComponent } from '../read-data-popup/read-data-popup.component';
 
 @Component({
   selector: 'app-step-six',

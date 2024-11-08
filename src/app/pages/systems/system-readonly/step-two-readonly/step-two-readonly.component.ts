@@ -28,6 +28,7 @@ export class StepTwoReadonlyComponent {
   @Input() stepTwo: StepTwo | null = null;
   @Input() idsystem = 0;
   @Input() countriesList: Country[] = [];
+  @Input() readonlyPopup: boolean = true;
 
   stepTwoForm = this.fb.group({
     idcountry: [0, Validators.required],
