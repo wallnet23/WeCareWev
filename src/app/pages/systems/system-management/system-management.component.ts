@@ -67,7 +67,9 @@ export class SystemManagementComponent {
   @ViewChild('stepFour') obj_stepFour!: StepFourComponent;
   @ViewChild('stepFive') obj_stepFive!: StepFourComponent;
   @ViewChild('stepSix') obj_stepSix!: StepFourComponent;
-
+  // serve per sapere se già ho aperto lo step 5
+  private step5FirstTime = true;
+  private step6FirstTime = true;
   stepOneForm!: FormGroup;
   stepTwoForm!: FormGroup;
   stepThreeForm!: FormGroup;
@@ -240,19 +242,38 @@ export class SystemManagementComponent {
   }
 
   // Funzione che gestiosce lo scrolling degli step
-  manageStepScrolling($event: { step: number, action: number }, stepper: MatStepper) {
+  manageStepScrolling(event: { step: number, action: number }, stepper: MatStepper) {
     // console.log("EDITABLE1", $event)
-    if ($event.action == 0) {
-      this.isEditable[$event.step - 1] = false;
-      this.isEditable[$event.step - 2] = true;
+    if (event.action == 0) {
+
+      this.isEditable[event.step - 1] = false;
+      this.isEditable[event.step - 2] = true;
       // console.log("EDITABLE2", this.isEditable)
       setTimeout(() => {
         stepper.previous();
       }, 0);
     }
-    else if ($event.action == 1) {
-      this.isEditable[$event.step - 1] = false;
-      this.isEditable[$event.step] = true;
+    else if (event.action == 1) {
+
+      // vuol dire che sono nello step 5 in visualizzazione e quindi dopo la prima volta deve richiamare ngOnInit
+      if (event.step == 4) {
+        // console.log('step4: ', event.step);
+        if (this.step5FirstTime) {
+          this.step5FirstTime = false;
+        } else {
+          this.obj_stepFive.ngOnInit();
+        }
+      }
+      if (event.step == 5) {
+        // console.log('step5: ', event.step);
+        if (this.step6FirstTime) {
+          this.step6FirstTime = false;
+        } else {
+          this.obj_stepSix.ngOnInit();
+        }
+      }
+      this.isEditable[event.step - 1] = false;
+      this.isEditable[event.step] = true;
       // console.log("EDITABLE2", this.isEditable)
       setTimeout(() => {
         stepper.next();

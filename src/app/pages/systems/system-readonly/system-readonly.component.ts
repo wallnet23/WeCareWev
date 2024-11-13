@@ -1,6 +1,6 @@
 import { CommonModule, Location, LocationChangeEvent } from '@angular/common';
 import { Component, ElementRef, HostListener, inject, Inject, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ConnectServerService } from '../../../services/connect-server.service';
 import { ApiResponse } from '../../../interfaces/api-response';
 import { SystemInfoFull } from '../interfaces/system-info-full';
@@ -17,7 +17,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatStepperModule } from '@angular/material/stepper';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { StepOneReadonlyComponent } from "./step-one-readonly/step-one-readonly.component";
 import { StepTwoReadonlyComponent } from "./step-two-readonly/step-two-readonly.component";
 import { StepThreeReadonlyComponent } from "./step-three-readonly/step-three-readonly.component";
@@ -40,6 +40,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ReadDataPopupComponent } from '../components/read-data-popup/read-data-popup.component';
 import { MatTableModule } from '@angular/material/table';
+import { PopupDialogService } from '../../../services/popup-dialog.service';
 
 declare var $: any;
 
@@ -106,7 +107,8 @@ export class SystemReadonlyComponent {
   stepStatusList: StepStatus[] = [];
 
   constructor(private route: ActivatedRoute, private connectServerService: ConnectServerService,
-    private elementRef: ElementRef, private location: Location) {
+    private elementRef: ElementRef, private location: Location, private translate: TranslateService,
+    private router: Router, private popupDialogService: PopupDialogService) {
     this.route.params.subscribe(params => {
       this.idsystem = params['id'];
     });
@@ -308,26 +310,37 @@ export class SystemReadonlyComponent {
       })
   }
 
-  getOkToApproval(): boolean {
-    if (this.systemStatus[0]?.id == 7 && this.checkFirstStepStatus()) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-// Funzione per verificare se ogni step non ha lo stato 15 non conforme.
-private checkFirstStepStatus(): boolean {
-  return this.stepStatusList.some(step =>
-    step.listStepStatus.length > 0 &&
-    (step.listStepStatus[0].idstepstatus == 15)
-  );
-}
 
 approvalRequested(){
-  //CAMBIA LO STATO ED INVIA NUOVAMENTE IL FORM PER IL CONTROLLO
-}
+  this.translate.get(['POPUP.TITLE.INFO', 'POPUP.MSG_APPROVEDSYSTEM', 'POPUP.BUTTON.SEND']).subscribe((translations) => {
+    const obj_request: ApiResponse<any> = {
+      code: 244,
+      data: {},
+      title: translations['POPUP.TITLE.INFO'],
+      message: translations['POPUP.MSG_APPROVEDSYSTEM'],
+      obj_dialog: {
+        disableClose: 1,
+        obj_buttonAction:
+        {
+          action: 1,
+          action_type: 2,
+          label: translations['POPUP.BUTTON.SEND'],
+          run_function: () => this.sendApprovalRequest()
+        }
+      }
+    }
+    this.popupDialogService.alertElement(obj_request);
+  });
 
+}
+private sendApprovalRequest() {
+  this.connectServerService.postRequest<ApiResponse<null>>
+    (Connect.urlServerLaraApi, 'system/systemApproval', { idsystem: this.idsystem, readonly: 1 })
+    .subscribe((val: ApiResponse<null>) => {
+      this.popupDialogService.alertElement(val);
+      this.router.navigate(['systemOverview', this.idsystem]);
+    })
+}
   @HostListener('click')
   onClick() {
     const modalId = this.elementRef.nativeElement.getAttribute('data-bs-target');
@@ -376,7 +389,7 @@ approvalRequested(){
     const dialogRef = this.dialog.open(ReadDataPopupComponent, dialogConfig);
   }
 
-  
+
 
   private initSystem() {
     return {

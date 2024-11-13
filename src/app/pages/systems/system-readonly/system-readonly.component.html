@@ -196,7 +196,7 @@
           </ng-template>
           <ng-template matStepContent>
             <app-step-five-readonly
-              *ngIf="stepStatusList[4].listStepStatus[0].idstepstatus != 10 || stepStatusList[3].listStepStatus[0].idstepstatus == 10; else stepFiveModify"
+              *ngIf="stepStatusList[4].listStepStatus[0].idstepstatus != 10; else stepFiveModify"
               #stepFive (formEmit)="onFormFiveReceived($event)" (nextStep)="stepper.next()"
               [stepFive]="systemInfo.stepFive" [idsystem]="idsystem">
             </app-step-five-readonly>
@@ -233,7 +233,7 @@
           </ng-template>
           <ng-template matStepContent>
             <app-step-six-readonly
-              *ngIf="stepStatusList[5].listStepStatus[0].idstepstatus != 10 || stepStatusList[4].listStepStatus[0].idstepstatus == 10; else stepSixModify"
+              *ngIf="stepStatusList[5].listStepStatus[0].idstepstatus != 10; else stepSixModify"
               #stepSix (formEmit)="onFormSixReceived($event)" (nextStep)="stepper.next()" [stepSix]="systemInfo.stepSix"
               [idsystem]="idsystem">
             </app-step-six-readonly>
@@ -249,7 +249,7 @@
       </mat-stepper>
     </div>
   </div>
-  <div class="row justify-content-center" *ngIf="getOkToApproval()">
+  <div class="row justify-content-center" *ngIf="systemStatus[0]?.id == 7">
     <div class="col-12 text-center mt-1">
       <button class="btn btn-outline-dark mb-2" (click)="readOnly()">
         {{"SYSTEM.SYSTEMMANAGEMENT.OVERVIEW" | translate}}

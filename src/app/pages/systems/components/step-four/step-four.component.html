@@ -8,7 +8,8 @@
           <input type="date" name="product_installdate" id="product_installdate" formControlName="product_installdate"
             class="form-control" placeholder="{{'SYSTEM.STEPFOUR.DATEPLACEHOLDER' | translate}}"
             [class.is-invalid]="stepFourForm.get('product_installdate')?.invalid && (stepFourForm.get('product_installdate')?.dirty || submitted)">
-          <div class="text-danger mt-1" *ngIf="stepFourForm.get('product_installdate')?.invalid && (stepFourForm.get('product_installdate')?.dirty || submitted)"
+          <div class="text-danger mt-1"
+            *ngIf="stepFourForm.get('product_installdate')?.invalid && (stepFourForm.get('product_installdate')?.dirty || submitted)"
             style="font-size: small;">{{"SYSTEM.STEPFOUR.DATEERROR" | translate}}</div>
         </div>
         <div class="col-12 col-md-6 mb-3">
@@ -19,7 +20,8 @@
             [class.is-invalid]="stepFourForm.get('product_systemcomposition')?.invalid && (stepFourForm.get('product_systemcomposition')?.dirty || submitted)">
             <option *ngFor="let comp of systemComposition" [ngValue]="comp.id">{{comp.name}}</option>
           </select>
-          <div class="text-danger mt-1" *ngIf="stepFourForm.get('product_systemcomposition')?.invalid && (stepFourForm.get('product_systemcomposition')?.dirty || submitted)"
+          <div class="text-danger mt-1"
+            *ngIf="stepFourForm.get('product_systemcomposition')?.invalid && (stepFourForm.get('product_systemcomposition')?.dirty || submitted)"
             style="font-size: small;">{{"SYSTEM.STEPFOUR.SYSERROR" | translate}}</div>
         </div>
         <div class="col-12 col-md-6">
@@ -30,12 +32,13 @@
             [class.is-invalid]="stepFourForm.get('product_systemweco')?.invalid && (stepFourForm.get('product_systemweco')?.dirty || submitted)">
             <option *ngFor="let weco of wecoComposition" [ngValue]="weco.id">{{weco.name}}</option>
           </select>
-          <div class="text-danger mt-1" *ngIf="stepFourForm.get('product_systemweco')?.invalid && (stepFourForm.get('product_systemweco')?.dirty || submitted)"
+          <div class="text-danger mt-1"
+            *ngIf="stepFourForm.get('product_systemweco')?.invalid && (stepFourForm.get('product_systemweco')?.dirty || submitted)"
             style="font-size: small;">{{"SYSTEM.STEPFOUR.PRODUCTERROR" | translate}}
           </div>
         </div>
         <div *ngIf="stepFourForm.get('product_systemweco')?.value != 3" class="col-12 mt-1">
-          <span style="font-size: medium; color: red;"> 
+          <span style="font-size: medium; color: red;">
             {{"SYSTEM.STEPFOUR.EXTENDWARRANTY" | translate}}
           </span>
         </div>
@@ -49,7 +52,9 @@
           <input type="text" name="product_brand" id="product_brand" formControlName="product_brand"
             class="form-control" placeholder="..."
             [class.is-invalid]="stepFourForm.get('product_brand')?.invalid && (stepFourForm.get('product_brand')?.dirty || submitted)">
-          <div class="text-danger mt-1" *ngIf="stepFourForm.get('product_brand')?.invalid && (stepFourForm.get('product_brand')?.dirty || submitted)" style="font-size: small;">
+          <div class="text-danger mt-1"
+            *ngIf="stepFourForm.get('product_brand')?.invalid && (stepFourForm.get('product_brand')?.dirty || submitted)"
+            style="font-size: small;">
             {{"SYSTEM.STEPFOUR.BRANDERROR" | translate}}
           </div>
         </div>
@@ -65,7 +70,8 @@
             formControlName="inverter_online">
           <label class="form-check-label" for="inverter_online">{{ "SYSTEM.STEPFOUR.ONLINEINVERTER" |
             translate}}</label>
-          <div class="fst-italic text-danger" style="font-size: small;" *ngIf="stepFourForm.get('inverter_online')?.value != 1">
+          <div class="fst-italic text-danger" style="font-size: small;"
+            *ngIf="stepFourForm.get('inverter_online')?.value != 1">
             {{ "SYSTEM.STEPFOUR.ONLINEERROR" | translate}}
           </div>
         </div>
@@ -78,12 +84,15 @@
             {{ "SYSTEM.STEPFOUR.VOLTAGE" | translate }}<sup>*</sup>
           </label>
           <select class="form-select" formControlName="refidwecaresystemvolt" id="refidwecaresystemvolt"
-          [class.is-invalid]="stepFourForm.get('refidwecaresystemvolt')?.invalid && (stepFourForm.get('refidwecaresystemvolt')?.dirty || submitted)">
+            [class.is-invalid]="stepFourForm.get('refidwecaresystemvolt')?.invalid && (stepFourForm.get('refidwecaresystemvolt')?.dirty || submitted)">
             <option [ngValue]="null">{{ "SYSTEM.STEPFOUR.SELECTVALUE" | translate }}</option>
-            <option *ngFor="let volt of systemVoltView" [ngValue]="volt.id">{{language_now == 'it' ? volt.name_it :
-              volt.name_en}}</option>
+            <option *ngFor="let volt of systemVoltView" [ngValue]="volt.id">
+              {{volt.name}}
+            </option>
           </select>
-          <div class="text-danger mt-1" *ngIf="stepFourForm.get('refidwecaresystemvolt')?.invalid && (stepFourForm.get('refidwecaresystemvolt')?.dirty || submitted)" style="font-size: small;">
+          <div class="text-danger mt-1"
+            *ngIf="stepFourForm.get('refidwecaresystemvolt')?.invalid && (stepFourForm.get('refidwecaresystemvolt')?.dirty || submitted)"
+            style="font-size: small;">
             {{"SYSTEM.STEPFOUR.VOLTAGEERROR" | translate}}
           </div>
         </div>
@@ -92,14 +101,16 @@
             {{ "SYSTEM.STEPFOUR.SYSTEMMODEL" | translate }}<sup>*</sup>
           </label>
           <select class="form-select" formControlName="system_model"
-          [class.is-invalid]="stepFourForm.get('system_model')?.invalid && (stepFourForm.get('system_model')?.dirty || submitted)">
+            [class.is-invalid]="stepFourForm.get('system_model')?.invalid && (stepFourForm.get('system_model')?.dirty || submitted)">
             <option [ngValue]="null" id="system_model">{{ "SYSTEM.STEPFOUR.SELECTMODEL" | translate }}
             </option>
             <option *ngFor="let model of systemModelView" [ngValue]="model.id">
-              {{language_now == 'it' ? model.name_it : model.name_en}}
+              {{model.name}}
             </option>
           </select>
-          <div class="text-danger mt-1" *ngIf="stepFourForm.get('system_model')?.invalid && (stepFourForm.get('system_model')?.dirty || submitted)" style="font-size: small;">
+          <div class="text-danger mt-1"
+            *ngIf="stepFourForm.get('system_model')?.invalid && (stepFourForm.get('system_model')?.dirty || submitted)"
+            style="font-size: small;">
             {{"SYSTEM.STEPFOUR.MODELERROR" | translate}}
           </div>
         </div>
@@ -108,13 +119,15 @@
             {{ "SYSTEM.STEPFOUR.BATTERYTYPE" | translate }}<sup>*</sup>
           </label>
           <select class="form-select" formControlName="refidwecaresystemtype" id="refidwecaresystemtype"
-          [class.is-invalid]="stepFourForm.get('refidwecaresystemtype')?.invalid && (stepFourForm.get('refidwecaresystemtype')?.dirty || submitted)">
+            [class.is-invalid]="stepFourForm.get('refidwecaresystemtype')?.invalid && (stepFourForm.get('refidwecaresystemtype')?.dirty || submitted)">
             <option [ngValue]="null">{{ "SYSTEM.STEPFOUR.SELECTTYPE" | translate }}</option>
             <option *ngFor="let type of systemTypeView" [ngValue]="type.id">
-              {{language_now == 'it' ? type.name_it : type.name_en}}
+              {{type.name}}
             </option>
           </select>
-          <div class="text-danger mt-1" *ngIf="stepFourForm.get('refidwecaresystemtype')?.invalid && (stepFourForm.get('refidwecaresystemtype')?.dirty || submitted)" style="font-size: small;">
+          <div class="text-danger mt-1"
+            *ngIf="stepFourForm.get('refidwecaresystemtype')?.invalid && (stepFourForm.get('refidwecaresystemtype')?.dirty || submitted)"
+            style="font-size: small;">
             {{"SYSTEM.STEPFOUR.BATTERYTYPEERROR" | translate}}
           </div>
         </div>
@@ -140,12 +153,14 @@
               style="font-size: medium;"></mat-icon>
           </label>
           <select class="form-select" formControlName="cluster_numberdevices" id="cluster_numberdevices"
-          [class.is-invalid]="stepFourForm.get('cluster_numberdevices')?.invalid && (stepFourForm.get('cluster_numberdevices')?.dirty || submitted)">
+            [class.is-invalid]="stepFourForm.get('cluster_numberdevices')?.invalid && (stepFourForm.get('cluster_numberdevices')?.dirty || submitted)">
             <option [ngValue]="null">{{ "SYSTEM.STEPFOUR.SELECTVALUE" | translate }}</option>
             <option *ngFor="let device of numDevicesCluster" [ngValue]="device.num"> {{device.num}}
             </option>
           </select>
-          <div class="text-danger mt-1" *ngIf="stepFourForm.get('cluster_numberdevices')?.invalid && (stepFourForm.get('cluster_numberdevices')?.dirty || submitted)" style="font-size: small;">
+          <div class="text-danger mt-1"
+            *ngIf="stepFourForm.get('cluster_numberdevices')?.invalid && (stepFourForm.get('cluster_numberdevices')?.dirty || submitted)"
+            style="font-size: small;">
             {{"SYSTEM.STEPFOUR.DEVICESFORCLUSTERERROR" | translate}}
           </div>
         </div>

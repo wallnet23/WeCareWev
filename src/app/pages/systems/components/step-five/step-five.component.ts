@@ -143,26 +143,26 @@ export class StepFiveComponent {
   }
 
   approvalRequested() {
-    this.translate.get(['POPUP.TITLE.INFO', 'POPUP.MSG_APPROVEDSTEP', 'POPUP.BUTTON.SEND']).subscribe((translations) => {
-      const obj_request: ApiResponse<any> = {
-        code: 244,
-        data: {},
-        title: translations['POPUP.TITLE.INFO'],
-        message: translations['POPUP.MSG_APPROVEDSTEP'],
-        obj_dialog: {
-          disableClose: 1,
-          obj_buttonAction:
-          {
-            action: 1,
-            action_type: 2,
-            label: translations['POPUP.BUTTON.SEND'],
-            run_function: () => this.updateStepReadonly()
-          }
-        }
-      }
-      this.popupDialogService.alertElement(obj_request);
-    });
-
+    // this.translate.get(['POPUP.TITLE.INFO', 'POPUP.MSG_APPROVEDSTEP', 'POPUP.BUTTON.SEND']).subscribe((translations) => {
+    //   const obj_request: ApiResponse<any> = {
+    //     code: 244,
+    //     data: {},
+    //     title: translations['POPUP.TITLE.INFO'],
+    //     message: translations['POPUP.MSG_APPROVEDSTEP'],
+    //     obj_dialog: {
+    //       disableClose: 1,
+    //       obj_buttonAction:
+    //       {
+    //         action: 1,
+    //         action_type: 2,
+    //         label: translations['POPUP.BUTTON.SEND'],
+    //         run_function: () => this.updateStepReadonly()
+    //       }
+    //     }
+    //   }
+    //   this.popupDialogService.alertElement(obj_request);
+    // });
+    this.updateStepReadonly();
   }
 
   private updateStepReadonly() {

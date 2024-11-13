@@ -1,15 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators, FormsModule, ReactiveFormsModule, FormControl, FormGroup, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
-import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatStepperModule } from '@angular/material/stepper';
-import { Observable } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { UploadImageService } from '../../../../services/upload-images.service';
 import { ConnectServerService } from '../../../../services/connect-server.service';
 import { Country } from '../../../../interfaces/country';
 import { ApiResponse } from '../../../../interfaces/api-response';
@@ -120,7 +117,7 @@ export class StepThreeComponent implements OnInit {
             this.formEmit.emit(this.formBuilder.group({}));
             if (action == 'next') {
               setTimeout(() => {
-                console.log('Emitting nextStep');
+                // console.log('Emitting nextStep');
                 this.changeStep.emit({ step: 3, action: 1 });
               }, 0);
             }
@@ -274,26 +271,26 @@ export class StepThreeComponent implements OnInit {
   }
 
   approvalRequested() {
-    this.translate.get(['POPUP.TITLE.INFO', 'POPUP.MSG_APPROVEDSTEP', 'POPUP.BUTTON.SEND']).subscribe((translations) => {
-      const obj_request: ApiResponse<any> = {
-        code: 244,
-        data: {},
-        title: translations['POPUP.TITLE.INFO'],
-        message: translations['POPUP.MSG_APPROVEDSTEP'],
-        obj_dialog: {
-          disableClose: 1,
-          obj_buttonAction:
-          {
-            action: 1,
-            action_type: 2,
-            label: translations['POPUP.BUTTON.SEND'],
-            run_function: () => this.updateStepReadonly()
-          }
-        }
-      }
-      this.popupDialogService.alertElement(obj_request);
-    });
-
+    // this.translate.get(['POPUP.TITLE.INFO', 'POPUP.MSG_APPROVEDSTEP', 'POPUP.BUTTON.SEND']).subscribe((translations) => {
+    //   const obj_request: ApiResponse<any> = {
+    //     code: 244,
+    //     data: {},
+    //     title: translations['POPUP.TITLE.INFO'],
+    //     message: translations['POPUP.MSG_APPROVEDSTEP'],
+    //     obj_dialog: {
+    //       disableClose: 1,
+    //       obj_buttonAction:
+    //       {
+    //         action: 1,
+    //         action_type: 2,
+    //         label: translations['POPUP.BUTTON.SEND'],
+    //         run_function: () => this.updateStepReadonly()
+    //       }
+    //     }
+    //   }
+    //   this.popupDialogService.alertElement(obj_request);
+    // });
+    this.updateStepReadonly();
   }
 
   private updateStepReadonly() {
@@ -335,5 +332,4 @@ export class StepThreeComponent implements OnInit {
       return null;
     };
   }
-
 }
