@@ -404,7 +404,11 @@
         "DATE": "Date",
         "STATUS": "Status",
         "MESSAGE": "Message"
-      }
+      },
+      "WARRANTY": "Warranty",
+      "EXTENDED": "Extended",
+      "NOTEXTENDED": "Not extended",
+      "UPTO": "up to"
     }
   },
   "TICKET": {

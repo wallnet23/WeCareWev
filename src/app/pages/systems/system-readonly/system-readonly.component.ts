@@ -41,6 +41,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ReadDataPopupComponent } from '../components/read-data-popup/read-data-popup.component';
 import { MatTableModule } from '@angular/material/table';
 import { PopupDialogService } from '../../../services/popup-dialog.service';
+import { SystemStatus } from '../interfaces/system-status';
 
 declare var $: any;
 
@@ -80,8 +81,7 @@ export class SystemReadonlyComponent {
   displayedColumns: string[] = ['date', 'status', 'message'];
 
   readonly dialog = inject(MatDialog);
-  systemStatusList: { id: number, name: string, color: string, message: string | null,
-    message_date: string | null }[] = [];
+  systemStatusList: SystemStatus[] = [];
 
   @ViewChild('stepOne') obj_stepOne!: StepOneReadonlyComponent;
   @ViewChild('stepTwo') obj_stepTwo!: StepTwoReadonlyComponent;
@@ -92,8 +92,6 @@ export class SystemReadonlyComponent {
 
   modalImageUrl: string = '';
 
-  // TODO: MODIFICARE SYSTEM STATUS CON QUELLO REALE
-  systemStatus: { id: number, name: string, color: string }[] = [];
   idsystem: number = 0;
   systemInfo: SystemInfoFull = this.initSystem();
   imagesStep2: Image[] = [];
@@ -124,7 +122,7 @@ export class SystemReadonlyComponent {
   }
 
   getSystem() {
-    this.getStatus();
+    this.getSystemStatusList();
     this.getStepStatus();
     this.getCountries();
     this.getStepOne();
@@ -133,7 +131,7 @@ export class SystemReadonlyComponent {
     this.getStepFour();
     this.getStepFive();
     this.getStepSix();
-    this.getStatus();
+
   }
 
   getStepOne() {
@@ -147,7 +145,8 @@ export class SystemReadonlyComponent {
   }
 
   getStepTwo() {
-    this.connectServerService.getRequest<ApiResponse<{ stepTwo: StepTwo }>>(Connect.urlServerLaraApi, 'system/infoStepTwo', { id: this.idsystem }).
+    this.connectServerService.getRequest<ApiResponse<{ stepTwo: StepTwo }>>(Connect.urlServerLaraApi,
+      'system/infoStepTwo', { id: this.idsystem }).
       subscribe((val: ApiResponse<{ stepTwo: StepTwo }>) => {
         if (val.data && val.data.stepTwo) {
           this.systemInfo!.stepTwo = val.data.stepTwo;
@@ -157,7 +156,8 @@ export class SystemReadonlyComponent {
   }
 
   getStepThree() {
-    this.connectServerService.getRequest<ApiResponse<{ stepThree: StepThree }>>(Connect.urlServerLaraApi, 'system/infoStepThree', { id: this.idsystem }).
+    this.connectServerService.getRequest<ApiResponse<{ stepThree: StepThree }>>(Connect.urlServerLaraApi,
+      'system/infoStepThree', { id: this.idsystem }).
       subscribe((val: ApiResponse<{ stepThree: StepThree }>) => {
         if (val.data.stepThree) {
           this.systemInfo!.stepThree = val.data.stepThree;
@@ -228,7 +228,7 @@ export class SystemReadonlyComponent {
       })
   }
 
-  getStepStatus() {
+  private getStepStatus() {
     this.connectServerService.getRequest<ApiResponse<{ stepStatusList: StepStatus[] }>>(
       Connect.urlServerLaraApi, 'system/listStepSystemStatus', { idsystem: this.idsystem })
       .subscribe((val: ApiResponse<{ stepStatusList: StepStatus[] }>) => {
@@ -240,12 +240,12 @@ export class SystemReadonlyComponent {
   }
 
   onFormOneReceived(form: FormGroup) {
-    this.route.params.subscribe(params => {
-      this.idsystem = params['id'];
-      //this.stepOneForm = form;
-      //this.getSystemOverview();
-      this.getStatus();
-    });
+    // this.route.params.subscribe(params => {
+    //   this.idsystem = params['id'];
+    //   //this.stepOneForm = form;
+    //   //this.getSystemOverview();
+    //   this.getStatus();
+    // });
   }
 
   onFormTwoReceived(form: FormGroup) {
@@ -266,15 +266,14 @@ export class SystemReadonlyComponent {
     //this.stepSixForm = form;
   }
 
-  getStatus() {
+  getSystemStatusList() {
     // console.log("Received 1")
     if (this.idsystem > 0) {
-      this.connectServerService.getRequest<ApiResponse<{ status: { id: number, name: string, color: string } }>>
-        (Connect.urlServerLaraApi, 'system/systemStatus', { idsystem: this.idsystem })
-        .subscribe((val: ApiResponse<{ status: { id: number, name: string, color: string } }>) => {
+      this.connectServerService.getRequest<ApiResponse<{ statusList: SystemStatus[] }>>
+        (Connect.urlServerLaraApi, 'system/systemStatusList', { idsystem: this.idsystem })
+        .subscribe((val: ApiResponse<{ statusList: SystemStatus[] }>) => {
           if (val.data) {
-            this.systemStatus = [];
-            this.systemStatus.push(val.data.status);
+            this.systemStatusList = val.data.statusList;
           }
         })
     }
@@ -311,36 +310,36 @@ export class SystemReadonlyComponent {
   }
 
 
-approvalRequested(){
-  this.translate.get(['POPUP.TITLE.INFO', 'POPUP.MSG_APPROVEDSYSTEM', 'POPUP.BUTTON.SEND']).subscribe((translations) => {
-    const obj_request: ApiResponse<any> = {
-      code: 244,
-      data: {},
-      title: translations['POPUP.TITLE.INFO'],
-      message: translations['POPUP.MSG_APPROVEDSYSTEM'],
-      obj_dialog: {
-        disableClose: 1,
-        obj_buttonAction:
-        {
-          action: 1,
-          action_type: 2,
-          label: translations['POPUP.BUTTON.SEND'],
-          run_function: () => this.sendApprovalRequest()
+  approvalRequested() {
+    this.translate.get(['POPUP.TITLE.INFO', 'POPUP.MSG_APPROVEDSYSTEM', 'POPUP.BUTTON.SEND']).subscribe((translations) => {
+      const obj_request: ApiResponse<any> = {
+        code: 244,
+        data: {},
+        title: translations['POPUP.TITLE.INFO'],
+        message: translations['POPUP.MSG_APPROVEDSYSTEM'],
+        obj_dialog: {
+          disableClose: 1,
+          obj_buttonAction:
+          {
+            action: 1,
+            action_type: 2,
+            label: translations['POPUP.BUTTON.SEND'],
+            run_function: () => this.sendApprovalRequest()
+          }
         }
       }
-    }
-    this.popupDialogService.alertElement(obj_request);
-  });
+      this.popupDialogService.alertElement(obj_request);
+    });
 
-}
-private sendApprovalRequest() {
-  this.connectServerService.postRequest<ApiResponse<null>>
-    (Connect.urlServerLaraApi, 'system/systemApproval', { idsystem: this.idsystem, readonly: 1 })
-    .subscribe((val: ApiResponse<null>) => {
-      this.popupDialogService.alertElement(val);
-      this.router.navigate(['systemOverview', this.idsystem]);
-    })
-}
+  }
+  private sendApprovalRequest() {
+    this.connectServerService.postRequest<ApiResponse<null>>
+      (Connect.urlServerLaraApi, 'system/systemApproval', { idsystem: this.idsystem, readonly: 1 })
+      .subscribe((val: ApiResponse<null>) => {
+        this.popupDialogService.alertElement(val);
+        this.router.navigate(['systemOverview', this.idsystem]);
+      })
+  }
   @HostListener('click')
   onClick() {
     const modalId = this.elementRef.nativeElement.getAttribute('data-bs-target');

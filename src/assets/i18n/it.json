@@ -403,7 +403,11 @@
         "DATE": "Data",
         "STATUS": "Stato",
         "MESSAGE": "Messaggio"
-      }
+      },
+      "WARRANTY": "Garanzia",
+      "EXTENDED": "Estesa",
+      "NOTEXTENDED": "Non estesa",
+      "UPTO": "fino a "
     }
   }
 }

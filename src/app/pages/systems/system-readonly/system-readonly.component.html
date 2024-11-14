@@ -24,12 +24,12 @@
       <span class="fw-bold">
         {{"SYSTEM.SYSTEMMANAGEMENT.STATUS" | translate}}:
       </span>
-      <span *ngIf="systemStatus.length > 0" class="ms-1">
-        <i class="bi bi-circle-fill" style="font-size: large;" [ngStyle]="{'color':  '#'+systemStatus[0].color}">
+      <span *ngIf="systemStatusList.length > 0" class="ms-1">
+        <i class="bi bi-circle-fill" style="font-size: large;" [ngStyle]="{'color':  '#'+systemStatusList[0].color}">
         </i>
       </span>
-      <span *ngIf="systemStatus.length > 0" class="ms-1">
-        {{systemStatus[0].name}}
+      <span *ngIf="systemStatusList.length > 0" class="ms-1">
+        {{systemStatusList[0].name}}
       </span>
     </div>
 
@@ -195,8 +195,7 @@
             </span>
           </ng-template>
           <ng-template matStepContent>
-            <app-step-five-readonly
-              *ngIf="stepStatusList[4].listStepStatus[0].idstepstatus != 10; else stepFiveModify"
+            <app-step-five-readonly *ngIf="stepStatusList[4].listStepStatus[0].idstepstatus != 10; else stepFiveModify"
               #stepFive (formEmit)="onFormFiveReceived($event)" (nextStep)="stepper.next()"
               [stepFive]="systemInfo.stepFive" [idsystem]="idsystem">
             </app-step-five-readonly>
@@ -232,8 +231,7 @@
             </span>
           </ng-template>
           <ng-template matStepContent>
-            <app-step-six-readonly
-              *ngIf="stepStatusList[5].listStepStatus[0].idstepstatus != 10; else stepSixModify"
+            <app-step-six-readonly *ngIf="stepStatusList[5].listStepStatus[0].idstepstatus != 10; else stepSixModify"
               #stepSix (formEmit)="onFormSixReceived($event)" (nextStep)="stepper.next()" [stepSix]="systemInfo.stepSix"
               [idsystem]="idsystem">
             </app-step-six-readonly>
@@ -249,7 +247,7 @@
       </mat-stepper>
     </div>
   </div>
-  <div class="row justify-content-center" *ngIf="systemStatus[0]?.id == 7">
+  <div class="row justify-content-center" *ngIf="systemStatusList[0]?.id == 7">
     <div class="col-12 text-center mt-1">
       <button class="btn btn-outline-dark mb-2" (click)="readOnly()">
         {{"SYSTEM.SYSTEMMANAGEMENT.OVERVIEW" | translate}}
@@ -262,7 +260,8 @@
     </div>
   </div>
 
-  <div *ngIf="systemStatus.length > 0 && systemStatus[0].id == 15" class="row justify-content-center align-items-center">
+  <div *ngIf="systemStatusList.length > 0 && systemStatusList[0].id == 15"
+    class="row justify-content-center align-items-center">
     <div class="col-12 text-center mb-2 mt-3">
       <div class="row justify-content-center align-items-center">
         <div class="col-12 text-center" style="font-weight: bold; font-size: large;">
@@ -272,7 +271,7 @@
 
       <div class="row justify-content-center align-items-center p-1 p-md-2">
         <div class="col-12 p-0" style="max-width: 1400px;">
-          <table mat-table [dataSource]="systemStatus" class="mat-elevation-z8">
+          <table mat-table [dataSource]="systemStatusList" class="mat-elevation-z8">
             <!-- Colonna Data -->
             <ng-container matColumnDef="date">
               <th mat-header-cell *matHeaderCellDef> {{"SYSTEM.READONLY.TABLE.DATE" | translate}} </th>
@@ -291,7 +290,18 @@
             <!-- Colonna Commento -->
             <ng-container matColumnDef="message">
               <th mat-header-cell *matHeaderCellDef> {{"SYSTEM.READONLY.TABLE.MESSAGE" | translate}} </th>
-              <td mat-cell *matCellDef="let element"> {{ element.message }} </td>
+              <td mat-cell *matCellDef="let element">
+                <span *ngIf="element.id == 15">
+                  {{"SYSTEM.READONLY.WARRANTY" | translate}}
+                  <span *ngIf="element.warranty_extend === 1; else notEx">
+                    {{"SYSTEM.READONLY.EXTENDED" | translate}} <br>
+                  </span>
+                  <ng-template #notEx>
+                    {{"SYSTEM.READONLY.NOTEXTENDED" | translate}} -
+                  </ng-template>
+                </span>
+                {{ element.message }}
+              </td>
             </ng-container>
 
             <!-- Header e righe della tabella -->
