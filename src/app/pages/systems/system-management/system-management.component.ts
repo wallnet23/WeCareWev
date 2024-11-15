@@ -26,6 +26,7 @@ import { StepFiveComponent } from "../components/step-five/step-five.component";
 import { StepSixComponent } from "../components/step-six/step-six.component";
 import { ReadDataPopupComponent } from '../components/read-data-popup/read-data-popup.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { SystemStatus } from '../interfaces/system-status';
 
 @Component({
   selector: 'app-system-management',
@@ -159,9 +160,9 @@ export class SystemManagementComponent {
 
   getSystemOverview() {
     if (this.idsystem > 0) {
-      this.connectServerService.getRequest<ApiResponse<{ systemInfo: SystemInfo, systemTickets: Ticket[], systemWarranty: Warranty, systemRMA: RMA }>>
+      this.connectServerService.getRequest<ApiResponse<{ systemInfo: SystemInfo }>>
         (Connect.urlServerLaraApi, 'system/systemOverview', { id: this.idsystem })
-        .subscribe((val: ApiResponse<{ systemInfo: SystemInfo, systemTickets: Ticket[], systemWarranty: Warranty, systemRMA: RMA }>) => {
+        .subscribe((val: ApiResponse<{ systemInfo: SystemInfo }>) => {
           if (val.data) {
             this.systemName = val.data.systemInfo.system_name;
           }

@@ -312,7 +312,7 @@
       "UPDATE": "Aggiorna"
     },
     "OVERVIEW": {
-      "POPUPMSG1": "Per accedere a questa pagina l'impianto deve essere completo ed approvato",
+      "POPUPMSG1": "Per accedere a questa pagina l'impianto deve essere nello stato Completato.",
       "POPUPMSG2": "Per accedere a questa pagina inverter e batterie devono essere prodotti Weco",
       "EXTENDED": "Estesa",
       "NOTEXTENDED": "Non Estesa",
@@ -366,7 +366,8 @@
       "SOLDPRODUCT": "Data in cui il prodotto è stato venduto",
       "INVERTERWARRANTYINFO": "Inizia quando il prodotto viene venduto e dura 5 anni",
       "BATTERYWARRANTYINFO": "Inizia quando il prodotto viene venduto e dura 2 anni",
-      "EXTENDEDWARRANTYINFO": "5 anni addizionali di garanzia"
+      "INVERTERWARRANTYINFOEXTENDED": "5 anni addizionali di garanzia",
+      "BATTERYWARRANTYINFOEXTENDED": "8 anni addizionali di garanzia"
     },
     "READONLY": {
       "OWNER": "Proprietario dell'impianto",

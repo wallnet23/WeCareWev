@@ -313,7 +313,7 @@
       "UPDATE": "Update"
     },
     "OVERVIEW": {
-      "POPUPMSG1": "To enter this page the system must be completed and approved",
+      "POPUPMSG1": "To access this page the system must be in the Completed state",
       "POPUPMSG2": "To enter this page inverters and batteries must be Weco products",
       "EXTENDED": "Extended",
       "NOTEXTENDED": "Not Extended",
@@ -367,7 +367,8 @@
       "EXTENDEDWARRANTY": "Extended Warranty",
       "INVERTERWARRANTYINFO": "It starts when the product is sold and it lasts 5 years",
       "BATTERYWARRANTYINFO": "It starts when the product is sold and it lasts 2 years",
-      "EXTENDEDWARRANTYINFO": "Additional 5 years of warranty"
+      "INVERTERWARRANTYINFOEXTENDED": "Additional 5 years of warranty",
+      "BATTERYWARRANTYINFOEXTENDED": "Additional 8 years of warranty"
     },
     "READONLY": {
       "OWNER": "System Owner",

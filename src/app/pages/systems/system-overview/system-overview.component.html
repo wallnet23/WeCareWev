@@ -107,13 +107,13 @@
           </p>
           <!-- Se completato -->
           <p class="paragraph" *ngIf="systemInfo?.status?.id == 15; else warrantyBlock">
-            <span *ngIf="systemStatus?.warranty_extend == 1; else notExtendedBlock">
+            <span *ngIf="systemInfo?.status?.warranty_extend == 1; else notExtendedBlock">
               {{"SYSTEM.OVERVIEW.EXTENDED" | translate}}
-            </span><br>
+            </span><br><br>
             <ng-template #notExtendedBlock>
               <span>{{"SYSTEM.OVERVIEW.NOTEXTENDED" | translate}}</span><br>
             </ng-template>
-            
+
             <span *ngIf="product_systemweco == 3; else notWecoBlock">
               {{"SYSTEM.OVERVIEW.EXTENDEDINFO" | translate}}
             </span>

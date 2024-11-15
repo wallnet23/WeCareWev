@@ -9,17 +9,17 @@ import { MatIcon } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SystemStatus } from '../../systems/interfaces/system-status';
 import { TranslateModule } from '@ngx-translate/core';
+import { UserState } from '../../../ngrx/user/user.reducer';
+import { Store } from '@ngrx/store';
 
 interface InverterWarranty {
   serialnumber: string;
-  inverter_date: string;
   warranty_expirationdefault: string;
   warranty_expirationextended: string;
 };
 
 interface BatteryWarranty {
   serialnumber: string;
-  battery_date: string;
   warranty_expirationdefault: string;
   warranty_expirationextended: string;
 }
@@ -39,28 +39,40 @@ interface BatteryWarranty {
 export class WarrantyInfoComponent {
 
   idsystem: number = 0;
-
+  currentLanguage = 'en';
   inverterList: InverterWarranty[] = [];
+  installer_dateofpurchase: string = '';
   batteriesList: BatteryWarranty[] = [];
-  systemStatus: SystemStatus | null = null; 
+  systemStatus: SystemStatus | null = null;
 
-  constructor(private connectServerService: ConnectServerService, private route: ActivatedRoute) {}
+  constructor(private connectServerService: ConnectServerService,
+    private route: ActivatedRoute, private store: Store<{ user: UserState
+     }>) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.idsystem = params['id'];
       this.getDevices();
+      this.store.select(state => state.user.userInfo).subscribe(
+        (val) => {
+          this.currentLanguage = val?.lang_code ? val?.lang_code : 'en';
+        }
+      )
     });
   }
 
   private getDevices() {
-    this.connectServerService.getRequest<ApiResponse<{inverterList: InverterWarranty[], batteriesList: BatteryWarranty[], systemStatus: SystemStatus}>>
-    (Connect.urlServerLaraApi, 'infoWarrantySystem', {idsystem: this.idsystem})
-    .subscribe((val: ApiResponse<{inverterList: InverterWarranty[], batteriesList: BatteryWarranty[], systemStatus: SystemStatus}>) => {
+    this.connectServerService.getRequest<ApiResponse<{inverterList: InverterWarranty[],
+      batteriesList: BatteryWarranty[], systemStatus: SystemStatus, installer_dateofpurchase: string}>>
+    (Connect.urlServerLaraApi, 'system/infoWarrantySystem', {idsystem: this.idsystem})
+    .subscribe((val: ApiResponse<{inverterList: InverterWarranty[], batteriesList: BatteryWarranty[], systemStatus: SystemStatus,
+      installer_dateofpurchase: string
+    }>) => {
       if(val.data) {
         this.inverterList = val.data.inverterList;
         this.batteriesList = val.data.batteriesList;
         this.systemStatus = val.data.systemStatus;
+        this.installer_dateofpurchase = val.data.installer_dateofpurchase;
       }
     })
   }

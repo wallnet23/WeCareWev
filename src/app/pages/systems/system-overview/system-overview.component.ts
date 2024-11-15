@@ -2,14 +2,11 @@ import { CommonModule, Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatTooltip } from '@angular/material/tooltip';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { Warranty } from '../interfaces/warranty';
 import { ConnectServerService } from '../../../services/connect-server.service';
 import { ApiResponse } from '../../../interfaces/api-response';
 import { Connect } from '../../../classes/connect';
 import { SystemInfo } from '../interfaces/system-info';
-import { RMA } from '../interfaces/rma';
 import { PopupDialogService } from '../../../services/popup-dialog.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { SystemStatus } from '../interfaces/system-status';
@@ -20,7 +17,6 @@ import { SystemStatus } from '../interfaces/system-status';
   imports: [
     CommonModule,
     MatCardModule,
-    MatTooltip,
     MatDialogModule,
     TranslateModule
   ],
@@ -37,7 +33,6 @@ export class SystemOverviewComponent {
   idsystem: number = 0;
   systemInfo!: SystemInfo | null;
   // systemTickets: Ticket[] = [];
-  systemStatus!: SystemStatus;
   //1 == inverter, 2 == batterie, 3 == inverter e batterie
   product_systemweco: number | null = null;
   //systemRMA!: RMA;
@@ -54,14 +49,15 @@ export class SystemOverviewComponent {
   }
 
   getSystemOverview() {
-    this.connectServerService.getRequest<ApiResponse<{ systemInfo: SystemInfo, systemStatus: SystemStatus }>>
+    this.connectServerService.getRequest<ApiResponse<{ systemInfo: SystemInfo }>>
       (Connect.urlServerLaraApi, 'system/systemOverview', { id: this.idsystem })
-      .subscribe((val: ApiResponse<{ systemInfo: SystemInfo, systemStatus: SystemStatus, product_systemWeco: number}>) => {
+      .subscribe((val: ApiResponse<{
+        systemInfo: SystemInfo
+      }>) => {
         if (val.data) {
           this.systemInfo = val.data.systemInfo;
           // this.systemTickets = val.data.systemTickets;
-          this.systemStatus = val.data.systemStatus;
-          this.product_systemweco = val.data.product_systemWeco;
+          this.product_systemweco = val.data.systemInfo.product_systemweco;
           // if(this.systemTickets.length > 0) {
           //   this.isTicket = true;
           // }
@@ -102,8 +98,8 @@ export class SystemOverviewComponent {
   }
 
   viewWarranty() {
-    if(this.systemInfo?.status?.id == 15) {
-      if(this.product_systemweco == 3) {
+    if (this.systemInfo?.status?.id == 15) {
+      if (this.product_systemweco == 3) {
         this.router.navigate(['systemWarranty', this.idsystem])
       }
       else {
@@ -113,13 +109,13 @@ export class SystemOverviewComponent {
     else {
       this.warrantyInfo(1);
     }
-    
+
   }
 
   warrantyInfo(type: number) {
     this.translate.get(['POPUP.TITLE.INFO', 'SYSTEM.OVERVIEW.POPUPMSG1', 'SYSTEM.OVERVIEW.POPUPMSG2']).subscribe((translations) => {
       let popupMsg = '';
-      if(type == 1) {
+      if (type == 1) {
         popupMsg = translations['SYSTEM.OVERVIEW.POPUPMSG1'];
       }
       else {
