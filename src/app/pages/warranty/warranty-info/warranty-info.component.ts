@@ -7,6 +7,22 @@ import { Connect } from '../../../classes/connect';
 import { ActivatedRoute } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { SystemStatus } from '../../systems/interfaces/system-status';
+import { TranslateModule } from '@ngx-translate/core';
+
+interface InverterWarranty {
+  serialnumber: string;
+  inverter_date: string;
+  warranty_expirationdefault: string;
+  warranty_expirationextended: string;
+};
+
+interface BatteryWarranty {
+  serialnumber: string;
+  battery_date: string;
+  warranty_expirationdefault: string;
+  warranty_expirationextended: string;
+}
 
 @Component({
   selector: 'app-warranty-info',
@@ -15,6 +31,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     CommonModule,
     MatIcon,
     MatTooltipModule,
+    TranslateModule
   ],
   templateUrl: './warranty-info.component.html',
   styleUrl: './warranty-info.component.scss'
@@ -23,7 +40,9 @@ export class WarrantyInfoComponent {
 
   idsystem: number = 0;
 
-  devices: Device[] = [];
+  inverterList: InverterWarranty[] = [];
+  batteriesList: BatteryWarranty[] = [];
+  systemStatus: SystemStatus | null = null; 
 
   constructor(private connectServerService: ConnectServerService, private route: ActivatedRoute) {}
 
@@ -35,10 +54,13 @@ export class WarrantyInfoComponent {
   }
 
   private getDevices() {
-    this.connectServerService.getRequest<ApiResponse<{warrantyDevices: Device[]}>>(Connect.urlServerLaraApi, 'infoWarrantySystem', {id: this.idsystem})
-    .subscribe((val: ApiResponse<{warrantyDevices: Device[]}>) => {
+    this.connectServerService.getRequest<ApiResponse<{inverterList: InverterWarranty[], batteriesList: BatteryWarranty[], systemStatus: SystemStatus}>>
+    (Connect.urlServerLaraApi, 'infoWarrantySystem', {idsystem: this.idsystem})
+    .subscribe((val: ApiResponse<{inverterList: InverterWarranty[], batteriesList: BatteryWarranty[], systemStatus: SystemStatus}>) => {
       if(val.data) {
-        this.devices = val.data.warrantyDevices;
+        this.inverterList = val.data.inverterList;
+        this.batteriesList = val.data.batteriesList;
+        this.systemStatus = val.data.systemStatus;
       }
     })
   }

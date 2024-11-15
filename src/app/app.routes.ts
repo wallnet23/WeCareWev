@@ -11,6 +11,7 @@ import { SystemsListComponent } from './pages/systems/systems-list/systems-list.
 import { loginSignupGuard } from './guards/login-signup.guard';
 import { SystemManagementComponent } from './pages/systems/system-management/system-management.component';
 import { SystemReadonlyComponent } from './pages/systems/system-readonly/system-readonly.component';
+import { WarrantyInfoComponent } from './pages/warranty/warranty-info/warranty-info.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -26,6 +27,7 @@ export const routes: Routes = [
   { path: 'systemOverview/:id', component: SystemOverviewComponent, canActivate: [authGuard] },
   { path: 'systemReadonly/:id', component: SystemReadonlyComponent, canActivate: [authGuard] },
   { path: 'newPassword/:token', component: NewPasswordComponent, canActivate: [loginSignupGuard]},
+  { path: 'systemWarranty/:id', component: WarrantyInfoComponent },
   // { path: 'systemTicketsList/:id', component: SystemTicketsListComponent, canActivate: [authGuard] },
   // { path: 'ticket/:id', component: TicketComponent, canActivate: [authGuard] },
   // { path: 'ticketsList', component: TicketsListComponent, canActivate: [authGuard] },

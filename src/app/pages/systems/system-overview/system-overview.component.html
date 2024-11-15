@@ -4,7 +4,7 @@
   </a>
 </div>
 
-<div *ngIf="idsystem > 0; else blockError;" class="container fullPage">
+<div *ngIf="idsystem > 0; else blockError;" class="container fullPage" style="min-height: 64%;">
   <div class="row justify-content-center align-items-center mt-2 p-2">
     <div class="col-6 text-center">
       <h2 class="systemName inline-bordered">{{systemInfo?.system_name}}</h2>
@@ -61,10 +61,10 @@
                 <span *ngIf="systemInfo?.status" style="margin-left: 1rem;">{{systemInfo.status?.name}}</span>
                 <span *ngIf="!systemInfo?.status" style="margin-left: 1rem;">Status not available</span>
               </li>
-              <li class="listElement">
+              <!-- <li class="listElement">
                 <span class="listTitle">{{"SYSTEM.OVERVIEW.CUSTOMERNAME" | translate}}:</span><br>
                 <span class="listDescription">{{systemInfo.customerInfo}}</span>
-              </li>
+              </li> -->
               <li class="listElement">
                 <span class="listTitle">{{"SYSTEM.OVERVIEW.INSTALLATIONSITE" | translate}}:</span><br>
                 <span class="listDescription">{{systemInfo.installationSite}}</span>
@@ -107,13 +107,29 @@
           </p>
           <!-- Se completato -->
           <p class="paragraph" *ngIf="systemInfo?.status?.id == 15; else warrantyBlock">
-
+            <span *ngIf="systemStatus?.warranty_extend == 1; else notExtendedBlock">
+              {{"SYSTEM.OVERVIEW.EXTENDED" | translate}}
+            </span><br>
+            <ng-template #notExtendedBlock>
+              <span>{{"SYSTEM.OVERVIEW.NOTEXTENDED" | translate}}</span><br>
+            </ng-template>
+            
+            <span *ngIf="product_systemweco == 3; else notWecoBlock">
+              {{"SYSTEM.OVERVIEW.EXTENDEDINFO" | translate}}
+            </span>
+            <ng-template #notWecoBlock>
+              <span>
+                {{"SYSTEM.OVERVIEW.NOTEXTENDEDINFO" | translate}}
+              </span><br>
+            </ng-template>
           </p>
           <ng-template #warrantyBlock>
             <p class="paragraph">
-              {{"SYSTEM.OVERVIEW.WARRANTYERROR" | translate}}<br><br>
-              {{"SYSTEM.OVERVIEW.ACTUALSTATE" | translate}}:
-              <i class="bi bi-circle-fill" style="font-size: large;" [ngStyle]="{'color':  '#'+systemInfo?.status?.color}">
+              {{"SYSTEM.OVERVIEW.WARRANTYERROR" | translate}}<br>
+              <span style="font-weight: bold;">
+                {{"SYSTEM.OVERVIEW.ACTUALSTATE" | translate}}:<br>
+              </span>
+              <i class="bi bi-circle-fill mt-2" style="font-size: large;" [ngStyle]="{'color':  '#'+systemInfo?.status?.color}">
               </i>
               {{systemInfo?.status?.name}}
             </p>
@@ -129,7 +145,7 @@
                     </ng-template> -->
         </div>
         <div class="card-footer greenBg text-center">
-          <div href="#" class="btn btn-outline-dark btn-light" (click)="warrantyInfo()">
+          <div href="#" class="btn btn-outline-dark btn-light" (click)="viewWarranty()">
             {{"SYSTEM.OVERVIEW.WARRANTYINFO" | translate}}
           </div>
         </div>

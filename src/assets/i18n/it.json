@@ -312,6 +312,12 @@
       "UPDATE": "Aggiorna"
     },
     "OVERVIEW": {
+      "POPUPMSG1": "Per accedere a questa pagina l'impianto deve essere completo ed approvato",
+      "POPUPMSG2": "Per accedere a questa pagina inverter e batterie devono essere prodotti Weco",
+      "EXTENDED": "Estesa",
+      "NOTEXTENDED": "Non Estesa",
+      "NOTEXTENDEDINFO": "Per visualizzare le informazioni sulla garanzia è necessario che inverter e batterie siano entrambi prodotti Weco",
+      "EXTENDEDINFO": "Per ottenere ulteriori informazioni su scadenze e composizione dell'impianto accedere a questa scheda",
       "ADD": "Aggiungi una descrizione",
       "CHANGEDESCRIPTION": "Modifica la descrizione dell'impianto",
       "DISMISS": "Annulla",
@@ -347,6 +353,20 @@
       "LOADINGERROR": "ERRORE DI CARICAMENTO",
       "REFRESH": "Ricarica la pagina per riprovare",
       "VIEWDATA": "Visualizza i Dati Inseriti"
+    },
+    "WARRANTY": {
+      "WARRANTYINFO": "INFORMAZIONI SULLA GARANZIA",
+      "INVERTERSLIST": "Lista di Inverter",
+      "BATTERIESLIST": "Lista delle Batterie",
+      "SERIALNUMBER": "Serial Number",
+      "INVERTERDATE": "Data dell'Inverter",
+      "BATTERYDATE": "Data della Batteria",
+      "DEFAULTWARRANTY": "Garanzia Base",
+      "EXTENDEDWARRANTY": "Garanzia Estesa",
+      "SOLDPRODUCT": "Data in cui il prodotto è stato venduto",
+      "INVERTERWARRANTYINFO": "Inizia quando il prodotto viene venduto e dura 5 anni",
+      "BATTERYWARRANTYINFO": "Inizia quando il prodotto viene venduto e dura 2 anni",
+      "EXTENDEDWARRANTYINFO": "5 anni addizionali di garanzia"
     },
     "READONLY": {
       "OWNER": "Proprietario dell'impianto",
