@@ -11,11 +11,12 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { PopupDialogService } from '../../../../services/popup-dialog.service';
 import { ConnectServerService } from '../../../../services/connect-server.service';
 import { MatCardModule } from '@angular/material/card';
-import { ScannerSelectorComponent } from '../../barcode-scanner/scanner-selector/scanner-selector.component';
+import { ScannerSelectorComponent } from '../../OLD-barcode-scanner/scanner-selector/scanner-selector.component';
 import { Inverter } from '../../interfaces/inverterData';
 import { ApiResponse } from '../../../../interfaces/api-response';
 import { Connect } from '../../../../classes/connect';
 import { StepFive } from '../interfaces/step-five';
+import { ScannerBarcodeButtonComponent } from "../../../../components/scanner-barcode-button/scanner-barcode-button.component";
 
 @Component({
   selector: 'app-step-five',
@@ -31,8 +32,9 @@ import { StepFive } from '../interfaces/step-five';
     MatIconModule,
     TranslateModule,
     MatCardModule,
-    ScannerSelectorComponent
-  ],
+    ScannerSelectorComponent,
+    ScannerBarcodeButtonComponent
+],
   templateUrl: './step-five.component.html',
   styleUrl: './step-five.component.scss'
 })

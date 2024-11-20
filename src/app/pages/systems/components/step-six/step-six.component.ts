@@ -9,7 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatCardModule } from '@angular/material/card';
-import { ScannerSelectorComponent } from '../../barcode-scanner/scanner-selector/scanner-selector.component';
+import { ScannerSelectorComponent } from '../../OLD-barcode-scanner/scanner-selector/scanner-selector.component';
 import { ConnectServerService } from '../../../../services/connect-server.service';
 import { PopupDialogService } from '../../../../services/popup-dialog.service';
 import { Battery, Cluster } from '../../interfaces/clusterData';

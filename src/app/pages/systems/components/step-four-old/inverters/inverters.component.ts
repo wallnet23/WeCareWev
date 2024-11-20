@@ -8,7 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { Inverter, InverterData } from '../../../interfaces/inverterData';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { ScannerSelectorComponent } from "../../../barcode-scanner/scanner-selector/scanner-selector.component";
+import { ScannerSelectorComponent } from "../../../OLD-barcode-scanner/scanner-selector/scanner-selector.component";
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({

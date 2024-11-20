@@ -44,8 +44,9 @@
                       <div class="col-12">
                         <input class="form-control" type="text" formControlName="serialnumber"
                           [class.is-invalid]="inverterItem.get('serialnumber')?.invalid && (inverterItem.get('serialnumber')?.dirty || submitted)">
-                        <app-scanner-selector class="cameraIcon" (barcodeScanned)="onBarcodeScanned($event, i)">
-                        </app-scanner-selector>
+                        <!-- <app-scanner-selector class="cameraIcon" (barcodeScanned)="onBarcodeScanned($event, i)">
+                        </app-scanner-selector> -->
+                        <app-scanner-barcode-button class="cameraIcon" (barcodeScanned)="onBarcodeScanned($event, i)"></app-scanner-barcode-button>
                       </div>
                       <div class="col-12">
                         <label class="mt-2" style="font-weight: bold; font-size: medium;">

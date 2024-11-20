@@ -1,0 +1,16 @@
+
+<div class="scanner-container">
+  <!-- <button *ngIf="!isCameraActive" (click)="startCamera()">Attiva Fotocamera</button>
+  <button *ngIf="isCameraActive" (click)="stopCamera()">Disattiva Fotocamera</button> -->
+
+  <div class="camera-view" *ngIf="isCameraActive">
+    <video #videoElement (canplay)="onCanPlay()" autoplay playsinline></video>
+  </div>
+
+  <canvas #canvas [width]="videoWidth" [height]="videoHeight" style="display: none;"></canvas>
+
+  <!-- <div *ngIf="barcodeResult" class="result">
+    <h3>Codice a Barre:</h3>
+    <p>{{ barcodeResult }}</p>
+  </div> -->
+</div>
