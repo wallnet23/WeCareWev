@@ -25,8 +25,10 @@ export class ScannerBarcodeComponent implements OnInit {
   constraints = {
     video: {
       facingMode: 'environment', // Usa la fotocamera posteriore
-      width: { ideal: 1280 },
-      height: { ideal: 720 }
+      width: { ideal: 1920 },
+      height: { ideal: 1080 },
+      frameRate: { ideal: 30, max: 60 } // Frame rate elevato per maggiore nitidezza
+
     }
   };
 
@@ -56,8 +58,10 @@ export class ScannerBarcodeComponent implements OnInit {
 
   stopCamera() {
     const stream = this.videoElement.nativeElement.srcObject as MediaStream;
-    const tracks = stream.getTracks();
-    tracks.forEach(track => track.stop());
+    if (stream) {
+      const tracks = stream.getTracks();
+      tracks.forEach(track => track.stop());
+    }
     this.isCameraActive = false;
     this.isScanning = false;
     this.isStreamReady = false;
@@ -73,31 +77,39 @@ export class ScannerBarcodeComponent implements OnInit {
     this.isScanning = true;
     this.intervalId = setInterval(() => {
       this.captureAndSend();
-    }, 2000); // Cattura un'immagine ogni secondo
+    }, 2000); // Cattura un'immagine ogni 2 secondi
   }
 
   private captureAndSend() {
     const context = this.canvas.nativeElement.getContext('2d');
     context.drawImage(this.videoElement.nativeElement, 0, 0, this.videoWidth, this.videoHeight);
 
+    // Migliora l'immagine prima di inviarla
+    // const imageData = context.getImageData(0, 0, this.videoWidth, this.videoHeight);
+    // this.applyImageEnhancements(imageData);
+
+    // context.putImageData(imageData, 0, 0);
+
     const dataURL = this.canvas.nativeElement.toDataURL('image/png');
 
-    this.http.post<any>('https://barcode.wallnet.it/decode', { image: dataURL }).subscribe(
-      response => {
-        if (response.success) {
-          this.barcodeResult = response.barcode;
-          // alert('Codice a barre rilevato: ' + this.barcodeResult);
-          this.barcodeScanned.emit(this.barcodeResult);
-          // this.stopCamera(); // Interrompe la scansione
-        } else {
-          //  console.log('Messaggio dal backend:', response.message);
+    this.http.post<any>('https://barcode.wallnet.it/decode',
+      { image: dataURL },
+      { headers: { 'X-Disable-Spinner': 'true' } }).subscribe(
+        response => {
+          if (response.success) {
+            this.barcodeResult = response.barcode;
+            // alert('Codice a barre rilevato: ' + this.barcodeResult);
+            this.barcodeScanned.emit(this.barcodeResult);
+            // this.stopCamera(); // Interrompe la scansione
+          } else {
+            //  console.log('Messaggio dal backend:', response.message);
+          }
         }
-      }
-      // ,
-      // error => {
-      //   console.error('Errore durante la comunicazione con il backend:', error);
-      // }
-    );
+        // ,
+        // error => {
+        //   console.error('Errore durante la comunicazione con il backend:', error);
+        // }
+      );
   }
 
   onCanPlay() {
@@ -112,4 +124,22 @@ export class ScannerBarcodeComponent implements OnInit {
     // console.error('Errore nella fotocamera:', error);
     alert('Errore nell\'accesso alla fotocamera.');
   }
+  // private applyImageEnhancements(imageData: ImageData) {
+  //   const data = imageData.data;
+
+  //   // Applica miglioramenti all'immagine
+  //   for (let i = 0; i < data.length; i += 4) {
+  //     const r = data[i];
+  //     const g = data[i + 1];
+  //     const b = data[i + 2];
+
+  //     // Converti in scala di grigi
+  //     const gray = (r + g + b) / 3;
+  //     data[i] = data[i + 1] = data[i + 2] = gray;
+
+  //     // Applica una soglia per evidenziare i bordi
+  //     const threshold = gray > 128 ? 255 : 0;
+  //     data[i] = data[i + 1] = data[i + 2] = threshold;
+  //   }
+  // }
 }

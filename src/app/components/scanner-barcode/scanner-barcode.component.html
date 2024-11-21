@@ -5,6 +5,7 @@
 
   <div class="camera-view" *ngIf="isCameraActive">
     <video #videoElement (canplay)="onCanPlay()" autoplay playsinline></video>
+    <div class="scan-line"></div> <!-- Barra rossa animata -->
   </div>
 
   <canvas #canvas [width]="videoWidth" [height]="videoHeight" style="display: none;"></canvas>

@@ -24,7 +24,7 @@ export class ScannerBarcodeButtonComponent {
 
   openDialog() {
     const dialogRef = this.dialog.open(ScannerModalComponent, {
-      width: '90%',
+      width: '95%',
     });
 
     dialogRef.afterClosed().subscribe(result => {

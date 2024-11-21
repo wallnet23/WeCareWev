@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { CommonModule } from '@angular/common';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -11,7 +10,6 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { PopupDialogService } from '../../../../services/popup-dialog.service';
 import { ConnectServerService } from '../../../../services/connect-server.service';
 import { MatCardModule } from '@angular/material/card';
-import { ScannerSelectorComponent } from '../../OLD-barcode-scanner/scanner-selector/scanner-selector.component';
 import { Inverter } from '../../interfaces/inverterData';
 import { ApiResponse } from '../../../../interfaces/api-response';
 import { Connect } from '../../../../classes/connect';
@@ -32,7 +30,6 @@ import { ScannerBarcodeButtonComponent } from "../../../../components/scanner-ba
     MatIconModule,
     TranslateModule,
     MatCardModule,
-    ScannerSelectorComponent,
     ScannerBarcodeButtonComponent
 ],
   templateUrl: './step-five.component.html',

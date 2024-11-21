@@ -44,7 +44,7 @@ export class ScannerModalComponent {
   private startAutoCloseTimer() {
     this.timerId = setTimeout(() => {
       this.dialogRef.close({ barcode: null }); // Chiude il modale automaticamente
-    }, 30000); // 30 secondi
+    }, 20000); // 20 secondi
   }
 
   private clearTimer() {

@@ -1,8 +1,7 @@
 <h2 mat-dialog-title>{{"SYSTEM.SCANNER.SCAN" | translate}}</h2>
-<mat-dialog-content class="mat-typography">
+<mat-dialog-content class="mat-typography mx-1 px-0">
   <app-scanner-barcode #scanner (barcodeScanned)="onBarcodeScanned($event)"></app-scanner-barcode>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>{{"SYSTEM.SCANNER.CLOSE" | translate}}</button>
 </mat-dialog-actions>
-
