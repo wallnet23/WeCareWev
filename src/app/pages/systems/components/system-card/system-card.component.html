@@ -11,11 +11,11 @@
               <span style="font-weight: 400; font-size: x-large;">{{system.system_name}}</span>
           </div>
           <div class="row justify-content-center align-items-center">
-            <div class="col-6 text-start d-none d-md-inline pe-0">
+            <div class="col-6 text-start pe-0">
               <i class="bi bi-circle-fill status me-1" matTooltip="Status: {{system.status?.name}}"
                 [ngStyle]="{'color':  '#'+system.status?.color}">
               </i>
-              <span class="d-none d-xl-inline" style="font-size: small;">{{system.status?.name}}</span>
+              <span class="d-none d-sm-inline" style="font-size: small;">{{system.status?.name}}</span>
             </div>
             <div class="col-6 text-end">
               <i class="bi bi-trash iconCursor me-2" style="color: #ca2314;" (click)="deleteSystem(system.id)"></i>
@@ -70,7 +70,7 @@
               </div>
             </div> -->
 
-            <div class="col-12 col-md-6 element text-center">
+            <!-- <div class="col-12 col-md-6 element text-center">
               <div class="row g-0">
                 <div class="col-12 p-0" style="border-bottom: 1px solid #e0e0e0;">
                   <span style="font-weight: bold;">{{'SYSTEM.SYSTEMLIST.SYSTEMCARD.DEVICES' |
@@ -90,14 +90,7 @@
                   <span style="font-weight: bold;">{{'SYSTEM.SYSTEMLIST.SYSTEMCARD.WARRANTY' | translate }}</span><br>
                 </div>
               </div>
-              <!-- <div class="content">
-                <i class="bi bi-circle-fill status" [ngStyle]="{'color':  '#'+system.status?.color}">
-                </i>
-                <span>
-                  {{system.status?.name}}
-                </span>
-              </div> -->
-            </div>
+            </div> -->
             <!--<div class="row">
             <div class="col-12 col-md-6 mt-2">
               <span style="font-weight: bold;">Supplier Name:</span><br>

@@ -10,6 +10,7 @@ import { SystemInfo } from '../interfaces/system-info';
 import { PopupDialogService } from '../../../services/popup-dialog.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { SystemStatus } from '../interfaces/system-status';
+import { Ticket } from '../../tickets/interfaces/ticket';
 
 @Component({
   selector: 'app-system-overview',
@@ -29,6 +30,32 @@ export class SystemOverviewComponent {
   isWarrantyRequest: boolean = false;
   isTicket: boolean = false;
   isRma: boolean = false;
+  latestTickets: Ticket[] = [
+    {
+      id: 1,
+      title: "Errore Sistema",
+      date_ticket: "2024-11-22",
+      description: "Il sistema si blocca durante l'avvio.",
+      idsystem: 101,
+      status: "Aperto"
+    },
+    {
+      id: 2,
+      title: "Richiesta Aggiornamento",
+      date_ticket: "2024-11-20",
+      description: "Richiesta di aggiornamento alla versione più recente.",
+      idsystem: 102,
+      status: "In corso"
+    },
+    {
+      id: 3,
+      title: "Problema di Connessione",
+      date_ticket: "2024-11-18",
+      description: "Impossibile connettersi al server principale.",
+      idsystem: null,
+      status: "Chiuso"
+    }
+  ];
 
   idsystem: number = 0;
   systemInfo!: SystemInfo | null;
