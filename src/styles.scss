@@ -2,6 +2,12 @@
 
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
 
+@font-face {
+  font-family: 'Century Gothic';
+  src: url('/assets/fonts/centurygothic.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 
 // usato per togliere padding nel MatStepperModule
 .mat-vertical-content{
@@ -13,6 +19,6 @@ html, body {
   @media screen and (min-width: 350px) {
     overflow-x: hidden;
   }
-
+  font-family: "Century Gothic", Sans-serif;
   height: 100%;
 }

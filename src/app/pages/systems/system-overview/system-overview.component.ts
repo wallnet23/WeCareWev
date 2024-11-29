@@ -147,9 +147,9 @@ export class SystemOverviewComponent {
   modifySystem() {
     let obj_val: ApiResponse<any> = {
       // 200: success, 511: warning
-      code: 511,
+      code: 244,
       data: null,
-      title: "Error",
+      title: "Info",
       message: "Work in progress",
       // 1: toast se null o altro apre il dialog
       type_alert: null,
