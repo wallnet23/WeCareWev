@@ -362,7 +362,11 @@
       "NEWRMA": "New RMA",
       "LOADINGERROR": "LOADING ERROR",
       "REFRESH": "Refresh the page to try again",
-      "VIEWDATA": "View Inserted Data"
+      "VIEWDATA": "View Inserted Data",
+      "EXPIRED": "Expired",
+      "VALID": "Valid",
+      "SERIALNUMBER": "Serial Number",
+      "WARRANTYINVERTER": "INVERTER WARRANTY"
     },
     "WARRANTY": {
       "WARRANTYINFO": "WARRANTY INFO",

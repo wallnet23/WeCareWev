@@ -11,6 +11,7 @@ import { PopupDialogService } from '../../../services/popup-dialog.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { SystemStatus } from '../interfaces/system-status';
 import { Ticket } from '../../tickets/interfaces/ticket';
+import { WarrantyInverter } from '../interfaces/warranty-inverter';
 
 @Component({
   selector: 'app-system-overview',
@@ -26,6 +27,8 @@ import { Ticket } from '../../tickets/interfaces/ticket';
 })
 export class SystemOverviewComponent {
 
+  warrantyInverterStatusCheck: boolean = false;
+  warrantyInverterStatus: WarrantyInverter[] = [];
   warrantyExtensionStatus: string = 'Not Requested';
   isWarrantyRequest: boolean = false;
   isTicket: boolean = false;
@@ -71,7 +74,6 @@ export class SystemOverviewComponent {
     this.route.params.subscribe(params => {
       this.idsystem = params['id'];
     });
-
     this.getSystemOverview();
   }
 
@@ -90,7 +92,33 @@ export class SystemOverviewComponent {
           // }
           // console.log("System info:", this.systemInfo)
         }
-      })
+      });
+
+    // CHIAMATA AL SERVER PER WARRANTY INVERTER STATUS
+    // this.connectServerService.getRequest<ApiResponse<{warrantyInverterStatus: WarrantyInverter[]}>> 
+    //   (Connect.urlServerLaraApi, 'system/warrantyInverterInfoCard', { id: this.idsystem })
+    //     .subscribe((val: ApiResponse<{warrantyInverterStatus: WarrantyInverter[]}>) => {
+    //       this.warrantyInverterStatus = val.data.warrantyInverterStatus;
+    //       this.checkInverterWarranty();
+    //     })
+    // TEMPORANEO
+    this.warrantyInverterStatus = [
+      {sn: 345876, valid: null},
+      {sn: 795174, valid: 0},
+      {sn: 205836, valid: 1},
+      {sn: 995101, valid: 0},
+      {sn: 155173, valid: 1},
+      {sn: 555000, valid: 1},
+      {sn: 990870, valid: null},
+    ]
+    this.checkInverterWarranty();
+  }
+
+  private checkInverterWarranty() {
+    // CONTROLLA SE C'E' ALMENO UN INVERTER CON GARANZIA NON NULLA
+    this.warrantyInverterStatusCheck = this.warrantyInverterStatus.some(inverter => {
+      inverter.valid != null;
+    })
   }
 
   modifyDescription(description: string) {
@@ -117,7 +145,22 @@ export class SystemOverviewComponent {
   // }
 
   modifySystem() {
-    this.router.navigate(['/systemManagement', this.idsystem]);
+    let obj_val: ApiResponse<any> = {
+      // 200: success, 511: warning
+      code: 511,
+      data: null,
+      title: "Error",
+      message: "Work in progress",
+      // 1: toast se null o altro apre il dialog
+      type_alert: null,
+      obj_toast: null,
+      obj_dialog: {
+        disableClose: 0,
+      }
+    }
+    this.popupDialogService.alertElement(obj_val)
+    // this.router.navigate(['/systemManagement', this.idsystem]);
+
   }
 
   viewSystem() {

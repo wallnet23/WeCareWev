@@ -7,7 +7,7 @@
 <div *ngIf="idsystem > 0; else errorBlock" class="container fullPage" style="min-height: 64%;">
   <div class="row justify-content-center align-items-center mt-2 p-2">
     <div class="col-6 text-center">
-      <h2 class="systemName inline-bordered">{{systemInfo?.system_name}}</h2>
+      <span class="systemName inline-bordered">{{systemInfo?.system_name}}</span>
     </div>
   </div>
 
@@ -48,7 +48,7 @@
     </div>
   </div>
 
-  <!-- SYSTEM -->
+  <!-- SYSTEM DATA -->
   <div class="row justify-content-center p-1 p-lg-4">
     <div class="col-12 col-md-6 mt-2">
       <div class="card">
@@ -84,11 +84,6 @@
                       {{"SYSTEM.OVERVIEW.BATTERYNUMBER" | translate}}:
                     </span>
                   </li>
-                  <li>
-                    <span class="listDescription">
-                      {{"SYSTEM.OVERVIEW.INVERTERWARRANTYSTATUS" | translate}}:
-                    </span>
-                  </li>
                 </ul>
               </li>
             </ul>
@@ -114,7 +109,7 @@
     <!-- TICKET -->
     <div class="col-12 col-md-6 mt-2">
       <div class="card">
-        <h5 class="card-header greenBg">{{"SYSTEM.OVERVIEW.TICKET" | translate}}</h5>
+        <h5 class="card-header yellowBg">{{"SYSTEM.OVERVIEW.TICKET" | translate}}</h5>
         <div class="card-body">
           <div *ngIf="systemInfo?.status?.id == 15; else noTicketBlock">
             <div class="row justify-content-center align-items-center borderBottom">
@@ -167,19 +162,43 @@
           </ng-template>
         </div>
 
-        <div class="card-footer greenBg text-center">
+        <div class="card-footer yellowBg text-center">
           <button [disabled]="systemInfo?.status?.id != 15" class="btn btn-outline-dark btn-light me-2"
             (click)="modifySystem()">
             {{"SYSTEM.OVERVIEW.MANAGETICKET" | translate}}
           </button>
         </div>
       </div>
+    </div>
+  </div>
 
-      <!-- <div class="col-12 col-md-6 mt-2">
+  <!-- WARRANTY -->
+  <div class="row justify-content-center p-1 ps-lg-4 pe-lg-4">
+    <div *ngIf="warrantyInverterStatus.length > 0 || warrantyInverterStatusCheck == true" class="col-12 mt-2">
       <div class="card">
-        <h5 class="card-header greenBg">{{"SYSTEM.OVERVIEW.WARRANTY" | translate}}</h5>
-        <div class="card-body">
-          <p style="margin-top: 1rem;">
+        <h5 class="card-header greenBg">{{"SYSTEM.OVERVIEW.WARRANTYINVERTER" | translate}}</h5>
+        <div class="card-body row pb-0">
+          <ng-container *ngFor="let inverter of warrantyInverterStatus">
+            <div *ngIf="inverter.valid != null" class="col-12 col-md-6 col-lg-4 col-xl-3 mb-3">
+              <span>
+                <span style="font-weight: bold;">{{"SYSTEM.OVERVIEW.SERIALNUMBER" | translate}}: </span>
+                <span>{{inverter.sn}}</span>
+              </span><br>
+              <span>
+                <span style="font-weight: bold;">{{"SYSTEM.OVERVIEW.WARRANTYSTATUS" | translate}}: </span>
+                <span *ngIf="inverter.valid == 0; else validBlock">
+                  {{"SYSTEM.OVERVIEW.EXPIRED" | translate}}
+                </span>
+                <ng-template #validBlock>
+                  <span>
+                    {{"SYSTEM.OVERVIEW.VALID" | translate}}
+                  </span>
+                </ng-template>
+              </span>
+            </div>
+          </ng-container>
+
+          <!-- <p style="margin-top: 1rem;">
             <span class="listTitle">{{"SYSTEM.OVERVIEW.WARRANTYSTATUS" | translate}}: </span><br>
           </p>
           <p class="paragraph" *ngIf="systemInfo?.status?.id == 15; else warrantyBlock">
@@ -205,22 +224,23 @@
               <span style="font-weight: bold;">
                 {{"SYSTEM.OVERVIEW.ACTUALSTATE" | translate}}:<br>
               </span>
-              <i class="bi bi-circle-fill mt-2" style="font-size: large;" [ngStyle]="{'color':  '#'+systemInfo?.status?.color}">
+              <i class="bi bi-circle-fill mt-2" style="font-size: large;"
+                [ngStyle]="{'color':  '#'+systemInfo?.status?.color}">
               </i>
               {{systemInfo?.status?.name}}
             </p>
-          </ng-template>
+          </ng-template> -->
         </div>
-        <div class="card-footer greenBg text-center">
+        <!-- <div class="card-footer greenBg text-center">
           <div href="#" class="btn btn-outline-dark btn-light" (click)="viewWarranty()">
             {{"SYSTEM.OVERVIEW.WARRANTYINFO" | translate}}
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
-  </div> -->
+  </div>
 
-      <!-- <div *ngIf="false" class="row justify-content-center align-items-center mt-2 p-1 p-lg-4">
+  <!-- <div *ngIf="false" class="row justify-content-center align-items-center mt-2 p-1 p-lg-4">
         <div class="col-12">
             <div class="card">
                 <h5 class="card-header orangeBg">{{"SYSTEM.OVERVIEW.TICKETS" | translate}}</h5>
@@ -286,24 +306,22 @@
         </div>
     </div> -->
 
-      <div class="row justify-content-center align-items-center mt-2 p-1 p-lg-4" *ngIf="false">
-        <div class="col-12">
-          <div class="card">
-            <h5 class="card-header yellowBg">{{"SYSTEM.OVERVIEW.RMA" | translate}}</h5>
-            <div class="card-body">
-              <div *ngIf="!isRma">
-                <h5 class="card-title">{{"SYSTEM.OVERVIEW.NORMA" | translate}}</h5>
-                <p class="card-text">{{"SYSTEM.OVERVIEW.PRESSFORRMA" | translate}}.</p>
-              </div>
-              <div *ngIf="isRma">
-                <h5 class="card-title">{{"SYSTEM.OVERVIEW.RMAAVAILABLE" | translate}}</h5>
-                <p class="card-text">{{"SYSTEM.OVERVIEW.OLDRMA" | translate}}.</p>
-              </div>
-            </div>
-            <div class="card-footer yellowBg text-center">
-              <div href="#" class="btn btn-outline-dark btn-light">{{"SYSTEM.OVERVIEW.NEWRMA" | translate}}</div>
-            </div>
+  <div class="row justify-content-center align-items-center mt-2 p-1 p-lg-4" *ngIf="false">
+    <div class="col-12">
+      <div class="card">
+        <h5 class="card-header yellowBg">{{"SYSTEM.OVERVIEW.RMA" | translate}}</h5>
+        <div class="card-body">
+          <div *ngIf="!isRma">
+            <h5 class="card-title">{{"SYSTEM.OVERVIEW.NORMA" | translate}}</h5>
+            <p class="card-text">{{"SYSTEM.OVERVIEW.PRESSFORRMA" | translate}}.</p>
           </div>
+          <div *ngIf="isRma">
+            <h5 class="card-title">{{"SYSTEM.OVERVIEW.RMAAVAILABLE" | translate}}</h5>
+            <p class="card-text">{{"SYSTEM.OVERVIEW.OLDRMA" | translate}}.</p>
+          </div>
+        </div>
+        <div class="card-footer yellowBg text-center">
+          <div href="#" class="btn btn-outline-dark btn-light">{{"SYSTEM.OVERVIEW.NEWRMA" | translate}}</div>
         </div>
       </div>
     </div>

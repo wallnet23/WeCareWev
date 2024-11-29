@@ -28,6 +28,10 @@
 // }
 
 .systemName {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+    font-size: x-large;
     font-weight: bold;
     display: inline-block;
 }
