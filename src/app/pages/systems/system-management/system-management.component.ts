@@ -13,9 +13,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ConnectServerService } from '../../../services/connect-server.service';
 import { ApiResponse } from '../../../interfaces/api-response';
 import { SystemInfo } from '../interfaces/system-info';
-import { Ticket } from '../../tickets/interfaces/ticket';
-import { Warranty } from '../interfaces/warranty';
-import { RMA } from '../interfaces/rma';
 import { Connect } from '../../../classes/connect';
 import { CommonModule, Location } from '@angular/common';
 import { PopupDialogService } from '../../../services/popup-dialog.service';
@@ -26,7 +23,6 @@ import { StepFiveComponent } from "../components/step-five/step-five.component";
 import { StepSixComponent } from "../components/step-six/step-six.component";
 import { ReadDataPopupComponent } from '../components/read-data-popup/read-data-popup.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { SystemStatus } from '../interfaces/system-status';
 
 @Component({
   selector: 'app-system-management',

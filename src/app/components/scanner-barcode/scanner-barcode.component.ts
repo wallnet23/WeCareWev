@@ -19,6 +19,7 @@ export class ScannerBarcodeComponent implements OnInit {
   isCameraActive = false;
   isScanning = false;
   isStreamReady = false; // Nuovo stato per tracciare se lo stream è pronto
+  isRequestPending = false; // Flag per monitorare lo stato della richiesta
   barcodeResult: string | null = null;
   intervalId: any;
 
@@ -45,8 +46,6 @@ export class ScannerBarcodeComponent implements OnInit {
         .then(this.attachVideo.bind(this))
         .catch(this.handleError);
       this.isCameraActive = true;
-      // Avvia la scansione automaticamente
-      //  this.startScanning();
     } else {
       alert('La fotocamera non è supportata sul tuo dispositivo.');
     }
@@ -65,6 +64,7 @@ export class ScannerBarcodeComponent implements OnInit {
     this.isCameraActive = false;
     this.isScanning = false;
     this.isStreamReady = false;
+    this.isRequestPending = false;
     clearInterval(this.intervalId);
   }
 
@@ -76,7 +76,9 @@ export class ScannerBarcodeComponent implements OnInit {
 
     this.isScanning = true;
     this.intervalId = setInterval(() => {
-      this.captureAndSend();
+      if (!this.isRequestPending) {
+        this.captureAndSend();
+      }
     }, 2000); // Cattura un'immagine ogni 2 secondi
   }
 
@@ -85,12 +87,13 @@ export class ScannerBarcodeComponent implements OnInit {
     context.drawImage(this.videoElement.nativeElement, 0, 0, this.videoWidth, this.videoHeight);
 
     // Migliora l'immagine prima di inviarla
-    // const imageData = context.getImageData(0, 0, this.videoWidth, this.videoHeight);
-    // this.applyImageEnhancements(imageData);
-
-    // context.putImageData(imageData, 0, 0);
+    const imageData = context.getImageData(0, 0, this.videoWidth, this.videoHeight);
+    this.applyImageEnhancements(imageData);
+    context.putImageData(imageData, 0, 0);
 
     const dataURL = this.canvas.nativeElement.toDataURL('image/png');
+    // Imposta il flag per indicare che la richiesta è in corso
+    this.isRequestPending = true;
 
     this.http.post<any>('https://barcode.wallnet.it/decode',
       { image: dataURL },
@@ -124,22 +127,24 @@ export class ScannerBarcodeComponent implements OnInit {
     // console.error('Errore nella fotocamera:', error);
     alert('Errore nell\'accesso alla fotocamera.');
   }
-  // private applyImageEnhancements(imageData: ImageData) {
-  //   const data = imageData.data;
+  private applyImageEnhancements(imageData: ImageData) {
+    const data = imageData.data;
 
-  //   // Applica miglioramenti all'immagine
-  //   for (let i = 0; i < data.length; i += 4) {
-  //     const r = data[i];
-  //     const g = data[i + 1];
-  //     const b = data[i + 2];
+    // Applica miglioramenti all'immagine
+    for (let i = 0; i < data.length; i += 4) {
+      const r = data[i];
+      const g = data[i + 1];
+      const b = data[i + 2];
 
-  //     // Converti in scala di grigi
-  //     const gray = (r + g + b) / 3;
-  //     data[i] = data[i + 1] = data[i + 2] = gray;
+      // Converti in scala di grigi
+      const gray = (r + g + b) / 3;
+      data[i] = data[i + 1] = data[i + 2] = gray;
 
-  //     // Applica una soglia per evidenziare i bordi
-  //     const threshold = gray > 128 ? 255 : 0;
-  //     data[i] = data[i + 1] = data[i + 2] = threshold;
-  //   }
-  // }
+      // Applica una soglia per evidenziare i contorni
+      const threshold = gray > 128 ? 255 : 0; // Soglia a 128
+      data[i] = data[i + 1] = data[i + 2] = threshold;
+      // Mantieni il canale alfa (trasparenza)
+      data[i + 3] = 255; // Opaco
+    }
+  }
 }

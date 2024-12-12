@@ -8,7 +8,7 @@ export interface SystemInfo {
     customerInfo: string | null;
     installationSite: string | null;
     installationDate: string | null;
-    devicesInfo: string[];
+    devicesInfo: {num_inverter: number, num_batteries:number};
     ticketsInfo: string[];
     product_systemweco: null | number;
   }

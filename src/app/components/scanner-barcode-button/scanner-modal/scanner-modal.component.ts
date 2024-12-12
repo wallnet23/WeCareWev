@@ -37,7 +37,7 @@ export class ScannerModalComponent {
   }
   onBarcodeScanned(barcode: string | null) {
     this.barcode = barcode;
-    this.clearTimer(); // Ferma il timer se un codice è stato trovato
+    // this.clearTimer(); // Ferma il timer se un codice è stato trovato
     this.dialogRef.close({ barcode: this.barcode });
   }
 

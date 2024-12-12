@@ -291,15 +291,6 @@
             <ng-container matColumnDef="message">
               <th mat-header-cell *matHeaderCellDef> {{"SYSTEM.READONLY.TABLE.MESSAGE" | translate}} </th>
               <td mat-cell *matCellDef="let element">
-                <span *ngIf="element.id == 15">
-                  {{"SYSTEM.READONLY.WARRANTY" | translate}}
-                  <span *ngIf="element.warranty_extend === 1; else notEx">
-                    {{"SYSTEM.READONLY.EXTENDED" | translate}} <br>
-                  </span>
-                  <ng-template #notEx>
-                    {{"SYSTEM.READONLY.NOTEXTENDED" | translate}} -
-                  </ng-template>
-                </span>
                 {{ element.message }}
               </td>
             </ng-container>
