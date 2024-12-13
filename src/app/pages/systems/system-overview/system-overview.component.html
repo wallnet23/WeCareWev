@@ -164,7 +164,7 @@
 
         <div class="card-footer yellowBg text-center">
           <button [disabled]="systemInfo?.status?.id != 15" class="btn btn-outline-dark btn-light me-2"
-            (click)="modifySystem()">
+            (click)="ticketsListSystem()">
             {{"SYSTEM.OVERVIEW.MANAGETICKET" | translate}}
           </button>
         </div>
@@ -179,21 +179,14 @@
         <h5 class="card-header greenBg">{{"SYSTEM.OVERVIEW.WARRANTYINVERTER" | translate}}</h5>
         <div class="card-body row pb-0">
           <ng-container *ngFor="let inverter of warrantyInverterStatus">
-            <div *ngIf="inverter.valid != null" class="col-12 col-md-6 col-lg-4 col-xl-3 mb-3">
+            <div *ngIf="inverter.warranty_valid != null" class="col-12 col-md-6 col-lg-4 col-xl-3 mb-3">
               <span>
                 <span style="font-weight: bold;">{{"SYSTEM.OVERVIEW.SERIALNUMBER" | translate}}: </span>
                 <span>{{inverter.sn}}</span>
               </span><br>
               <span>
                 <span style="font-weight: bold;">{{"SYSTEM.OVERVIEW.WARRANTYSTATUS" | translate}}: </span>
-                <span *ngIf="inverter.valid == 0; else validBlock">
-                  {{"SYSTEM.OVERVIEW.EXPIRED" | translate}}
-                </span>
-                <ng-template #validBlock>
-                  <span>
-                    {{"SYSTEM.OVERVIEW.VALID" | translate}}
-                  </span>
-                </ng-template>
+                <span>{{inverter.warranty_str}}</span>
               </span>
             </div>
           </ng-container>

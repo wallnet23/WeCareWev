@@ -77,13 +77,16 @@ export class SystemOverviewComponent {
   }
 
   getSystemOverview() {
-    this.connectServerService.getRequest<ApiResponse<{ systemInfo: SystemInfo }>>
+    this.connectServerService.getRequest<ApiResponse<{ systemInfo: SystemInfo, warrantyInverterListStatus: WarrantyInverter[] }>>
       (Connect.urlServerLaraApi, 'system/systemOverview', { id: this.idsystem })
       .subscribe((val: ApiResponse<{
-        systemInfo: SystemInfo
+        systemInfo: SystemInfo,
+        warrantyInverterListStatus: WarrantyInverter[]
       }>) => {
         if (val.data) {
           this.systemInfo = val.data.systemInfo;
+          this.warrantyInverterStatus = val.data.warrantyInverterListStatus;
+          this.checkInverterWarranty();
           // this.systemTickets = val.data.systemTickets;
           // if(this.systemTickets.length > 0) {
           //   this.isTicket = true;
@@ -91,31 +94,12 @@ export class SystemOverviewComponent {
           // console.log("System info:", this.systemInfo)
         }
       });
-
-    // CHIAMATA AL SERVER PER WARRANTY INVERTER STATUS
-    // this.connectServerService.getRequest<ApiResponse<{warrantyInverterStatus: WarrantyInverter[]}>>
-    //   (Connect.urlServerLaraApi, 'system/warrantyInverterInfoCard', { id: this.idsystem })
-    //     .subscribe((val: ApiResponse<{warrantyInverterStatus: WarrantyInverter[]}>) => {
-    //       this.warrantyInverterStatus = val.data.warrantyInverterStatus;
-    //       this.checkInverterWarranty();
-    //     })
-    // TEMPORANEO
-    this.warrantyInverterStatus = [
-      {sn: 345876, valid: null},
-      {sn: 795174, valid: 0},
-      {sn: 205836, valid: 1},
-      {sn: 995101, valid: 0},
-      {sn: 155173, valid: 1},
-      {sn: 555000, valid: 1},
-      {sn: 990870, valid: null},
-    ]
-    this.checkInverterWarranty();
   }
 
   private checkInverterWarranty() {
     // CONTROLLA SE C'E' ALMENO UN INVERTER CON GARANZIA NON NULLA
     this.warrantyInverterStatusCheck = this.warrantyInverterStatus.some(inverter => {
-      inverter.valid != null;
+      inverter.warranty_valid != null;
     })
   }
 
@@ -143,9 +127,27 @@ export class SystemOverviewComponent {
     this.location.back();
   }
 
-// ticketsListSystem() {
-  //   this.router.navigate(['/systemTicketsList', 1]);
-  // }
+  ticketsListSystem() {
+    // this.router.navigate(['/systemTicketsList', 1]);
+
+    let obj_val: ApiResponse<any> = {
+      // 200: success, 511: warning
+      code: 244,
+      data: null,
+      title: "Info",
+      message: "Work in progress",
+      // 1: toast se null o altro apre il dialog
+      type_alert: null,
+      obj_toast: null,
+      obj_dialog: {
+        disableClose: 0,
+      }
+    }
+    this.popupDialogService.alertElement(obj_val)
+    // this.router.navigate(['/systemManagement', this.idsystem]);
+
+
+  }
   // newTicket() {
   //   this.router.navigate(['/newTicket', this.idsystem]);
   // }
