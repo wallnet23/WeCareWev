@@ -328,7 +328,7 @@
       "INSTALLATIONSITE": "Installation Site",
       "DEVICEINFO": "Device Info",
       "SYSTEMINFO": "Information about the plant",
-      "ENABLEFUNC": "Insert the system's datas to enable the others functionalities",
+      "ENABLEFUNC": "To access this function the system must be checked and inspected by the technician.",
       "MODIFYDATA": "Modify System Data",
       "VIEW": "View System Data",
       "WARRANTY": "WARRANTY",

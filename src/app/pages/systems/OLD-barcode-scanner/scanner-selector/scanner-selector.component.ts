@@ -1,8 +1,6 @@
 import { Component, ElementRef, EventEmitter, inject, Output, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { VideoDecodeComponent } from "../video-decode/video-decode.component";
-import { ImgDecodeComponent } from "../img-decode/img-decode.component";
-import { ControlValueAccessor, FormControl } from '@angular/forms';
+import { ControlValueAccessor } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalComponent } from '../modal/modal.component';
 
@@ -11,9 +9,7 @@ import { ModalComponent } from '../modal/modal.component';
   selector: 'app-scanner-selector',
   standalone: true,
   imports: [
-    CommonModule,
-    VideoDecodeComponent,
-    ImgDecodeComponent
+    CommonModule
 ],
   templateUrl: './scanner-selector.component.html',
   styleUrl: './scanner-selector.component.scss'
@@ -34,7 +30,7 @@ export class ScannerSelectorComponent implements ControlValueAccessor {
     const dialogRef = this.dialog.open(ModalComponent, {
       width: '90%',
     });
-    
+
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.barcode) {
         this.barcode = result.barcode;

@@ -327,7 +327,7 @@
       "INSTALLATIONSITE": "Sito di Installazione",
       "DEVICEINFO": "Informazioni sul Dispositivo",
       "SYSTEMINFO": "Informazioni sull'impianto",
-      "ENABLEFUNC": "Inserisci i dati dell'impianto per abilitare le altre funzionalità",
+      "ENABLEFUNC": "Per accedere a questa funzione l'impianto deve essere controllato e visionato dal tecnico.",
       "MODIFYDATA": "Modifica i Dati dell'impianto",
       "VIEW": "Visualizza i Dati dell'impianto",
       "INVERTERNUMBER": "Numero di Inverter",

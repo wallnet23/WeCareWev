@@ -99,8 +99,10 @@ export class SystemOverviewComponent {
   private checkInverterWarranty() {
     // CONTROLLA SE C'E' ALMENO UN INVERTER CON GARANZIA NON NULLA
     this.warrantyInverterStatusCheck = this.warrantyInverterStatus.some(inverter => {
-      inverter.warranty_valid != null;
+      // console.log(inverter);
+      return inverter.warranty_valid !== null;
     })
+    // console.log('warrantyInverterStatusCheck', this.warrantyInverterStatusCheck);
   }
 
   modifyDescription(description: string) {

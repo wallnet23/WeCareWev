@@ -54,7 +54,8 @@
               </i>
             </span>
           </ng-template>
-          <app-step-one-readonly *ngIf="stepStatusList[0].listStepStatus[0].idstepstatus != 10; else stepOneModify"
+          <app-step-one-readonly *ngIf="!(stepStatusList[0].listStepStatus[0].idstepstatus == 10
+          && systemStatusList[0]?.id == 7); else stepOneModify"
             #stepOne (formEmit)="onFormOneReceived($event)" (nextStep)="stepper.next()" [idsystem]="idsystem"
             [countriesList]="countriesList" [stepOne]="systemInfo.stepOne">
           </app-step-one-readonly>
@@ -88,7 +89,8 @@
             </span>
           </ng-template>
           <ng-template matStepContent>
-            <app-step-two-readonly *ngIf="stepStatusList[1].listStepStatus[0].idstepstatus != 10; else stepTwoModify"
+            <app-step-two-readonly *ngIf="!(stepStatusList[1].listStepStatus[0].idstepstatus == 10
+             && systemStatusList[0]?.id == 7); else stepTwoModify"
               #stepTwo (formEmit)="onFormTwoReceived($event)" (nextStep)="stepper.next()"
               [countriesList]="countriesList" [idsystem]="idsystem" [stepTwo]="systemInfo.stepTwo">
             </app-step-two-readonly>
@@ -125,7 +127,8 @@
           </ng-template>
           <ng-template matStepContent>
             <app-step-three-readonly
-              *ngIf="stepStatusList[2].listStepStatus[0].idstepstatus != 10; else stepThreeModify" #stepThree
+              *ngIf="!(stepStatusList[2].listStepStatus[0].idstepstatus == 10
+              && systemStatusList[0]?.id == 7); else stepThreeModify" #stepThree
               (formEmit)="onFormThreeReceived($event)" (nextStep)="stepper.next()" [stepThree]="systemInfo.stepThree"
               [countriesList]="countriesList" [idsystem]="idsystem">
             </app-step-three-readonly>
@@ -160,7 +163,8 @@
             </span>
           </ng-template>
           <ng-template matStepContent>
-            <app-step-four-readonly *ngIf="stepStatusList[3].listStepStatus[0].idstepstatus != 10; else stepFourModify"
+            <app-step-four-readonly *ngIf="!(stepStatusList[3].listStepStatus[0].idstepstatus == 10
+            && systemStatusList[0]?.id == 7 ); else stepFourModify"
               #stepFour (formEmit)="onFormFourReceived($event)" (nextStep)="stepper.next()"
               [stepFour]="systemInfo.stepFour" [idsystem]="idsystem">
             </app-step-four-readonly>
@@ -195,7 +199,8 @@
             </span>
           </ng-template>
           <ng-template matStepContent>
-            <app-step-five-readonly *ngIf="stepStatusList[4].listStepStatus[0].idstepstatus != 10; else stepFiveModify"
+            <app-step-five-readonly *ngIf="!(stepStatusList[4].listStepStatus[0].idstepstatus == 10
+            && systemStatusList[0]?.id == 7); else stepFiveModify"
               #stepFive (formEmit)="onFormFiveReceived($event)" (nextStep)="stepper.next()"
               [stepFive]="systemInfo.stepFive" [idsystem]="idsystem">
             </app-step-five-readonly>
@@ -231,7 +236,8 @@
             </span>
           </ng-template>
           <ng-template matStepContent>
-            <app-step-six-readonly *ngIf="stepStatusList[5].listStepStatus[0].idstepstatus != 10; else stepSixModify"
+            <app-step-six-readonly *ngIf="!(stepStatusList[5].listStepStatus[0].idstepstatus == 10
+            && systemStatusList[0]?.id == 7); else stepSixModify"
               #stepSix (formEmit)="onFormSixReceived($event)" (nextStep)="stepper.next()" [stepSix]="systemInfo.stepSix"
               [idsystem]="idsystem">
             </app-step-six-readonly>
