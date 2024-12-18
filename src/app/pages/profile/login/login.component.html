@@ -20,13 +20,13 @@
             <p class="login-card-description d-md-none text-center">{{"PROFILE.LOGIN.SIGNIN" | translate}}</p>
             <form [formGroup]="loginForm">
               <div class="form-group">
-                <label for="email" class="sr-only">{{"PROFILE.LOGIN.EMAIL" | translate}}</label>
-                <input type="email" name="email" id="email" formControlName="email" class="form-control"
+                <label for="email">{{"PROFILE.LOGIN.EMAIL" | translate}}</label>
+                <input type="email" name="email" id="email" formControlName="email" class="form-control inputElement"
                   placeholder="{{'PROFILE.LOGIN.MAILPLACEHOLDER' | translate}}" [ngClass]="{'error': !valid}">
               </div>
-              <div class="form-group input-container" [ngClass]="{'mb-4': valid}">
-                <label for="password" class="sr-only">{{"PROFILE.LOGIN.PSW" | translate}}</label>
-                <input [type]="type" name="password" id="password" formControlName="password" class="form-control"
+              <div class="form-group mt-2" [ngClass]="{'mb-4': valid}" style="position: relative">
+                <label for="password">{{"PROFILE.LOGIN.PSW" | translate}}</label>
+                <input [type]="type" name="password" id="password" formControlName="password" class="form-control inputElement"
                   placeholder="***********" [ngClass]="{'error': !valid}">
                 <i class="bi" [ngClass]="{'bi-eye': !toggled, 'bi-eye-slash': toggled}" id="togglePassword"
                   (click)="seePassword()"></i>

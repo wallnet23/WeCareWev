@@ -90,14 +90,15 @@ form {
     width: 100%;
 }
 
-.form-control {
+.inputElement {
     border: 1px solid #d5dae2;
     //padding: 15px 25px;
     //margin-bottom: 20px;
     min-height: 45px;
     font-size: 16px;
-    line-height: 15;
     font-weight: normal;
+
+    padding-right: 40px; /* spazio per l'icona */
 
     &::placeholder {
         color: #919aa3;
@@ -143,19 +144,10 @@ form {
     border: 1px solid #DC3545 !important;
 }
 
-.input-container .bi {
+.bi {
     position: absolute;
     right: 10px; /* distanza dal bordo destro del campo di input */
+    bottom: 11%;
     cursor: pointer;
     z-index: 1;
-}
-
-.input-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.input-container .form-control {
-    padding-right: 40px; /* spazio per l'icona */
 }
