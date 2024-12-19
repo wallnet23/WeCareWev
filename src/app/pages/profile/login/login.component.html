@@ -8,7 +8,7 @@
         <div class="col-md-7 col-12">
           <div class="card-body">
             <div class="languageBox">
-              <app-language></app-language>
+              <app-language (lang)="changeLang($event)"></app-language>
             </div>
             <div class="brand-wrapper d-none d-md-block">
               <img src="assets/img/logo.png" alt="logo" class="logo">
@@ -46,8 +46,16 @@
               <button routerLink="/signup" class="btn btn-link">{{"PROFILE.LOGIN.REGISTER" | translate}}</button>
             </p>
             <nav class="login-card-footer-nav">
-              <a href="#!" class="me-4">{{"PROFILE.LOGIN.USERTERMS" | translate}}</a>
-              <a href="#!">{{"PROFILE.LOGIN.PRIVACY" | translate}}</a>
+              @if(lang == 'it'){
+                  <a href="https://www.iubenda.com/privacy-policy/52431611" target="_blank" class="iubenda-white iubenda-noiframe iubenda-embed iubenda-noiframe me-4" title="Privacy Policy ">Privacy Policy</a><script type="text/javascript">(function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src="https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener){w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload", loader);}else{w.onload = loader;}})(window, document);</script>
+                  <a href="https://www.iubenda.com/termini-e-condizioni/52431611" target="_blank" class="iubenda-white iubenda-noiframe iubenda-embed iubenda-noiframe " title="Termini e Condizioni ">Termini e Condizioni</a><script type="text/javascript">(function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src="https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener){w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload", loader);}else{w.onload = loader;}})(window, document);</script>
+              }
+              @else{
+                  <a href="https://www.iubenda.com/privacy-policy/78584924" target="_blank" class="iubenda-white iubenda-noiframe iubenda-embed iubenda-noiframe me-4" title="Privacy Policy ">Privacy Policy</a><script type="text/javascript">(function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src="https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener){w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload", loader);}else{w.onload = loader;}})(window, document);</script>
+                  <a href="https://www.iubenda.com/terms-and-conditions/78584924" target="_blank" class="iubenda-white iubenda-noiframe iubenda-embed iubenda-noiframe " title="Terms and Conditions ">Terms and Conditions</a><script type="text/javascript">(function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src="https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener){w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload", loader);}else{w.onload = loader;}})(window, document);</script>
+              }
+              <!-- <a href="#!" class="me-4">{{"PROFILE.LOGIN.USERTERMS" | translate}}</a>
+              <a href="#!">{{"PROFILE.LOGIN.PRIVACY" | translate}}</a> -->
             </nav>
           </div>
         </div>
