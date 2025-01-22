@@ -6,7 +6,6 @@ import { SystemCardComponent } from '../components/system-card/system-card.compo
 import { FormsModule } from '@angular/forms';
 import { SystemInfo } from '../interfaces/system-info';
 import { TranslateModule } from '@ngx-translate/core';
-import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-systems-list',
@@ -16,22 +15,21 @@ import { MatTooltip } from '@angular/material/tooltip';
     MatIconModule,
     SystemCardComponent,
     FormsModule,
-    TranslateModule,
-    MatTooltip
+    TranslateModule
   ],
   templateUrl: './systems-list.component.html',
   styleUrl: './systems-list.component.scss'
 })
 export class SystemsListComponent {
-searchText: any;
+  searchText: any;
 
   systemsList: SystemInfo[] = []
 
   constructor(private router: Router) {
-
   }
 
   navigate(src: string) {
     this.router.navigate([src, 0]);
   }
+
 }
