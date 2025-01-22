@@ -38,7 +38,6 @@ import { ScannerBarcodeButtonComponent } from "../../../../components/scanner-ba
     MatIconModule,
     TranslateModule,
     MatCardModule,
-    ScannerSelectorComponent,
     MatSelectModule,
     ScannerBarcodeButtonComponent
 ],
