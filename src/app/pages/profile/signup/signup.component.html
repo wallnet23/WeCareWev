@@ -100,7 +100,7 @@
                         </div>
                     </div>
 
-                    <div class="col-12 col-lg-6 mb-3 mb-lg-0" [ngClass]="{'mb-lg-3': isItalian}">
+                    <div class="col-12 col-lg-6 mb-3 mb-lg-0" [ngClass]="{'mb-lg-3': isItalian}" style="position: relative;">
                       <label for="password" style="font-weight: bold;">{{"PROFILE.SIGNUP.PWD" | translate}}<sup
                           class="small-asterisk">*</sup></label>
                       <input [type]="type1" id="password" formControlName="password" class="form-control form_control"
@@ -109,7 +109,7 @@
                       <i class="bi bi-eye icon" [ngClass]="{'bi-eye': !toggled1, 'bi-eye-slash': toggled1}"
                         id="togglePassword" (click)="seePassword('password')"></i>
                     </div>
-                    <div class="col-12 col-lg-6">
+                    <div class="col-12 col-lg-6" style="position: relative;">
                       <label for="password_confirmation" style="font-weight: bold;">{{"PROFILE.SIGNUP.PWD_CONFIRM" |
                         translate}}<sup class="small-asterisk">*</sup></label>
                       <input [type]="type2" id="password_confirmation" formControlName="password_confirmation"
@@ -154,8 +154,8 @@
                   </div>
                 </div>
                 <div class="col-12 text-center">
-                  <label *ngIf="signupForm.invalid" for="sendBtn"
-                    style="font-size: small; color: red;">{{"PROFILE.SIGNUP.INVALID" | translate}}</label>
+                  <label *ngIf="signupForm.invalid" class="mb-2" for="sendBtn"
+                    style="font-size: small; color: red;">{{"PROFILE.SIGNUP.INVALID" | translate}}</label><br>
                   <button class="btn btn-block send-btn mb-4" id="sendBtn" type="button" (click)="sendSignupData()"
                     [disabled]="signupForm.invalid">
                     {{"PROFILE.SIGNUP.SEND" | translate}}

@@ -22,6 +22,7 @@ import { Inverter } from '../../interfaces/inverterData';
 import { StepFourService } from '../step-four/step-four.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ReadDataPopupComponent } from '../read-data-popup/read-data-popup.component';
+import { ScannerBarcodeButtonComponent } from "../../../../components/scanner-barcode-button/scanner-barcode-button.component";
 
 @Component({
   selector: 'app-step-six',
@@ -38,8 +39,9 @@ import { ReadDataPopupComponent } from '../read-data-popup/read-data-popup.compo
     TranslateModule,
     MatCardModule,
     ScannerSelectorComponent,
-    MatSelectModule
-  ],
+    MatSelectModule,
+    ScannerBarcodeButtonComponent
+],
   templateUrl: './step-six.component.html',
   styleUrl: './step-six.component.scss'
 })
@@ -203,6 +205,10 @@ export class StepSixComponent {
     return form.get('clusters_list') as FormArray;
   }
 
+  get clusterFieldAsFormArray() {
+    return this.stepSixForm.get('clusters_list') as FormArray;
+  }
+
 
   objcluster_default: ClusterSend = {
     id: 0,
@@ -317,5 +323,10 @@ export class StepSixComponent {
           this.readonlyEmit.emit();
         })
     }
+  }
+
+  onBarcodeScanned(barcode: string, i: number) {
+    this.clusterFieldAsFormArray.at(i).get('serialnumber')!.setValue(barcode);
+    // console.log("FORM FIELD", this.inverterFieldAsFormArray.value[i].serialnumber)
   }
 }

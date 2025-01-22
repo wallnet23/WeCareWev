@@ -18,6 +18,9 @@ import { StepTwo } from '../interfaces/step-two';
 import { Image } from '../interfaces/image';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ImageLoaderService } from '../../../../services/image-loader.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ImageViewerComponent } from '../image-viewer/image-viewer.component';
+import { PdfViewerComponent } from '../pdf-viewer/pdf-viewer.component';
 
 @Component({
   selector: 'app-step-two',
@@ -49,7 +52,7 @@ export class StepTwoComponent {
 
   submitted = false;
   selectedFilesStep2: File[] = [];
-  maxImagesStep2: number = 6;
+  maxImagesStep2: number = 5;
   isImagesStep2: boolean = false;
   imageSpaceLeftStep2: boolean = true;
   imagesStep2: Image[] = [];
@@ -83,7 +86,8 @@ export class StepTwoComponent {
   constructor(private formBuilder: FormBuilder,
     private connectServerService: ConnectServerService,
     private popupDialogService: PopupDialogService,
-    private imageLoaderService: ImageLoaderService, private translate: TranslateService) { }
+    private imageLoaderService: ImageLoaderService, private translate: TranslateService,
+    public dialog: MatDialog) { }
 
   infoStep() {
     this.connectServerService.getRequest<ApiResponse<{ stepTwo: StepTwo }>>(Connect.urlServerLaraApi, 'system/infoStepTwo', { id: this.idsystem }).
@@ -294,6 +298,33 @@ export class StepTwoComponent {
           this.popupDialogService.alertElement(val);
           this.readonlyEmit.emit();
         })
+    }
+  }
+
+  viewImage(image: Image) {
+    console.log(image)
+    const id = image.id;
+    if (id > 0) {
+      if (image.ext == "pdf") {
+        this.dialog.open(PdfViewerComponent, {
+          data: { file: image },
+          panelClass: 'fullscreen-modal',
+          width: '90vh',
+          height: '90vh',
+          maxHeight: '90vh',
+          maxWidth: '95vw',
+          minWidth: '250px',
+          position: {
+            top: '40px',
+          },
+          // autoFocus: false
+        });
+      }
+      else {
+        this.dialog.open(ImageViewerComponent, {
+          data: { file: image },
+        });
+      }
     }
   }
 

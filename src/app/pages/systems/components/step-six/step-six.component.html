@@ -31,7 +31,7 @@
                 </mat-card-header>
                 <mat-card-content>
                   <div *ngFor="let bat of cluster.get('batteries').controls;let j = index" formArrayName="batteries">
-                    <div [formGroupName]="j" class="row">
+                    <div [formGroupName]="j" class="row" style="position: relative;">
                       <div class="col-12"
                         style="margin-top: 0px; margin-bottom: 0px;padding-top: 0px; padding-bottom: 0px;"
                         [ngClass]="{'mt-2': j == 0}">
@@ -50,6 +50,7 @@
                           style="font-size: small;">
                           {{"SYSTEM.STEPSIX.SERIALNUMBERERROR" | translate}}
                         </div>
+                        <app-scanner-barcode-button class="cameraIcon" (barcodeScanned)="onBarcodeScanned($event, i)"></app-scanner-barcode-button>
                       </div>
                     </div>
                   </div>
