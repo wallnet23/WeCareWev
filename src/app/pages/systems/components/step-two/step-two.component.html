@@ -55,16 +55,19 @@
       <ng-container *ngFor="let image2 of imagesStep2">
         <div *ngIf="image2.src" class="col-xs-12 col-sm-6 col-md-2 mb-4 text-center" style="width: 100px; height: 100px;">
           <!-- L'URL sicuro è già gestito nel componente -->
-          <img [src]="urlServerLaraMedia+image2.src" [alt]="image2.title" class="img-fluid thumbnailImg">
+          <img *ngIf="image2.ext != 'pdf'; else pdfBlock" [src]="urlServerLaraMedia+image2.src" [alt]="image2.title" class="img-fluid thumbnailImg" (click)="viewImage(image2)">
+          <ng-template #pdfBlock>
+            <img src="assets/img/pdfThumbnail.png" [alt]="image2.title" class="img-fluid thumbnailImg" (click)="viewImage(image2)">
+          </ng-template>
           <i class="bi bi-trash trash" (click)="deleteImg(image2.id)"></i>
         </div>
       </ng-container>
     </div>
-    <div class="row justify-content-center mb-5">
+    <div class="row justify-content-center mb-3 mt-2">
       <div class="col-md-4 text-center d-flex flex-column" style="max-width: 250px;">
         <label *ngIf="imagesStep2.length < 5 && submitted" class="text-danger" style="font-size: small;">{{"SYSTEM.STEPTWO.FEWIMAGES" | translate}}</label><br>
         <label *ngIf="!imageSpaceLeftStep2" class="text-danger" style="font-size: small;">{{"SYSTEM.STEPTWO.IMAGELIMIT" | translate}}</label><br>
-        <label *ngIf="imagesStep2.length < maxImagesStep2" for="fileUpload2" class="btn btn-outline-dark">
+        <label *ngIf="imagesStep2.length < maxImagesStep2" for="fileUpload2" class="btn btn-outline-dark mt-1">
           <i class="bi bi-upload" style="margin-right: 4px;"></i>
             {{"SYSTEM.STEPTWO.IMPORT" | translate}}
           <input type="file" id="fileUpload2" style="display: none;" (change)="onFileSelected($event)" multiple>
@@ -83,8 +86,7 @@
       <button class="btn btn-outline-dark ms-1 me-1 ms-md-2 me-md-2" id="next" (click)="saveStep('save')">
         {{"SYSTEM.STEPBUTTONS.SAVE" | translate}}
       </button>
-      <button class="btn btn-outline-dark me-0 ms-md-2" [disabled]="stepTwoForm.invalid || (imagesStep2.length < 5)" (click)="saveStep('next')"
-        >
+      <button class="btn btn-outline-dark me-0 ms-md-2" [disabled]="stepTwoForm.invalid || (imagesStep2.length < 5)" (click)="saveStep('next')">
         {{"SYSTEM.STEPBUTTONS.NEXT" | translate}}
       </button>
     </div>

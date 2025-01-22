@@ -88,7 +88,6 @@ form {
   //margin-bottom: 20px;
   min-height: 45px;
   font-size: 13px;
-  line-height: 15;
   font-weight: normal;
 
   &::placeholder {
@@ -156,8 +155,8 @@ form {
 
 .icon {
   position: absolute;
-  right: 20px;
-  top: 74%;
+  right: 24px;
+  top: 66%;
   transform: translateY(-50%);
   cursor: pointer;
   z-index: 2;

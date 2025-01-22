@@ -16,6 +16,9 @@ import { StepThree } from '../interfaces/step-three';
 import { Image } from '../interfaces/image';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ImageLoaderService } from '../../../../services/image-loader.service';
+import { PdfViewerComponent } from '../pdf-viewer/pdf-viewer.component';
+import { ImageViewerComponent } from '../image-viewer/image-viewer.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-step-three',
@@ -87,7 +90,7 @@ export class StepThreeComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
     private connectServerService: ConnectServerService, private popupDialogService: PopupDialogService,
-    private imageLoaderService: ImageLoaderService, private translate: TranslateService) { }
+    private imageLoaderService: ImageLoaderService, private translate: TranslateService, public dialog: MatDialog) { }
 
   infoStep() {
     this.connectServerService.getRequest<ApiResponse<{ stepThree: StepThree }>>(Connect.urlServerLaraApi, 'system/infoStepThree', { id: this.idsystem }).
@@ -332,4 +335,31 @@ export class StepThreeComponent implements OnInit {
       return null;
     };
   }
+
+  viewImage(image: Image) {
+      console.log(image)
+      const id = image.id;
+      if (id > 0) {
+        if (image.ext == "pdf") {
+          this.dialog.open(PdfViewerComponent, {
+            data: { file: image },
+            panelClass: 'fullscreen-modal',
+            width: '90vh',
+            height: '90vh',
+            maxHeight: '90vh',
+            maxWidth: '95vw',
+            minWidth: '250px',
+            position: {
+              top: '70px',
+            },
+            // autoFocus: false
+          });
+        }
+        else {
+          this.dialog.open(ImageViewerComponent, {
+            data: { file: image },
+          });
+        }
+      }
+    }
 }

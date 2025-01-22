@@ -132,7 +132,7 @@
           </div>
         </div>
         <div *ngIf="stepFourForm.get('refidwecaresystemtype')?.value != null" class="col-12">
-          <label class="form-check-label mt-3 mr-2" for="singleBattery">
+          <label class="form-check-label mt-3 me-3" for="singleBattery">
             {{ "SYSTEM.STEPFOUR.SINGLEBATTERY" | translate }}
           </label>
           <div class="form-check form-check-inline">
@@ -169,7 +169,7 @@
 
     </div>
 
-    <div *ngIf="!isReadonly; else updateBlock" class="col-12 text-center px-0">
+    <div *ngIf="!isReadonly; else updateBlock" class="col-12 mt-3 text-center px-0">
       <button class="btn btn-outline-dark me-0 me-md-2" (click)="previous()">
         {{"SYSTEM.STEPBUTTONS.PREV" | translate}}
       </button>
