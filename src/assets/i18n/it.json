@@ -5,12 +5,14 @@
     "MSG_APPROVEDSTEP": "Richiesta non modificabile. Completa tutti gli step e clicca il tasto approva impianto!",
     "MSG_CHANGEPWD": "Sei sicuro di voler cambiare la password di accesso?",
     "MSG_WORKINPROGRESS": "Lavori in corso. Funzionalità da implementare!",
+    "MSG_SENDEMAIL": "Sei sicuro di voler inviare l'email?",
     "BUTTON": {
       "DELETE": "Cancella",
       "CLOSE": "Chiudi",
       "GO": "Vai",
       "SEND": "Invia",
-      "UPDATE": "Aggiorna"
+      "UPDATE": "Aggiorna",
+      "CONFIRM": "Conferma"
     },
     "TITLE": {
       "WARNING": "Attenzione",
@@ -288,7 +290,11 @@
       "INVERTER": "Inverter",
       "SERIALNUMBER": "Numero di Serie",
       "MODEL": "Modello",
-      "INVERTERCOMPOSE": "Inserisci gli inverter:"
+      "INVERTERCOMPOSE": "Inserisci gli inverter:",
+      "ERRORSNSINGULAR": "Sei sicuro di aver inserito il serial number correttamente? il seguente seriale risulta essere sbagliato",
+      "ERRORSNPLURAL": "Sei sicuro di aver inserito i serial number correttamente? i seguenti seriali risultano essere sbagliati",
+      "PRESSBUTTON": "Se credi di aver inserito i dati correttamente premi il pulsante qui sotto per inviare una mail a Weco",
+      "SENDEMAIL": "Invia Mail"
     },
     "STEPSIX": {
       "SERIALNUMBERERROR": "Inserisci un serial number",

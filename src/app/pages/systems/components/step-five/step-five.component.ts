@@ -15,6 +15,7 @@ import { ApiResponse } from '../../../../interfaces/api-response';
 import { Connect } from '../../../../classes/connect';
 import { StepFive } from '../interfaces/step-five';
 import { ScannerBarcodeButtonComponent } from "../../../../components/scanner-barcode-button/scanner-barcode-button.component";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-step-five',
@@ -31,7 +32,7 @@ import { ScannerBarcodeButtonComponent } from "../../../../components/scanner-ba
     TranslateModule,
     MatCardModule,
     ScannerBarcodeButtonComponent
-],
+  ],
   templateUrl: './step-five.component.html',
   styleUrl: './step-five.component.scss'
 })
@@ -41,10 +42,13 @@ export class StepFiveComponent {
 
   @Output() formEmit = new EventEmitter<FormGroup>();
   @Output() readonlyEmit = new EventEmitter<void>();
-  @Output() changeStep = new EventEmitter<{step: number, action: number}>();
+  @Output() changeStep = new EventEmitter<{ step: number, action: number }>();
 
   @Input() isReadonly = false;
   @Input() idsystem = 0;
+
+  listerrorsn: string[] = [];
+
   stepFiveForm = this.formBuilder.group({
     inverter_communication: new FormControl<number | null | boolean>({ value: null, disabled: false }),
     inverter_power: new FormControl<number | null | boolean>({ value: null, disabled: false }),
@@ -52,7 +56,7 @@ export class StepFiveComponent {
   });
 
   constructor(private formBuilder: FormBuilder, private connectServerService: ConnectServerService,
-    private popupDialogService: PopupDialogService, private translate: TranslateService) { }
+    private popupDialogService: PopupDialogService, private translate: TranslateService, private router: Router) { }
 
   ngOnInit(): void {
     if (this.idsystem > 0) {
@@ -68,9 +72,11 @@ export class StepFiveComponent {
         id: this.idsystem
       })
       .subscribe((val: ApiResponse<{
-        stepFive: StepFive
+        stepFive: StepFive,
+        listerrorsn: string[]
       }>) => {
         if (val.data && val.data.stepFive) {
+          this.listerrorsn = val.data.listerrorsn;
           this.inverterFieldAsFormArray.clear();
           const data_step = val.data.stepFive;
           this.stepFiveForm.patchValue({
@@ -96,21 +102,22 @@ export class StepFiveComponent {
     // console.log('data 1', this.stepFiveForm.value);
     // console.log('data valid', this.stepFourForm.valid);
     if (this.stepFiveForm.valid) {
-      this.connectServerService.postRequest<ApiResponse<null | {missingserial: string}>>(Connect.urlServerLaraApi, 'system/saveStepFive',
+      this.connectServerService.postRequest<ApiResponse<null | { listerrorsn: string[] }>>(Connect.urlServerLaraApi, 'system/saveStepFive',
         {
           idsystem: this.idsystem,
           obj_step: stepFive,
         })
-        .subscribe((val: ApiResponse<null | {missingserial: string}>) => {
+        .subscribe((val: ApiResponse<null | { listerrorsn: string[] }>) => {
+          this.listerrorsn = [];
           this.popupDialogService.alertElement(val);
           this.infoStep();
           this.formEmit.emit(this.formBuilder.group({}));
-          if(val && val.data && val.data.missingserial) {
-
-          }else if (action == 'next' ) {
+          if (val && val.data && val.data.listerrorsn) {
+            this.listerrorsn = val.data.listerrorsn;
+          } else if (action == 'next') {
             setTimeout(() => {
               // console.log('Emitting nextStep');
-              this.changeStep.emit({step: 5, action: 1});
+              this.changeStep.emit({ step: 5, action: 1 });
             }, 0);
           }
         })
@@ -118,7 +125,7 @@ export class StepFiveComponent {
   }
 
   previous() {
-    this.changeStep.emit({step: 5, action: 0});
+    this.changeStep.emit({ step: 5, action: 0 });
   }
 
   get inverterFieldAsFormArray(): any {
@@ -170,16 +177,56 @@ export class StepFiveComponent {
     this.submitted = true;
     const stepFive = this.stepFiveForm.getRawValue();
     if (this.stepFiveForm.valid) {
-      this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepFive',
+      this.connectServerService.postRequest<ApiResponse<null | { listerrorsn: string[] }>>(Connect.urlServerLaraApi, 'system/saveStepFive',
         {
           idsystem: this.idsystem,
           obj_step: stepFive,
           readonly: 1,
         })
-        .subscribe((val: ApiResponse<null>) => {
+        .subscribe((val: ApiResponse<null | { listerrorsn: string[] }>) => {
+          this.listerrorsn = [];
           this.popupDialogService.alertElement(val);
-          this.readonlyEmit.emit();
+          if (val && val.data && val.data.listerrorsn) {
+            this.listerrorsn = val.data.listerrorsn;
+          }
+          else {
+            this.readonlyEmit.emit();
+          }
         })
     }
+  }
+
+  confirmEmailPopUp() {
+    this.translate.get(['POPUP.MSG_SENDEMAIL', 'POPUP.BUTTON.CONFIRM', 'POPUP.TITLE.INFO']).subscribe((translations) => {
+      const obj_request: ApiResponse<any> = {
+        code: 244,
+        data: {},
+        title: translations['POPUP.TITLE.INFO'],
+        message: translations['POPUP.MSG_SENDEMAIL'],
+        obj_dialog: {
+          disableClose: 1,
+          obj_buttonAction:
+          {
+            action: 1,
+            action_type: 2,
+            label: translations['POPUP.BUTTON.CONFIRM'],
+            run_function: (val?: number) => this.sendEmail()
+          }
+        }
+      }
+      this.popupDialogService.alertElement(obj_request);
+    });
+  }
+
+  sendEmail() {
+    this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 
+      'system/sendEmailErrorInverter', {idsystem: this.idsystem})
+      .subscribe((val: ApiResponse<null>) => {
+        this.popupDialogService.alertElement(val);
+        if(val) {
+          this.listerrorsn = [];
+          this.router.navigate(['systemOverview', this.idsystem]);
+        }
+      })
   }
 }

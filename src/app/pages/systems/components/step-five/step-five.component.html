@@ -14,10 +14,10 @@
     <div class="col-12">
       <div class="container">
         <div class="row mt-4">
-          <div class="col-12 col-md-6 col-lg-4 mb-4"
+          <div class="col-12 col-md-6 col-lg-4 mb-2"
             *ngFor="let inverterItem of inverterFieldAsFormArray.controls; let i = index"
             formArrayName="inverters_list">
-            <mat-card class="mb-4">
+            <mat-card class="mb-1">
               <div [formGroupName]="i">
                 <mat-card-header style="border-bottom: 2px solid lightgray;" class="bg-primary bg-opacity-10">
                   <mat-card-title style="font-weight: bold; font-size: medium;">
@@ -64,8 +64,8 @@
       </div>
     </div>
   </div>
-  <div class="row" *ngIf="inverterFieldAsFormArray.length >1">
-    <div class="col-12 mt-3 ms-3 form-check form-switch">
+  <div class="row" *ngIf="inverterFieldAsFormArray.length > 1">
+    <div class="col-12 mt-1 mb-2 ms-3 form-check form-switch">
       <input class="form-check-input" type="checkbox" role="switch" id="inverter_communication"
         formControlName="inverter_communication">
       <label class="form-check-label" for="inverter_communication">
@@ -80,17 +80,40 @@
       </label>
     </div>
   </div>
-  <div *ngIf="!isReadonly; else updateBlock" class="col-12 text-center px-0">
-    <button class="btn btn-outline-dark me-0 me-md-2" (click)="previous()">
-      {{"SYSTEM.STEPBUTTONS.PREV" | translate}}
-    </button>
-    <button class="btn btn-outline-dark ms-1 me-1 ms-md-2 me-md-2" id="next" (click)="saveStep('save')">
-      {{"SYSTEM.STEPBUTTONS.SAVE" | translate}}
-    </button>
-    <button class="btn btn-outline-dark me-0 ms-md-2"
-      [disabled]="stepFiveForm.invalid || inverterFieldAsFormArray.length ==0" (click)="saveStep('next')">
-      {{"SYSTEM.STEPBUTTONS.NEXT" | translate}}
-    </button>
+  <div *ngIf="!isReadonly && listerrorsn.length > 0" class="row justify-content-center mt-2">
+    <div class="col-12 text-center mt-1 mb-1">
+      <span *ngIf="listerrorsn.length == 1">
+        {{"SYSTEM.STEPFIVE.ERRORSNSINGULAR" | translate}}:
+      </span>
+      <span *ngIf="listerrorsn.length > 1">
+        {{"SYSTEM.STEPFIVE.ERRORSNPLURAL" | translate}}: 
+      </span>
+      <span *ngFor="let item of listerrorsn; let i = index" style="color: rgb(195, 0, 0);">
+        "{{item}}" {{i == listerrorsn.length - 1 ? '.' : ','}}
+      </span><br>
+      <span >
+        {{"SYSTEM.STEPFIVE.PRESSBUTTON" | translate}}
+      </span>
+    </div>
+    <div class="col-12 text-center mb-4 px-0">
+      <button class="btn btn-outline-danger" (click)="confirmEmailPopUp()">
+        {{"SYSTEM.STEPFIVE.SENDEMAIL" | translate}}
+      </button>
+    </div>
+  </div>
+  <div *ngIf="!isReadonly; else updateBlock" class="row justify-content-center">
+    <div class="col-12 text-center px-0">
+      <button class="btn btn-outline-dark me-0 me-md-2" (click)="previous()">
+        {{"SYSTEM.STEPBUTTONS.PREV" | translate}}
+      </button>
+      <button class="btn btn-outline-dark ms-1 me-1 ms-md-2 me-md-2" id="next" (click)="saveStep('save')">
+        {{"SYSTEM.STEPBUTTONS.SAVE" | translate}}
+      </button>
+      <button class="btn btn-outline-dark me-0 ms-md-2"
+        [disabled]="stepFiveForm.invalid || inverterFieldAsFormArray.length == 0" (click)="saveStep('next')">
+        {{"SYSTEM.STEPBUTTONS.NEXT" | translate}}
+      </button>
+    </div>
   </div>
   <ng-template #updateBlock>
     <div class="col-12 text-center">

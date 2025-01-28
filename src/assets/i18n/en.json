@@ -5,12 +5,14 @@
     "MSG_APPROVEDSTEP": "Request not modifiable. Complete all the steps and click the approve system button!",
     "MSG_CHANGEPWD": "Are you sure you want to change your login password?",
     "MSG_WORKINPROGRESS": "Work in progress. Feature to be implemented!",
+    "MSG_SENDEMAIL": "Are you sure you want to send the email?",
     "BUTTON": {
       "DELETE": "Delete",
       "CLOSE": "Close",
       "GO": "Go",
       "SEND": "Send",
-      "UPDATE": "Update"
+      "UPDATE": "Update",
+      "CONFIRM": "Confirm"
     },
     "TITLE": {
       "WARNING": "Warning",
@@ -289,7 +291,11 @@
       "SERIALNUMBER": "Serial Number",
       "MODEL": "Model",
       "QUANTITY": "Enter the quantity of inverters that make up the entire system.",
-      "INVERTERCOMPOSE": "Inserisci gli inverter:"
+      "INVERTERCOMPOSE": "Inserisci gli inverter:",
+      "ERRORSNSINGULAR": "Are you sure you entered the serial number correctly? The following serial number does not appear to be correct.",
+      "ERRORSNPLURAL": "Are you sure you entered the serial numbers correctly? The following serial numbers do not appear to be correct.",
+      "PRESSBUTTON": "If you believe you have entered the data correctly, press the button below to send an email to Weco.",
+      "SENDEMAIL": "Send Email"
     },
     "STEPSIX": {
       "SERIALNUMBERERROR": "Insert a serial number",
