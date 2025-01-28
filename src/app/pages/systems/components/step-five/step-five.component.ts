@@ -96,16 +96,18 @@ export class StepFiveComponent {
     // console.log('data 1', this.stepFiveForm.value);
     // console.log('data valid', this.stepFourForm.valid);
     if (this.stepFiveForm.valid) {
-      this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/saveStepFive',
+      this.connectServerService.postRequest<ApiResponse<null | {missingserial: string}>>(Connect.urlServerLaraApi, 'system/saveStepFive',
         {
           idsystem: this.idsystem,
           obj_step: stepFive,
         })
-        .subscribe((val: ApiResponse<null>) => {
+        .subscribe((val: ApiResponse<null | {missingserial: string}>) => {
           this.popupDialogService.alertElement(val);
           this.infoStep();
           this.formEmit.emit(this.formBuilder.group({}));
-          if (action == 'next') {
+          if(val && val.data && val.data.missingserial) {
+
+          }else if (action == 'next' ) {
             setTimeout(() => {
               // console.log('Emitting nextStep');
               this.changeStep.emit({step: 5, action: 1});
