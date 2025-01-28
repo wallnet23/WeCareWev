@@ -214,7 +214,8 @@
           </ng-template>
         </mat-step>
 
-        <mat-step *ngIf="systemInfo.stepFour.product_systemcomposition == 3 && stepStatusList.length > 4"
+        <mat-step *ngIf="systemInfo.stepFour.product_systemcomposition == 3 && stepStatusList.length > 4
+          && stepStatusList[5].listStepStatus.length > 0"
           errorMessage="Incomplete">
           <ng-template matStepLabel>
             <span style="font-weight: bold;">
@@ -225,11 +226,11 @@
                 style="font-size: large;" [ngStyle]="{'color':  '#'+stepStatusList[5].listStepStatus[0].color}"
                 matTooltip="{{stepStatusList[5].listStepStatus[0].name}}">
               </i>
-              <i *ngIf="stepStatusList[5].listStepStatus[0].idstepstatus == 15" class="bi bi-check-circle-fill"
+              <i *ngIf="stepStatusList[5] && stepStatusList[5].listStepStatus[0].idstepstatus == 15" class="bi bi-check-circle-fill"
                 style="font-size: large;" [ngStyle]="{'color':  '#'+stepStatusList[5].listStepStatus[0].color}"
                 matTooltip="{{stepStatusList[5].listStepStatus[0].name}}">
               </i>
-              <i *ngIf="stepStatusList[5].listStepStatus[0].idstepstatus == 5" class="bi bi-question-circle-fill"
+              <i *ngIf="stepStatusList[5] && stepStatusList[5].listStepStatus[0].idstepstatus == 5" class="bi bi-question-circle-fill"
                 style="font-size: large;" [ngStyle]="{'color':  '#'+stepStatusList[5].listStepStatus[0].color}"
                 matTooltip="{{stepStatusList[5].listStepStatus[0].name}}">
               </i>
