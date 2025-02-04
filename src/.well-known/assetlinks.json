@@ -1,0 +1,7 @@
+[{
+  "relation": ["lookalikes/allowlist"],
+  "target" : { "namespace": "web", "site": "https://wecobatteries.com"}
+},{
+  "relation": ["lookalikes/allowlist"],
+  "target" : { "namespace": "web", "site": "https://wecare-wecobatteries.com"}
+}]
