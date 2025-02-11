@@ -51,9 +51,9 @@ export class UploadImageService {
   uploadImagesFromStep(files: FileList, uploadCallback: () => void, maxImages: number, step: number) {
     const newImages: any = [];
     let imagesAdded = 0;
-    console.log(step)
+    // console.log(step)
     if (step === 2) {
-      console.log("STEP 2")
+      // console.log("STEP 2")
       if (this.imagesStep2.length + files.length <= maxImages) {
         for (let i = 0; i < files.length; i++) {
           if (this.imagesStep2.length + newImages.length >= maxImages) {
@@ -82,7 +82,7 @@ export class UploadImageService {
       }
     }
     else if (step === 3) {
-      console.log("STEP 3")
+      // console.log("STEP 3")
       if (this.imagesStep3.length + files.length <= maxImages) {
         for (let i = 0; i < files.length; i++) {
           if (this.imagesStep3.length + newImages.length >= maxImages) {

@@ -302,7 +302,7 @@ export class StepTwoComponent {
   }
 
   viewImage(image: Image) {
-    console.log(image)
+    // console.log(image)
     const id = image.id;
     if (id > 0) {
       if (image.ext == "pdf") {

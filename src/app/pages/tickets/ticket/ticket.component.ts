@@ -27,7 +27,7 @@ export class TicketComponent {
     private router: Router, private connectServerService: ConnectServerService) {
     this.activatedRoute.paramMap.subscribe((paramMap) => {
       this.id = paramMap.get('id');
-      console.log('ID:', this.id);
+      // console.log('ID:', this.id);
     });
     if(this.id) {
       this.getTicketAndSystemFromServer();

@@ -19,11 +19,11 @@ export class VideoDecodeComponent {
   @ViewChild('resultsContainer') resultsContainer?: ElementRef<HTMLDivElement>;
 
   @Output() barcodeScanned = new EventEmitter<string>();
-  
+
   resolveInit?: ()=>void;
   pInit:Promise<void> = new Promise(r=>{this.resolveInit=r});
   bDestoryed = false;
-  
+
   cvRouter?:CaptureVisionRouter;
   cameraEnhancer?:CameraEnhancer;
 
@@ -35,21 +35,21 @@ export class VideoDecodeComponent {
       if(this.bDestoryed){ throw Error(strErrorDistoryed); } // Check if component is destroyed after every async
       this.cameraEnhancer = await CameraEnhancer.createInstance(cameraView);
       if(this.bDestoryed){ throw Error(strErrorDistoryed); }
-  
+
       // Get default UI and append it to DOM.
       this.uiContainer!.nativeElement.append(cameraView.getUIElement());
-  
+
       // Create a `CaptureVisionRouter` instance and set `CameraEnhancer` instance as its image source.
       this.cvRouter = await CaptureVisionRouter.createInstance();
       if(this.bDestoryed){ throw Error(strErrorDistoryed); }
       this.cvRouter.setInput(this.cameraEnhancer);
-  
+
       // Define a callback for results.
       this.cvRouter.addResultReceiver({ onDecodedBarcodesReceived: (result) => {
         if (!result.barcodeResultItems.length) return;
-  
+
         this.resultsContainer!.nativeElement.textContent = '';
-        console.log(result);
+        // console.log(result);
         for (let item of result.barcodeResultItems) {
           this.resultsContainer!.nativeElement.append(
             `${item.formatString}: ${item.text}`,
@@ -59,7 +59,7 @@ export class VideoDecodeComponent {
           this.barcodeScanned.emit(item.text);
         }
       }});
-  
+
       // Filter out unchecked and duplicate results.
       const filter = new MultiFrameResultCrossFilter();
       // Filter out unchecked barcodes.
@@ -68,24 +68,24 @@ export class VideoDecodeComponent {
       filter.enableResultDeduplication("barcode", true);
       await this.cvRouter.addResultFilter(filter);
       if(this.bDestoryed){ throw Error(strErrorDistoryed); }
-  
+
       // Open camera and start scanning single barcode.
       await this.cameraEnhancer.open();
       if(this.bDestoryed){ throw Error(strErrorDistoryed); }
       await this.cvRouter.startCapturing("ReadSingleBarcode");
       if(this.bDestoryed){ throw Error(strErrorDistoryed); }
-  
+
     }catch(ex:any){
-      
+
       if((ex as Error)?.message === strErrorDistoryed){
-        console.log(strErrorDistoryed);
+        // console.log(strErrorDistoryed);
       }else{
         let errMsg = ex.message || ex;
         console.error(errMsg);
         alert(errMsg);
       }
     }
-  
+
     // distroy function will wait pInit
     this.resolveInit!();
   }

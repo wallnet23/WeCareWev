@@ -42,20 +42,20 @@ export class ImageViewerComponent {
   adjustContainerSize(): void {
     const container = this.imageContainer.nativeElement;
     const image = this.image.nativeElement;
-  
+
     // Ottieni le dimensioni dello schermo
     const screenWidth = window.innerWidth;
     const screenHeight = window.innerHeight;
-  
+
     // Ottieni le dimensioni scalate dell'immagine
     const scaledWidth = image.offsetWidth * this.zoomLevel;
     const scaledHeight = image.offsetWidth * this.zoomLevel;
-  
+
     // Ottieni la larghezza attuale del contenitore
     const containerStyles = getComputedStyle(container);
     const currentWidth = parseFloat(containerStyles.width);
     const currentHeight = parseFloat(containerStyles.height);
-  
+
     // Se l'immagine scalata rientra nello schermo, espandi il contenitore
     if (scaledWidth <= screenWidth) {
       container.style.width = `${scaledWidth}px`;
@@ -67,8 +67,8 @@ export class ImageViewerComponent {
       container.style.height = `${screenHeight}px`;
       container.style.overflow = 'auto';
     }
-  
-    console.log('Container Width:', currentWidth);
-    console.log('Container Height:', currentHeight);
+
+    // console.log('Container Width:', currentWidth);
+    // console.log('Container Height:', currentHeight);
   }
 }
