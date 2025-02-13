@@ -10,8 +10,9 @@ import { SystemInfo } from '../interfaces/system-info';
 import { PopupDialogService } from '../../../services/popup-dialog.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { SystemStatus } from '../interfaces/system-status';
-import { Ticket } from '../../tickets/interfaces/ticket';
+//import { Ticket } from '../../tickets/interfaces/ticket';
 import { WarrantyInverter } from '../interfaces/warranty-inverter';
+import { Ticket } from '../../tickets/interfaces/ticket';
 
 @Component({
   selector: 'app-system-overview',
@@ -130,22 +131,22 @@ export class SystemOverviewComponent {
   }
 
   ticketsListSystem() {
-    // this.router.navigate(['/systemTicketsList', 1]);
+    this.router.navigate(['/ticketList']);
 
-    let obj_val: ApiResponse<any> = {
-      // 200: success, 511: warning
-      code: 244,
-      data: null,
-      title: "Info",
-      message: "Work in progress",
-      // 1: toast se null o altro apre il dialog
-      type_alert: null,
-      obj_toast: null,
-      obj_dialog: {
-        disableClose: 0,
-      }
-    }
-    this.popupDialogService.alertElement(obj_val)
+    // let obj_val: ApiResponse<any> = {
+    //   // 200: success, 511: warning
+    //   code: 244,
+    //   data: null,
+    //   title: "Info",
+    //   message: "Work in progress",
+    //   // 1: toast se null o altro apre il dialog
+    //   type_alert: null,
+    //   obj_toast: null,
+    //   obj_dialog: {
+    //     disableClose: 0,
+    //   }
+    // }
+    // this.popupDialogService.alertElement(obj_val)
     // this.router.navigate(['/systemManagement', this.idsystem]);
 
 
