@@ -30,7 +30,7 @@ export class ImgDecodeComponent {
   }
 
   print() {
-    console.log("FORM RESULT: ", this.exampleForm.getRawValue());
+    // console.log("FORM RESULT: ", this.exampleForm.getRawValue());
   }
 
   // pReader: Promise<BarcodeReader> | null = null;

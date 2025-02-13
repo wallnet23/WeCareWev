@@ -34,7 +34,7 @@ export class ScannerSelectorComponent implements ControlValueAccessor {
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.barcode) {
         this.barcode = result.barcode;
-        console.log(this.barcode);
+        // console.log(this.barcode);
         this.barcodeScanned.emit(this.barcode);
       }
     });

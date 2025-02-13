@@ -255,11 +255,11 @@ export class StepFourOldComponent implements OnInit {
   }
 
   private logicStep() {
-    console.log('product_systemcomposition 1');
+    // console.log('product_systemcomposition 1');
 
     this.stepFourForm.get('product_systemcomposition')?.valueChanges.subscribe(
       (val) => {
-        console.log('product_systemcomposition 2');
+        // console.log('product_systemcomposition 2');
         if (val == null) {
           this.wecoComposition = [
             {

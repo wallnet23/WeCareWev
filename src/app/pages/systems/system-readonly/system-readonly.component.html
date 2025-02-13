@@ -54,14 +54,17 @@
               </i>
             </span>
           </ng-template>
+          <app-error-message *ngIf="stepStatusList[0].listStepStatus[0].idstepstatus == 10"
+            [error]="stepStatusList[0].listStepStatus">
+          </app-error-message>
           <app-step-one-readonly *ngIf="!(stepStatusList[0].listStepStatus[0].idstepstatus == 10
-          && systemStatusList[0]?.id == 7); else stepOneModify"
-            #stepOne (formEmit)="onFormOneReceived($event)" (nextStep)="stepper.next()" [idsystem]="idsystem"
-            [countriesList]="countriesList" [stepOne]="systemInfo.stepOne">
+          && systemStatusList[0]?.id == 7); else stepOneModify" #stepOne (formEmit)="onFormOneReceived($event)"
+            (nextStep)="stepper.next()" [idsystem]="idsystem" [countriesList]="countriesList"
+            [stepOne]="systemInfo.stepOne">
           </app-step-one-readonly>
           <ng-template #stepOneModify>
-            <app-error-message [error]="stepStatusList[0].listStepStatus">
-            </app-error-message>
+            <!-- <app-error-message [error]="stepStatusList[0].listStepStatus">
+            </app-error-message> -->
             <app-step-one #stepOne (formEmit)="onFormOneReceived($event)" (nextStep)="stepper.next()"
               [isReadonly]="true" [idsystem]="idsystem" (readonlyEmit)="onDataReceived()">
             </app-step-one>
@@ -89,14 +92,17 @@
             </span>
           </ng-template>
           <ng-template matStepContent>
+            <app-error-message *ngIf="stepStatusList[1].listStepStatus[0].idstepstatus == 10"
+              [error]="stepStatusList[1].listStepStatus">
+            </app-error-message>
             <app-step-two-readonly *ngIf="!(stepStatusList[1].listStepStatus[0].idstepstatus == 10
-             && systemStatusList[0]?.id == 7); else stepTwoModify"
-              #stepTwo (formEmit)="onFormTwoReceived($event)" (nextStep)="stepper.next()"
-              [countriesList]="countriesList" [idsystem]="idsystem" [stepTwo]="systemInfo.stepTwo">
+             && systemStatusList[0]?.id == 7); else stepTwoModify" #stepTwo (formEmit)="onFormTwoReceived($event)"
+              (nextStep)="stepper.next()" [countriesList]="countriesList" [idsystem]="idsystem"
+              [stepTwo]="systemInfo.stepTwo">
             </app-step-two-readonly>
             <ng-template #stepTwoModify>
-              <app-error-message [error]="stepStatusList[1].listStepStatus">
-              </app-error-message>
+              <!-- <app-error-message [error]="stepStatusList[1].listStepStatus">
+              </app-error-message> -->
               <app-step-two #stepTwo (formEmit)="onFormTwoReceived($event)" (nextStep)="stepper.next()"
                 [idsystem]="idsystem" [isReadonly]="true" (readonlyEmit)="onDataReceived()">
               </app-step-two>
@@ -126,15 +132,17 @@
             </span>
           </ng-template>
           <ng-template matStepContent>
-            <app-step-three-readonly
-              *ngIf="!(stepStatusList[2].listStepStatus[0].idstepstatus == 10
+            <app-error-message *ngIf="stepStatusList[2].listStepStatus[0].idstepstatus == 10"
+            [error]="stepStatusList[2].listStepStatus">
+            </app-error-message>
+            <app-step-three-readonly *ngIf="!(stepStatusList[2].listStepStatus[0].idstepstatus == 10
               && systemStatusList[0]?.id == 7); else stepThreeModify" #stepThree
               (formEmit)="onFormThreeReceived($event)" (nextStep)="stepper.next()" [stepThree]="systemInfo.stepThree"
               [countriesList]="countriesList" [idsystem]="idsystem">
             </app-step-three-readonly>
             <ng-template #stepThreeModify>
-              <app-error-message [error]="stepStatusList[2].listStepStatus">
-              </app-error-message>
+              <!-- <app-error-message [error]="stepStatusList[2].listStepStatus">
+              </app-error-message> -->
               <app-step-three #stepThree (formEmit)="onFormThreeReceived($event)" (readonlyEmit)="onDataReceived()"
                 (nextStep)="stepper.next()" [idsystem]="idsystem" [isReadonly]="true">
               </app-step-three>
@@ -163,14 +171,16 @@
             </span>
           </ng-template>
           <ng-template matStepContent>
+            <app-error-message *ngIf="stepStatusList[3].listStepStatus[0].idstepstatus == 10"
+            [error]="stepStatusList[3].listStepStatus">
+            </app-error-message>
             <app-step-four-readonly *ngIf="!(stepStatusList[3].listStepStatus[0].idstepstatus == 10
-            && systemStatusList[0]?.id == 7 ); else stepFourModify"
-              #stepFour (formEmit)="onFormFourReceived($event)" (nextStep)="stepper.next()"
-              [stepFour]="systemInfo.stepFour" [idsystem]="idsystem">
+            && systemStatusList[0]?.id == 7 ); else stepFourModify" #stepFour (formEmit)="onFormFourReceived($event)"
+              (nextStep)="stepper.next()" [stepFour]="systemInfo.stepFour" [idsystem]="idsystem">
             </app-step-four-readonly>
             <ng-template #stepFourModify>
-              <app-error-message [error]="stepStatusList[3].listStepStatus">
-              </app-error-message>
+              <!-- <app-error-message [error]="stepStatusList[3].listStepStatus">
+              </app-error-message> -->
               <app-step-four #stepFour (formEmit)="onFormFourReceived($event)" (nextStep)="stepper.next()"
                 [idsystem]="idsystem" [isReadonly]="true" (readonlyEmit)="onDataReceived()">
               </app-step-four>
@@ -199,14 +209,15 @@
             </span>
           </ng-template>
           <ng-template matStepContent>
+            <app-error-message *ngIf="stepStatusList[4].listStepStatus[0].idstepstatus == 10" [error]="stepStatusList[4].listStepStatus">
+            </app-error-message>
             <app-step-five-readonly *ngIf="!(stepStatusList[4].listStepStatus[0].idstepstatus == 10
-            && systemStatusList[0]?.id == 7); else stepFiveModify"
-              #stepFive (formEmit)="onFormFiveReceived($event)" (nextStep)="stepper.next()"
-              [stepFive]="systemInfo.stepFive" [idsystem]="idsystem">
+            && systemStatusList[0]?.id == 7); else stepFiveModify" #stepFive (formEmit)="onFormFiveReceived($event)"
+              (nextStep)="stepper.next()" [stepFive]="systemInfo.stepFive" [idsystem]="idsystem">
             </app-step-five-readonly>
             <ng-template #stepFiveModify>
-              <app-error-message [error]="stepStatusList[4].listStepStatus">
-              </app-error-message>
+              <!-- <app-error-message [error]="stepStatusList[4].listStepStatus">
+              </app-error-message> -->
               <app-step-five #stepFive (formEmit)="onFormFiveReceived($event)" (nextStep)="stepper.next()"
                 [idsystem]="idsystem" [isReadonly]="true" (readonlyEmit)="onDataReceived()">
               </app-step-five>
@@ -214,8 +225,8 @@
           </ng-template>
         </mat-step>
 
-        <mat-step *ngIf="systemInfo.stepFour.product_systemcomposition == 3 && stepStatusList.length > 4"
-          errorMessage="Incomplete">
+        <mat-step *ngIf="systemInfo.stepFour.product_systemcomposition == 3 && stepStatusList.length > 4
+          && stepStatusList[5].listStepStatus.length > 0" errorMessage="Incomplete">
           <ng-template matStepLabel>
             <span style="font-weight: bold;">
               {{"SYSTEM.SYSTEMMANAGEMENT.BATTERIES" | translate}}
@@ -225,21 +236,25 @@
                 style="font-size: large;" [ngStyle]="{'color':  '#'+stepStatusList[5].listStepStatus[0].color}"
                 matTooltip="{{stepStatusList[5].listStepStatus[0].name}}">
               </i>
-              <i *ngIf="stepStatusList[5].listStepStatus[0].idstepstatus == 15" class="bi bi-check-circle-fill"
-                style="font-size: large;" [ngStyle]="{'color':  '#'+stepStatusList[5].listStepStatus[0].color}"
+              <i *ngIf="stepStatusList[5] && stepStatusList[5].listStepStatus[0].idstepstatus == 15"
+                class="bi bi-check-circle-fill" style="font-size: large;"
+                [ngStyle]="{'color':  '#'+stepStatusList[5].listStepStatus[0].color}"
                 matTooltip="{{stepStatusList[5].listStepStatus[0].name}}">
               </i>
-              <i *ngIf="stepStatusList[5].listStepStatus[0].idstepstatus == 5" class="bi bi-question-circle-fill"
-                style="font-size: large;" [ngStyle]="{'color':  '#'+stepStatusList[5].listStepStatus[0].color}"
+              <i *ngIf="stepStatusList[5] && stepStatusList[5].listStepStatus[0].idstepstatus == 5"
+                class="bi bi-question-circle-fill" style="font-size: large;"
+                [ngStyle]="{'color':  '#'+stepStatusList[5].listStepStatus[0].color}"
                 matTooltip="{{stepStatusList[5].listStepStatus[0].name}}">
               </i>
             </span>
           </ng-template>
           <ng-template matStepContent>
+            <app-error-message *ngIf="stepStatusList[5].listStepStatus[0].idstepstatus == 10"
+             [error]="stepStatusList[5].listStepStatus">
+            </app-error-message>
             <app-step-six-readonly *ngIf="!(stepStatusList[5].listStepStatus[0].idstepstatus == 10
-            && systemStatusList[0]?.id == 7); else stepSixModify"
-              #stepSix (formEmit)="onFormSixReceived($event)" (nextStep)="stepper.next()" [stepSix]="systemInfo.stepSix"
-              [idsystem]="idsystem">
+            && systemStatusList[0]?.id == 7); else stepSixModify" #stepSix (formEmit)="onFormSixReceived($event)"
+              (nextStep)="stepper.next()" [stepSix]="systemInfo.stepSix" [idsystem]="idsystem">
             </app-step-six-readonly>
             <ng-template #stepSixModify>
               <app-error-message [error]="stepStatusList[5].listStepStatus">

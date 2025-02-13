@@ -219,12 +219,14 @@ export class StepFiveComponent {
   }
 
   sendEmail() {
-    this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 
-      'system/sendEmailErrorInverter', {idsystem: this.idsystem})
+    this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi,
+      'system/sendEmailErrorInverter', {
+        idsystem: this.idsystem,
+        listerrorsn: this.listerrorsn
+      })
       .subscribe((val: ApiResponse<null>) => {
         this.popupDialogService.alertElement(val);
         if(val) {
-          this.listerrorsn = [];
           this.router.navigate(['systemOverview', this.idsystem]);
         }
       })
