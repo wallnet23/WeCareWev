@@ -1,8 +1,8 @@
-<div class="container-fluid p-1 p-md-2 p-lg-3 p-xl-4" style="background-color: whitesmoke; min-height: 90vh;">
+<div class="container-fluid p-1 p-md-2 p-lg-3 p-xl-4" style="background-color: white; min-height: 90vh;">
     <div class="row justify-content-center">
         <div class="col-12 mt-4" style="max-width: 1200px;">
             <mat-expansion-panel class="customPanel ticketPanel" expanded appInViewport>
-                <mat-expansion-panel-header class="cutomPanelHeader">
+                <mat-expansion-panel-header>
                     <mat-panel-title>
                         <span class="panelTitle">
                             <i class="bi bi-file-earmark-text me-2"></i>
@@ -15,7 +15,7 @@
                     <!-- EMAIL -->
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="email">
-                            Email per la risposta
+                            {{"TICKET.NEW.EMAIL" | translate}}
                         </label>
                         <input class="form-control" type="text" id="email" formControlName="email">
                     </div>
@@ -23,7 +23,7 @@
                     <!-- REQUEST -->
                     <div class="col-12 col-md-6">
                         <label class="form-label" for="request">
-                            Richiesta
+                            {{"TICKET.NEW.REQUEST" | translate}}
                         </label>
                         <select class="form-select" id="request" formControlName="request">
                             <option [ngValue]="null">
@@ -37,11 +37,11 @@
 
                     <ng-container>
                         <!-- INVERTER LIST -->
-                        <div class="col-12 col-md-6 mt-3 mb-2 ps-md-3 ps-lg-5 pe-md-3 pe-lg-5" 
+                        <div class="col-12 col-md-6 mt-3 mb-2 ps-md-3 ps-lg-5 pe-md-3 pe-lg-5"
                             [ngStyle]="{'border-right': isSmallScreen ? 'none' : '1px solid lightgray'}"
                             formArrayName="inverterList">
                             <span class="listTitle">
-                                Lista Inverter
+                                {{"TICKET.NEW.INVERTERLIST" | translate}}
                             </span>
                             <div *ngFor="let inverter of inverterList.controls; let i = index" [formGroupName]="i"
                                 class="row justify-content-center align-items-group mt-2"
@@ -59,11 +59,11 @@
                         </div>
 
                         <!-- BATTERY LIST -->
-                        <div class="col-12 col-md-6 mt-3 mb-2 ps-md-3 ps-lg-5 pe-md-3 pe-lg-5" 
+                        <div class="col-12 col-md-6 mt-3 mb-2 ps-md-3 ps-lg-5 pe-md-3 pe-lg-5"
                             [ngStyle]="{'border-left': isSmallScreen ? 'none' : '1px solid lightgray'}"
                             formArrayName="batteryList">
                             <span class="listTitle">
-                                Lista Batterie
+                                {{"TICKET.NEW.BATTERYLIST" | translate}}
                             </span>
                             <div *ngFor="let battery of batteryList.controls; let i = index" [formGroupName]="i"
                                 class="row justify-content-center align-items-group mt-2"
@@ -83,7 +83,7 @@
 
                     <div class="col-12 mt-2">
                         <label class="form-label" for="description">
-                            Descrizione del Problema
+                            {{"TICKET.NEW.PROBLEMDESCRIPTION" | translate}}
                         </label>
                         <textarea class="form-control" type="text" id="description" formControlName="description"
                             rows="3">
@@ -91,16 +91,27 @@
                     </div>
 
                     <div class="col-12 mt-2">
-                        <button class="btn btn-outline-dark">
+                        <label *ngIf="fileList.length < maxImages" for="fileUpload2"
+                            class="btn btn-outline-dark mt-1">
                             <i class="bi bi-paperclip"></i>
-                        </button>
+                            <input type="file" id="fileUpload2" style="display: none;" (change)="onFileSelected($event)"
+                                multiple>
+                        </label>
+
+                        <div class="row justify-content-center mt-2">
+                            <div *ngFor="let img of imagesList" class="col-auto">
+                                <img style="height: 50px; width: 40px; border: 1px solid lightgray; object-fit: cover;" 
+                                    [src]="'assets/img/'+img.src" [title]="img.src">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="row justify-content-end pt-1 ps-1 pe-1 pt-md-2 ps-md-2 pe-md-2 pt-lg-3 ps-lg-3 pe-lg-3" style="border-top: 1px solid lightgray;">
+                <div class="row justify-content-end pt-1 ps-1 pe-1 pt-md-2 ps-md-2 pe-md-2 pt-lg-3 ps-lg-3 pe-lg-3"
+                    style="border-top: 1px solid lightgray;">
                     <div class="col-auto">
                         <button class="btn btn-outline-success" (click)="createTicket()">
-                            Crea
+                            {{"TICKET.NEW.CREATE" | translate}}
                         </button>
                     </div>
                 </div>

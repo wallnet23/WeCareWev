@@ -144,3 +144,17 @@ mat-expansion-panel.mat-expanded mat-expansion-panel-header {
     object-fit: contain;
     border: 2px solid #ccc;
 }
+
+.imgThumb {
+    height: 50px; 
+    width: 40px; 
+    border: 1px solid lightgray; 
+    object-fit: cover;
+    transform: scale(1);
+    transition: transform 0.5s ease;
+}
+
+.imgThumb:hover {
+    cursor: pointer;
+    transform: scale(1.3);
+}

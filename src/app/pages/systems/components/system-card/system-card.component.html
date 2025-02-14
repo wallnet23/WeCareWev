@@ -38,8 +38,9 @@
             <div class="col-12 col-md-6 element text-center">
               <div class="row g-0">
                 <div class="col-12 p-0" style="border-bottom: 1px solid #e0e0e0;">
-                  <span style="font-weight: bold;">{{'SYSTEM.SYSTEMLIST.SYSTEMCARD.INSTALLATIONSITE'
-                    | translate }}</span><br>
+                  <span style="font-weight: bold;">
+                    {{'SYSTEM.SYSTEMLIST.SYSTEMCARD.INSTALLATIONSITE' | translate }}
+                  </span><br>
                 </div>
               </div>
               <div class="content">{{system.installationSite}}</div>
@@ -48,19 +49,20 @@
             <div class="col-12 col-md-6 element text-center">
               <div class="row g-0">
                 <div class="col-12 p-0" style="border-bottom: 1px solid #e0e0e0;">
-                  <span style="font-weight: bold;">{{'SYSTEM.SYSTEMLIST.SYSTEMCARD.CUSTOMER'
-                    |
-                    translate }}</span><br>
+                  <span style="font-weight: bold;">
+                    {{'SYSTEM.SYSTEMLIST.SYSTEMCARD.CUSTOMER' | translate }}</span><br>
                 </div>
               </div>
               <div class="content">{{system.customerInfo}}</div>
             </div>
 
-            <!-- <div class="col-12 col-md-6 element text-center">
+            <!-- TICKET -->
+            <div class="col-12 col-md-6 element text-center">
               <div class="row g-0">
                 <div class="col-12 p-0" style="border-bottom: 1px solid #e0e0e0;">
-                  <span style="font-weight: bold;">{{'SYSTEM.SYSTEMLIST.SYSTEMCARD.TICKETS' |
-                    translate }}</span><br>
+                  <span style="font-weight: bold;">
+                    {{'SYSTEM.SYSTEMLIST.SYSTEMCARD.TICKETS' | translate }}
+                  </span><br>
                 </div>
               </div>
               <div class="content">
@@ -68,7 +70,23 @@
                   {{ticket}}<br>
                 </span>
               </div>
-            </div> -->
+            </div>
+
+            <!-- RMA -->
+            <div class="col-12 col-md-6 element text-center">
+              <div class="row g-0">
+                <div class="col-12 p-0" style="border-bottom: 1px solid #e0e0e0;">
+                  <span style="font-weight: bold;">
+                    {{'SYSTEM.SYSTEMLIST.SYSTEMCARD.RMA' | translate }}
+                  </span><br>
+                </div>
+              </div>
+              <div class="content">
+                <span *ngFor="let ticket of system.ticketsInfo">
+                  {{ticket}}<br>
+                </span>
+              </div>
+            </div>
 
             <!-- <div class="col-12 col-md-6 element text-center">
               <div class="row g-0">
@@ -82,8 +100,9 @@
                   {{device}}<br>
                 </span>
               </div>
-            </div>
+            </div> -->
 
+            <!--
             <div class="col-12 col-md-6 element text-center">
               <div class="row g-0">
                 <div class="col-12 p-0" style="border-bottom: 1px solid #e0e0e0;">

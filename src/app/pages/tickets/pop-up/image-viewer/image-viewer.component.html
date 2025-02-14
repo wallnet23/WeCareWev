@@ -1,0 +1,12 @@
+<div class="overlay" (click)="closeModal()">
+    <div class="modal-content">
+        <div class="image-container" #imageContainer (click)="$event.stopPropagation()" style="position: relative;">
+            <img class="fullImage" [src]="'assets/img/'+image?.src" [title]="image?.title">
+            <div>
+                <button class="btn btn-danger" style="position: absolute; top: 5px; right: 5px; opacity: 0.9;" (click)="closeModal()">
+                    <i class="bi bi-x" style="color: white;"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

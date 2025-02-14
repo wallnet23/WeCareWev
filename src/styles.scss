@@ -16,9 +16,10 @@
 }
 
 html, body {
-  @media screen and (min-width: 350px) {
-    overflow-x: hidden;
-  }
+  // COMMENTATO PER PROBLEMI CON DIALOG MATERIAL
+  // @media screen and (min-width: 350px) {
+  //   overflow-x: hidden;
+  // }
   font-family: "Century Gothic", Sans-serif;
   height: 100%;
 }

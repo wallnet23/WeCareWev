@@ -5,6 +5,10 @@ import { TranslateModule } from '@ngx-translate/core';
 import { InViewportDirective } from '../../../directives/in-viewport.directive';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Route, Router } from '@angular/router';
+import { Connect } from '../../../classes/connect';
+import { Image } from '../../systems/components/interfaces/image';
+import { ApiResponse } from '../../../interfaces/api-response';
+import { ConnectServerService } from '../../../services/connect-server.service';
 
 @Component({
   selector: 'app-ticket-new',
@@ -21,11 +25,15 @@ import { Route, Router } from '@angular/router';
 })
 export class TicketNewComponent {
 
+  imageSpaceLeft: boolean = true;
+  imagesList: Image[] = [];
+  maxImages: number = 10;
+  fileList: File[] = [];
   newTicketForm!: FormGroup;
   requestList: { id: number, title: string }[] = [];
   isSmallScreen: boolean = false;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder, private router: Router, private connectServerService: ConnectServerService) {
     this.newTicketForm = this.fb.group({
       email: [null],
       request: [null],
@@ -131,7 +139,87 @@ export class TicketNewComponent {
   createTicket() {
     // CHIAMATA AL SERVER E POI NAVIGA CON L'ID RESTITUITO
     const id = 0
-    this.router.navigate(['ticketModifyWeco', id])
+    this.router.navigate(['ticketModify', id])
   }
+
+  /**
+ * Quando si seleziona i file
+ * @param event
+ */
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files) {
+      this.fileList = Array.from(input.files);
+      this.uploadFilesServer();
+    }
+  }
+  /**
+   * Reset la selezione dei file quando importato
+   */
+  private resetFileInput() {
+    const fileInput = document.getElementById('fileUpload2') as HTMLInputElement;
+    fileInput.value = '';
+    this.fileList = [];
+  }
+
+  private uploadFilesServer() {
+      // this.imagesStep2 = this.uploadImageService.getImagesStep2();
+      const formData = new FormData();
+      formData.append("folder", Connect.FOLDER_STEP_TWO);
+      formData.append("size", Connect.FILE_SIZE.toString());
+      formData.append("size_string", Connect.FILE_SIZE_STRING);
+      //formData.append("idsystem", this.idsystem.toString());
+      formData.append("step_position", "2");
+      if (this.fileList && this.fileList.length + this.imagesList.length <= this.maxImages) {
+        this.fileList.forEach((file, index) => {
+          formData.append(`files[]`, file);
+        });
+        //this.setImages(formData);
+        this.imageSpaceLeft = true;
+      }
+      else {
+        this.imageSpaceLeft = false;
+      }
+    }
+  
+    getImages() {
+      this.connectServerService.getRequest<ApiResponse<{ listFiles: Image[] }>>(Connect.urlServerLaraApi, 'ticket/filesList',
+        {
+          //idsystem: this.idsystem,
+          //step_position: 2
+        })
+        .subscribe((val: ApiResponse<{ listFiles: Image[] }>) => {
+          if (val.data.listFiles) {
+            this.imagesList = val.data.listFiles.map(image => {
+              // Chiama ImageLoaderService solo una volta per immagine
+              // this.imageLoaderService.getImageWithToken(Connect.urlServerLaraFile + image.src).subscribe(
+              //   (safeUrl) => {
+              //     image.src = safeUrl; // Assegna l'URL sicuro all'immagine
+              //   }
+              // );
+              return image;
+            });
+          }
+        })
+    }
+  
+    // setImages(formData: FormData) {
+    //   this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/uploadFiles',
+    //     formData)
+    //     .subscribe((val: ApiResponse<null>) => {
+    //       this.popupDialogService.alertElement(val);
+    //       this.resetFileInput();
+    //       this.getImages();
+    //     })
+    // }
+  
+    // deleteImg(idimage: number) {
+    //   this.connectServerService.postRequest<ApiResponse<null>>(Connect.urlServerLaraApi, 'system/deleteFile',
+    //     { idsystem: this.idsystem, idimage: idimage })
+    //     .subscribe((val: ApiResponse<null>) => {
+    //       this.popupDialogService.alertElement(val);
+    //       this.getImages();
+    //     })
+    // }
 
 }

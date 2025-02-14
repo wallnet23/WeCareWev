@@ -163,7 +163,8 @@
         "WARRANTY": "Stato della Garanzia",
         "INSTALLATIONSITE": "Sito di Installazione",
         "CUSTOMER": "Cliente",
-        "TICKETS": "Biglietti",
+        "TICKETS": "Tickets",
+        "RMA": "RMA",
         "DEVICES": "Dispositivi"
       }
     },
@@ -449,6 +450,43 @@
       "EXTENDED": "Estesa",
       "NOTEXTENDED": "Non estesa",
       "UPTO": "fino a "
+    }
+  },
+  "TICKET": {
+    "LIST": {
+      "TICKET": "Lista Ticket",
+      "CREATETICKET": "Nuovo Ticket",
+      "CLOSEDFILTER": "Chiusi",
+      "OPENEDFILTER": "Aperti",
+      "ID": "Id",
+      "PROGRESSIVE": "Progressivo",
+      "CREATIONDATE": "Data Apertura",
+      "DESCRIPTION": "Descrizione",
+      "REQUESTTYPE": "Tipo Richiesta"
+    },
+    "NEW": {
+      "NEWTICKETSMALL": "Nuovo Ticket",
+      "EMAIL": "Email per la risposta",
+      "REQUEST": "Richiesta",
+      "INVERTERLIST": "Lista Inverter",
+      "BATTERYLIST": "Lista Batteria",
+      "PROBLEMDESCRIPTION": "Descrizione Problema",
+      "CREATE": "Crea"
+    },
+    "MODIFY": {
+      "TICKETINFO": "Ticket Info",
+      "PROGRESSIVE": "Progressivo",
+      "CREATIONDATE": "Data Creazione",
+      "EMAIL": "Email",
+      "REQUESTTYPE": "Tipo Richiesta",
+      "ANOMALYFOUNDED": "Anomalie Riscontrate dal Cliente",
+      "INVERTERLIST": "Lista Inverter",
+      "BATTERYLIST": "Lista Batterie",
+      "PROBLEMDESCRIPTION": "Descrizione Problema",
+      "MESSAGE": "Messaggio",
+      "NEWMESSAGE": "Nuovo Messaggio",
+      "SEND": "Invia",
+      "ADDMESSAGE": "Aggiungi Messaggio"
     }
   }
 }
