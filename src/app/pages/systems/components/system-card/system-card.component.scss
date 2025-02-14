@@ -77,3 +77,11 @@
         border-right: none;
     }
 }
+
+.systemTitle {
+    font-size: large;
+
+    @media screen and (min-width: 992px) {
+        font-size: x-large;
+    }
+}

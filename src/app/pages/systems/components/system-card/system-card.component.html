@@ -1,6 +1,6 @@
 <div class="container p-4">
   <div class="row justify-content-center">
-    <div class="col-12 col-lg-9 col-xxl-8">
+    <div class="col-12 col-xxl-10">
       <div *ngIf="!isSystem" class="col-12 text-center p-4" style="color: grey;">
         {{'SYSTEM.SYSTEMLIST.EMPTY' | translate }}
       </div>
@@ -8,7 +8,7 @@
         <div class="card-header noPointer p-0">
           <div class="row justify-content-center align-items-center">
             <div class="col-12 text-center" (click)="systemOverview(system.id)">
-              <span style="font-weight: 400; font-size: x-large;">{{system.system_name}}</span>
+              <span style="font-weight: 400;" class="systemTitle">{{system.system_name}}</span>
           </div>
           <div class="row justify-content-center align-items-center">
             <div class="col-6 text-start pe-0">
