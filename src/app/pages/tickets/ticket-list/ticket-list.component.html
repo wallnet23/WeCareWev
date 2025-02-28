@@ -1,4 +1,4 @@
-<div class="container-fluid p-1 p-md-2 p-lg-3 p-xl-4" style="background-color: white; min-height: 90vh;">
+<div class="container-fluid" style="background-color: white;">
     <div class="row justify-content-center">
 
         <!-- INFO PANEL -->
@@ -29,19 +29,27 @@
         </div> -->
 
         <!-- TICKET PANEL -->
-        <div class="col-12 mt-4" style="max-width: 1200px;">
+        <div class="col-12 mt-2 p-0">
             <mat-expansion-panel class="customPanel ticketPanel" expanded appInViewport>
-                <mat-expansion-panel-header class="cutomPanelHeader">
+                <mat-expansion-panel-header class="customPanelHeader yellowBg">
                     <mat-panel-title>
                         <span class="panelTitle">
-                            <i class="bi bi-file-earmark-text me-2"></i>
+                            <!-- <i class="bi bi-file-earmark-text me-2"></i> -->
                             {{"TICKET.LIST.TICKET" | translate}}
                         </span>
                     </mat-panel-title>
                 </mat-expansion-panel-header>
 
                 <div class="row justify-content-center">
-                    <div class="col-12">
+                    <div class="col-12" style="position: relative;">
+                        <!-- ADD TICKET -->
+                        <div class="col-auto" [ngClass]="{'upperPosition': isSmall, 'lowerPosition': !isSmall}" 
+                            style="position: absolute; z-index: 1000;">
+                            <button class="btn btn-outline-dark me-2" (click)="newTicket()">
+                                <i class="me-2 bi bi-plus-lg"></i>
+                                {{"TICKET.LIST.CREATETICKET" | translate}}
+                            </button>
+                        </div>
                         <app-ticket-table></app-ticket-table>
                     </div>
                 </div>

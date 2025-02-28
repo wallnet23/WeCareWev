@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { TranslateModule } from '@ngx-translate/core';
@@ -59,10 +59,6 @@ export class TicketTableComponent {
 
   goToTicket(id: number) {
     this.router.navigate(['ticket', id]);
-  }
-
-  newTicket() {
-    this.router.navigate(['ticketNew'])
   }
 
 }

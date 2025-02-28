@@ -1,27 +1,18 @@
 <div class="container-fluid p-2 p-md-3 p-lg-4 mt-1">
     <div class="row justify-content-end mb-1" style="position: relative;">
-        <!-- ADD TICKET -->
-        <div class="col-auto" style="position: absolute; left: 0; top: 0">
-            <button class="btn btn-outline-dark me-2" (click)="newTicket()">
-                <i class="me-2 bi bi-plus-lg"></i>
-                {{"TICKET.LIST.CREATETICKET" | translate}}
-            </button>
-        </div>
 
         <!-- FILTERS -->
-        <div class="col-auto text-end responsiveColumn">
+        <div class="col-12 d-none d-md-inline text-end responsiveColumn">
             <mat-chip-listbox class="mat-chip-container" multiple>
                 <mat-chip-option (selectionChange)="onSelectionChange($event, 1)" selected>
-                    <span class="d-none d-md-inline">
+                    <span>
                         {{"TICKET.LIST.CLOSEDFILTER" | translate}}
                     </span>
-                    <i class="bi bi-x-circle ms-1"></i>
                 </mat-chip-option>
                 <mat-chip-option (selectionChange)="onSelectionChange($event, 2)" selected>
-                    <span class="d-none d-md-inline">
+                    <span>
                         {{"TICKET.LIST.OPENEDFILTER" | translate}}
                     </span>
-                    <i class="bi bi-play-circle ms-1"></i>
                 </mat-chip-option>
                 <!-- <mat-chip-option (selectionChange)="onSelectionChange($event)" selected>
                     <span class="d-none d-md-inline">
@@ -30,6 +21,9 @@
                     <i class="bi bi-x-octagon ms-1"></i>
                 </mat-chip-option> -->
             </mat-chip-listbox>
+        </div>
+        <div class="col-12 d-md-none">
+            <div class="mt-5"></div>
         </div>
     </div>
 

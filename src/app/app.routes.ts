@@ -34,7 +34,6 @@ export const routes: Routes = [
   // { path: 'newTicket', component: TicketNewComponent },
   // { path: 'newTicket/:id', component: TicketNewComponent },
   { path: 'deniedAccess', component: DeniedAccessComponent },
-  { path: "ticketList", component: TicketListComponent },
   { path: "ticketNew", component: TicketNewComponent },
   { path: "ticketModify/:id", component: TicketModifyComponent },
   // da cancellare

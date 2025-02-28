@@ -454,7 +454,7 @@
   },
   "TICKET": {
     "LIST": {
-      "TICKET": "Lista Ticket",
+      "TICKET": "LISTA TICKET",
       "CREATETICKET": "Nuovo Ticket",
       "CLOSEDFILTER": "Chiusi",
       "OPENEDFILTER": "Aperti",
@@ -465,19 +465,26 @@
       "REQUESTTYPE": "Tipo Richiesta"
     },
     "NEW": {
-      "NEWTICKETSMALL": "Nuovo Ticket",
+      "SYSTEMINFO": "Informazioni Impianto",
+      "ANOMALYFOUNDED": "Anomalie Riscontrate",
+      "NEWTICKETSMALL": "NUOVO TICKET",
       "EMAIL": "Email per la risposta",
       "REQUEST": "Richiesta",
-      "INVERTERLIST": "Lista Inverter",
-      "BATTERYLIST": "Lista Batteria",
-      "PROBLEMDESCRIPTION": "Descrizione Problema",
+      "INVERTERLIST": "Lista Inverters",
+      "BATTERYLIST": "Lista Batterie",
+      "PROBLEMDESCRIPTION": "Descrizione",
       "CREATE": "Crea"
     },
     "MODIFY": {
-      "TICKETINFO": "Ticket Info",
+      "WECOTECHNICIAN": "Tecnico Weco",
+      "STATUS": "Stato",
+      "SYSTEMINFO": "Informazioni Impianto",
+      "OPENEDFROM": "Aperto Da",
+      "TICKETID": "Ticket ID",
       "PROGRESSIVE": "Progressivo",
       "CREATIONDATE": "Data Creazione",
       "EMAIL": "Email",
+      "ANSWEREMAIL": "Email di risposta",
       "REQUESTTYPE": "Tipo Richiesta",
       "ANOMALYFOUNDED": "Anomalie Riscontrate dal Cliente",
       "INVERTERLIST": "Lista Inverter",

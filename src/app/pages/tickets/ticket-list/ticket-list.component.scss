@@ -12,7 +12,7 @@
 }
 
 .customPanel {
-    border-radius: 20px;
+    border-radius: 10px;
     overflow: hidden;
 }
 
@@ -85,4 +85,38 @@ mat-expansion-panel.mat-expanded mat-expansion-panel-header {
 .ticketPanel.visible {
     transform: translateY(0);
     opacity: 1;
+}
+
+.yellowBg {
+    background-color: #FFE69C;
+}
+
+/* Mantiene il colore anche su hover e focus */
+.customPanelHeader.yellowBg {
+    background-color: #FFE69C !important;
+}
+
+/* Sovrascrive gli stili di Angular Material quando il panel è attivo */
+.customPanelHeader.yellowBg.mat-expansion-panel-header {
+    background-color: #FFE69C !important;
+}
+
+/* Quando il pannello è hoverato */
+.customPanelHeader.yellowBg.mat-expansion-panel-header:hover {
+    background-color: #FFE69C !important;
+}
+
+/* Quando il pannello è focus */
+.customPanelHeader.yellowBg.mat-expansion-panel-header:focus {
+    background-color: #FFE69C !important;
+}
+
+.upperPosition {
+    left: 20px;
+    top: 20px;
+}
+
+.lowerPosition {
+    right: 28px;
+    top: 24px
 }

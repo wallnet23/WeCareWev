@@ -13,6 +13,7 @@ import { SystemStatus } from '../interfaces/system-status';
 //import { Ticket } from '../../tickets/interfaces/ticket';
 import { WarrantyInverter } from '../interfaces/warranty-inverter';
 import { Ticket } from '../../tickets/interfaces/ticket';
+import { TicketListComponent } from "../../tickets/ticket-list/ticket-list.component";
 
 @Component({
   selector: 'app-system-overview',
@@ -21,8 +22,9 @@ import { Ticket } from '../../tickets/interfaces/ticket';
     CommonModule,
     MatCardModule,
     MatDialogModule,
-    TranslateModule
-  ],
+    TranslateModule,
+    TicketListComponent
+],
   templateUrl: './system-overview.component.html',
   styleUrl: './system-overview.component.scss'
 })

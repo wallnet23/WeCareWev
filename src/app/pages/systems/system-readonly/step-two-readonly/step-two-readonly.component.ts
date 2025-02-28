@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SecurityContext } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StepTwo } from '../../components/interfaces/step-two';
 import { ConnectServerService } from '../../../../services/connect-server.service';
@@ -9,7 +9,10 @@ import { Image } from '../../components/interfaces/image';
 import { Connect } from '../../../../classes/connect';
 import { ApiResponse } from '../../../../interfaces/api-response';
 import { ImageLoaderService } from '../../../../services/image-loader.service';
-import { SafeUrl } from '@angular/platform-browser';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { MatDialog } from '@angular/material/dialog';
+import { ImageViewerComponent } from '../../components/image-viewer/image-viewer.component';
+import { PdfViewerComponent } from '../../components/pdf-viewer/pdf-viewer.component';
 
 @Component({
   selector: 'app-step-two-readonly',
@@ -24,11 +27,12 @@ import { SafeUrl } from '@angular/platform-browser';
 export class StepTwoReadonlyComponent {
 
   @Output() formEmit = new EventEmitter<FormGroup>();
-
   @Input() stepTwo: StepTwo | null = null;
   @Input() idsystem = 0;
   @Input() countriesList: Country[] = [];
   @Input() readonlyPopup: boolean = true;
+
+  acceptedExt: string[] = ['jpg', 'png', 'jpeg'];
 
   stepTwoForm = this.fb.group({
     idcountry: [0, Validators.required],
@@ -44,7 +48,8 @@ export class StepTwoReadonlyComponent {
   modalImageUrl: string = '';
   urlServerLaraMedia = Connect.urlServerLaraMedia;
   constructor(private fb: FormBuilder, private connectServerService: ConnectServerService,
-    private imageLoaderService: ImageLoaderService) { }
+    private imageLoaderService: ImageLoaderService, private dialog: MatDialog,
+    private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     // TODO: SE NECESSARIO CONVERTIRE LO STEP RICEVUTO IN INGERSSO IN UN FORM
@@ -86,12 +91,38 @@ export class StepTwoReadonlyComponent {
       })
   }
 
-  setImage(img: Image) {
-    // this.modalImageUrl = img.src;
-    this.modalImageUrl = '';
-  }
-  selectedImage: string | null | SafeUrl = null;
-  openModal(imageSrc: string | SafeUrl) {
-    this.selectedImage = this.urlServerLaraMedia+imageSrc;
+  // setImage(img: Image) {
+  //   // this.modalImageUrl = img.src;
+  //   this.modalImageUrl = '';
+  // }
+  // selectedImage: string | null | SafeUrl = null;
+
+  // openModal(imageSrc: string | SafeUrl) {
+  //   this.selectedImage = this.urlServerLaraMedia + imageSrc;
+  // }
+
+  viewImage(img: Image) {
+    console.log(img)
+    if (img.ext != 'pdf' && this.acceptedExt.includes(img.ext)) {
+      console.log("DEFINITO?")
+      const dialogRef = this.dialog.open(ImageViewerComponent, {
+        maxWidth: '90%',
+        minWidth: '350px',
+        maxHeight: '90%',
+        data: { file: img }
+      });
+    }
+    else if (img.ext == 'pdf') {
+      const dialogRef = this.dialog.open(PdfViewerComponent, {
+        maxWidth: '700px',
+        minWidth: '350px',
+        maxHeight: '500px',
+        data: { pdf: img }
+      });
+    }
+    else {
+      const urlString = this.sanitizer.sanitize(SecurityContext.URL, img.src);
+      const newTab = window.open(urlString!, "_blank");
+    }
   }
 }

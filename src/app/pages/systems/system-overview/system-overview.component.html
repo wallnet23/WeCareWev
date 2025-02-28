@@ -106,87 +106,20 @@
       </div>
     </div>
 
-    <!-- TICKET -->
-    <div class="col-12 col-md-6 mt-2" >
-      <div class="card">
-        <h5 class="card-header yellowBg">{{"SYSTEM.OVERVIEW.TICKET" | translate}}</h5>
-        <div class="card-body">
-          <div *ngIf="systemInfo?.status?.id == 15; else noTicketBlock">
-            <div class="row justify-content-center align-items-center borderBottom">
-              <ul class="list-unstyled mb-1">
-                <li class="">
-                  <span class="me-2" style="font-weight: bold; font-size: large;">
-                    {{"SYSTEM.OVERVIEW.OPENTICKET" | translate}}
-                  </span>
-                  <span>
-                    <!-- numero di ticket aperti -->
-                  </span>
-                </li>
-                <li class="">
-                  <span class="me-2" style="font-weight: bold; font-size: large;">
-                    {{"SYSTEM.OVERVIEW.CLOSEDTICKET" | translate}}
-                  </span>
-                  <span>
-                    <!-- numero di ticket chiusi -->
-                  </span>
-                </li>
-              </ul>
-            </div>
-
-            <div class="row justify-content-center align-items-center">
-              <ul class="list-unstyled mb-1">
-                <li class="">
-                  <span style="font-size: large; font-weight: bold;">
-                    {{"SYSTEM.OVERVIEW.LATESTTICKET" | translate}}
-                  </span>
-                  <ul style="list-style-type: circle;">
-                    <li *ngFor="let item of latestTickets">
-                      <!-- LISTA ULTIMI TICKET -->
-                      <span>
-                        {{"SYSTEM.OVERVIEW.TICKETTITLE" | translate}}:
-                        {{item.title}}
-                      </span><br>
-                      <span>
-                        {{"SYSTEM.OVERVIEW.TICKETSTATUS" | translate}}:
-                        {{item.status}}
-                      </span>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <ng-template #noTicketBlock class="mt-4 p-2 text-center">
-            <span class="mt-4">{{"SYSTEM.OVERVIEW.ENABLEFUNC" | translate}}</span>
-          </ng-template>
-        </div>
-
-        <div class="card-footer yellowBg text-center">
-          <button [disabled]="systemInfo?.status?.id != 15" class="btn btn-outline-dark btn-light me-2"
-            (click)="ticketsListSystem()">
-            {{"SYSTEM.OVERVIEW.MANAGETICKET" | translate}}
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- WARRANTY -->
-  <div class="row justify-content-center p-1 ps-lg-4 pe-lg-4">
-    <div *ngIf="warrantyInverterStatusCheck == true" class="col-12 mt-2">
+    <!-- WARRANTY -->
+    <div class="col-12 col-md-6 mt-2">
       <div class="card">
         <h5 class="card-header greenBg">{{"SYSTEM.OVERVIEW.WARRANTYINVERTER" | translate}}</h5>
         <div class="card-body row pb-0">
           <ng-container *ngFor="let inverter of warrantyInverterStatus">
-            <div *ngIf="inverter.warranty_valid != null" class="col-12 col-md-6 col-lg-4 col-xl-3 mb-3">
+            <div *ngIf="inverter.warranty_valid != null" class="col-12 col-xl-6 mb-3">
               <span>
-                <span style="font-weight: bold;">{{"SYSTEM.OVERVIEW.SERIALNUMBER" | translate}}: </span>
-                <span>{{inverter.sn}}</span>
+                <span style="font-weight: bold; border-bottom: 1px solid lightgray;">{{"SYSTEM.OVERVIEW.SERIALNUMBER" | translate}}: </span><br>
+                <span class="ms-2">{{inverter.sn}}</span>
               </span><br>
               <span>
-                <span style="font-weight: bold;">{{"SYSTEM.OVERVIEW.WARRANTYSTATUS" | translate}}: </span>
-                <span>{{inverter.warranty_str}}</span>
+                <span style="font-weight: bold; border-bottom: 1px solid lightgray;">{{"SYSTEM.OVERVIEW.WARRANTYSTATUS" | translate}}: </span><br>
+                <span class="ms-2">{{inverter.warranty_str}}</span>
               </span>
             </div>
           </ng-container>
@@ -224,12 +157,20 @@
             </p>
           </ng-template> -->
         </div>
-        <!-- <div class="card-footer greenBg text-center">
-          <div href="#" class="btn btn-outline-dark btn-light" (click)="viewWarranty()">
+        <div class="card-footer greenBg text-center">
+          <div href="#" class="btn btn-outline-dark btn-light" >
             {{"SYSTEM.OVERVIEW.WARRANTYINFO" | translate}}
           </div>
-        </div> -->
+        </div>
       </div>
+    </div>
+
+  </div>
+
+  <!-- TICKET -->
+  <div class="row justify-content-center p-1 ps-lg-4 pe-lg-4">
+    <div class="col-12 mt-2">
+      <app-ticket-list [idsystem]="idsystem"></app-ticket-list>
     </div>
   </div>
 

@@ -14,6 +14,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { ImageViewerComponent } from '../pop-up/image-viewer/image-viewer.component';
 import { PdfViewerComponent } from '../pop-up/pdf-viewer/pdf-viewer.component';
 import { DomSanitizer } from '@angular/platform-browser';
+import { SystemInfoPopupComponent } from '../../systems/system-info-popup/system-info-popup.component';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Status } from '../../systems/interfaces/step-status';
 
 @Component({
   selector: 'app-ticket-modify',
@@ -39,6 +42,10 @@ export class TicketModifyComponent {
   imagesList: Image[] = [];
   acceptedExt: string[] = ['jpg', 'png', 'jpeg'];
   imageSpaceLeft: boolean = true;
+  idsystem: number = 0;
+  systemStatus: {id: number, name: string, color: string} = {id: 0, name: '', color: ''};
+  isAtBottom: boolean = false;
+  isAtBottomSm: boolean = false;
 
   newAttachedFiles: any[] = [];
   newMessageForm = new FormGroup({
@@ -53,16 +60,35 @@ export class TicketModifyComponent {
 
   constructor(private fb: FormBuilder, private viewportScroller: ViewportScroller,
     private connectServerService: ConnectServerService, private dialog: MatDialog,
-    private sanitizer: DomSanitizer) { }
+    private sanitizer: DomSanitizer, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.idsystem = params['idsystem'];
+    });
+    this.getStatus();
     this.getData();
     this.updateWindowDimensions();
+  }
+
+  ngAfterViewInit(): void {
+    this.scrollToTop();
   }
 
   @HostListener('window:resize', ['$event'])
   onResize(event: Event): void {
     this.updateWindowDimensions();
+  }
+
+  @HostListener('window:scroll', [])
+  onScroll(): void {
+    const scrollPosition = window.innerHeight + window.scrollY;
+    const pageHeight = document.documentElement.scrollHeight;
+    const pageWidth = document.documentElement.scrollWidth;
+    
+    // Controlla se mancano meno di 200px alla fine della pagina
+    this.isAtBottom = ((pageHeight - scrollPosition) < 120) && pageWidth > 767;
+    this.isAtBottomSm = ((pageHeight - scrollPosition) < 160) && pageWidth <= 767;
   }
 
   updateWindowDimensions() {
@@ -72,6 +98,16 @@ export class TicketModifyComponent {
     else {
       this.isSmallScreen = false;
     }
+  }
+
+  private scrollToTop(): void {
+    if (window.scrollY > 0) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
+
+  goBack() {
+    this.router.navigate(['systemOverview', this.idsystem]);
   }
 
   newMessage(): void {
@@ -86,6 +122,19 @@ export class TicketModifyComponent {
     setTimeout(() => {
       this.bottomAnchor.nativeElement.scrollIntoView({ behavior: 'smooth' });
     }, 100);
+  }
+
+  getStatus() {
+    // console.log("Received 1")
+    if (this.idsystem > 0) {
+      this.connectServerService.getRequest<ApiResponse<{ status: { id: number, name: string, color: string } }>>
+        (Connect.urlServerLaraApi, 'system/systemStatus', { idsystem: this.idsystem })
+        .subscribe((val: ApiResponse<{ status: { id: number, name: string, color: string } }>) => {
+          if (val.data) {
+            this.systemStatus = val.data.status;
+          }
+        })
+    }
   }
 
   sendMessage() {
@@ -116,6 +165,17 @@ export class TicketModifyComponent {
     }
   }
 
+  systemInfoPopup() {
+    //console.log("IDSYSTEM", this.idsystem)
+    const dialogRef = this.dialog.open(SystemInfoPopupComponent, {
+      maxWidth: '900px',
+      minWidth: '350px',
+      maxHeight: '800px',
+      width: '90%',
+      data: { idsystem: this.idsystem }
+    });
+  }
+
   getData() {
     this.ticketInfo = {
       id: 123,
@@ -124,7 +184,7 @@ export class TicketModifyComponent {
       description: "Richiesta di assistenza",
       requestType: "Assistenza",
       email: "example@example.com",
-      attachedFiles: [{ id: 1, src: 'wecoW.png', ext: 'png', folder: '', title: '' }],
+      attachedFiles: [{ id: 1, src: 'wecoW.jpg', ext: 'jpg', folder: '', title: '' }],
       inverterList: [
         { id: 1, sn: "INV-001" },
         { id: 2, sn: "INV-002" }
@@ -146,21 +206,21 @@ export class TicketModifyComponent {
       {
         id: 2,
         description: "Questo è il secondo messaggio senza allegati",
-        attached: [{ id: 0, src: "wecoW.png", ext: 'png' }, { id: 1, src: "profileThumb.jpg" }],
+        attached: [{ id: 0, src: "wecoW.jpg", ext: 'jpg' }, { id: 1, src: "profileThumb.jpg" }],
         date: "2023-05-26T09:30:00Z",
         sender: 2
       },
       {
         id: 3,
         description: "Messaggio finale con allegato",
-        attached: [{ id: 0, src: "wecoW.png", ext: 'png' }, { id: 1, src: "profileThumb.jpg" }],
+        attached: [{ id: 0, src: "wecoW.jpg", ext: 'jpg' }, { id: 1, src: "profileThumb.jpg" }],
         date: "2023-05-27T16:45:00Z",
         sender: 1
       },
       {
         id: 4,
         description: "Questo è il primo messaggio",
-        attached: [{ id: 0, src: "wecoW.png", ext: 'png' }, { id: 1, src: "profileThumb.jpg", ext: 'jjj' }],
+        attached: [{ id: 0, src: "wecoW.jpg", ext: 'jpg' }, { id: 1, src: "profileThumb.jpg", ext: 'jjj' }],
         date: "2023-05-25T14:00:00Z",
         sender: 1
       },
@@ -174,7 +234,7 @@ export class TicketModifyComponent {
       {
         id: 6,
         description: "Messaggio finale con allegato",
-        attached: [{ id: 0, src: "wecoW.png", ext: 'png' }, { id: 1, src: "profileThumb.jpg" }],
+        attached: [{ id: 0, src: "wecoW.jpg", ext: 'jpg' }, { id: 1, src: "profileThumb.jpg" }],
         date: "2023-05-27T16:45:00Z",
         sender: 1
       }

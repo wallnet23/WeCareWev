@@ -1,14 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, Input } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { TranslateModule } from '@ngx-translate/core';
 import { InViewportDirective } from '../../../directives/in-viewport.directive';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Route, Router } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Connect } from '../../../classes/connect';
 import { Image } from '../../systems/components/interfaces/image';
 import { ApiResponse } from '../../../interfaces/api-response';
 import { ConnectServerService } from '../../../services/connect-server.service';
+import { SystemInfoPopupComponent } from '../../systems/system-info-popup/system-info-popup.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-ticket-new',
@@ -17,7 +19,6 @@ import { ConnectServerService } from '../../../services/connect-server.service';
     CommonModule,
     TranslateModule,
     MatExpansionModule,
-    InViewportDirective,
     ReactiveFormsModule,
   ],
   templateUrl: './ticket-new.component.html',
@@ -25,6 +26,7 @@ import { ConnectServerService } from '../../../services/connect-server.service';
 })
 export class TicketNewComponent {
 
+  idsystem: number = 0;
   imageSpaceLeft: boolean = true;
   imagesList: Image[] = [];
   maxImages: number = 10;
@@ -33,7 +35,8 @@ export class TicketNewComponent {
   requestList: { id: number, title: string }[] = [];
   isSmallScreen: boolean = false;
 
-  constructor(private fb: FormBuilder, private router: Router, private connectServerService: ConnectServerService) {
+  constructor(private fb: FormBuilder, private router: Router, private connectServerService: ConnectServerService,
+    private dialog: MatDialog, private route: ActivatedRoute) {
     this.newTicketForm = this.fb.group({
       email: [null],
       request: [null],
@@ -44,6 +47,10 @@ export class TicketNewComponent {
   }
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.idsystem = params['idsystem']
+      console.log('ID System:', params['idsystem']);
+    });
     this.getData();
   }
 
@@ -64,6 +71,9 @@ export class TicketNewComponent {
   getData() {
     // CHIAMATA AL SERVER. SE PRESENTI INVERTER O BATTERIE CREA LISTE
     const sampleInverters = [
+      { id: 1, sn: 'INV-001', selected: 1 },
+      { id: 2, sn: 'INV-002', selected: 0 },
+      { id: 3, sn: 'INV-003', selected: 0 },
       { id: 1, sn: 'INV-001', selected: 1 },
       { id: 2, sn: 'INV-002', selected: 0 },
       { id: 3, sn: 'INV-003', selected: 0 }
@@ -90,7 +100,7 @@ export class TicketNewComponent {
     return this.fb.group({
       id: [0],
       sn: [null],
-      selected: [0],
+      selected_inverter: [0],
     })
   }
 
@@ -98,7 +108,7 @@ export class TicketNewComponent {
     return this.fb.group({
       id: [0],
       sn: [null],
-      selected: [0],
+      selected_battery: [0],
     })
   }
 
@@ -106,7 +116,7 @@ export class TicketNewComponent {
     return this.fb.group({
       id: [inverter.id],
       sn: [inverter.sn],
-      selected: [inverter.selected],
+      selected_inverter: [inverter.selected],
     })
   }
 
@@ -114,7 +124,7 @@ export class TicketNewComponent {
     return this.fb.group({
       id: [battery.id],
       sn: [battery.sn],
-      selected: [battery.sn],
+      selected_battery: [battery.sn],
     })
   }
 
@@ -139,7 +149,17 @@ export class TicketNewComponent {
   createTicket() {
     // CHIAMATA AL SERVER E POI NAVIGA CON L'ID RESTITUITO
     const id = 0
-    this.router.navigate(['ticketModify', id])
+    this.router.navigate(['ticketModify', id], {queryParams: {'idsystem': this.idsystem}})
+  }
+
+  systemInfoPopup() {
+    const dialogRef = this.dialog.open(SystemInfoPopupComponent, {
+      maxWidth: '900px',
+      minWidth: '350px',
+      maxHeight: '800px',
+      width: '90%',
+      data: {idsystem: this.idsystem }
+    });
   }
 
   /**
@@ -201,6 +221,10 @@ export class TicketNewComponent {
             });
           }
         })
+    }
+
+    goBack() {
+      window.history.back();
     }
   
     // setImages(formData: FormData) {
